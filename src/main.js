@@ -60,7 +60,7 @@ let elStatTotal, elStatAvailable, elStatExpired;
 let elHeroStatTotal, elHeroStatAvailable, elHeroStatExpired;
 let elCountYs, elCountSr, elCountZzz, elCountBh3;
 let elSearchInput, elHeroSearchInput;
-let elSortSelect, elViewGridBtn, elViewListBtn;
+let elViewGridBtn, elViewListBtn;
 let elDetailModal, elModalHeroImg, elModalTitle, elModalDate, elModalVersion, elModalType, elModalDesc, elModalTags, elModalPrimaryLink, elModalFavoriteBtn, elModalGameBadge, elModalStatusBadge;
 let elGameZoneHeader, elGameZoneLogo, elGameZoneTitle, elGameZoneDesc, elZoneStatTotal, elZoneStatAvailable, elZoneStatExpired, elBackToHomeBtn;
 let elMobileNavToggle, elMobileFilterBtn, elSidebarCloseBtn, elDrawerOverlay, elSidebarPanel, elNavMenu;
@@ -101,7 +101,6 @@ function initDOM() {
   elHeroSearchInput = document.getElementById('heroSearchInput');
   elSearchInput = document.getElementById('heroSearchInput'); // Syncing
   
-  elSortSelect = document.getElementById('sortSelect');
   elViewGridBtn = document.getElementById('viewGrid');
   elViewListBtn = document.getElementById('viewList');
   
@@ -191,11 +190,51 @@ function bindEvents() {
     renderEvents();
   });
 
-  // Sorting
-  elSortSelect.addEventListener('change', (e) => {
-    state.sortKey = e.target.value;
-    renderEvents();
-  });
+  // Custom Select Dropdown logic
+  const dropdown = document.getElementById('sortSelectDropdown');
+  const trigger = document.getElementById('sortSelectTrigger');
+  const selectedText = document.getElementById('sortSelectedText');
+  const options = document.getElementById('sortSelectOptions');
+
+  if (trigger && options) {
+    // Toggle dropdown
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.toggle('open');
+    });
+
+    // Close when clicking options or clicking outside
+    options.querySelectorAll('.select-option').forEach(opt => {
+      opt.addEventListener('click', (e) => {
+        e.stopPropagation();
+        
+        // Remove active class from other options
+        options.querySelectorAll('.select-option').forEach(o => o.classList.remove('active'));
+        
+        // Add active class
+        opt.classList.add('active');
+        
+        // Update trigger text
+        selectedText.textContent = opt.textContent;
+        
+        // Update state
+        state.sortKey = opt.getAttribute('data-value');
+        
+        // Close dropdown
+        dropdown.classList.remove('open');
+        
+        // Render events
+        renderEvents();
+      });
+    });
+
+    // Close when clicking outside the dropdown
+    document.addEventListener('click', (e) => {
+      if (dropdown && !dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+      }
+    });
+  }
 
   // Hero Search box
   elHeroSearchInput.addEventListener('input', (e) => {

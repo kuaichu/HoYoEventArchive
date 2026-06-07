@@ -255,12 +255,18 @@
               
               <div class="sort-container">
                 <span>排序方式:</span>
-                <select class="sort-select" id="sortSelect">
-                  <option value="date-desc">默认排序 (时间降序)</option>
-                  <option value="date-asc">时间升序</option>
-                  <option value="title-asc">标题首字母 (A-Z)</option>
-                  <option value="status-asc">状态分类</option>
-                </select>
+                <div class="custom-select" id="sortSelectDropdown">
+                  <div class="select-trigger" id="sortSelectTrigger">
+                    <span class="selected-text" id="sortSelectedText">默认排序 (时间降序)</span>
+                    <i class="fa-solid fa-chevron-down trigger-arrow"></i>
+                  </div>
+                  <div class="select-options" id="sortSelectOptions">
+                    <div class="select-option active" data-value="date-desc">默认排序 (时间降序)</div>
+                    <div class="select-option" data-value="date-asc">时间升序</div>
+                    <div class="select-option" data-value="title-asc">标题首字母 (A-Z)</div>
+                    <div class="select-option" data-value="status-asc">状态分类</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
