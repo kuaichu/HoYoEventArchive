@@ -188,6 +188,36 @@
                 <p class="portal-count" id="countBh3">0 个活动</p>
               </div>
               <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
+          </div>
+
+          <!-- Game Zone Header (Hidden by default, shown when a game is selected) -->
+          <div class="game-zone-header hidden" id="gameZoneHeader">
+            <div class="game-zone-left">
+              <button class="back-to-home-btn" id="backToHomeBtn">
+                <i class="fa-solid fa-chevron-left"></i>返回全部游戏
+              </button>
+              <div class="game-zone-title-wrapper">
+                <img src="" alt="Game Logo" class="game-zone-logo" id="gameZoneLogo" />
+                <div class="game-zone-text">
+                  <h2 id="gameZoneTitle">游戏专区</h2>
+                  <p id="gameZoneDesc">游戏活动档案库</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="game-zone-stats" id="gameZoneStats">
+              <div class="zone-stat-item">
+                <span class="zone-stat-num" id="zoneStatTotal">0</span>
+                <span class="zone-stat-label">活动</span>
+              </div>
+              <div class="zone-stat-item">
+                <span class="zone-stat-num available" id="zoneStatAvailable">0</span>
+                <span class="zone-stat-label">可访问</span>
+              </div>
+              <div class="zone-stat-item">
+                <span class="zone-stat-num expired" id="zoneStatExpired">0</span>
+                <span class="zone-stat-label">已失效</span>
+              </div>
             </div>
           </div>
 

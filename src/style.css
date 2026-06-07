@@ -838,6 +838,120 @@ body {
   opacity: 1;
 }
 
+/* Game Zone Header */
+.game-zone-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 20px 28px;
+  background: var(--bg-card);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transition: var(--transition-normal);
+}
+
+.game-zone-header[data-zone="ys"] {
+  background: radial-gradient(circle at 15% 50%, rgba(251, 191, 36, 0.15) 0%, rgba(9, 11, 28, 0.95) 100%), var(--bg-card);
+  border-color: rgba(251, 191, 36, 0.25);
+}
+.game-zone-header[data-zone="sr"] {
+  background: radial-gradient(circle at 15% 50%, rgba(167, 139, 250, 0.15) 0%, rgba(9, 11, 28, 0.95) 100%), var(--bg-card);
+  border-color: rgba(167, 139, 250, 0.25);
+}
+.game-zone-header[data-zone="zzz"] {
+  background: radial-gradient(circle at 15% 50%, rgba(52, 211, 153, 0.15) 0%, rgba(9, 11, 28, 0.95) 100%), var(--bg-card);
+  border-color: rgba(52, 211, 153, 0.25);
+}
+.game-zone-header[data-zone="bh3"] {
+  background: radial-gradient(circle at 15% 50%, rgba(244, 114, 182, 0.15) 0%, rgba(9, 11, 28, 0.95) 100%), var(--bg-card);
+  border-color: rgba(244, 114, 182, 0.25);
+}
+
+.game-zone-left {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.back-to-home-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.back-to-home-btn:hover {
+  background: var(--primary);
+  border-color: var(--primary-hover);
+  color: white;
+  box-shadow: 0 0 12px var(--primary-glow);
+}
+
+.game-zone-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.game-zone-logo {
+  height: 48px;
+  object-fit: contain;
+}
+
+.game-zone-text h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: white;
+}
+
+.game-zone-text p {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.game-zone-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.zone-stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(9, 11, 28, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 8px 16px;
+  border-radius: 10px;
+  min-width: 70px;
+}
+
+.zone-stat-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+}
+.zone-stat-num.available { color: var(--status-available); }
+.zone-stat-num.expired { color: var(--status-expired); }
+
+.zone-stat-label {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
 /* Event Control / Filter Bar */
 .control-bar {
   display: flex;

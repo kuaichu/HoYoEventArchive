@@ -62,6 +62,7 @@ let elCountYs, elCountSr, elCountZzz, elCountBh3;
 let elSearchInput, elHeroSearchInput;
 let elSortSelect, elViewGridBtn, elViewListBtn;
 let elDetailModal, elModalHeroImg, elModalTitle, elModalDate, elModalVersion, elModalType, elModalDesc, elModalTags, elModalPrimaryLink, elModalFavoriteBtn, elModalGameBadge, elModalStatusBadge;
+let elGameZoneHeader, elGameZoneLogo, elGameZoneTitle, elGameZoneDesc, elZoneStatTotal, elZoneStatAvailable, elZoneStatExpired, elBackToHomeBtn;
 
 
 // Initialize App
@@ -117,7 +118,14 @@ function initDOM() {
   elModalGameBadge = document.getElementById('modalGameBadge');
   elModalStatusBadge = document.getElementById('modalStatusBadge');
   
-
+  elGameZoneHeader = document.getElementById('gameZoneHeader');
+  elGameZoneLogo = document.getElementById('gameZoneLogo');
+  elGameZoneTitle = document.getElementById('gameZoneTitle');
+  elGameZoneDesc = document.getElementById('gameZoneDesc');
+  elZoneStatTotal = document.getElementById('zoneStatTotal');
+  elZoneStatAvailable = document.getElementById('zoneStatAvailable');
+  elZoneStatExpired = document.getElementById('zoneStatExpired');
+  elBackToHomeBtn = document.getElementById('backToHomeBtn');
 }
 
 // Bind event listeners
@@ -198,6 +206,17 @@ function bindEvents() {
   const elMainContent = document.getElementById('mainContent');
   if (elMainContent) {
     elMainContent.addEventListener('scroll', updateHeaderSearchVisibility);
+  }
+
+  // Back to Home button click inside Game Zone
+  if (elBackToHomeBtn) {
+    elBackToHomeBtn.addEventListener('click', () => {
+      setGameFilter('all');
+      const elPaneHome = document.getElementById('paneHome');
+      if (elPaneHome) {
+        elPaneHome.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
   }
 
   // Hot Tags click
@@ -633,6 +652,64 @@ function getFilteredEvents() {
 
 // Render events in Grid or List layout
 function renderEvents() {
+  // Sync page headers and game zone visibility
+  const elHeroWrapper = document.querySelector('.hero-wrapper');
+  const elGamePortals = document.querySelector('.game-portals');
+  
+  if (state.currentTab === 'home') {
+    if (state.filters.game === 'all') {
+      if (elHeroWrapper) elHeroWrapper.classList.remove('hidden');
+      if (elGamePortals) elGamePortals.classList.remove('hidden');
+      if (elGameZoneHeader) elGameZoneHeader.classList.add('hidden');
+    } else {
+      if (elHeroWrapper) elHeroWrapper.classList.add('hidden');
+      if (elGamePortals) elGamePortals.classList.add('hidden');
+      if (elGameZoneHeader) {
+        elGameZoneHeader.classList.remove('hidden');
+        elGameZoneHeader.setAttribute('data-zone', state.filters.game);
+        
+        // Update Game Zone Details
+        const gameKey = state.filters.game;
+        const gameCoversLocal = {
+          ys: '/images/genshin_cover.png',
+          sr: '/images/hsr_cover.png',
+          zzz: '/images/zzz_cover.png',
+          bh3: '/images/bh3_cover.png'
+        };
+        const gameTitles = {
+          ys: '原神活动专区',
+          sr: '崩坏：星穹铁道活动专区',
+          zzz: '绝区零活动专区',
+          bh3: '崩坏3活动专区'
+        };
+        const gameDescs = {
+          ys: '收录原神历年网页活动、概念网页与官方特别企划',
+          sr: '收录星铁历年网页活动、数据报告及年度入梦指南',
+          zzz: '收录绝区零历次测试预约、公测活动及趣味H5',
+          bh3: '收录崩坏3历次版本大型H5网页企划与特别福利活动'
+        };
+        
+        if (elGameZoneLogo) elGameZoneLogo.src = gameCoversLocal[gameKey] || '';
+        if (elGameZoneTitle) elGameZoneTitle.textContent = gameTitles[gameKey] || '游戏专区';
+        if (elGameZoneDesc) elGameZoneDesc.textContent = gameDescs[gameKey] || '';
+        
+        // Calculate stats for this game
+        const total = state.events.filter(e => e.gameKey === gameKey).length;
+        const available = state.events.filter(e => e.gameKey === gameKey && e.status !== '已失效').length;
+        const expired = state.events.filter(e => e.gameKey === gameKey && e.status === '已失效').length;
+        
+        if (elZoneStatTotal) elZoneStatTotal.textContent = total;
+        if (elZoneStatAvailable) elZoneStatAvailable.textContent = available;
+        if (elZoneStatExpired) elZoneStatExpired.textContent = expired;
+      }
+    }
+  } else {
+    // Other tabs (library, timeline, etc.)
+    if (elHeroWrapper) elHeroWrapper.classList.add('hidden');
+    if (elGamePortals) elGamePortals.classList.add('hidden');
+    if (elGameZoneHeader) elGameZoneHeader.classList.add('hidden');
+  }
+
   const filtered = getFilteredEvents();
   
   if (filtered.length === 0) {
