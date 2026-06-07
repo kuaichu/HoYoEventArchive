@@ -1,0 +1,48 @@
+name: Auto Crawl Miyoushe Events
+
+on:
+  schedule:
+    # Runs every 12 hours (at 00:00 and 12:00 UTC)
+    - cron: '0 */12 * * *'
+  workflow_dispatch:
+    # Allows manual triggering from the GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Miyoushe Crawler
+        run: node scripts/miyoushe-crawler.js
+
+      - name: Update Event Statuses
+        run: node scripts/update-statuses.js
+
+      - name: Check for Changes & Commit
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          # Only commit if events.json was modified
+          if git diff --quiet src/events.json; then
+            echo "No new events or updates found. Skipping commit."
+          else
+            git add src/events.json
+            git commit -m "chore(data): auto update events database from miyoushe [skip ci]"
+            git push origin main
+          fi
