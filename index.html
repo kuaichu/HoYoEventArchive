@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>米游活动档案馆 | HOYO EVENT ARCHIVE</title>
+    <!-- FontAwesome Free Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="description" content="米游活动档案馆收录米哈游旗下游戏历年网页活动、年度数据报告、限时回归活动与纪念册页面。提供全面的分类筛选、智能搜索与失效监测服务。" />
+  </head>
+  <body>
+    <div id="app">
+      <!-- Header Section -->
+      <header class="header-bar">
+        <div class="logo-section">
+          <div class="logo-icon">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+          <div class="logo-text">
+            <h1>米游活动档案馆</h1>
+            <p>HoYo Event Archive</p>
+          </div>
+        </div>
+        
+        <nav>
+          <ul class="nav-links">
+            <li><a class="nav-item active" data-tab="home"><i class="fa-solid fa-house"></i>首页</a></li>
+            <li><a class="nav-item" data-tab="library"><i class="fa-solid fa-box-archive"></i>活动库</a></li>
+            <li><a class="nav-item" data-tab="timeline"><i class="fa-solid fa-timeline"></i>时间轴</a></li>
+            <li><a class="nav-item" data-tab="reports"><i class="fa-solid fa-file-invoice"></i>年度报告</a></li>
+            <li><a class="nav-item" data-tab="reflow"><i class="fa-solid fa-person-walking-arrow-loop-left"></i>回归活动</a></li>
+            <li><a class="nav-item" data-tab="expired"><i class="fa-solid fa-circle-xmark"></i>失效页面</a></li>
+            <li><a class="nav-item" data-tab="about"><i class="fa-solid fa-circle-info"></i>关于本站</a></li>
+          </ul>
+        </nav>
+        
+        <div class="header-right">
+          <button class="global-search-btn" id="headerSearchBtn" title="搜索">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+
+        </div>
+      </header>
+
+      <!-- Sidebar Panel -->
+      <aside class="sidebar-panel">
+        <!-- Game Filter Group -->
+        <div class="filter-group">
+          <div class="filter-title">游戏筛选</div>
+          <ul class="filter-list" id="gameFilters">
+            <!-- Rendered Dynamically -->
+          </ul>
+        </div>
+
+        <!-- Type Filter Group -->
+        <div class="filter-group">
+          <div class="filter-title">类型筛选</div>
+          <ul class="filter-list" id="typeFilters">
+            <!-- Rendered Dynamically -->
+          </ul>
+        </div>
+
+        <!-- Status Filter Group -->
+        <div class="filter-group">
+          <div class="filter-title">状态筛选</div>
+          <ul class="filter-list" id="statusFilters">
+            <!-- Rendered Dynamically -->
+          </ul>
+        </div>
+
+        <!-- Statistics Panel -->
+        <div class="stats-box">
+          <div class="stats-title">
+            <i class="fa-solid fa-chart-simple"></i>
+            <span>活动总览</span>
+          </div>
+          <div class="stats-grid">
+            <div class="stat-item">
+              <span class="stat-num total" id="statTotal">0</span>
+              <span class="stat-label">总活动数</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num available" id="statAvailable">0</span>
+              <span class="stat-label">可访问</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-num expired" id="statExpired">0</span>
+              <span class="stat-label">已失效</span>
+            </div>
+          </div>
+          <div class="stats-update-info">
+            数据每日自动检测更新
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Content Area -->
+      <main class="main-content" id="mainContent">
+        <!-- Container for Home Tab -->
+        <div class="tab-pane active" id="paneHome">
+          <!-- Hero Section + Recent updates -->
+          <div class="hero-wrapper">
+            <div class="hero-banner">
+              <div class="hero-text">
+                <h2>米游活动档案馆</h2>
+                <p>收录米哈游游戏历年网页活动、年度报告、回归活动与纪念页面</p>
+                <div class="search-box-container">
+                  <input type="text" class="search-input" id="heroSearchInput" placeholder="搜索活动名称、类型或关键词..." />
+                  <button class="search-btn" id="heroSearchBtn">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </div>
+                <div class="hot-searches">
+                  <span>热门搜索:</span>
+                  <div class="hot-tags" id="hotTags">
+                    <span class="hot-tag">周年报告</span>
+                    <span class="hot-tag">回归活动</span>
+                    <span class="hot-tag">纪念册</span>
+                    <span class="hot-tag">预抽卡</span>
+                    <span class="hot-tag">入梦指南</span>
+                    <span class="hot-tag">黄金裔WIKI</span>
+                  </div>
+                </div>
+                <!-- Hero statistics cards container -->
+                <div class="hero-stats-container">
+                  <div class="hero-stat-card">
+                    <span class="hero-stat-value" id="heroStatTotal">0</span>
+                    <span class="hero-stat-label">活动</span>
+                  </div>
+                  <div class="hero-stat-card">
+                    <span class="hero-stat-value" id="heroStatAvailable">0</span>
+                    <span class="hero-stat-label">可访问</span>
+                  </div>
+                  <div class="hero-stat-card">
+                    <span class="hero-stat-value" id="heroStatExpired">0</span>
+                    <span class="hero-stat-label">已失效</span>
+                  </div>
+                  <div class="hero-stat-card">
+                    <span class="hero-stat-value">4</span>
+                    <span class="hero-stat-label">游戏</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="recently-updated-panel">
+              <div class="panel-header">
+                <span class="panel-title"><i class="fa-solid fa-clock-rotate-left"></i>最近更新</span>
+                <span class="panel-more" id="recentMoreBtn">更多 &gt;</span>
+              </div>
+              <ul class="update-list" id="recentlyUpdatedList">
+                <!-- Dynamically Rendered -->
+              </ul>
+            </div>
+          </div>
+
+          <!-- Game Portal Cards -->
+          <div class="game-portals">
+            <div class="portal-card" data-game="ys">
+              <div class="portal-cover ys"></div>
+              <div class="portal-info">
+                <span class="portal-name">原神</span>
+                <p class="portal-count" id="countYs">0 个活动</p>
+              </div>
+              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
+            </div>
+            <div class="portal-card" data-game="sr">
+              <div class="portal-cover sr"></div>
+              <div class="portal-info">
+                <span class="portal-name">星穹铁道</span>
+                <p class="portal-count" id="countSr">0 个活动</p>
+              </div>
+              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
+            </div>
+            <div class="portal-card" data-game="zzz">
+              <div class="portal-cover zzz"></div>
+              <div class="portal-info">
+                <span class="portal-name">绝区零</span>
+                <p class="portal-count" id="countZzz">0 个活动</p>
+              </div>
+              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
+            </div>
+            <div class="portal-card" data-game="bh3">
+              <div class="portal-cover bh3"></div>
+              <div class="portal-info">
+                <span class="portal-name">崩坏3</span>
+                <p class="portal-count" id="countBh3">0 个活动</p>
+              </div>
+              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
+            </div>
+          </div>
+
+          <!-- Events Listing Section -->
+          <div class="control-bar" style="margin-top: 16px;">
+            <div class="control-tabs">
+              <button class="control-tab active" data-subtab="all">全部活动</button>
+              <button class="control-tab" data-subtab="latest">最新上线</button>
+              <button class="control-tab" data-subtab="ending">已结束</button>
+              <button class="control-tab" data-subtab="popular">热门活动</button>
+              <button class="control-tab" data-subtab="favorites">我收藏的</button>
+            </div>
+            
+            <div class="control-actions">
+              <div class="view-switchers">
+                <button class="view-btn active" id="viewGrid" title="卡片视图">
+                  <i class="fa-solid fa-grip"></i>卡片视图
+                </button>
+                <button class="view-btn" id="viewList" title="列表视图">
+                  <i class="fa-solid fa-list"></i>列表视图
+                </button>
+              </div>
+              
+              <div class="sort-container">
+                <span>排序方式:</span>
+                <select class="sort-select" id="sortSelect">
+                  <option value="date-desc">默认排序 (时间降序)</option>
+                  <option value="date-asc">时间升序</option>
+                  <option value="title-asc">标题首字母 (A-Z)</option>
+                  <option value="status-asc">状态分类</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Events Container -->
+          <div class="event-grid-container" style="margin-top: 16px;">
+            <div class="event-grid" id="eventsContainer">
+              <!-- Dynamically Rendered -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Container for Timeline Tab -->
+        <div class="tab-pane hidden" id="paneTimeline">
+          <div class="timeline-container" id="timelineContainer">
+            <!-- Dynamically Rendered -->
+          </div>
+        </div>
+
+        <!-- Container for About Tab -->
+        <div class="tab-pane hidden" id="paneAbout">
+          <div class="about-card">
+            <h2>关于本站</h2>
+            <p><strong>米游活动档案馆</strong> 是一个旨在记录和汇总米哈游游戏（原神、崩坏：星穹铁道、绝区零、崩坏3等）历史网页活动、年度拓展报告、重返群星/回归活动以及特殊纪念册的非官方公益网站。</p>
+            
+            <h3>核心功能</h3>
+            <ul>
+              <li><strong>活动收录</strong>：聚合多款米游的网页H5页面链接，避免链接丢失和遗忘。</li>
+              <li><strong>状态监测</strong>：自动/手动标记页面的访问状态，分为“可访问”、“已失效（404）”、“需登录/绑定”以及“活动已结束”。</li>
+              <li><strong>数据筛选</strong>：支持按游戏种类、活动类型、可用状态进行多维度交叉筛选。</li>
+              <li><strong>搜索与收藏</strong>：快速搜寻特定活动关键词，支持本地浏览器收藏功能，定制您的个人档案馆。</li>
+              <li><strong>时光轴回顾</strong>：按上线年份和月份查看历史活动分布，重温米游历代版本的运营轨迹。</li>
+            </ul>
+
+            <h3>声明</h3>
+            <p>本站所收录的所有网页活动链接、背景图片、美术素材、角色设计以及商标版权均归属于 <strong>米哈游（miHoYo）</strong>。本站仅作学习交流与信息整理之用。若有侵权或不妥之处，请联系本站管理人员进行下线处理。</p>
+            
+            <p style="margin-top: 24px; text-align: right; font-style: italic;">米游活动档案馆运维组 · 2026.06</p>
+          </div>
+        </div>
+      </main>
+
+      <!-- Event Details Preview Modal -->
+      <div class="modal-overlay" id="detailModal">
+        <div class="modal-content">
+          <div class="modal-hero">
+            <img src="" alt="Event cover" class="modal-hero-img" id="modalHeroImg" />
+            <button class="modal-close-btn" id="modalCloseBtn" title="关闭">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="modal-badge-row">
+              <span class="modal-game-badge" id="modalGameBadge">游戏</span>
+              <span class="status-badge" id="modalStatusBadge">状态</span>
+            </div>
+            
+            <h2 class="modal-title-h2" id="modalTitle">活动标题</h2>
+            
+            <div class="modal-grid-meta">
+              <div class="modal-meta-item">
+                <span class="modal-meta-label">发布时间</span>
+                <span class="modal-meta-val" id="modalDate">2026.01.01</span>
+              </div>
+              <div class="modal-meta-item">
+                <span class="modal-meta-label">关联版本</span>
+                <span class="modal-meta-val" id="modalVersion">v1.0</span>
+              </div>
+              <div class="modal-meta-item">
+                <span class="modal-meta-label">活动类型</span>
+                <span class="modal-meta-val" id="modalType">回归活动</span>
+              </div>
+            </div>
+            
+            <p class="modal-desc" id="modalDesc">活动详情介绍</p>
+            
+            <div class="modal-tags" id="modalTags">
+              <!-- Dynamically Rendered -->
+            </div>
+            
+            <div class="modal-action-row">
+              <a href="" target="_blank" class="modal-primary-btn" id="modalPrimaryLink">
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                <span>立即访问活动网页</span>
+              </a>
+              <button class="modal-secondary-btn" id="modalFavoriteBtn" title="加入收藏">
+                <i class="fa-regular fa-star"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
