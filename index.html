@@ -39,12 +39,20 @@
           <button class="global-search-btn" id="headerSearchBtn" title="搜索">
             <i class="fa-solid fa-magnifying-glass"></i>
           </button>
-
+          <button class="mobile-nav-toggle" id="mobileNavToggle" title="菜单">
+            <i class="fa-solid fa-bars"></i>
+          </button>
         </div>
       </header>
 
       <!-- Sidebar Panel -->
       <aside class="sidebar-panel">
+        <div class="sidebar-header-mobile">
+          <h3>筛选条件</h3>
+          <button class="sidebar-close-btn" id="sidebarCloseBtn" title="关闭">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
         <!-- Game Filter Group -->
         <div class="filter-group">
           <div class="filter-title">游戏筛选</div>
@@ -233,6 +241,9 @@
             </div>
             
             <div class="control-actions">
+              <button class="mobile-filter-btn" id="mobileFilterBtn" title="筛选">
+                <i class="fa-solid fa-filter"></i>筛选
+              </button>
               <div class="view-switchers">
                 <button class="view-btn active" id="viewGrid" title="卡片视图">
                   <i class="fa-solid fa-grip"></i>卡片视图
@@ -344,6 +355,8 @@
       </div>
 
 
+      <!-- Drawer Overlay for Mobile -->
+      <div class="drawer-overlay" id="drawerOverlay"></div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

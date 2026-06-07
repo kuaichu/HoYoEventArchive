@@ -1752,41 +1752,113 @@ body {
 }
 
 /* Responsive adjustments */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(4, 5, 12, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.drawer-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobile-nav-toggle {
+  display: none;
+}
+.mobile-filter-btn {
+  display: none;
+}
+.sidebar-header-mobile {
+  display: none;
+}
+
 @media (max-width: 1024px) {
   #app {
     grid-template-areas: 
       "header"
-      "sidebar"
       "main";
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto 1fr;
-    height: auto;
-    overflow: visible;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+    overflow: hidden;
   }
   
   .sidebar-panel {
-    border-right: none;
-    border-bottom: 1px solid var(--border-color);
-    padding: 16px;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    height: auto;
-    overflow-y: visible;
+    position: fixed;
+    top: 0;
+    left: -320px; /* Hidden by default */
+    width: 300px;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(13, 16, 35, 0.96);
+    backdrop-filter: blur(25px);
+    border-right: 1px solid var(--border-color);
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.6);
+    transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    overflow-y: auto;
+    gap: 24px;
+    border-radius: 0;
+  }
+  
+  .sidebar-panel.open {
+    left: 0;
+  }
+  
+  .sidebar-header-mobile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  
+  .sidebar-header-mobile h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  
+  .sidebar-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 22px;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .sidebar-close-btn:hover {
+    color: var(--primary);
   }
 
   .main-content {
-    height: auto;
-    overflow-y: visible;
+    height: 100%;
+    overflow-y: auto;
   }
   
   .filter-group {
-    flex: 1;
-    min-width: 200px;
+    width: 100%;
+    margin-bottom: 0;
   }
   
   .stats-box {
     width: 100%;
+    margin-top: auto;
   }
   
   .hero-wrapper {
@@ -1796,25 +1868,135 @@ body {
   .game-portals {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .game-zone-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px 20px;
+  }
+  
+  .game-zone-left {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .game-zone-title-wrapper {
+    width: 100%;
+  }
+
+  .game-zone-stats {
+    width: 100%;
+    justify-content: space-between;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding-top: 12px;
+    gap: 10px;
+  }
+  
+  .mobile-filter-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 8px 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: var(--transition-fast);
+  }
+  .mobile-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary);
+  }
+}
+
+@media (max-width: 900px) {
+  .header-bar {
+    padding: 0 20px;
+  }
+
+  .header-bar nav {
+    position: fixed;
+    top: 0;
+    right: -300px; /* Hidden by default */
+    width: 280px;
+    height: 100%;
+    z-index: 1000;
+    background: rgba(13, 16, 35, 0.96);
+    backdrop-filter: blur(25px);
+    border-left: 1px solid var(--border-color);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.6);
+    transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    padding: 80px 24px 24px 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header-bar nav.open {
+    right: 0;
+  }
+  
+  .nav-links {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+    width: 100%;
+  }
+  
+  .nav-links li {
+    width: 100%;
+  }
+  
+  .nav-item {
+    width: 100%;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .mobile-nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+    cursor: pointer;
+    font-size: 18px;
+    transition: var(--transition-fast);
+    z-index: 1001; /* Keep above overlay */
+  }
 }
 
 @media (max-width: 640px) {
   .header-bar {
-    padding: 0 12px;
-    flex-direction: column;
-    height: auto;
-    padding-top: 12px;
-    padding-bottom: 12px;
-    gap: 12px;
+    padding: 0 16px;
+    height: 60px;
   }
   
-  .nav-links {
-    flex-wrap: wrap;
-    justify-content: center;
+  .logo-text h1 {
+    font-size: 16px;
+  }
+  
+  .logo-text p {
+    font-size: 10px;
   }
   
   .game-portals {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   
   .control-bar {
@@ -1825,6 +2007,35 @@ body {
   
   .control-tabs {
     flex-wrap: wrap;
+    gap: 6px;
+  }
+  
+  .control-tab {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .control-actions {
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .view-switchers {
+    gap: 4px;
+  }
+
+  .view-btn {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  .sort-container {
+    font-size: 12px;
+  }
+
+  .sort-select {
+    padding: 6px 24px 6px 10px;
+    font-size: 12px;
   }
   
   .event-list-header {
@@ -1834,6 +2045,7 @@ body {
   .event-list-row {
     grid-template-columns: 1fr;
     gap: 8px;
+    padding: 16px;
   }
   
   .list-status-cell {

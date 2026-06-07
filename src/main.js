@@ -63,6 +63,7 @@ let elSearchInput, elHeroSearchInput;
 let elSortSelect, elViewGridBtn, elViewListBtn;
 let elDetailModal, elModalHeroImg, elModalTitle, elModalDate, elModalVersion, elModalType, elModalDesc, elModalTags, elModalPrimaryLink, elModalFavoriteBtn, elModalGameBadge, elModalStatusBadge;
 let elGameZoneHeader, elGameZoneLogo, elGameZoneTitle, elGameZoneDesc, elZoneStatTotal, elZoneStatAvailable, elZoneStatExpired, elBackToHomeBtn;
+let elMobileNavToggle, elMobileFilterBtn, elSidebarCloseBtn, elDrawerOverlay, elSidebarPanel, elNavMenu;
 
 
 // Initialize App
@@ -126,6 +127,13 @@ function initDOM() {
   elZoneStatAvailable = document.getElementById('zoneStatAvailable');
   elZoneStatExpired = document.getElementById('zoneStatExpired');
   elBackToHomeBtn = document.getElementById('backToHomeBtn');
+  
+  elMobileNavToggle = document.getElementById('mobileNavToggle');
+  elMobileFilterBtn = document.getElementById('mobileFilterBtn');
+  elSidebarCloseBtn = document.getElementById('sidebarCloseBtn');
+  elDrawerOverlay = document.getElementById('drawerOverlay');
+  elSidebarPanel = document.querySelector('.sidebar-panel');
+  elNavMenu = document.querySelector('.header-bar nav');
 }
 
 // Bind event listeners
@@ -138,6 +146,14 @@ function bindEvents() {
       navLink.classList.add('active');
       const tabName = navLink.getAttribute('data-tab');
       applyTabChange(tabName);
+
+      // Close mobile navigation drawer
+      if (elNavMenu) elNavMenu.classList.remove('open');
+      if (elDrawerOverlay) elDrawerOverlay.classList.remove('active');
+      if (elMobileNavToggle) {
+        const icon = elMobileNavToggle.querySelector('i');
+        if (icon) icon.className = 'fa-solid fa-bars';
+      }
     });
   });
 
@@ -254,6 +270,55 @@ function bindEvents() {
     if (latestTabBtn) latestTabBtn.click();
     scrollToEvents();
   });
+
+  // Mobile navigation drawer toggle
+  if (elMobileNavToggle) {
+    elMobileNavToggle.addEventListener('click', () => {
+      const isOpen = elNavMenu.classList.toggle('open');
+      elDrawerOverlay.classList.toggle('active', isOpen);
+      const icon = elMobileNavToggle.querySelector('i');
+      if (icon) {
+        icon.className = isOpen ? 'fa-solid fa-xmark' : 'fa-solid fa-bars';
+      }
+      // Close sidebar if open
+      if (elSidebarPanel) {
+        elSidebarPanel.classList.remove('open');
+      }
+    });
+  }
+
+  // Mobile filters drawer toggle
+  if (elMobileFilterBtn) {
+    elMobileFilterBtn.addEventListener('click', () => {
+      if (elSidebarPanel) elSidebarPanel.classList.add('open');
+      if (elDrawerOverlay) elDrawerOverlay.classList.add('active');
+      // Close nav menu if open
+      if (elNavMenu) {
+        elNavMenu.classList.remove('open');
+        const icon = elMobileNavToggle.querySelector('i');
+        if (icon) icon.className = 'fa-solid fa-bars';
+      }
+    });
+  }
+
+  // Mobile filters close button
+  if (elSidebarCloseBtn) {
+    elSidebarCloseBtn.addEventListener('click', () => {
+      if (elSidebarPanel) elSidebarPanel.classList.remove('open');
+      if (elDrawerOverlay) elDrawerOverlay.classList.remove('active');
+    });
+  }
+
+  // Click overlay to close both drawers
+  if (elDrawerOverlay) {
+    elDrawerOverlay.addEventListener('click', () => {
+      if (elSidebarPanel) elSidebarPanel.classList.remove('open');
+      if (elNavMenu) elNavMenu.classList.remove('open');
+      elDrawerOverlay.classList.remove('active');
+      const icon = elMobileNavToggle.querySelector('i');
+      if (icon) icon.className = 'fa-solid fa-bars';
+    });
+  }
 }
 
 // Scroll to events grid view
@@ -538,6 +603,12 @@ function renderSidebarFilters() {
       }
       
       renderEvents();
+      
+      // Close mobile filters drawer after selection
+      if (window.innerWidth <= 1024) {
+        if (elSidebarPanel) elSidebarPanel.classList.remove('open');
+        if (elDrawerOverlay) elDrawerOverlay.classList.remove('active');
+      }
     });
   });
 }
