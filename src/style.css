@@ -1981,6 +1981,49 @@ body {
 }
 
 @media (max-width: 640px) {
+  .main-content {
+    padding: 16px 12px;
+    gap: 16px;
+  }
+
+  .hero-banner {
+    padding: 24px 16px;
+  }
+  
+  .hero-text h2 {
+    font-size: 24px;
+  }
+  
+  .hero-text p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  
+  .hot-searches {
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  
+  .hot-tags {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .hero-stats-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 320px;
+    margin: 18px auto 0 auto;
+  }
+  
+  .hero-stat-card {
+    width: 100%;
+    height: 70px;
+  }
+
   .header-bar {
     padding: 0 16px;
     height: 60px;
