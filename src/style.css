@@ -2004,6 +2004,7 @@ body {
 @media (max-width: 900px) {
   .header-bar {
     padding: 0 20px;
+    z-index: 1000;
   }
 
   .header-bar nav {
