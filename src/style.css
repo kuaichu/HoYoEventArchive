@@ -57,12 +57,15 @@
   padding: 0;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-main);
   color: var(--text-primary);
-  min-height: 100vh;
-  overflow-x: hidden;
   background-image: 
     radial-gradient(circle at 10% 20%, rgba(13, 10, 48, 0.6) 0%, transparent 50%),
     radial-gradient(circle at 90% 80%, rgba(18, 11, 46, 0.5) 0%, transparent 50%),
@@ -406,6 +409,7 @@ body {
   gap: 24px;
   overflow-y: auto;
   height: 100%;
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Hero Section */
