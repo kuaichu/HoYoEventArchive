@@ -1,29 +1,38 @@
 import './style.css';
 import eventsData from './events.json';
 
-// Load custom events from localStorage if they exist, otherwise fall back to default
+// Load custom events from localStorage if they exist, otherwise fall back to default.
+// Repository-backed events should refresh from src/events.json so crawler updates remain visible.
 const localEvents = localStorage.getItem('hoyo_archive_custom_events');
-let eventsList = localEvents ? JSON.parse(localEvents) : eventsData;
+let eventsList = eventsData;
 
-// If localStorage is used, ensure standard events are synchronized with repository defaults (like version and description updates)
 if (localEvents) {
   let updated = false;
-  eventsList = eventsList.map(localEvt => {
-    const defaultEvt = eventsData.find(d => d.id === localEvt.id);
-    if (defaultEvt) {
-      if (localEvt.version !== defaultEvt.version) {
-        localEvt.version = defaultEvt.version;
-        updated = true;
-      }
-      if (localEvt.description !== defaultEvt.description) {
-        localEvt.description = defaultEvt.description;
-        updated = true;
-      }
+  const parsedLocalEvents = JSON.parse(localEvents);
+  const localById = new Map(parsedLocalEvents.map(evt => [evt.id, evt]));
+
+  eventsList = eventsData.map(defaultEvt => {
+    const localEvt = localById.get(defaultEvt.id);
+    if (!localEvt) {
+      return defaultEvt;
     }
-    return localEvt;
+
+    const mergedEvt = { ...defaultEvt };
+    if (JSON.stringify(localEvt) !== JSON.stringify(mergedEvt)) {
+      updated = true;
+    }
+    return mergedEvt;
   });
-  if (updated) {
-    localStorage.setItem('hoyo_archive_custom_events', JSON.stringify(eventsList));
+
+  const defaultIds = new Set(eventsData.map(evt => evt.id));
+  const customOnlyEvents = parsedLocalEvents.filter(evt => !defaultIds.has(evt.id));
+  if (customOnlyEvents.length > 0) {
+    eventsList.push(...customOnlyEvents);
+  }
+
+  const normalizedLocalState = JSON.stringify(eventsList);
+  if (normalizedLocalState !== localEvents || updated) {
+    localStorage.setItem('hoyo_archive_custom_events', normalizedLocalState);
   }
 }
 
