@@ -36,7 +36,10 @@ async function runCrawler() {
     maxNums[g.gameKey] = maxNum;
   });
 
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
   let newEventsCount = 0;
 
   for (const game of games) {
@@ -246,4 +249,7 @@ async function runCrawler() {
   }
 }
 
-runCrawler();
+runCrawler().catch(err => {
+  console.error('Crawler failed:', err);
+  process.exit(1);
+});
