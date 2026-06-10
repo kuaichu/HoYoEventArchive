@@ -38,7 +38,7 @@ async function main() {
 Project: hoyo-event-archive
 Status: running
 Trigger: ${trigger}
-Run: #${runId} (${runUrl})`;
+Run: <a href="${runUrl}">#${runId}</a>`;
   } else if (type === 'finished') {
     const status = argv[3] || 'success';
     const dataChanged = argv[4] === 'true';
@@ -58,7 +58,7 @@ Status: ${status}
 Data: ${dataStr}
 Trigger: ${trigger}
 Duration: ${durationStr}
-Run: #${runId} (${runUrl})`;
+Run: <a href="${runUrl}">#${runId}</a>`;
   } else {
     console.error('Invalid notification type');
     process.exit(1);
