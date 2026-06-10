@@ -30,6 +30,12 @@ jobs:
       - name: Install Chromium for Puppeteer
         run: npx puppeteer browsers install chrome
 
+      - name: Record Start Time
+        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+
+      - name: Send Sync Started Notification
+        run: node scripts/tg-notify.js started ${{ github.event_name }}
+
       - name: Run Miyoushe Crawler
         run: node scripts/miyoushe-crawler.js
 
@@ -37,6 +43,7 @@ jobs:
         run: node scripts/update-statuses.js
 
       - name: Check for Changes & Commit
+        id: commit_step
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -44,8 +51,17 @@ jobs:
           # Only commit if events.json was modified
           if git diff --quiet src/events.json; then
             echo "No new events or updates found. Skipping commit."
+            echo "changed=false" >> $GITHUB_OUTPUT
           else
             git add src/events.json
             git commit -m "chore(data): auto update events database from miyoushe [skip ci]"
             git push origin main
+            echo "changed=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: Send Sync Finished Notification
+        if: always()
+        run: |
+          START=${START_TIME:-$(date +%s)}
+          DURATION=$(( $(date +%s) - START ))
+          node scripts/tg-notify.js finished ${{ job.status }} ${{ steps.commit_step.outputs.changed || 'false' }} ${{ github.event_name }} $DURATION
