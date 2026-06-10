@@ -1,9 +1,12 @@
 import { argv } from 'process';
 
-const BOT_TOKEN = '8262701427:AAHVx8MmIzA1weUjxeOWn4--9fMeGQjOgTo';
-const CHAT_ID = '-1003962096060';
+const BOT_TOKEN = process.env.TG_BOT_TOKEN;
+const CHAT_ID = process.env.TG_CHAT_ID || '-1003962096060';
 
 async function sendTelegramMessage(text) {
+  if (!BOT_TOKEN) {
+    throw new Error('TG_BOT_TOKEN is not defined in environment variables');
+  }
   const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
   const res = await fetch(url, {
     method: 'POST',

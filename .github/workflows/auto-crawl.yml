@@ -13,6 +13,8 @@ permissions:
 jobs:
   crawl:
     runs-on: ubuntu-latest
+    env:
+      TG_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
 
     steps:
       - name: Checkout Repository
