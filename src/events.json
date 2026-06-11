@@ -1294,5 +1294,141 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "ys-31",
+    "title": "「运动时间到！」",
+    "url": "https://act.mihoyo.com/ys/event/e20260610sports/index.html?game_biz=hk4e_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.10",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "ys-32",
+    "title": "「月之七」版本活动祈愿预告第二期",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=382675dd182b418c&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=ys&utm_campaign=pgc",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.08",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-34",
+    "title": "阵容模拟器 - 「崩坏：星穹铁道」",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-lineup-hkrpg/index.html?mhy_presentation_style=fullscreen#/home?lineup_type=Boss",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.09",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-35",
+    "title": "游戏工具 | 《崩坏：星穹铁道》",
+    "url": "https://act.mihoyo.com/sr/event/cultivation-tool/index.html?mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&utm_medium=mys&utm_campaign=post",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.01",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-36",
+    "title": "战绩 |《崩坏：星穹铁道》",
+    "url": "https://webstatic.mihoyo.com/app/community-game-records/rpg/index.html?mhy_presentation_style=fullscreen&game_id=6&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.01",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-37",
+    "title": "珠星大厦 - 「崩坏：星穹铁道」地图",
+    "url": "https://webstatic.mihoyo.com/sr/app/interactive-map/index.html?mhy_presentation_style=fullscreen&utm_medium=mys&utm_campaign=bb#/map/682?zoom=-1.00&center=-371.00,384.00&shown_types=24,838,839,905,837,659,660,686&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.01",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-38",
+    "title": "《崩坏：星穹铁道》4.3版本「沉于生者的忘川」专题展示页现已上线",
+    "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/index.html?game_biz=hkrpg_cn&mhy_presentation_style=fullscreen&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.05.29",
+    "tags": [
+      "v4.3版本"
+    ],
+    "version": "v4.3",
+    "description": "快来了解新版本内容吧~"
+  },
+  {
+    "id": "zzz-10",
+    "title": "代理人养成指南",
+    "url": "https://act.mihoyo.com/zzz/event/character-builder/index.html?game_biz=nap_cn&mhy_auth_required=1&mhy_presentation_style=fullscreen&utm_source=media&utm_medium=mys&utm_campaign=arti#/",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "资料站",
+    "status": "可访问",
+    "date": "2026.06.09",
+    "tags": [
+      "资料站"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "bh3-5",
+    "title": "《崩坏3》8.9版本前瞻",
+    "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_890_1400/index.html?game_biz=bh3_cn&bbs_landscape=true&bbs_presentation_style=fullscreen&mhy_hide_status_bar=true",
+    "game": "崩坏3",
+    "gameKey": "bh3",
+    "type": "预约/预抽卡",
+    "status": "可访问",
+    "date": "2026.05.23",
+    "tags": [
+      "预约/预抽卡",
+      "v8.9版本"
+    ],
+    "version": "v8.9",
+    "description": "《崩坏3》全新版本「羽落万生」开启，角色「愈生佑翎」登场！"
   }
 ]

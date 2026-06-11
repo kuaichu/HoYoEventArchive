@@ -10,10 +10,10 @@ const eventsPath = path.join(__dirname, '..', 'src', 'events.json');
 const events = JSON.parse(fs.readFileSync(eventsPath, 'utf8'));
 
 const games = [
-  { gids: 2, name: '原神', gameKey: 'ys' },
-  { gids: 6, name: '星穹铁道', gameKey: 'sr' },
-  { gids: 8, name: '绝区零', gameKey: 'zzz' },
-  { gids: 1, name: '崩坏3', gameKey: 'bh3' }
+  { gids: 2, name: '原神', gameKey: 'ys', forumId: 28 },
+  { gids: 6, name: '星穹铁道', gameKey: 'sr', forumId: 53 },
+  { gids: 8, name: '绝区零', gameKey: 'zzz', forumId: 58 },
+  { gids: 1, name: '崩坏3', gameKey: 'bh3', forumId: 6 }
 ];
 
 async function runCrawler() {
@@ -41,71 +41,54 @@ async function runCrawler() {
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
   let newEventsCount = 0;
-
   for (const game of games) {
     try {
-      console.log(`>>> Fetching news list for game: ${game.name} (${game.gameKey.toUpperCase()})`);
+      console.log(`>>> Fetching forum post list for game: ${game.name} (${game.gameKey.toUpperCase()})`);
       
-      const posts = [];
-      const types = [1, 2, 3]; // 1: 公告, 2: 活动, 3: 资讯
-      const pageSize = 50;
-
-      for (const type of types) {
-        console.log(`Fetching latest ${pageSize} posts for type ${type}...`);
-        const url = `https://bbs-api.miyoushe.com/painter/wapi/getNewsList?gids=${game.gids}&type=${type}&page_size=${pageSize}`;
-        try {
-          const res = await fetch(url, {
-            headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-              'Referer': 'https://www.miyoushe.com/'
-            }
-          });
-          const json = await res.json();
-          if (json.retcode === 0 && json.data && json.data.list && json.data.list.length > 0) {
-            posts.push(...json.data.list);
-          }
-        } catch (err) {
-          console.error(`Error fetching type ${type} for ${game.name}:`, err.message);
+      const pageSize = 30;
+      const url = `https://bbs-api.miyoushe.com/post/wapi/getForumPostList?forum_id=${game.forumId}&is_good=false&is_top=false&last_id=&page_size=${pageSize}&sort_type=2`;
+      
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Referer': 'https://www.miyoushe.com/'
         }
-        await new Promise(r => setTimeout(r, 200));
-      }
-
-      // Deduplicate posts by post_id
-      const uniquePostsMap = {};
-      posts.forEach(p => {
-        uniquePostsMap[p.post.post_id] = p;
       });
-      const uniquePosts = Object.values(uniquePostsMap);
+      const json = await res.json();
       
-      console.log(`Found total ${uniquePosts.length} unique announcement posts for ${game.name}. Parsing details...`);
+      if (json.retcode !== 0 || !json.data || !json.data.list) {
+        console.error(`Failed to fetch forum list for ${game.name}: retcode=${json.retcode}, message=${json.message}`);
+        continue;
+      }
       
-      for (const item of uniquePosts) {
+      console.log(`Found total ${json.data.list.length} announcement posts for ${game.name}. Parsing details...`);
+      
+      for (const item of json.data.list) {
         const postId = item.post.post_id;
         const subject = item.post.subject;
+        const structuredStr = item.post.structured_content;
         
-        // Fetch full post content
-        const detailUrl = `https://bbs-api.miyoushe.com/post/wapi/getPostFull?post_id=${postId}`;
+        if (!structuredStr) continue;
         
-        // Sleep 300ms to be polite to the API
-        await new Promise(r => setTimeout(r, 300));
-        
-        const detailRes = await fetch(detailUrl, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Referer': 'https://www.miyoushe.com/'
-          }
-        });
-        const detailJson = await detailRes.json();
-        
-        if (detailJson.retcode !== 0 || !detailJson.data || !detailJson.data.post || !detailJson.data.post.post) {
+        let ops = [];
+        try {
+          ops = JSON.parse(structuredStr);
+        } catch (e) {
           continue;
         }
         
-        const content = detailJson.data.post.post.content;
+        if (!Array.isArray(ops)) continue;
         
-        // Extract web activity links
-        const urlRegex = /https?:\/\/(?:act|webstatic)\.mihoyo\.com\/[^\s"'<>\(\)]+/gi;
-        const matches = content.match(urlRegex) || [];
+        // Extract links from structured content
+        const matches = [];
+        ops.forEach(op => {
+          if (op.attributes && op.attributes.link) {
+            const link = op.attributes.link;
+            if (link.includes('act.mihoyo.com') || link.includes('webstatic.mihoyo.com')) {
+              matches.push(link);
+            }
+          }
+        });
         
         // Process unique URLs found in this post
         const uniqueUrls = [...new Set(matches.map(u => u.replace(/&amp;/g, '&').replace(/[.,;!?]$/, '')))];
