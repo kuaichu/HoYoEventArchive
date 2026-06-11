@@ -56,10 +56,23 @@ jobs:
             echo "changed=false" >> $GITHUB_OUTPUT
           else
             git add src/events.json
-            git commit -m "chore(data): auto update events database from miyoushe [skip ci]"
+            git commit -m "chore(data): auto update events database from miyoushe"
             git push origin main
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
+
+      - name: Build Site
+        if: steps.commit_step.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Deploy to Cloudflare Pages
+        if: steps.commit_step.outputs.changed == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=hoyo-event-archive --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Send Sync Finished Notification
         if: always()
