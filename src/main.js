@@ -58,7 +58,7 @@ const state = {
   currentSubtab: 'all',    // all | latest | ending | popular | favorites (Only inside Home/Library)
   filters: {
     game: 'all',           // all | ys | sr | zzz | bh3
-    type: 'all',           // all | 年度报告 | 回归活动 | 小游戏 | 资料站 | 预约/预抽卡 | 联动活动 | 其他活动
+    type: 'all',           // all | 年度报告 | 回归活动 | 版本前瞻 | 小游戏 | 资料站 | 预约/预抽卡 | 联动活动 | 其他活动
     status: 'all'          // all | 可访问 | 已失效 | 需登录 | 已结束
   },
   searchQuery: '',
@@ -588,6 +588,7 @@ function renderSidebarFilters() {
     { label: '全部类型', value: 'all', icon: 'fa-border-all' },
     { label: '年度报告', value: '年度报告', icon: 'fa-chart-pie' },
     { label: '回归活动', value: '回归活动', icon: 'fa-arrows-spin' },
+    { label: '版本前瞻', value: '版本前瞻', icon: 'fa-tower-broadcast' },
     { label: '小游戏', value: '小游戏', icon: 'fa-puzzle-piece' },
     { label: '资料站', value: '资料站', icon: 'fa-book' },
     { label: '预约/预抽卡', value: '预约/预抽卡', icon: 'fa-ticket' },

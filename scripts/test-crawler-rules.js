@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import {
   canonicalizeEventUrl,
+  classifyEventType,
   getAnnouncementDate,
   isPermanentResourceUrl
 } from './crawler-rules.js';
@@ -45,5 +46,11 @@ assert.equal(
   '2026.06.11'
 );
 assert.equal(getAnnouncementDate({ post: {} }), null);
+
+assert.equal(classifyEventType('《崩坏3》8.9版本前瞻'), '版本前瞻');
+assert.equal(classifyEventType('《原神》版本前瞻特别节目'), '版本前瞻');
+assert.equal(classifyEventType('3.0版本前瞻预热'), '版本前瞻');
+assert.equal(classifyEventType('浮生孰来 八重神子预热小游戏'), '小游戏');
+assert.equal(classifyEventType('群星邀约 预抽卡'), '预约/预抽卡');
 
 console.log('Crawler rules passed.');

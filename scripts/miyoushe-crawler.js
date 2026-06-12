@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer';
 import {
   canonicalizeEventUrl,
+  classifyEventType,
   getAnnouncementDate,
   isPermanentResourceUrl
 } from './crawler-rules.js';
@@ -165,22 +166,8 @@ async function runCrawler() {
             continue;
           }
           
-          // Categorize activity type
-          let eventType = '其他活动';
           const textToAnalyze = `${eventTitle} ${eventDesc}`.toLowerCase();
-          if (textToAnalyze.includes('年度报告') || textToAnalyze.includes('年报') || textToAnalyze.includes('足迹')) {
-            eventType = '年度报告';
-          } else if (textToAnalyze.includes('回归') || textToAnalyze.includes('重聚') || textToAnalyze.includes('召回')) {
-            eventType = '回归活动';
-          } else if (textToAnalyze.includes('联动') || textToAnalyze.includes('合作') || textToAnalyze.includes('联动小游戏')) {
-            eventType = '联动活动';
-          } else if (textToAnalyze.includes('小游戏') || textToAnalyze.includes('游玩') || textToAnalyze.includes('绘画征集') || textToAnalyze.includes('画笔')) {
-            eventType = '小游戏';
-          } else if (textToAnalyze.includes('资料站') || textToAnalyze.includes('图鉴') || textToAnalyze.includes('计算器') || textToAnalyze.includes('指南')) {
-            eventType = '资料站';
-          } else if (textToAnalyze.includes('预约') || textToAnalyze.includes('预抽卡') || textToAnalyze.includes('前瞻')) {
-            eventType = '预约/预抽卡';
-          }
+          const eventType = classifyEventType(textToAnalyze);
           
           // Generate new ID suffix safely
           maxNums[game.gameKey] += 1;
