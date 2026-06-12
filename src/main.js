@@ -15,6 +15,7 @@ const gameCovers = {
 // changes (status/date/title/tags/etc.) are visible even when localStorage is present.
 const localEvents = localStorage.getItem('hoyo_archive_custom_events');
 let eventsList = eventsData;
+const retiredEventIds = new Set(['sr-34', 'sr-35', 'sr-36', 'sr-37', 'zzz-10']);
 
 if (localEvents) {
   let updated = false;
@@ -36,7 +37,9 @@ if (localEvents) {
 
   // Preserve local-only custom entries created from the admin panel.
   const defaultIds = new Set(eventsData.map(evt => evt.id));
-  const customOnlyEvents = parsedLocalEvents.filter(evt => !defaultIds.has(evt.id));
+  const customOnlyEvents = parsedLocalEvents.filter(evt => {
+    return !defaultIds.has(evt.id) && !retiredEventIds.has(evt.id);
+  });
   if (customOnlyEvents.length > 0) {
     eventsList.push(...customOnlyEvents);
   }
@@ -667,6 +670,13 @@ function gTypeLabelShort(label) {
   return label;
 }
 
+function formatEventDate(event, compact = false) {
+  if (event.dateType === 'announcement') {
+    return `${compact ? '公告 ' : '公告于 '}${event.date}`;
+  }
+  return event.date;
+}
+
 // Render recently updated panel in Home
 function renderRecentlyUpdated() {
   const recentList = [...state.events]
@@ -683,7 +693,7 @@ function renderRecentlyUpdated() {
         </div>
         <div class="update-info">
           <span>${e.game}</span>
-          <span>${e.date}</span>
+          <span>${formatEventDate(e, true)}</span>
         </div>
       </li>
     `;
@@ -887,7 +897,7 @@ function renderEvents() {
             </div>
             
             <div class="event-date-row">
-              <span>${e.date}</span>
+              <span>${formatEventDate(e)}</span>
               <span style="color: var(--primary); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px;">
                 查看详情 <i class="fa-solid fa-angle-right" style="font-size: 10px;"></i>
               </span>
@@ -905,7 +915,7 @@ function renderEvents() {
         <div>所属游戏</div>
         <div>关联版本</div>
         <div>活动类型</div>
-        <div>发布日期</div>
+        <div>相关日期</div>
         <div>访问状态</div>
         <div style="text-align: center;">操作</div>
       </div>
@@ -928,7 +938,7 @@ function renderEvents() {
               <span class="event-version-badge ${e.gameKey}">${e.version || '通用'}</span>
             </div>
             <div class="list-type-cell">${e.type}</div>
-            <div class="list-date-cell">${e.date}</div>
+            <div class="list-date-cell">${formatEventDate(e)}</div>
             <div class="list-status-cell">
               <span class="list-status-badge ${statusClass}">${e.status}</span>
             </div>
@@ -1008,7 +1018,7 @@ function renderTimeline() {
               </div>
               <div class="timeline-item-card">
                 <div class="timeline-card-left">
-                  <span class="timeline-card-date">${e.date.substring(5)}</span>
+                  <span class="timeline-card-date">${e.dateType === 'announcement' ? '公告 ' : ''}${e.date.substring(5)}</span>
                   <div class="timeline-card-title">${e.title}</div>
                   <div class="timeline-card-meta">
                     <span class="timeline-card-game" style="color:var(--primary);">${e.game}</span>
@@ -1066,7 +1076,7 @@ function openDetailModal(eventObj) {
     };
   }
   elModalTitle.textContent = eventObj.title;
-  elModalDate.textContent = eventObj.date;
+  elModalDate.textContent = formatEventDate(eventObj);
   elModalVersion.textContent = eventObj.version || '通用';
   elModalType.textContent = eventObj.type;
   elModalDesc.textContent = eventObj.description || '暂无该活动的详细说明。该活动是米哈游推出的官方网页活动之一。';

@@ -2,6 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer';
+import {
+  canonicalizeEventUrl,
+  getAnnouncementDate,
+  isPermanentResourceUrl
+} from './crawler-rules.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +23,7 @@ const games = [
 
 async function runCrawler() {
   console.log('Starting automated Miyoushe web event crawler...\n');
+  const knownEventUrls = new Set(events.map(event => canonicalizeEventUrl(event.url)));
   
   // Track maximum event ID suffixes to prevent duplicates
   const maxNums = {};
@@ -98,15 +104,17 @@ async function runCrawler() {
           if (rawUrl.includes('/common/') || rawUrl.match(/\.(png|jpg|jpeg|gif|svg)/i)) {
             continue;
           }
+
+          if (isPermanentResourceUrl(rawUrl)) {
+            console.log(`Skipping permanent resource linked by "${subject}": ${rawUrl}`);
+            continue;
+          }
           
-          // Helper to strip minor query params for comparison
-          const getBaseUrl = u => u.split('?')[0].split('#')[0].replace(/\/$/, '');
           const cleanUrl = rawUrl;
-          const baseUrl = getBaseUrl(cleanUrl);
+          const canonicalUrl = canonicalizeEventUrl(cleanUrl);
           
           // Check if it already exists in the database
-          const exists = events.some(e => getBaseUrl(e.url) === baseUrl);
-          if (exists) {
+          if (knownEventUrls.has(canonicalUrl)) {
             continue;
           }
           
@@ -150,22 +158,11 @@ async function runCrawler() {
           const versionMatch = combinedText.match(versionRegex);
           const version = versionMatch ? 'v' + versionMatch[1] : '通用';
           
-          // Format publication date from Miyoushe metadata
-          let pubDate = '';
-          if (item.news_meta && item.news_meta.start_at_sec) {
-            const seconds = parseInt(item.news_meta.start_at_sec, 10);
-            if (!isNaN(seconds)) {
-              const d = new Date(seconds * 1000);
-              pubDate = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
-            }
-          }
-          if (!pubDate && item.post && item.post.created_at) {
-            const d = new Date(item.post.created_at * 1000);
-            pubDate = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
-          }
+          // This is the announcement post date, not necessarily the page's launch date.
+          const pubDate = getAnnouncementDate(item);
           if (!pubDate) {
-            const d = new Date();
-            pubDate = `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+            console.warn(`Skipping ${cleanUrl}: source post has no reliable publication time.`);
+            continue;
           }
           
           // Categorize activity type
@@ -206,12 +203,16 @@ async function runCrawler() {
             type: eventType,
             status: '可访问',
             date: pubDate,
+            dateType: 'announcement',
+            sourcePostId: String(postId),
+            sourcePostTitle: subject,
             tags: tags.length > 0 ? tags : ['网页活动'],
             version: version,
             description: eventDesc
           };
           
           events.push(newEvent);
+          knownEventUrls.add(canonicalUrl);
           newEventsCount++;
           console.log(`Added new event: [${newEvent.id}] ${newEvent.title} (${newEvent.version})`);
         }

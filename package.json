@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "screenshots": "node scripts/capture-screenshots.js"
+    "screenshots": "node scripts/capture-screenshots.js",
+    "test:crawler": "node scripts/test-crawler-rules.js"
   },
   "devDependencies": {
     "puppeteer": "^25.1.0",

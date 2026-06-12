@@ -268,6 +268,7 @@ function saveAdminEvent() {
     const index = state.events.findIndex(e => e.id === id);
     if (index !== -1) {
       state.events[index] = {
+        ...state.events[index],
         id,
         title,
         url,
