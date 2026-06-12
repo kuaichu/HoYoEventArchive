@@ -16,6 +16,26 @@ const identityQueryParams = new Set([
   'sn'
 ]);
 
+const genericPageTitles = [
+  /^原神版本页$/i,
+  /^《?原神》?社区征集活动$/i,
+  /^米游社$/i,
+  /^网页活动$/i,
+  /^活动页$/i,
+  /^hoyolab$/i
+];
+
+function isUsefulTitle(title) {
+  const normalized = title.trim();
+  return normalized.length >= 4 && !genericPageTitles.some(pattern => pattern.test(normalized));
+}
+
+export function selectEventTitle(subject, pageTitle, ogTitle = '') {
+  if (isUsefulTitle(pageTitle || '')) return pageTitle.trim();
+  if (isUsefulTitle(ogTitle || '')) return ogTitle.trim();
+  return (subject || pageTitle || ogTitle || '').trim();
+}
+
 export function isPermanentResourceUrl(rawUrl) {
   try {
     const url = new URL(rawUrl);
@@ -82,9 +102,7 @@ export function classifyEventType(text) {
   }
   if (
     normalized.includes('小游戏') ||
-    normalized.includes('游玩') ||
-    normalized.includes('绘画征集') ||
-    normalized.includes('画笔')
+    normalized.includes('游玩')
   ) {
     return '小游戏';
   }

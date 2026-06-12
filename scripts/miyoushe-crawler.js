@@ -6,7 +6,8 @@ import {
   canonicalizeEventUrl,
   classifyEventType,
   getAnnouncementDate,
-  isPermanentResourceUrl
+  isPermanentResourceUrl,
+  selectEventTitle
 } from './crawler-rules.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -135,15 +136,15 @@ async function runCrawler() {
             
             const pageData = await page.evaluate(() => {
               const title = document.title || '';
+              const ogTitleEl = document.querySelector('meta[property="og:title"]');
               const descEl = document.querySelector('meta[name="description"]') || 
                              document.querySelector('meta[property="og:description"]');
+              const ogTitle = ogTitleEl ? ogTitleEl.getAttribute('content') : '';
               const desc = descEl ? descEl.getAttribute('content') : '';
-              return { title, desc };
+              return { title, ogTitle, desc };
             });
             
-            if (pageData.title && pageData.title.trim().length > 3) {
-              eventTitle = pageData.title.trim();
-            }
+            eventTitle = selectEventTitle(subject, pageData.title, pageData.ogTitle);
             if (pageData.desc && pageData.desc.trim().length > 10) {
               eventDesc = pageData.desc.trim();
             }

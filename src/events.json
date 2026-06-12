@@ -153,7 +153,7 @@
   },
   {
     "id": "sr-10",
-    "title": "1周年年度拓展报告",
+    "title": "星穹列车年度开拓报告（1周年）",
     "url": "https://act.mihoyo.com/sr/event/e20240426anniversary-so6swc/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
@@ -170,7 +170,7 @@
   },
   {
     "id": "sr-11",
-    "title": "2周年年度拓展报告",
+    "title": "星穹列车年度开拓报告（2周年）",
     "url": "https://act.mihoyo.com/sr/event/e20250426anniversary-ab5xre/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
@@ -187,7 +187,7 @@
   },
   {
     "id": "sr-12",
-    "title": "3周年年度拓展报告",
+    "title": "星穹列车年度开拓报告（3周年）",
     "url": "https://act.mihoyo.com/sr/event/e20260426anniversary-6sg7ni/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
@@ -204,7 +204,7 @@
   },
   {
     "id": "sr-13",
-    "title": "2026纪念册",
+    "title": "星穹贺礼·三周年开拓福利",
     "url": "https://act.mihoyo.com/sr/event/e20260422album-en1jh8/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
@@ -212,16 +212,16 @@
     "status": "已结束",
     "date": "2026.04.22",
     "tags": [
-      "纪念册",
-      "年鉴",
-      "需登录"
+      "周年福利",
+      "三周年",
+      "纪念册"
     ],
-    "description": "星穹铁道2026年度电子纪念册。收录了过去一年所有的版本插画、光锥大图以及音乐曲目，查看需绑定米哈游通行证。",
+    "description": "星穹铁道三周年开拓福利活动。240万份纪念册免费赠送，首次帮助好友抽取纪念册可获得星琼。",
     "version": "v4.2"
   },
   {
     "id": "sr-14",
-    "title": "2025纪念册",
+    "title": "星穹贺礼·周年福利",
     "url": "https://act.mihoyo.com/sr/event/e20250409album-ywl2vf/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
@@ -229,11 +229,11 @@
     "status": "已结束",
     "date": "2025.04.09",
     "tags": [
+      "周年福利",
       "纪念册",
-      "插画鉴赏",
-      "音乐回顾"
+      "星琼奖励"
     ],
-    "description": "星穹铁道2025年度电子纪念合辑。记录了仙舟「罗浮」新剧情、新角色翡翠等的精美原画与高品质OST试听。",
+    "description": "星穹铁道周年福利活动。240万份纪念册免费赠送，首次帮助好友抽取纪念册可获得星琼。",
     "version": "v3.1"
   },
   {
@@ -287,7 +287,7 @@
   },
   {
     "id": "sr-18",
-    "title": "周年福利 (星穹铁道)",
+    "title": "航『星』一载 周年福利",
     "url": "https://act.mihoyo.com/sr/event/e20240419myp-rg53yq/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
@@ -299,7 +299,7 @@
       "周年纪念",
       "签到礼包"
     ],
-    "description": "崩坏：星穹铁道周年庆专享福利聚合站。包括版本更新指引、社区签到礼包、以及多平台联动兑换汇总。",
+    "description": "星穹铁道周年助力活动，30万份周边免费放送，帮助好友可获得星琼奖励。",
     "version": "v2.1"
   },
   {
@@ -542,7 +542,7 @@
   },
   {
     "id": "zzz-1",
-    "title": "3.0回归活动 (新版本重逢)",
+    "title": "回归丽都 共启新章",
     "url": "https://act.mihoyo.com/zzz/event/e20260606reunion-97ch1w/index.html",
     "game": "绝区零",
     "gameKey": "zzz",
@@ -576,7 +576,7 @@
   },
   {
     "id": "zzz-3",
-    "title": "2.5回归活动 (星空与重逢)",
+    "title": "集结委托：回归丽都（2.5版本）",
     "url": "https://act.mihoyo.com/zzz/event/e20251219-collection-ok467g/index.html",
     "game": "绝区零",
     "gameKey": "zzz",
@@ -586,26 +586,26 @@
     "tags": [
       "回归活动",
       "2.5版本",
-      "艾利都特权"
+      "菲林奖励"
     ],
-    "description": "绝区零2.5版本限时回归邀请活动。回归绳匠可通过特权挑战和日常活跃度获得定制奖励。",
+    "description": "邀请好友绑定邀请码并回归《绝区零》，最高可获得740菲林；参与抽奖还可获得游戏机、手办及周边等奖励。",
     "version": "v2.5"
   },
   {
     "id": "zzz-4",
-    "title": "2.0回归活动 (狂欢与返途)",
+    "title": "下一站：卫非地！",
     "url": "https://act.mihoyo.com/zzz/event/e20250523collection-zspbz1/index.html",
     "game": "绝区零",
     "gameKey": "zzz",
-    "type": "回归活动",
+    "type": "预约/预抽卡",
     "status": "已结束",
     "date": "2025.05.23",
     "tags": [
-      "回归活动",
-      "2.0周年",
-      "绳网邀请"
+      "版本预约",
+      "2.0版本",
+      "菲林奖励"
     ],
-    "description": "绝区零2.0大版本狂欢返途活动。为重返新艾利都的绳匠准备了专属资源包，并提供高额活跃奖励。",
+    "description": "参与《绝区零》2.0版本预约可获得320菲林；解锁里程碑还可获得限定称号及代理人等级提升包等好礼。",
     "version": "v2.0"
   },
   {
@@ -627,7 +627,7 @@
   },
   {
     "id": "zzz-6",
-    "title": "1.3回归活动 (重回绳网)",
+    "title": "集结委托：回归丽都（1.3版本）",
     "url": "https://act.mihoyo.com/zzz/event/e20241106reunion-tsic2y/index.html",
     "game": "绝区零",
     "gameKey": "zzz",
@@ -636,9 +636,10 @@
     "date": "2024.11.06",
     "tags": [
       "回归活动",
-      "1.3版本"
+      "1.3版本",
+      "菲林奖励"
     ],
-    "description": "1.3版本「虚拟杀机」上线期间推出的重回绳网特别活动。邀请并召回流失的绳友重温空洞委托。",
+    "description": "邀请回归绳匠体验《绝区零》并绑定邀请码，最高可获得510菲林；回归绳匠绑定邀请码可领取60菲林。",
     "version": "v1.3"
   },
   {
@@ -677,24 +678,24 @@
   },
   {
     "id": "zzz-9",
-    "title": "3.0版本前瞻预热 (艾利都新声)",
+    "title": "早安，罗斯凯利法",
     "url": "https://act.mihoyo.com/zzz/event/e20260606-warmup-rpxqfd/index.html",
     "game": "绝区零",
     "gameKey": "zzz",
-    "type": "版本前瞻",
+    "type": "小游戏",
     "status": "可访问",
     "date": "2026.06.06",
     "tags": [
-      "版本前瞻",
-      "最新上线",
-      "绝区零"
+      "小游戏",
+      "罗斯凯利法",
+      "3.0版本"
     ],
     "description": "小邦布！努力，奋斗！然后成为罗斯凯利法的传奇！",
     "version": "v3.0"
   },
   {
     "id": "ys-1",
-    "title": "彼时今日 (回归邀请)",
+    "title": "彼时今日",
     "url": "https://act.mihoyo.com/ys/event/e20250618return-lw5jy8/index.html",
     "game": "原神",
     "gameKey": "ys",
@@ -704,14 +705,14 @@
     "tags": [
       "回归活动",
       "原石奖励",
-      "提瓦特之约"
+      "好友邀请"
     ],
-    "description": "原神专属旅行者回归邀请页面。老玩家重回提瓦特大陆，可查看流失期间的版本大事件，并在激活码激活后领取原石奖励。",
+    "description": "参与「彼时今日」网页活动回顾提瓦特之旅，必得原石；邀请好友还可参与抽奖。",
     "version": "v5.7"
   },
   {
     "id": "ys-2",
-    "title": "脆脆鲨联动网页活动",
+    "title": "雀巢脆脆鲨 × 原神联动",
     "url": "https://act.mihoyo.com/ys/event/e20260327-ccs-hg7tcy/index.html",
     "game": "原神",
     "gameKey": "ys",
@@ -762,7 +763,7 @@
   },
   {
     "id": "ys-5",
-    "title": "始于诺德卡莱",
+    "title": "始于挪德卡莱",
     "url": "https://act.mihoyo.com/ys/event/e20250829reserve-6htzhx/index.html",
     "game": "原神",
     "gameKey": "ys",
@@ -779,19 +780,19 @@
   },
   {
     "id": "ys-6",
-    "title": "绘境之旅 (同人绘画大赛)",
+    "title": "千星奇域「绘境之旅」",
     "url": "https://act.mihoyo.com/ys/event/e20251022ugc-9x16wi/index.html",
     "game": "原神",
     "gameKey": "ys",
-    "type": "联动活动",
+    "type": "其他活动",
     "status": "已结束",
     "date": "2025.10.22",
     "tags": [
-      "UGC",
-      "绘画大赛",
-      "同人展示"
+      "千星奇域",
+      "网页活动",
+      "原石奖励"
     ],
-    "description": "提瓦特绘境之旅同人插画征集站。收录了来自全球旅行者的精美原画与高赞作品，玩家点赞或投稿均可获得专属勋章奖励。",
+    "description": "参与《原神》千星奇域「绘境之旅」网页活动，可获得重现晶簇、奇偶动作及原石等奖励。",
     "version": "v6.1"
   },
   {
@@ -827,23 +828,6 @@
     ],
     "description": "原神五周年特别数据回忆录。重温旅行者五年间结识的伙伴、踏足的国度，并计算专属的“提瓦特契合度”，分享可获取大额原石奖励。",
     "version": "v6.0"
-  },
-  {
-    "id": "ys-9",
-    "title": "启星之约 (回归召回)",
-    "url": "https://act.mihoyo.com/ys/event/e20251022ugc-9x16wi/index.html",
-    "game": "原神",
-    "gameKey": "ys",
-    "type": "其他活动",
-    "status": "已结束",
-    "date": "2025.10.22",
-    "tags": [
-      "网页活动",
-      "召回奖励",
-      "原石"
-    ],
-    "description": "原神秋季旅行者召回企划。分享自己的启星二维码邀请老玩家回归，可瓜分百万原石奖池并兑换周边。",
-    "version": "v6.1"
   },
   {
     "id": "ys-10",
@@ -949,7 +933,7 @@
   },
   {
     "id": "ys-16",
-    "title": "诺德卡莱概念站 (先导)",
+    "title": "挪德卡莱概念站（先导）",
     "url": "https://act.mihoyo.com/ys/event/e20250723light-uowufz/index.html",
     "game": "原神",
     "gameKey": "ys",
@@ -961,7 +945,7 @@
       "概念设定",
       "艺术鉴赏"
     ],
-    "description": "展示诺德卡莱宏伟空灵概念原画的艺术导览网页。支持高清壁纸下载、新曲试听以及核心制作人采访手记。",
+    "description": "展示挪德卡莱概念原画的艺术导览网页，提供高清壁纸、新曲试听及相关设定内容。",
     "version": "v5.7"
   },
   {
@@ -983,41 +967,41 @@
   },
   {
     "id": "ys-18",
-    "title": "提瓦特群星相聚",
+    "title": "相伴同行",
     "url": "https://webstatic.mihoyo.com/ys/event/e20210901people/index.html#/",
     "game": "原神",
     "gameKey": "ys",
-    "type": "其他活动",
+    "type": "回归活动",
     "status": "已结束",
     "date": "2021.09.01",
     "tags": [
-      "周年庆",
-      "网页活动",
-      "角色回忆"
+      "回归活动",
+      "好友邀请",
+      "原石奖励"
     ],
-    "description": "原神一周年特别网页活动。旅行者可以登录查看与提瓦特伙伴相伴的时光与回忆。",
+    "description": "与回归及新人冒险家同行完成委托，可抽取原石、周边等活动奖励。",
     "version": "v2.1"
   },
   {
     "id": "ys-19",
-    "title": "荒泷极意堂 (先导网页)",
+    "title": "皑尘与雪影",
     "url": "https://webstatic.mihoyo.com/ys/event/e20211113pre/index.html",
     "game": "原神",
     "gameKey": "ys",
-    "type": "小游戏",
+    "type": "版本前瞻",
     "status": "已结束",
     "date": "2021.11.13",
     "tags": [
-      "小游戏",
-      "荒泷一斗",
+      "版本前瞻",
+      "2.3版本",
       "版本先导"
     ],
-    "description": "荒泷一斗角色先导网页小游戏。旅行者完成极意堂的试炼任务可以获取原石及角色培养素材。",
-    "version": "v2.2"
+    "description": "《原神》2.3版本「皑尘与雪影」先行展示页，汇总新角色、活动及版本内容。",
+    "version": "v2.3"
   },
   {
     "id": "ys-20",
-    "title": "留风佳叙 (申鹤网页小游戏)",
+    "title": "云中鹤影",
     "url": "https://webstatic.mihoyo.com/ys/event/e20211231shenh/index.html",
     "game": "原神",
     "gameKey": "ys",
@@ -1025,16 +1009,16 @@
     "status": "已结束",
     "date": "2021.12.31",
     "tags": [
-      "小游戏",
+      "网页活动",
       "申鹤",
-      "留云借风"
+      "原石奖励"
     ],
-    "description": "申鹤角色预热网页小游戏。协助留云借风真君完成符箓绘制 and 关卡挑战，获取原石等奖励。",
+    "description": "申鹤角色主题H5网页活动，参与活动可获得原石等奖励。",
     "version": "v2.3"
   },
   {
     "id": "ys-21",
-    "title": "飞彩镌流年 (海灯节活动)",
+    "title": "尘歌宴仙归",
     "url": "https://webstatic.mihoyo.com/ys/event/e20220128lantern/index.html",
     "game": "原神",
     "gameKey": "ys",
@@ -1044,31 +1028,31 @@
     "tags": [
       "海灯节",
       "小游戏",
-      "节日庆典"
+      "原石奖励"
     ],
-    "description": "2022年海灯节主题网页活动。旅行者在港口协助璃月居民准备霄灯、制作灯谜，换取原石及定制海灯节背景。",
+    "description": "2022年海灯节主题网页活动，协助仙人准备佳肴，参与可获得原石等奖励。",
     "version": "v2.4"
   },
   {
     "id": "ys-22",
-    "title": "浮生孰来 (八重神子预热小游戏)",
+    "title": "薄樱初绽时",
     "url": "https://webstatic.mihoyo.com/ys/event/e20220207-previ/index.html?",
     "game": "原神",
     "gameKey": "ys",
-    "type": "小游戏",
+    "type": "版本前瞻",
     "status": "已结束",
     "date": "2022.02.07",
     "tags": [
-      "八重神子",
-      "小游戏",
-      "神樱大社"
+      "版本前瞻",
+      "2.5版本",
+      "版本先导"
     ],
-    "description": "八重神子上线预热小游戏。旅行者协助鸣神大社巫女分发御守、撰写轻小说推荐，以此完成神子给出的测试题目并解锁原石。",
-    "version": "v2.4"
+    "description": "《原神》2.5版本「薄樱初绽时」先行展示页，汇总新角色、活动及版本内容。",
+    "version": "v2.5"
   },
   {
     "id": "ys-23",
-    "title": "织锦与织意 (神里绫华小游戏)",
+    "title": "轻风雅游",
     "url": "https://webstatic.mihoyo.com/ys/event/e20220415travel-tq8y/index.html?",
     "game": "原神",
     "gameKey": "ys",
@@ -1076,16 +1060,16 @@
     "status": "已结束",
     "date": "2022.04.15",
     "tags": [
+      "网页活动",
       "神里绫华",
-      "小游戏",
-      "稻妻"
+      "原石奖励"
     ],
-    "description": "神里绫华主题网页小游戏。协助绫华准备出行的折扇、花饰以及布匹，并在集市上交换礼物以解锁原石。",
+    "description": "神里绫华主题网页活动，准备出行所需物品并完成互动，可获得原石等奖励。",
     "version": "v2.6"
   },
   {
     "id": "ys-24",
-    "title": "森林奇旅 (须弥先导拼图)",
+    "title": "纸间奇旅",
     "url": "https://webstatic.mihoyo.com/ys/event/20220817puzzle-qgrp/index.html",
     "game": "原神",
     "gameKey": "ys",
@@ -1093,45 +1077,45 @@
     "status": "已结束",
     "date": "2022.08.17",
     "tags": [
-      "须弥",
-      "小游戏",
-      "拼图"
+      "网页活动",
+      "拼图",
+      "原石奖励"
     ],
-    "description": "须弥大版本上线前夕的先导拼图解谜活动。旅行者探索森林环境、完成拼图和动植物观察日志，收集原石奖励。",
+    "description": "完成拼图并探索纸间世界，参与活动可获得原石等奖励。",
     "version": "v2.8"
   },
   {
     "id": "ys-25",
-    "title": "留影叙佳期 (角色生日相册)",
+    "title": "海上绮梦录",
     "url": "https://webstatic.mihoyo.com/ys/event/e20220722dream-6bgs/index.html?",
     "game": "原神",
     "gameKey": "ys",
-    "type": "其他活动",
+    "type": "小游戏",
     "status": "已结束",
     "date": "2022.07.22",
     "tags": [
-      "生日记录",
-      "原画插图",
-      "收集"
+      "网页活动",
+      "回忆答题",
+      "原石奖励"
     ],
-    "description": "记录提瓦特大陆伙伴们生日贺画与留言的专属相册。旅行者可在此查阅历史所有角色的生日插图和寄语。",
+    "description": "与派蒙一起回顾旅途见闻并完成答题，参与活动可获得原石等奖励。",
     "version": "v2.8"
   },
   {
     "id": "ys-26",
-    "title": "提瓦特同行之约 (5.20限时邀请)",
+    "title": "魔女尼可的茶会",
     "url": "https://act.mihoyo.com/ys/event/e20260520invite-19ccy4/index.html?game_biz=hk4e_cn&lang=zh-cn",
     "game": "原神",
     "gameKey": "ys",
-    "type": "回归活动",
+    "type": "小游戏",
     "status": "已结束",
     "date": "2026.05.20",
     "tags": [
-      "限时邀请",
-      "回归活动",
+      "网页活动",
+      "尼可",
       "原石奖励"
     ],
-    "description": "原神5.20特别限时邀请网页活动。旅行者可以分享个人邀请链接，召回老玩家，共同获取原石与周边大奖抽奖券。",
+    "description": "尼可角色主题网页活动，参加茶会互动并完成活动任务，可领取游戏内奖励。",
     "version": "v6.6"
   },
   {
@@ -1222,7 +1206,7 @@
   },
   {
     "id": "ys-27",
-    "title": "《原神》社区征集活动",
+    "title": "「恣锐锋镞」洛恩绘画征集活动",
     "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202605291815205656&act_id=ea202605291815205656&game_biz=hk4e&mhy_presentation_style=fullscreen",
     "game": "原神",
     "gameKey": "ys",
@@ -1230,10 +1214,12 @@
     "status": "可访问",
     "date": "2026.06.01",
     "tags": [
-      "网页活动"
+      "绘画征集",
+      "洛恩",
+      "社区活动"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。"
+    "description": "为洛恩创作并投稿绘画作品，参与米游社官方征集可赢取周边礼包与原石等奖励。"
   },
   {
     "id": "ys-28",

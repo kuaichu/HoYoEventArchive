@@ -1,9 +1,11 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import {
   canonicalizeEventUrl,
   classifyEventType,
   getAnnouncementDate,
-  isPermanentResourceUrl
+  isPermanentResourceUrl,
+  selectEventTitle
 } from './crawler-rules.js';
 
 const permanentResources = [
@@ -52,5 +54,30 @@ assert.equal(classifyEventType('《原神》版本前瞻特别节目'), '版本�
 assert.equal(classifyEventType('3.0版本前瞻预热'), '版本前瞻');
 assert.equal(classifyEventType('浮生孰来 八重神子预热小游戏'), '小游戏');
 assert.equal(classifyEventType('群星邀约 预抽卡'), '预约/预抽卡');
+assert.equal(classifyEventType('「恣锐锋镞」洛恩绘画征集活动开启'), '其他活动');
+
+assert.equal(
+  selectEventTitle('「月之七」版本活动祈愿预告第二期', '原神版本页'),
+  '「月之七」版本活动祈愿预告第二期'
+);
+assert.equal(
+  selectEventTitle('【有奖活动】洛恩绘画征集活动开启', '《原神》社区征集活动'),
+  '【有奖活动】洛恩绘画征集活动开启'
+);
+assert.equal(
+  selectEventTitle('公告标题', '早安，罗斯凯利法', '更长的分享标题'),
+  '早安，罗斯凯利法'
+);
+
+const events = JSON.parse(fs.readFileSync(new URL('../src/events.json', import.meta.url), 'utf8'));
+const ids = events.map(event => event.id);
+assert.equal(new Set(ids).size, ids.length, 'Event IDs must be unique');
+
+const canonicalUrls = events.map(event => canonicalizeEventUrl(event.url));
+assert.equal(
+  new Set(canonicalUrls).size,
+  canonicalUrls.length,
+  'Canonical event URLs must be unique'
+);
 
 console.log('Crawler rules passed.');
