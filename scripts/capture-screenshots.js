@@ -8,6 +8,15 @@ const __dirname = path.dirname(__filename);
 
 const eventsPath = path.join(__dirname, '..', 'src', 'events.json');
 const outputDir = path.join(__dirname, '..', 'public', 'images', 'screenshots');
+const dryRun = process.argv.includes('--dry-run');
+
+const limitArg = process.argv.find(arg => arg.startsWith('--limit='));
+const parsedLimit = limitArg ? Number.parseInt(limitArg.split('=')[1], 10) : Number.POSITIVE_INFINITY;
+const captureLimit = Number.isFinite(parsedLimit) && parsedLimit > 0
+  ? parsedLimit
+  : Number.POSITIVE_INFINITY;
+
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
 async function captureScreenshots() {
   console.log('Starting screenshot capture process...');
@@ -18,74 +27,68 @@ async function captureScreenshots() {
     console.log('Created screenshots directory:', outputDir);
   }
 
-  // Load events
+  // Load events and capture only thumbnails that are actually missing.
   const events = JSON.parse(fs.readFileSync(eventsPath, 'utf8'));
   console.log(`Loaded ${events.length} events from database.`);
 
-  // Create 404 placeholder screenshot
-  const placeholderPath = path.join(outputDir, '404.png');
-  // We will create a simple 404 image if it doesn't exist (or we can let the application fallback)
+  const missingEvents = events
+    .filter(event => event.status !== '已失效')
+    .filter(event => !fs.existsSync(path.join(outputDir, `${event.id}.png`)))
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, captureLimit);
+
+  console.log(`Found ${missingEvents.length} missing screenshot(s) eligible for capture.`);
+
+  if (missingEvents.length === 0 || dryRun) {
+    if (dryRun) {
+      missingEvents.forEach(event => console.log(`- ${event.id}: ${event.title}`));
+    }
+    return;
+  }
   
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
 
-  const page = await browser.newPage();
-  
-  // Set viewport to a nice 16:9 ratio (1024x576)
-  await page.setViewport({
-    width: 1024,
-    height: 576,
-    deviceScaleFactor: 1
-  });
-
-  // Set user agent to a standard desktop browser
-  await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-
-  // Set standard timeout
-  page.setDefaultNavigationTimeout(30000);
-  page.setDefaultTimeout(30000);
-
-  for (let i = 0; i < events.length; i++) {
-    const event = events[i];
+  for (let i = 0; i < missingEvents.length; i++) {
+    const event = missingEvents[i];
     const outputPath = path.join(outputDir, `${event.id}.png`);
 
-    console.log(`\n[${i + 1}/${events.length}] Processing: ${event.title}`);
-    
-    // Check if we already have it to avoid re-downloading
-    if (fs.existsSync(outputPath)) {
-      console.log(`-> Screenshot already exists at ${outputPath}. Skipping.`);
-      continue;
-    }
+    console.log(`\n[${i + 1}/${missingEvents.length}] Processing: ${event.title}`);
 
-    if (event.status === '已失效') {
-      console.log(`-> Status is '已失效' (404). Skipping capture.`);
-      continue;
-    }
+    const page = await browser.newPage();
+    await page.setViewport({ width: 1024, height: 576, deviceScaleFactor: 1 });
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36');
+    page.setDefaultNavigationTimeout(45000);
+    page.setDefaultTimeout(45000);
 
     try {
       console.log(`-> Navigating to: ${event.url}`);
+
+      // Many event pages keep analytics and game resources connected forever, so
+      // waiting for networkidle is unreliable. DOM readiness plus a short settle
+      // window produces a stable thumbnail without stalling the whole workflow.
+      const response = await page.goto(event.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
       
-      // Navigate to URL
-      const response = await page.goto(event.url, { waitUntil: 'networkidle2', timeout: 30000 });
-      
-      // If 404 status code returned
-      if (response && response.status() === 404) {
-        console.log(`-> URL returned 404. Skipping.`);
+      if (response && response.status() >= 400) {
+        console.log(`-> URL returned HTTP ${response.status()}. Skipping.`);
         continue;
       }
 
-      // Wait a few seconds for animations to settle
-      console.log('-> Waiting 10 seconds for page load and animations...');
-      await new Promise(resolve => setTimeout(resolve, 10000));
+      await Promise.race([
+        page.evaluate(() => document.fonts?.ready),
+        sleep(3000)
+      ]);
+      await sleep(5000);
 
-      // Take screenshot
       await page.screenshot({ path: outputPath, type: 'png' });
       console.log(`-> Saved screenshot to: ${outputPath}`);
 
     } catch (error) {
       console.error(`-> Error capturing screenshot for ${event.title}:`, error.message);
+    } finally {
+      await page.close();
     }
   }
 

@@ -44,19 +44,22 @@ jobs:
       - name: Update Event Statuses
         run: node scripts/update-statuses.js
 
+      - name: Capture Missing Event Screenshots
+        run: npm run screenshots
+
       - name: Check for Changes & Commit
         id: commit_step
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # Only commit if events.json was modified
-          if git diff --quiet src/events.json; then
+
+          git add src/events.json public/images/screenshots
+
+          if git diff --cached --quiet; then
             echo "No new events or updates found. Skipping commit."
             echo "changed=false" >> $GITHUB_OUTPUT
           else
-            git add src/events.json
-            git commit -m "chore(data): auto update events database from miyoushe"
+            git commit -m "chore(data): update events and screenshots from miyoushe"
             git push origin main
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
