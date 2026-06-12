@@ -1351,5 +1351,23 @@
     ],
     "version": "v8.9",
     "description": "《崩坏3》全新版本「羽落万生」开启，角色「愈生佑翎」登场！"
+  },
+  {
+    "id": "sr-39",
+    "title": "米游币抽抽乐-星穹铁道专场现已开启！",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&id=e202606111738051&game_biz=hkrpg&mys_source=bbs&mys_medium=sr&mys_campaign=arti",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.12",
+    "dateType": "announcement",
+    "sourcePostId": "75959467",
+    "sourcePostTitle": "米游币抽抽乐-星穹铁道专场现已开启！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
