@@ -1441,5 +1441,23 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "zzz-10",
+    "title": "绝区零工具合集",
+    "url": "https://act.mihoyo.com/app/mihoyo-zzz-game-record/m.html?mhy_presentation_style=fullscreen#/zzz/roles/0/detail&mhy_bg_style=dark&utm_source=media&utm_medium=mys&utm_campaign=arti",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.17",
+    "dateType": "announcement",
+    "sourcePostId": "76063822",
+    "sourcePostTitle": "战绩更新 | 战绩新增「拟境湮灭战」作战记录，快来查看吧！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
