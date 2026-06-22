@@ -1459,5 +1459,23 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "ys-36",
+    "title": "【有奖活动】「镜水析谬」桑多涅绘画征集活动开启！",
+    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202606181648058769&act_id=ea202606181648058769&game_biz=hk4e&mhy_presentation_style=fullscreen",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.22",
+    "dateType": "announcement",
+    "sourcePostId": "76169211",
+    "sourcePostTitle": "【有奖活动】「镜水析谬」桑多涅绘画征集活动开启！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
