@@ -23,6 +23,52 @@ const games = [
   { gids: 1, name: '崩坏3', gameKey: 'bh3', forumId: 6 }
 ];
 
+const pageSize = Number.parseInt(process.env.MIYOUSHE_PAGE_SIZE || '20', 10);
+const maxPagesPerGame = Number.parseInt(process.env.MIYOUSHE_MAX_PAGES || '5', 10);
+
+function isEventLink(rawUrl) {
+  try {
+    const url = new URL(rawUrl.replace(/&amp;/g, '&'));
+    return (
+      ['act.mihoyo.com', 'webstatic.mihoyo.com', 'act.hoyoverse.com', 'webstatic.hoyoverse.com'].includes(url.hostname) &&
+      !url.pathname.includes('/common/') &&
+      !url.pathname.match(/\.(png|jpg|jpeg|gif|svg)$/i)
+    );
+  } catch {
+    return false;
+  }
+}
+
+async function fetchForumPosts(game) {
+  const posts = [];
+  let lastId = '';
+
+  for (let page = 1; page <= maxPagesPerGame; page++) {
+    const url = `https://bbs-api.miyoushe.com/post/wapi/getForumPostList?forum_id=${game.forumId}&is_good=false&is_top=false&last_id=${encodeURIComponent(lastId)}&page_size=${pageSize}&sort_type=2`;
+    const res = await fetch(url, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Referer': 'https://www.miyoushe.com/'
+      }
+    });
+    const json = await res.json();
+
+    if (json.retcode !== 0 || !json.data || !Array.isArray(json.data.list)) {
+      console.error(`Failed to fetch forum list page ${page} for ${game.name}: retcode=${json.retcode}, message=${json.message}`);
+      break;
+    }
+
+    posts.push(...json.data.list);
+
+    if (json.data.is_last || !json.data.last_id || json.data.list.length === 0) {
+      break;
+    }
+    lastId = json.data.last_id;
+  }
+
+  return posts;
+}
+
 async function runCrawler() {
   console.log('Starting automated Miyoushe web event crawler...\n');
   const knownEventUrls = new Set(events.map(event => canonicalizeEventUrl(event.url)));
@@ -52,26 +98,15 @@ async function runCrawler() {
   for (const game of games) {
     try {
       console.log(`>>> Fetching forum post list for game: ${game.name} (${game.gameKey.toUpperCase()})`);
-      
-      const pageSize = 30;
-      const url = `https://bbs-api.miyoushe.com/post/wapi/getForumPostList?forum_id=${game.forumId}&is_good=false&is_top=false&last_id=&page_size=${pageSize}&sort_type=2`;
-      
-      const res = await fetch(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-          'Referer': 'https://www.miyoushe.com/'
-        }
-      });
-      const json = await res.json();
-      
-      if (json.retcode !== 0 || !json.data || !json.data.list) {
-        console.error(`Failed to fetch forum list for ${game.name}: retcode=${json.retcode}, message=${json.message}`);
+
+      const posts = await fetchForumPosts(game);
+      if (posts.length === 0) {
         continue;
       }
-      
-      console.log(`Found total ${json.data.list.length} announcement posts for ${game.name}. Parsing details...`);
-      
-      for (const item of json.data.list) {
+
+      console.log(`Found total ${posts.length} announcement posts for ${game.name}. Parsing details...`);
+
+      for (const item of posts) {
         const postId = item.post.post_id;
         const subject = item.post.subject;
         const structuredStr = item.post.structured_content;
@@ -92,8 +127,8 @@ async function runCrawler() {
         ops.forEach(op => {
           if (op.attributes && op.attributes.link) {
             const link = op.attributes.link;
-            if (link.includes('act.mihoyo.com') || link.includes('webstatic.mihoyo.com')) {
-              matches.push(link);
+            if (isEventLink(link)) {
+              matches.push(link.replace(/&amp;/g, '&').replace(/[.,;!?]$/, ''));
             }
           }
         });
