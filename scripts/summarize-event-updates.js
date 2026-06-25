@@ -3,6 +3,7 @@ import { execFileSync } from 'node:child_process';
 import { canonicalizeEventUrl } from './crawler-rules.js';
 
 const currentPath = new URL('../src/events.json', import.meta.url);
+const outputJson = process.argv.includes('--json');
 
 function readBaseEvents() {
   try {
@@ -23,6 +24,11 @@ function eventKey(event) {
 const baseKeys = new Set(readBaseEvents().map(eventKey));
 const currentEvents = JSON.parse(fs.readFileSync(currentPath, 'utf8'));
 const addedEvents = currentEvents.filter(event => !baseKeys.has(eventKey(event)));
+
+if (outputJson) {
+  console.log(JSON.stringify(addedEvents, null, 2));
+  process.exit(0);
+}
 
 if (addedEvents.length === 0) {
   process.exit(0);
