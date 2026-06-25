@@ -5,7 +5,7 @@ import path from 'node:path';
 
 const BOT_TOKEN = process.env.TG_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TG_CHAT_ID || process.env.TELEGRAM_CHAT_ID || '-1003962096060';
-const CHANNEL_CHAT_ID = process.env.TG_CHANNEL_CHAT_ID || process.env.TELEGRAM_CHANNEL_CHAT_ID;
+const CHANNEL_CHAT_ID = process.env.TG_CHANNEL_CHAT_ID || process.env.TELEGRAM_CHANNEL_CHAT_ID || '-1003934800450';
 const DRY_RUN = process.env.TG_NOTIFY_DRY_RUN === '1';
 const TRANSIENT_DELETE_AFTER_SECONDS = Number.parseInt(
   process.env.TG_TRANSIENT_DELETE_AFTER_SECONDS ||
