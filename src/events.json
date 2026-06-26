@@ -1588,5 +1588,23 @@
     ],
     "version": "v8.8",
     "description": "《崩坏3》全新版本「数海游云」开启，协同者「白鹿游云」登场！"
+  },
+  {
+    "id": "zzz-11",
+    "title": "米游币抽抽乐-绝区零专场现已开启！",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&id=e202606231822571&game_biz=nap&utm_source=bbs&utm_medium=zzz&utm_campaign=arti",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.26",
+    "dateType": "announcement",
+    "sourcePostId": "76244363",
+    "sourcePostTitle": "米游币抽抽乐-绝区零专场现已开启！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
