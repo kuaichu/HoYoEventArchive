@@ -1606,5 +1606,23 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "ys-37",
+    "title": "「月之八」版本「映夏！归乡？千灵节！」内容专题页上线！",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=026e946ecbc54a3d&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=ys&utm_campaign=post",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.06.29",
+    "dateType": "announcement",
+    "sourcePostId": "76309085",
+    "sourcePostTitle": "「月之八」版本「映夏！归乡？千灵节！」内容专题页上线！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
