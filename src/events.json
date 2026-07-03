@@ -1624,5 +1624,60 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "ys-38",
+    "title": "米游币抽抽乐-原神专场现已开启！",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&id=e202607021808111&game_biz=hk4e&utm_source=bbs&utm_medium=ys&utm_campaign=arti",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "已结束",
+    "date": "2026.07.03",
+    "dateType": "announcement",
+    "sourcePostId": "76412998",
+    "sourcePostTitle": "米游币抽抽乐-原神专场现已开启！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-45",
+    "title": "《崩坏：星穹铁道》4.4版本「鸣笛于归寂之时」专题展示页现已上线",
+    "url": "https://act.mihoyo.com/puzzle/hkrpg/e2070703decyhdTakKink_c5fa06d9da/index.html?game_biz=hkrpg_cn&mhy_presentation_style=fullscreen&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "已结束",
+    "date": "2026.07.03",
+    "dateType": "announcement",
+    "sourcePostId": "76423556",
+    "sourcePostTitle": "4.4版本「鸣笛于归寂之时」专题展示页",
+    "tags": [
+      "v4.4版本"
+    ],
+    "version": "v4.4",
+    "description": "快来了解新版本内容吧~"
+  },
+  {
+    "id": "sr-46",
+    "title": "《崩坏：星穹铁道》4.4版本前瞻特别节目",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606231747484569&mhy_presentation_style=fullscreen&game_biz=hkrpg&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "版本前瞻",
+    "status": "已结束",
+    "date": "2026.07.03",
+    "dateType": "announcement",
+    "sourcePostId": "76412990",
+    "sourcePostTitle": "【有奖活动】4.4版本前瞻讨论活动开启，参与赢648现金",
+    "tags": [
+      "版本前瞻",
+      "v4.4版本"
+    ],
+    "version": "v4.4",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
