@@ -1679,5 +1679,23 @@
     ],
     "version": "v4.4",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-47",
+    "title": "银河铁道之夜绘画征集",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-contribute/index.html?id=ea202606151740450477&act_id=ea202606151740450477&game_biz=hkrpg&mhy_presentation_style=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "已结束",
+    "date": "2026.07.09",
+    "dateType": "announcement",
+    "sourcePostId": "76553438",
+    "sourcePostTitle": "「银河铁道之夜」主题绘画征集活动",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
