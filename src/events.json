@@ -1697,5 +1697,23 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "ys-39",
+    "title": "创造星领域！-「奇域校园星」首届高校暑期创作赛启动！",
+    "url": "https://act.mihoyo.com/ys/event/e20260710creator/index.html?game_biz=hk4e_cn&mhy_auth_required=true",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "已结束",
+    "date": "2026.07.10",
+    "dateType": "announcement",
+    "sourcePostId": "76575556",
+    "sourcePostTitle": "「奇域校园星」校园企划正式启动！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
