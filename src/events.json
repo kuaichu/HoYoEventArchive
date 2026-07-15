@@ -1715,5 +1715,23 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "ys-40",
+    "title": "来奇域，快乐一夏！",
+    "url": "https://act.mihoyo.com/ys/event/e20260715ugc-4svbyl/index.html?game_biz=hk4e_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "已结束",
+    "date": "2026.07.15",
+    "dateType": "announcement",
+    "sourcePostId": "76687253",
+    "sourcePostTitle": "「来奇域，快乐一夏！」——《原神》网页活动上线！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
