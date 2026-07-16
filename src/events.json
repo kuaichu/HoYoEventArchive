@@ -1733,5 +1733,42 @@
     ],
     "version": "通用",
     "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-48",
+    "title": "官方小程序&企业微信正式上线，每版本领专属星琼福利！",
+    "url": "https://act.mihoyo.com/sr/event/wechat-landing-ii2fz2/index.html?game_biz=hkrpg_cn&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "已结束",
+    "date": "2026.07.15",
+    "dateType": "announcement",
+    "sourcePostId": "76691429",
+    "sourcePostTitle": "官方小程序&企业微信正式上线，每版本领专属星琼福利！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
+  },
+  {
+    "id": "sr-49",
+    "title": "《崩坏：星穹铁道》「重返群星之旅」回归网页活动现已开启！",
+    "url": "https://act.mihoyo.com/sr/event/e20260715return-4wlzz5/index.html?game_biz=hkrpg_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=bbs&utm_medium=post",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "回归活动",
+    "status": "已结束",
+    "date": "2026.07.15",
+    "dateType": "announcement",
+    "sourcePostId": "76688381",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+    "tags": [
+      "回归活动",
+      "游戏内奖励"
+    ],
+    "version": "通用",
+    "description": "邀请开拓者回归，赢星琼、电竞笔记本、iPhone 17等惊喜好礼！"
   }
 ]
