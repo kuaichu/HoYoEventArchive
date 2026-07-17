@@ -4,7 +4,9 @@ import {
   canonicalizeEventUrl,
   classifyEventType,
   getAnnouncementDate,
+  isEventCandidateUrl,
   isPermanentResourceUrl,
+  resolveEventUrl,
   selectEventTitle
 } from './crawler-rules.js';
 
@@ -29,6 +31,40 @@ const realActivities = [
 realActivities.forEach(url => {
   assert.equal(isPermanentResourceUrl(url), false, `Expected event page: ${url}`);
 });
+
+assert.equal(isEventCandidateUrl('https://act.mihoyo.com/zzz/event/example/index.html'), true);
+assert.equal(isEventCandidateUrl('https://mhyurl.cn/ufdx1aofg'), true);
+assert.equal(isEventCandidateUrl('https://example.com/not-an-event'), false);
+
+const finalZzzUrl = 'https://act.mihoyo.com/zzz/event/e20260717reserve-pvy5cf/index.html';
+const redirectRequests = [];
+const resolvedZzzUrl = await resolveEventUrl('https://mhyurl.cn/ufdx1aofg', async (url, options) => {
+  redirectRequests.push({ url, options });
+  if (url === 'https://mhyurl.cn/ufdx1aofg') {
+    return {
+      ok: false,
+      status: 302,
+      headers: { get: name => name.toLowerCase() === 'location' ? finalZzzUrl : null }
+    };
+  }
+  return { ok: true, status: 200, headers: { get: () => null }, url };
+});
+assert.equal(resolvedZzzUrl, finalZzzUrl);
+assert.equal(redirectRequests.length, 2);
+assert.equal(redirectRequests[0].options.method, 'GET');
+assert.equal(redirectRequests[0].options.redirect, 'manual');
+
+let untrustedFetchCount = 0;
+const rejectedRedirect = await resolveEventUrl('https://mhyurl.cn/untrusted', async () => {
+  untrustedFetchCount++;
+  return {
+    ok: false,
+    status: 302,
+    headers: { get: () => 'https://example.com/phishing' }
+  };
+});
+assert.equal(rejectedRedirect, null);
+assert.equal(untrustedFetchCount, 1, 'Untrusted redirect targets must not be fetched');
 
 assert.equal(
   canonicalizeEventUrl('https://example.com/event/index.html?page_sn=abc&utm_source=bbs'),

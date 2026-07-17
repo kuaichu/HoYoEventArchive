@@ -6,6 +6,15 @@ const permanentResourcePathFragments = [
   '/app/interactive-map/'
 ];
 
+const eventHostnames = new Set([
+  'act.mihoyo.com',
+  'webstatic.mihoyo.com',
+  'act.hoyoverse.com',
+  'webstatic.hoyoverse.com'
+]);
+
+const eventShortLinkHostnames = new Set(['mhyurl.cn']);
+
 const identityQueryParams = new Set([
   'act_id',
   'activity_id',
@@ -28,6 +37,85 @@ const genericPageTitles = [
 function isUsefulTitle(title) {
   const normalized = title.trim();
   return normalized.length >= 4 && !genericPageTitles.some(pattern => pattern.test(normalized));
+}
+
+function cleanEventUrl(rawUrl) {
+  return String(rawUrl || '').replace(/&amp;/g, '&').replace(/[.,;!?]$/, '');
+}
+
+function parseHttpUrl(rawUrl) {
+  try {
+    const url = new URL(cleanEventUrl(rawUrl));
+    return ['http:', 'https:'].includes(url.protocol) ? url : null;
+  } catch {
+    return null;
+  }
+}
+
+function isEventPageUrl(rawUrl) {
+  const url = parseHttpUrl(rawUrl);
+  return Boolean(
+    url &&
+    eventHostnames.has(url.hostname) &&
+    !url.pathname.includes('/common/') &&
+    !url.pathname.match(/\.(png|jpg|jpeg|gif|svg)$/i)
+  );
+}
+
+function isEventShortLink(rawUrl) {
+  const url = parseHttpUrl(rawUrl);
+  return Boolean(url && eventShortLinkHostnames.has(url.hostname));
+}
+
+export function isEventCandidateUrl(rawUrl) {
+  return isEventPageUrl(rawUrl) || isEventShortLink(rawUrl);
+}
+
+export async function resolveEventUrl(
+  rawUrl,
+  fetchImpl = fetch,
+  { timeoutMs = 8000, maxRedirects = 3 } = {}
+) {
+  const cleanedUrl = cleanEventUrl(rawUrl);
+  if (isEventPageUrl(cleanedUrl)) return cleanedUrl;
+  if (!isEventShortLink(cleanedUrl)) return null;
+
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  let currentUrl = cleanedUrl;
+
+  try {
+    for (let redirectCount = 0; redirectCount <= maxRedirects; redirectCount++) {
+      if (!isEventShortLink(currentUrl) && !isEventPageUrl(currentUrl)) return null;
+
+      const response = await fetchImpl(currentUrl, {
+        method: 'GET',
+        redirect: 'manual',
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (compatible; HoYoEventArchive/1.0)'
+        }
+      });
+
+      if (response.status >= 300 && response.status < 400) {
+        if (redirectCount >= maxRedirects) return null;
+        const location = response.headers?.get?.('location');
+        if (!location) return null;
+        const nextUrl = new URL(location, currentUrl).toString();
+        if (!isEventShortLink(nextUrl) && !isEventPageUrl(nextUrl)) return null;
+        currentUrl = nextUrl;
+        continue;
+      }
+
+      if (!response.ok) return null;
+      const finalUrl = cleanEventUrl(response.url || currentUrl);
+      return isEventPageUrl(finalUrl) ? finalUrl : null;
+    }
+  } finally {
+    clearTimeout(timeoutId);
+  }
+
+  return null;
 }
 
 export function selectEventTitle(subject, pageTitle, ogTitle = '') {

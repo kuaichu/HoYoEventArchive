@@ -6,7 +6,9 @@ import {
   canonicalizeEventUrl,
   classifyEventType,
   getAnnouncementDate,
+  isEventCandidateUrl,
   isPermanentResourceUrl,
+  resolveEventUrl,
   selectEventTitle
 } from './crawler-rules.js';
 
@@ -25,19 +27,6 @@ const games = [
 
 const pageSize = Number.parseInt(process.env.MIYOUSHE_PAGE_SIZE || '20', 10);
 const maxPagesPerGame = Number.parseInt(process.env.MIYOUSHE_MAX_PAGES || '5', 10);
-
-function isEventLink(rawUrl) {
-  try {
-    const url = new URL(rawUrl.replace(/&amp;/g, '&'));
-    return (
-      ['act.mihoyo.com', 'webstatic.mihoyo.com', 'act.hoyoverse.com', 'webstatic.hoyoverse.com'].includes(url.hostname) &&
-      !url.pathname.includes('/common/') &&
-      !url.pathname.match(/\.(png|jpg|jpeg|gif|svg)$/i)
-    );
-  } catch {
-    return false;
-  }
-}
 
 export async function fetchForumPosts(game, fetchImpl = fetch) {
   const posts = [];
@@ -174,7 +163,7 @@ export async function runCrawler() {
           ops.forEach(op => {
             if (op.attributes && op.attributes.link) {
               const link = op.attributes.link;
-              if (isEventLink(link)) {
+              if (isEventCandidateUrl(link)) {
                 matches.push(link.replace(/&amp;/g, '&').replace(/[.,;!?]$/, ''));
               }
             }
@@ -184,17 +173,24 @@ export async function runCrawler() {
           const uniqueUrls = [...new Set(matches.map(u => u.replace(/&amp;/g, '&').replace(/[.,;!?]$/, '')))];
         
           for (const rawUrl of uniqueUrls) {
-          // Exclude generic links like webstatic.mihoyo.com/common/ or static image resources
-          if (rawUrl.includes('/common/') || rawUrl.match(/\.(png|jpg|jpeg|gif|svg)/i)) {
+          let cleanUrl;
+          try {
+            cleanUrl = await resolveEventUrl(rawUrl);
+          } catch (error) {
+            console.warn(`Could not resolve event link ${rawUrl}: ${error.message}`);
             continue;
           }
 
-          if (isPermanentResourceUrl(rawUrl)) {
-            console.log(`Skipping permanent resource linked by "${subject}": ${rawUrl}`);
+          if (!cleanUrl) continue;
+          if (cleanUrl !== rawUrl) {
+            console.log(`Resolved event short link: ${rawUrl} -> ${cleanUrl}`);
+          }
+
+          if (isPermanentResourceUrl(cleanUrl)) {
+            console.log(`Skipping permanent resource linked by "${subject}": ${cleanUrl}`);
             continue;
           }
-          
-          const cleanUrl = rawUrl;
+
           const canonicalUrl = canonicalizeEventUrl(cleanUrl);
           
           // Check if it already exists in the database
