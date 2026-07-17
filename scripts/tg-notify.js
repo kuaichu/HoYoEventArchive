@@ -224,6 +224,69 @@ export function summarizeDeliveries(results) {
   };
 }
 
+export function buildFinishedNotificationPlan({
+  status,
+  dataChanged,
+  trigger,
+  duration,
+  updateSummary,
+  eventUpdates,
+  project,
+  runId,
+  runUrl,
+  statusTargets,
+  eventTargets,
+  transientDeleteAfterSeconds,
+  notificationTest = false
+}) {
+  const title = notificationTest
+    ? 'HoYo Event Archive notification test'
+    : status === 'success'
+      ? 'HoYo Event Archive sync finished'
+      : 'HoYo Event Archive sync failed';
+  const dataStr = notificationTest
+    ? 'simulated change (not committed)'
+    : dataChanged
+      ? 'changed and committed'
+      : 'no changes';
+  const shouldDelete = status === 'success' && !dataChanged;
+  let text = `${title}
+Project: ${htmlEscape(project)}
+Status: ${htmlEscape(status)}
+Data: ${htmlEscape(dataStr)}
+Trigger: ${htmlEscape(trigger)}
+Duration: ${htmlEscape(duration)}`;
+
+  if (updateSummary) {
+    text += `
+Updates:
+${htmlEscape(updateSummary)}`;
+  } else if (dataChanged) {
+    text += `
+Updates: changed, but no newly added event summary was generated`;
+  }
+
+  text += `
+Run: <a href="${runUrl}">#${runId}</a>`;
+
+  if (shouldDelete) {
+    text += `
+Note: no repository changes detected; this temporary notice will be deleted.`;
+  }
+
+  return {
+    eventCards: {
+      enabled: status === 'success' && dataChanged && eventUpdates.length > 0,
+      targets: eventTargets
+    },
+    summary: {
+      text,
+      targets: statusTargets,
+      deleteAfterSeconds: shouldDelete ? transientDeleteAfterSeconds : 0
+    }
+  };
+}
+
 async function sendEventCards(events, targets) {
   const results = [];
 
@@ -316,56 +379,47 @@ Run: <a href="${runUrl}">#${runId}</a>`;
   const duration = formatDuration(argv[6]);
   const updateSummary = (process.env.EVENT_UPDATE_SUMMARY || '').trim();
   const eventUpdates = parseEventUpdates();
-  const dataStr = dataChanged ? 'changed and committed' : 'no changes';
-  const title = status === 'success' ? 'HoYo Event Archive sync finished' : 'HoYo Event Archive sync failed';
   const persistentTargets = CHANNEL_CHAT_ID || CHAT_ID;
   const transientTargets = CHAT_ID || CHANNEL_CHAT_ID;
+  const plan = buildFinishedNotificationPlan({
+    status,
+    dataChanged,
+    trigger,
+    duration,
+    updateSummary,
+    eventUpdates,
+    project,
+    runId,
+    runUrl,
+    statusTargets: transientTargets,
+    eventTargets: persistentTargets,
+    transientDeleteAfterSeconds: TRANSIENT_DELETE_AFTER_SECONDS,
+    notificationTest: process.env.TG_NOTIFICATION_TEST === '1'
+  });
+  let cardDeliveryError;
 
-  if (status === 'success' && eventUpdates.length > 0) {
-    const cardDelivery = await sendEventCards(eventUpdates, persistentTargets);
+  if (plan.eventCards.enabled) {
+    const cardDelivery = await sendEventCards(eventUpdates, plan.eventCards.targets);
     if (cardDelivery.ok) {
       console.log(`Sent ${cardDelivery.sentCount} persistent event card notification(s).`);
-      return;
-    }
-    if (cardDelivery.sentCount > 0) {
-      throw new Error(
+    } else if (cardDelivery.sentCount > 0) {
+      cardDeliveryError = new Error(
         `Event card delivery incomplete: ${cardDelivery.sentCount}/${cardDelivery.attempted} succeeded.`
       );
+    } else {
+      console.warn('No event card notification was sent; the status summary will still be delivered.');
+      cardDeliveryError = new Error('Event card delivery failed for every target.');
     }
-    console.warn('No event card notification was sent; falling back to summary message.');
-  }
-
-  let text = `${title}
-Project: ${htmlEscape(project)}
-Status: ${htmlEscape(status)}
-Data: ${htmlEscape(dataStr)}
-Trigger: ${htmlEscape(trigger)}
-Duration: ${htmlEscape(duration)}`;
-
-  if (updateSummary) {
-    text += `
-Updates:
-${htmlEscape(updateSummary)}`;
-  } else if (dataChanged) {
-    text += `
-Updates: changed, but no new event summary was generated`;
-  }
-
-  text += `
-Run: <a href="${runUrl}">#${runId}</a>`;
-
-  const shouldDelete = status === 'success' && !updateSummary;
-  if (shouldDelete) {
-    text += `
-Note: no event updates detected; this temporary notice will be deleted.`;
   }
 
   await sendToTargets(
     'result',
-    text,
-    shouldDelete || status !== 'success' ? transientTargets : persistentTargets,
-    shouldDelete ? TRANSIENT_DELETE_AFTER_SECONDS : 0
+    plan.summary.text,
+    plan.summary.targets,
+    plan.summary.deleteAfterSeconds
   );
+
+  if (cardDeliveryError) throw cardDeliveryError;
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
