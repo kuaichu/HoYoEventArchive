@@ -1440,6 +1440,67 @@ body {
   gap: 20px;
 }
 
+.timeline-months {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.timeline-month-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.timeline-month-header {
+  position: relative;
+  z-index: 2;
+  min-height: 28px;
+  margin-left: 20px;
+  padding-left: 36px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.timeline-month-header::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg-main);
+  border: 2px solid rgba(129, 140, 248, 0.85);
+  box-shadow: 0 0 8px rgba(93, 107, 250, 0.35);
+  transform: translateY(-50%);
+}
+
+.timeline-month-label {
+  padding: 5px 10px;
+  color: #c7d2fe;
+  background: rgba(93, 107, 250, 0.11);
+  border: 1px solid rgba(129, 140, 248, 0.28);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.timeline-month-count {
+  color: var(--text-muted);
+  font-size: 10px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.timeline-month-events {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .timeline-year-header {
   font-size: 24px;
   font-weight: 800;
@@ -1544,6 +1605,27 @@ body {
 
 .timeline-card-game {
   font-weight: 600;
+}
+
+@media (max-width: 640px) {
+  .timeline-container {
+    padding-inline: 0;
+  }
+
+  .timeline-item {
+    gap: 12px;
+  }
+
+  .timeline-item-card {
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .timeline-card-meta {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
 }
 
 /* Detail Preview Modal */

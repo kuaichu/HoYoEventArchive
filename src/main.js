@@ -16,6 +16,7 @@ import {
   parsePersistedEventState,
   serializeEventState
 } from './event-storage.js';
+import { groupTimelineEvents, timelineDayLabel } from './timeline-domain.js';
 
 const EVENT_STORAGE_KEY = 'hoyo_archive_custom_events';
 const LEGACY_EVENT_STORAGE_BACKUP_KEY = `${EVENT_STORAGE_KEY}_legacy_backup`;
@@ -990,52 +991,53 @@ function renderEvents() {
 
 // Render Linear Timeline
 function renderTimeline() {
-  const sorted = [...state.events].sort((a, b) => new Date(b.date.replace(/\./g, '/')) - new Date(a.date.replace(/\./g, '/')));
-  
-  // Group by year
-  const groups = {};
-  sorted.forEach(e => {
-    const year = e.date.split('.')[0] || '其他';
-    if (!groups[year]) groups[year] = [];
-    groups[year].push(e);
-  });
+  const groups = groupTimelineEvents(state.events);
 
-  const years = Object.keys(groups).sort((a, b) => b - a);
-
-  elTimelineContainer.innerHTML = years.map(year => {
-    const yearEvents = groups[year];
+  elTimelineContainer.innerHTML = groups.map(({ year, months }) => {
     return `
       <div class="timeline-year-group">
         <div class="timeline-year-header">
           <div class="timeline-year-dot">${escapeHtml(year)}</div>
         </div>
-        ${yearEvents.map(e => {
-          return `
-            <div class="timeline-item" data-id="${escapeHtml(e.id)}">
-              <div class="timeline-item-left">
-                <div class="timeline-item-dot"></div>
+        <div class="timeline-months">
+          ${months.map(({ label, events }) => `
+            <section class="timeline-month-group">
+              <div class="timeline-month-header">
+                <span class="timeline-month-label">${escapeHtml(label)}</span>
+                <span class="timeline-month-count">${events.length} 项</span>
               </div>
-              <div class="timeline-item-card">
-                <div class="timeline-card-left">
-                  <span class="timeline-card-date">${escapeHtml(e.dateType === 'announcement' ? `公告 ${e.date.substring(5)}` : e.date.substring(5))}</span>
-                  <div class="timeline-card-title">${escapeHtml(e.title)}</div>
-                  <div class="timeline-card-meta">
-                    <span class="timeline-card-game" style="color:var(--primary);">${escapeHtml(e.game)}</span>
-                    <span>&middot;</span>
-                    <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 1px 4px;">${escapeHtml(e.version || '待确认')}</span>
-                    <span>&middot;</span>
-                    <span>${escapeHtml(e.type)}</span>
-                  </div>
-                </div>
-                <div>
-                  <span class="list-status-badge ${statusMeta(e.status).className}" style="font-size:10px; padding: 2px 6px;">
-                    ${escapeHtml(e.status)}
-                  </span>
-                </div>
+              <div class="timeline-month-events">
+                ${events.map(e => {
+                  return `
+                    <div class="timeline-item" data-id="${escapeHtml(e.id)}">
+                      <div class="timeline-item-left">
+                        <div class="timeline-item-dot"></div>
+                      </div>
+                      <div class="timeline-item-card">
+                        <div class="timeline-card-left">
+                          <span class="timeline-card-date">${escapeHtml(timelineDayLabel(e))}</span>
+                          <div class="timeline-card-title">${escapeHtml(e.title)}</div>
+                          <div class="timeline-card-meta">
+                            <span class="timeline-card-game" style="color:var(--primary);">${escapeHtml(e.game)}</span>
+                            <span>&middot;</span>
+                            <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 1px 4px;">${escapeHtml(e.version || '待确认')}</span>
+                            <span>&middot;</span>
+                            <span>${escapeHtml(e.type)}</span>
+                          </div>
+                        </div>
+                        <div>
+                          <span class="list-status-badge ${statusMeta(e.status).className}" style="font-size:10px; padding: 2px 6px;">
+                            ${escapeHtml(e.status)}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  `;
+                }).join('')}
               </div>
-            </div>
-          `;
-        }).join('')}
+            </section>
+          `).join('')}
+        </div>
       </div>
     `;
   }).join('');
