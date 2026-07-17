@@ -8,6 +8,8 @@ import {
 } from '../scripts/miyoushe-crawler.js';
 import {
   classifyEventPageState,
+  navigateWithRetries,
+  screenshotNavigationUrl,
   selectMissingScreenshotEvents
 } from '../scripts/capture-screenshots.js';
 import { collectEventUpdates } from '../scripts/summarize-event-updates.js';
@@ -145,6 +147,34 @@ test('event page readiness distinguishes GPU warning, loading, and the main UI',
     'ready'
   );
   assert.equal(classifyEventPageState({ coverText: '资源加载失败，请重试' }), 'fatal-error');
+});
+
+test('screenshot navigation strips tracking parameters and retries transient timeouts', async () => {
+  assert.equal(
+    screenshotNavigationUrl(
+      'https://act.mihoyo.com/zzz/event/example/index.html?mhy_auth_required=true&utm_source=mys'
+    ),
+    'https://act.mihoyo.com/zzz/event/example/index.html'
+  );
+
+  let attempts = 0;
+  const response = { status: () => 200 };
+  const page = {
+    goto: async () => {
+      attempts++;
+      if (attempts < 3) throw new Error('net::ERR_TIMED_OUT');
+      return response;
+    }
+  };
+
+  assert.equal(
+    await navigateWithRetries(page, 'https://act.mihoyo.com/event', {
+      attempts: 3,
+      sleepFn: async () => {}
+    }),
+    response
+  );
+  assert.equal(attempts, 3);
 });
 
 test('metadata changes to an existing event produce a notifiable update', () => {

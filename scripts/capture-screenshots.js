@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { canonicalizeEventUrl } from './crawler-rules.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -59,6 +60,29 @@ export function classifyEventPageState({
   return homeVisible && loadingComplete && loadingHidden && mainScene && gameReady
     ? 'ready'
     : 'waiting';
+}
+
+export function screenshotNavigationUrl(rawUrl) {
+  return canonicalizeEventUrl(rawUrl);
+}
+
+export async function navigateWithRetries(
+  page,
+  url,
+  { attempts = 3, timeoutMs = 45000, sleepFn = sleep } = {}
+) {
+  let lastError;
+  for (let attempt = 1; attempt <= attempts; attempt++) {
+    try {
+      return await page.goto(url, { waitUntil: 'domcontentloaded', timeout: timeoutMs });
+    } catch (error) {
+      lastError = error;
+      if (attempt >= attempts) break;
+      console.warn(`-> Navigation attempt ${attempt}/${attempts} failed: ${error.message}. Retrying.`);
+      await sleepFn(attempt * 1500);
+    }
+  }
+  throw lastError;
 }
 
 async function readEventPageState(page) {
@@ -171,7 +195,7 @@ export async function captureScreenshots() {
   try {
     browser = await puppeteer.launch({
       headless: true,
-      args: ['--no-sandbox', '--disable-setuid-sandbox']
+      args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
     });
 
     for (let i = 0; i < missingEvents.length; i++) {
@@ -188,12 +212,13 @@ export async function captureScreenshots() {
         page.setDefaultNavigationTimeout(45000);
         page.setDefaultTimeout(45000);
 
-      console.log(`-> Navigating to: ${event.url}`);
+      const navigationUrl = screenshotNavigationUrl(event.url);
+      console.log(`-> Navigating to: ${navigationUrl}`);
 
       // Many event pages keep analytics and game resources connected forever, so
       // waiting for networkidle is unreliable. DOM readiness plus a short settle
       // window produces a stable thumbnail without stalling the whole workflow.
-      const response = await page.goto(event.url, { waitUntil: 'domcontentloaded', timeout: 45000 });
+      const response = await navigateWithRetries(page, navigationUrl);
       
       if (response && response.status() >= 400) {
         console.log(`-> URL returned HTTP ${response.status()}. Skipping.`);
