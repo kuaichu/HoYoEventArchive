@@ -562,11 +562,17 @@ function updateStats() {
   if (elHeroStatAvailable) elHeroStatAvailable.textContent = available;
   if (elHeroStatExpired) elHeroStatExpired.textContent = expired;
   
-  // Render game counts in portals
-  elCountYs.textContent = `${state.events.filter(e => e.gameKey === 'ys').length} 个活动`;
-  elCountSr.textContent = `${state.events.filter(e => e.gameKey === 'sr').length} 个活动`;
-  elCountZzz.textContent = `${state.events.filter(e => e.gameKey === 'zzz').length} 个活动`;
-  elCountBh3.textContent = `${state.events.filter(e => e.gameKey === 'bh3').length} 个活动`;
+  // Render game counts as secondary archive metadata and keep whole-card labels descriptive.
+  [
+    { element: elCountYs, gameKey: 'ys', gameName: '原神' },
+    { element: elCountSr, gameKey: 'sr', gameName: '星穹铁道' },
+    { element: elCountZzz, gameKey: 'zzz', gameName: '绝区零' },
+    { element: elCountBh3, gameKey: 'bh3', gameName: '崩坏3' }
+  ].forEach(({ element, gameKey, gameName }) => {
+    const count = state.events.filter(event => event.gameKey === gameKey).length;
+    element.textContent = `${count} 项收录`;
+    element.closest('.portal-card')?.setAttribute('aria-label', `进入${gameName}专区，收录${count}项活动`);
+  });
 }
 
 // Dynamic Sidebar Filters with Badge counters

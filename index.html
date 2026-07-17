@@ -165,38 +165,34 @@
 
           <!-- Game Portal Cards -->
           <div class="game-portals">
-            <div class="portal-card" data-game="ys">
-              <div class="portal-cover ys"></div>
-              <div class="portal-info">
-                <span class="portal-name">原神</span>
-                <p class="portal-count" id="countYs">0 个活动</p>
-              </div>
-              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
-            </div>
-            <div class="portal-card" data-game="sr">
-              <div class="portal-cover sr"></div>
-              <div class="portal-info">
-                <span class="portal-name">星穹铁道</span>
-                <p class="portal-count" id="countSr">0 个活动</p>
-              </div>
-              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
-            </div>
-            <div class="portal-card" data-game="zzz">
-              <div class="portal-cover zzz"></div>
-              <div class="portal-info">
-                <span class="portal-name">绝区零</span>
-                <p class="portal-count" id="countZzz">0 个活动</p>
-              </div>
-              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
-            </div>
-            <div class="portal-card" data-game="bh3">
-              <div class="portal-cover bh3"></div>
-              <div class="portal-info">
-                <span class="portal-name">崩坏3</span>
-                <p class="portal-count" id="countBh3">0 个活动</p>
-              </div>
-              <span class="portal-action">进入专区 <i class="fa-solid fa-arrow-right-long"></i></span>
-            </div>
+            <button type="button" class="portal-card" data-game="ys" aria-label="进入原神专区">
+              <span class="portal-cover ys" aria-hidden="true"></span>
+              <span class="portal-footer">
+                <span class="portal-count" id="countYs">0 项收录</span>
+                <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+              </span>
+            </button>
+            <button type="button" class="portal-card" data-game="sr" aria-label="进入星穹铁道专区">
+              <span class="portal-cover sr" aria-hidden="true"></span>
+              <span class="portal-footer">
+                <span class="portal-count" id="countSr">0 项收录</span>
+                <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+              </span>
+            </button>
+            <button type="button" class="portal-card" data-game="zzz" aria-label="进入绝区零专区">
+              <span class="portal-cover zzz" aria-hidden="true"></span>
+              <span class="portal-footer">
+                <span class="portal-count" id="countZzz">0 项收录</span>
+                <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+              </span>
+            </button>
+            <button type="button" class="portal-card" data-game="bh3" aria-label="进入崩坏3专区">
+              <span class="portal-cover bh3" aria-hidden="true"></span>
+              <span class="portal-footer">
+                <span class="portal-count" id="countBh3">0 项收录</span>
+                <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
+              </span>
+            </button>
           </div>
 
           <!-- Game Zone Header (Hidden by default, shown when a game is selected) -->

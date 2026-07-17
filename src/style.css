@@ -712,6 +712,10 @@ body {
   align-items: center;
   padding: 20px;
   cursor: pointer;
+  appearance: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   transition: var(--transition-normal);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
 }
@@ -765,63 +769,55 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(to bottom, rgba(6, 7, 19, 0) 20%, rgba(6, 7, 19, 0.7) 65%, rgba(6, 7, 19, 0.95) 100%);
+  background: linear-gradient(to bottom, rgba(6, 7, 19, 0) 50%, rgba(6, 7, 19, 0.24) 72%, rgba(6, 7, 19, 0.78) 100%);
   z-index: 1;
   transition: var(--transition-normal);
 }
 
 .portal-card:hover::before {
-  background: linear-gradient(to bottom, rgba(6, 7, 19, 0) 15%, rgba(6, 7, 19, 0.6) 55%, rgba(6, 7, 19, 0.9) 100%);
+  background: linear-gradient(to bottom, rgba(6, 7, 19, 0) 48%, rgba(6, 7, 19, 0.18) 70%, rgba(6, 7, 19, 0.7) 100%);
 }
 
 .portal-card:hover .portal-cover {
   transform: scale(1.06);
 }
 
-.portal-info {
+.portal-footer {
   position: relative;
   z-index: 2;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
-  text-align: center;
+  justify-content: space-between;
   width: 100%;
-}
-
-.portal-name {
-  font-size: 22px;
-  font-weight: 700;
-  color: white;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
 }
 
 .portal-count {
-  font-size: 14px;
-  color: var(--text-secondary);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 6px 11px;
+  font-size: 12px;
+  font-weight: 650;
+  color: rgba(238, 242, 255, 0.88);
+  background: rgba(9, 11, 28, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  backdrop-filter: blur(10px);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-.portal-action {
-  position: relative;
-  z-index: 2;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: var(--text-accent);
-  display: flex;
+.portal-enter-icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  margin-top: 12px;
-  padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  width: 100%;
-  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: white;
+  background: rgba(9, 11, 28, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
   transition: var(--transition-fast);
-  backdrop-filter: blur(5px);
 }
 
 .portal-card:hover {
@@ -833,13 +829,21 @@ body {
 .portal-card[data-game="zzz"]:hover { border-color: rgba(52, 211, 153, 0.4); --glow-color: rgba(52, 211, 153, 0.18); }
 .portal-card[data-game="bh3"]:hover { border-color: rgba(244, 114, 182, 0.4); --glow-color: rgba(244, 114, 182, 0.18); }
 
-.portal-card:hover .portal-action {
-  color: white;
+.portal-card:hover .portal-enter-icon,
+.portal-card:focus-visible .portal-enter-icon {
   background: var(--primary);
   border-color: var(--primary-hover);
   box-shadow: 0 0 12px var(--primary-glow);
-  transform: translateY(-2px);
-  opacity: 1;
+  transform: translateX(3px);
+}
+
+.portal-card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.portal-card:active {
+  transform: translateY(-2px) scale(0.99);
 }
 
 /* Game Zone Header */
