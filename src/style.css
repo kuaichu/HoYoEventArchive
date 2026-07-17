@@ -1311,7 +1311,7 @@ body {
 
 .event-list-header {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 60px;
+  grid-template-columns: minmax(0, 2.4fr) minmax(0, 0.9fr) minmax(0, 0.7fr) minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 0.7fr) 52px;
   padding: 12px 20px;
   color: var(--text-muted);
   font-size: 12px;
@@ -1323,7 +1323,7 @@ body {
 
 .event-list-row {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 60px;
+  grid-template-columns: minmax(0, 2.4fr) minmax(0, 0.9fr) minmax(0, 0.7fr) minmax(0, 0.9fr) minmax(0, 1fr) minmax(0, 0.7fr) 52px;
   align-items: center;
   padding: 14px 20px;
   background: var(--bg-card);
@@ -1398,6 +1398,19 @@ body {
 .list-action-cell {
   display: flex;
   justify-content: center;
+  align-items: center;
+}
+
+.list-favorite-header {
+  text-align: center;
+}
+
+.list-bookmark-btn {
+  position: static;
+  inset: auto;
+  margin: 0;
+  width: 32px;
+  height: 32px;
 }
 
 /* Timeline View */
@@ -2213,7 +2226,12 @@ body {
   .event-list-row {
     grid-template-columns: 1fr;
     gap: 8px;
-    padding: 16px;
+    padding: 16px 58px 16px 16px;
+    position: relative;
+  }
+
+  .list-title-cell {
+    padding-right: 4px;
   }
   
   .list-status-cell {
@@ -2221,7 +2239,9 @@ body {
   }
   
   .list-action-cell {
-    justify-content: flex-start;
+    position: absolute;
+    top: 14px;
+    right: 14px;
   }
 }
 

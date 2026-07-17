@@ -911,7 +911,7 @@ function renderEvents() {
         <div>活动类型</div>
         <div>相关日期</div>
         <div>访问状态</div>
-        <div style="text-align: center;">操作</div>
+        <div class="list-favorite-header">收藏</div>
       </div>
       ${filtered.map(e => {
         const isBookmarked = state.bookmarks.includes(e.id);
@@ -936,7 +936,7 @@ function renderEvents() {
               <span class="list-status-badge ${status.className}">${escapeHtml(e.status)}</span>
             </div>
             <div class="list-action-cell">
-              <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" style="position:static; margin-right:8px;" data-id="${escapeHtml(e.id)}" title="加入收藏">
+              <button class="bookmark-btn list-bookmark-btn ${isBookmarked ? 'active' : ''}" data-id="${escapeHtml(e.id)}" title="${isBookmarked ? '取消收藏' : '加入收藏'}">
                 <i class="${isBookmarked ? 'fa-solid' : 'fa-regular'} fa-star"></i>
               </button>
             </div>
