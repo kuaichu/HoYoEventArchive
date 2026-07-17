@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { buildFinishedNotificationPlan } from '../scripts/tg-notify.js';
+import { buildFinishedNotificationPlan, resolveTelegramTargets } from '../scripts/tg-notify.js';
 
 const baseInput = {
   status: 'success',
@@ -14,6 +14,17 @@ const baseInput = {
   eventTargets: '-100-channel',
   transientDeleteAfterSeconds: 90
 };
+
+test('event cards fall back to the working status chat when no channel is configured', () => {
+  assert.deepEqual(
+    resolveTelegramTargets({ TG_CHAT_ID: '-100-status', TG_CHANNEL_CHAT_ID: '' }),
+    { statusTargets: '-100-status', eventTargets: '-100-status' }
+  );
+  assert.deepEqual(
+    resolveTelegramTargets({ TG_CHAT_ID: '-100-status', TG_CHANNEL_CHAT_ID: '-100-channel' }),
+    { statusTargets: '-100-status', eventTargets: '-100-channel' }
+  );
+});
 
 test('successful no-change runs send a temporary status summary only', () => {
   const plan = buildFinishedNotificationPlan({
