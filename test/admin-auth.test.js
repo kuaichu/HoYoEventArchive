@@ -26,20 +26,23 @@ function basic(username, password) {
 
 function contextFor(pathname, authorization) {
   let nextCalls = 0;
+  let nextRequest;
   return {
     context: {
       request: new Request(`https://example.test${pathname}`, {
         headers: authorization ? { Authorization: authorization } : {}
       }),
-      next: async () => {
+      next: async request => {
         nextCalls++;
+        nextRequest = request;
         return new Response('protected admin html', {
           status: 200,
           headers: { 'Content-Type': 'text/html; charset=UTF-8' }
         });
       }
     },
-    getNextCalls: () => nextCalls
+    getNextCalls: () => nextCalls,
+    getNextRequest: () => nextRequest
   };
 }
 
@@ -69,6 +72,16 @@ test('valid admin credentials serve a private non-cacheable response', async () 
   assert.equal(response.headers.get('Cache-Control'), 'private, no-store');
   assert.match(response.headers.get('Vary'), /Authorization/);
   assert.equal(fixture.getNextCalls(), 1);
+});
+
+test('authenticated legacy admin paths are internally rewritten without a redirect', async () => {
+  for (const pathname of ['/admin/', '/admin.html']) {
+    const fixture = contextFor(pathname, basic('admin', fixturePassword));
+    const response = await handleAdminRequest(fixture.context, fixtureConfig);
+    assert.equal(response.status, 200);
+    assert.equal(new URL(fixture.getNextRequest().url).pathname, '/admin');
+    assert.equal(fixture.getNextRequest().headers.get('Authorization'), basic('admin', fixturePassword));
+  }
 });
 
 test('public routes bypass admin authentication', async () => {

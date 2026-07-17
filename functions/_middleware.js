@@ -99,7 +99,16 @@ export async function handleAdminRequest(context, config = ADMIN_AUTH_CONFIG) {
   );
   if (!authorized) return unauthorizedResponse();
 
-  return privateAdminResponse(await context.next());
+  let nextRequest;
+  if (pathname !== '/admin') {
+    const canonicalUrl = new URL(context.request.url);
+    canonicalUrl.pathname = '/admin';
+    nextRequest = new Request(canonicalUrl, {
+      method: context.request.method,
+      headers: context.request.headers
+    });
+  }
+  return privateAdminResponse(await context.next(nextRequest));
 }
 
 export function onRequest(context) {
