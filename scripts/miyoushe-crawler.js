@@ -12,7 +12,7 @@ import {
   getAnnouncementDate,
   isEventCandidateUrl,
   isPermanentResourceUrl,
-  resolveEventUrl,
+  resolveStoredEventUrl,
   selectEventTitle
 } from './crawler-rules.js';
 import { isNumericVersion } from './version-classification.js';
@@ -192,7 +192,7 @@ export async function runCrawler() {
           for (const rawUrl of uniqueUrls) {
           let cleanUrl;
           try {
-            cleanUrl = await resolveEventUrl(rawUrl);
+            cleanUrl = await resolveStoredEventUrl(rawUrl);
           } catch (error) {
             console.warn(`Could not resolve event link ${rawUrl}: ${error.message}`);
             continue;

@@ -159,6 +159,12 @@ test('screenshot navigation strips tracking parameters and retries transient tim
     ),
     'https://act.mihoyo.com/zzz/event/example/index.html'
   );
+  assert.equal(
+    screenshotNavigationUrl(
+      'https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea123&act_id=ea123&game_biz=hkrpg&mhy_presentation_style=fullscreen#/rpg/act?&utm_source=bbs'
+    ),
+    'https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea123&act_id=ea123#/rpg/act'
+  );
 
   let attempts = 0;
   const response = { status: () => 200 };

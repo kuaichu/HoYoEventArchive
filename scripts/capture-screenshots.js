@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { canonicalizeEventUrl } from './crawler-rules.js';
+import { normalizeStoredEventUrl } from '../src/event-url.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -91,7 +91,7 @@ export function isScreenshotBufferUsable(buffer) {
 }
 
 export function screenshotNavigationUrl(rawUrl) {
-  return canonicalizeEventUrl(rawUrl);
+  return normalizeStoredEventUrl(rawUrl);
 }
 
 export async function navigateWithRetries(

@@ -3,6 +3,7 @@ import {
   extractExplicitVersion,
   isNumericVersion
 } from './version-classification.js';
+import { normalizeStoredEventUrl } from '../src/event-url.js';
 
 const permanentResourcePathFragments = [
   '/bbs/event/bbs-lineup-',
@@ -122,6 +123,11 @@ export async function resolveEventUrl(
   }
 
   return null;
+}
+
+export async function resolveStoredEventUrl(rawUrl, fetchImpl = fetch, options = {}) {
+  const resolvedUrl = await resolveEventUrl(rawUrl, fetchImpl, options);
+  return resolvedUrl ? normalizeStoredEventUrl(resolvedUrl) : null;
 }
 
 function stripHtml(rawHtml) {

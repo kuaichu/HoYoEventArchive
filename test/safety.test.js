@@ -20,6 +20,10 @@ test('HTML escaping neutralizes text and attribute injection characters', () => 
 test('external URLs allow only absolute credential-free HTTP(S)', () => {
   assert.equal(safeExternalUrl('https://act.mihoyo.com/event'), 'https://act.mihoyo.com/event');
   assert.equal(safeExternalUrl('http://example.com/path'), 'http://example.com/path');
+  assert.equal(
+    safeExternalUrl('https://act.mihoyo.com/ys/event/example/index.html?game_biz=hk4e_cn&mhy_presentation_style=fullscreen&utm_source=bbs'),
+    'https://act.mihoyo.com/ys/event/example/index.html'
+  );
   assert.equal(safeExternalUrl('javascript:alert(1)'), null);
   assert.equal(safeExternalUrl('data:text/html,test'), null);
   assert.equal(safeExternalUrl('https://user:pass@example.com'), null);

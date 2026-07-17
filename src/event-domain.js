@@ -1,3 +1,5 @@
+import { normalizeStoredEventUrl } from './event-url.js';
+
 export const GAME_KEYS = Object.freeze(['all', 'ys', 'sr', 'zzz', 'bh3']);
 
 export const EVENT_TYPES = Object.freeze([
@@ -148,14 +150,7 @@ export function escapeHtml(value) {
 }
 
 export function safeExternalUrl(value) {
-  try {
-    const url = new URL(String(value ?? ''));
-    if (!['http:', 'https:'].includes(url.protocol)) return null;
-    if (url.username || url.password) return null;
-    return url.href;
-  } catch {
-    return null;
-  }
+  return normalizeStoredEventUrl(value);
 }
 
 const BUILD_SCREENSHOT_VERSION = typeof __SCREENSHOT_VERSION__ === 'string'
@@ -217,7 +212,7 @@ export function normalizeEvent(raw, fallback = {}) {
 
   const gameKey = pick('gameKey', value => GAME_KEYS.includes(value));
   const title = pick('title', value => validText(value));
-  const url = pick('url', value => validText(value) && safeExternalUrl(value));
+  const url = safeExternalUrl(raw.url) || safeExternalUrl(fallbackEvent.url);
   const type = pick('type', value => EVENT_TYPES.includes(value));
   const status = pick('status', value => EVENT_STATUSES.includes(value));
   const date = pick('date', validDate);

@@ -1036,7 +1036,7 @@
   {
     "id": "ys-22",
     "title": "薄樱初绽时",
-    "url": "https://webstatic.mihoyo.com/ys/event/e20220207-previ/index.html?",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20220207-previ/index.html",
     "game": "原神",
     "gameKey": "ys",
     "type": "版本前瞻",
@@ -1053,7 +1053,7 @@
   {
     "id": "ys-23",
     "title": "轻风雅游",
-    "url": "https://webstatic.mihoyo.com/ys/event/e20220415travel-tq8y/index.html?",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20220415travel-tq8y/index.html",
     "game": "原神",
     "gameKey": "ys",
     "type": "小游戏",
@@ -1087,7 +1087,7 @@
   {
     "id": "ys-25",
     "title": "海上绮梦录",
-    "url": "https://webstatic.mihoyo.com/ys/event/e20220722dream-6bgs/index.html?",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20220722dream-6bgs/index.html",
     "game": "原神",
     "gameKey": "ys",
     "type": "小游戏",
@@ -1104,7 +1104,7 @@
   {
     "id": "ys-26",
     "title": "魔女尼可的茶会",
-    "url": "https://act.mihoyo.com/ys/event/e20260520invite-19ccy4/index.html?game_biz=hk4e_cn&lang=zh-cn",
+    "url": "https://act.mihoyo.com/ys/event/e20260520invite-19ccy4/index.html?lang=zh-cn",
     "game": "原神",
     "gameKey": "ys",
     "type": "小游戏",
@@ -1207,7 +1207,7 @@
   {
     "id": "ys-27",
     "title": "「恣锐锋镞」洛恩绘画征集活动",
-    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202605291815205656&act_id=ea202605291815205656&game_biz=hk4e&mhy_presentation_style=fullscreen",
+    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202605291815205656&act_id=ea202605291815205656",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1224,7 +1224,7 @@
   {
     "id": "ys-28",
     "title": "米游币抽抽乐-原神专场现已开启！",
-    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&id=e202605220001071&game_biz=hk4e&utm_source=bbs&utm_medium=ys&utm_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202605220001071&game_biz=hk4e",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1239,7 +1239,7 @@
   {
     "id": "ys-29",
     "title": "《原神》「月之七」版本前瞻特别节目",
-    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202604301608148656&mhy_presentation_style=fullscreen&game_biz=hk4e&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202604301608148656",
     "game": "原神",
     "gameKey": "ys",
     "type": "版本前瞻",
@@ -1254,7 +1254,7 @@
   {
     "id": "sr-33",
     "title": "千冶•刃绘画",
-    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202605261549567753&act_id=ea202605261549567753&game_biz=hkrpg&mhy_presentation_style=fullscreen#/rpg/act?&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202605261549567753&act_id=ea202605261549567753#/rpg/act",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1269,7 +1269,7 @@
   {
     "id": "ys-30",
     "title": "履迹寻路",
-    "url": "https://act.mihoyo.com/ys/event/e20260408land-gmdt0n/index.html?game_biz=hk4e_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "url": "https://act.mihoyo.com/ys/event/e20260408land-gmdt0n/index.html",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1284,7 +1284,7 @@
   {
     "id": "ys-31",
     "title": "「运动时间到！」",
-    "url": "https://act.mihoyo.com/ys/event/e20260610sports/index.html?game_biz=hk4e_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "url": "https://act.mihoyo.com/ys/event/e20260610sports/index.html",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1305,7 +1305,7 @@
   {
     "id": "ys-32",
     "title": "「月之七」版本活动祈愿预告第二期",
-    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=382675dd182b418c&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=ys&utm_campaign=pgc",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=382675dd182b418c",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1325,7 +1325,7 @@
   {
     "id": "sr-38",
     "title": "《崩坏：星穹铁道》4.3版本「沉于生者的忘川」专题展示页现已上线",
-    "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/index.html?game_biz=hkrpg_cn&mhy_presentation_style=fullscreen&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1341,7 +1341,7 @@
   {
     "id": "bh3-5",
     "title": "《崩坏3》8.9版本前瞻",
-    "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_890_1400/index.html?game_biz=bh3_cn&bbs_landscape=true&bbs_presentation_style=fullscreen&mhy_hide_status_bar=true",
+    "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_890_1400/index.html",
     "game": "崩坏3",
     "gameKey": "bh3",
     "type": "版本前瞻",
@@ -1360,7 +1360,7 @@
   {
     "id": "sr-39",
     "title": "米游币抽抽乐-星穹铁道专场现已开启！",
-    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&id=e202606111738051&game_biz=hkrpg&mys_source=bbs&mys_medium=sr&mys_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202606111738051&game_biz=hkrpg",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1381,7 +1381,7 @@
   {
     "id": "ys-33",
     "title": "原神千星奇域创作者中心",
-    "url": "https://act.mihoyo.com/miliastra_wonderland/developer?mhy_presentation_style=fullscreen&mhy_auth_required=true&utm_source=bbs&utm_medium=mys&utm_campaign=arti&utm_content=66summerevent",
+    "url": "https://act.mihoyo.com/miliastra_wonderland/developer",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1402,7 +1402,7 @@
   {
     "id": "ys-34",
     "title": "千星奇域创作者中心服务协议",
-    "url": "https://act.mihoyo.com/miliastra_wonderland/agreement?mhy_presentation_style=fullscreen&id=156266",
+    "url": "https://act.mihoyo.com/miliastra_wonderland/agreement?id=156266",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1420,7 +1420,7 @@
   {
     "id": "ys-35",
     "title": "《原神》「月之八」版本前瞻特别节目",
-    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606111703555535&mhy_presentation_style=fullscreen&game_biz=hk4e&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606111703555535",
     "game": "原神",
     "gameKey": "ys",
     "type": "版本前瞻",
@@ -1438,7 +1438,7 @@
   {
     "id": "sr-40",
     "title": "绯英绘画",
-    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202604151308528522&act_id=ea202604151308528522&game_biz=hkrpg&mhy_presentation_style=fullscreen#/rpg/act",
+    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202604151308528522&act_id=ea202604151308528522#/rpg/act",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1456,7 +1456,7 @@
   {
     "id": "zzz-10",
     "title": "绝区零工具合集",
-    "url": "https://act.mihoyo.com/app/mihoyo-zzz-game-record/m.html?mhy_presentation_style=fullscreen#/zzz/roles/0/detail&mhy_bg_style=dark&utm_source=media&utm_medium=mys&utm_campaign=arti",
+    "url": "https://act.mihoyo.com/app/mihoyo-zzz-game-record/m.html#/zzz/roles/0/detail",
     "game": "绝区零",
     "gameKey": "zzz",
     "type": "其他活动",
@@ -1475,7 +1475,7 @@
   {
     "id": "ys-36",
     "title": "【有奖活动】「镜水析谬」桑多涅绘画征集活动开启！",
-    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202606181648058769&act_id=ea202606181648058769&game_biz=hk4e&mhy_presentation_style=fullscreen",
+    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202606181648058769&act_id=ea202606181648058769",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1496,7 +1496,7 @@
   {
     "id": "sr-41",
     "title": "银狼LV.999绘画",
-    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202603191939552452&act_id=ea202603191939552452&game_biz=hkrpg&mhy_presentation_style=fullscreen#/rpg/act",
+    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202603191939552452&act_id=ea202603191939552452#/rpg/act",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1514,7 +1514,7 @@
   {
     "id": "sr-42",
     "title": "【已开奖】4.3版本前瞻讨论活动开启，参与赢648现金",
-    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202605121648516106&mhy_presentation_style=fullscreen&game_biz=hkrpg&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202605121648516106",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "版本前瞻",
@@ -1536,7 +1536,7 @@
   {
     "id": "sr-43",
     "title": "《崩坏：星穹铁道》周边实物发货信息登记平台",
-    "url": "https://act.mihoyo.com/sr/event/around-gift-w3qak2/index.html?game_biz=hkrpg_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen",
+    "url": "https://act.mihoyo.com/sr/event/around-gift-w3qak2/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1554,7 +1554,7 @@
   {
     "id": "sr-44",
     "title": "不死途绘画",
-    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202603121636536101&act_id=ea202603121636536101&game_biz=hkrpg&mhy_presentation_style=fullscreen#/rpg/act",
+    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202603121636536101&act_id=ea202603121636536101#/rpg/act",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1572,7 +1572,7 @@
   {
     "id": "bh3-6",
     "title": "《崩坏3》V8.9羽落万生特别节目",
-    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202605151427438423&mhy_presentation_style=fullscreen&game_biz=bh3",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202605151427438423",
     "game": "崩坏3",
     "gameKey": "bh3",
     "type": "版本前瞻",
@@ -1592,7 +1592,7 @@
   {
     "id": "bh3-7",
     "title": "《崩坏3》8.8版本前瞻",
-    "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_880_1367/index.html?game_biz=bh3_cn&bbs_landscape=true&bbs_presentation_style=fullscreen&mhy_hide_status_bar=true",
+    "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_880_1367/index.html",
     "game": "崩坏3",
     "gameKey": "bh3",
     "type": "版本前瞻",
@@ -1611,7 +1611,7 @@
   {
     "id": "zzz-11",
     "title": "米游币抽抽乐-绝区零专场现已开启！",
-    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&id=e202606231822571&game_biz=nap&utm_source=bbs&utm_medium=zzz&utm_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202606231822571&game_biz=nap",
     "game": "绝区零",
     "gameKey": "zzz",
     "type": "其他活动",
@@ -1632,7 +1632,7 @@
   {
     "id": "ys-37",
     "title": "「月之八」版本「映夏！归乡？千灵节！」内容专题页上线！",
-    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=026e946ecbc54a3d&bbs_presentation_style=fullscreen&utm_source=bbs&utm_medium=ys&utm_campaign=post",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=026e946ecbc54a3d",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1650,7 +1650,7 @@
   {
     "id": "ys-38",
     "title": "米游币抽抽乐-原神专场现已开启！",
-    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&id=e202607021808111&game_biz=hk4e&utm_source=bbs&utm_medium=ys&utm_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202607021808111&game_biz=hk4e",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1671,7 +1671,7 @@
   {
     "id": "sr-45",
     "title": "《崩坏：星穹铁道》4.4版本「鸣笛于归寂之时」专题展示页现已上线",
-    "url": "https://act.mihoyo.com/puzzle/hkrpg/e2070703decyhdTakKink_c5fa06d9da/index.html?game_biz=hkrpg_cn&mhy_presentation_style=fullscreen&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "url": "https://act.mihoyo.com/puzzle/hkrpg/e2070703decyhdTakKink_c5fa06d9da/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1689,7 +1689,7 @@
   {
     "id": "sr-46",
     "title": "《崩坏：星穹铁道》4.4版本前瞻特别节目",
-    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606231747484569&mhy_presentation_style=fullscreen&game_biz=hkrpg&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606231747484569",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "版本前瞻",
@@ -1711,7 +1711,7 @@
   {
     "id": "sr-47",
     "title": "银河铁道之夜绘画征集",
-    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-contribute/index.html?id=ea202606151740450477&act_id=ea202606151740450477&game_biz=hkrpg&mhy_presentation_style=fullscreen&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-contribute/index.html?id=ea202606151740450477&game_biz=hkrpg",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1732,7 +1732,7 @@
   {
     "id": "ys-39",
     "title": "创造星领域！-「奇域校园星」首届高校暑期创作赛启动！",
-    "url": "https://act.mihoyo.com/ys/event/e20260710creator/index.html?game_biz=hk4e_cn&mhy_auth_required=true",
+    "url": "https://act.mihoyo.com/ys/event/e20260710creator/index.html",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1753,7 +1753,7 @@
   {
     "id": "ys-40",
     "title": "来奇域，快乐一夏！",
-    "url": "https://act.mihoyo.com/ys/event/e20260715ugc-4svbyl/index.html?game_biz=hk4e_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&utm_source=bbs&utm_medium=mys&utm_campaign=arti",
+    "url": "https://act.mihoyo.com/ys/event/e20260715ugc-4svbyl/index.html",
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
@@ -1774,7 +1774,7 @@
   {
     "id": "sr-48",
     "title": "官方小程序&企业微信正式上线，每版本领专属星琼福利！",
-    "url": "https://act.mihoyo.com/sr/event/wechat-landing-ii2fz2/index.html?game_biz=hkrpg_cn&utm_source=bbs&utm_medium=mys&utm_campaign=post",
+    "url": "https://act.mihoyo.com/sr/event/wechat-landing-ii2fz2/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
@@ -1793,7 +1793,7 @@
   {
     "id": "sr-49",
     "title": "《崩坏：星穹铁道》「重返群星之旅」回归网页活动现已开启！",
-    "url": "https://act.mihoyo.com/sr/event/e20260715return-4wlzz5/index.html?game_biz=hkrpg_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=bbs&utm_medium=post",
+    "url": "https://act.mihoyo.com/sr/event/e20260715return-4wlzz5/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "回归活动",
@@ -1813,7 +1813,7 @@
   {
     "id": "zzz-12",
     "title": "初代虚狩，回归",
-    "url": "https://act.mihoyo.com/zzz/event/e20260717reserve-pvy5cf/index.html?game_biz=nap_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=oomys",
+    "url": "https://act.mihoyo.com/zzz/event/e20260717reserve-pvy5cf/index.html",
     "game": "绝区零",
     "gameKey": "zzz",
     "type": "回归活动",

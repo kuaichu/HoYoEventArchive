@@ -10,6 +10,7 @@ import {
   isEventCandidateUrl,
   isPermanentResourceUrl,
   resolveEventUrl,
+  resolveStoredEventUrl,
   selectEventTitle
 } from './crawler-rules.js';
 
@@ -56,6 +57,25 @@ assert.equal(resolvedZzzUrl, finalZzzUrl);
 assert.equal(redirectRequests.length, 2);
 assert.equal(redirectRequests[0].options.method, 'GET');
 assert.equal(redirectRequests[0].options.redirect, 'manual');
+
+const storedZzzUrl = await resolveStoredEventUrl(
+  'https://mhyurl.cn/normalized',
+  async (url) => {
+    if (url === 'https://mhyurl.cn/normalized') {
+      return {
+        ok: false,
+        status: 302,
+        headers: {
+          get: name => name.toLowerCase() === 'location'
+            ? `${finalZzzUrl}?game_biz=nap_cn&mhy_presentation_style=fullscreen&utm_source=bbs`
+            : null
+        }
+      };
+    }
+    return { ok: true, status: 200, headers: { get: () => null }, url };
+  }
+);
+assert.equal(storedZzzUrl, finalZzzUrl);
 
 let untrustedFetchCount = 0;
 const rejectedRedirect = await resolveEventUrl('https://mhyurl.cn/untrusted', async () => {
