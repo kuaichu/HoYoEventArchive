@@ -80,7 +80,7 @@ async function telegram(method, body) {
 async function sendMessage(text, target) {
   if (DRY_RUN) {
     console.log(`[dry-run] sendMessage to ${target}:\n${text}`);
-    return { chat: { id: target }, message_id: 0 };
+    return { chat: { id: target }, message_id: 1 };
   }
 
   return telegram('sendMessage', {
@@ -125,14 +125,11 @@ async function sendPhoto(caption, target, photoPath) {
 }
 
 async function deleteMessage(target, messageId) {
-  try {
-    await telegram('deleteMessage', {
-      chat_id: target,
-      message_id: messageId
-    });
-  } catch (err) {
-    console.warn(`Failed to delete Telegram message ${messageId}: ${err.message}`);
-  }
+  await telegram('deleteMessage', {
+    chat_id: target,
+    message_id: messageId
+  });
+  console.log(`Deleted Telegram message ${messageId} from ${target}.`);
 }
 
 function parseEventUpdates() {
@@ -231,6 +228,45 @@ export function summarizeDeliveries(results) {
   };
 }
 
+export async function deleteDeliveredMessages(
+  results,
+  deleteAfterSeconds,
+  {
+    sleepFn = sleep,
+    deleteFn = deleteMessage,
+    dryRun = DRY_RUN,
+    label = 'notification'
+  } = {}
+) {
+  if (deleteAfterSeconds <= 0) return 0;
+
+  const successful = results.filter(result => result.ok);
+  if (successful.length === 0) {
+    throw new Error(`Cannot delete Telegram ${label}: no successful deliveries were recorded.`);
+  }
+
+  const messages = successful.map(result => {
+    const chatId = result.message?.chat?.id;
+    const messageId = result.message?.message_id;
+    if (chatId === undefined || chatId === null || messageId === undefined || messageId === null) {
+      throw new Error(`Cannot delete Telegram ${label}: missing Telegram message identifiers.`);
+    }
+    return { chatId, messageId };
+  });
+
+  console.log(`Telegram ${label} will be deleted in ${deleteAfterSeconds}s.`);
+  if (dryRun) return messages.length;
+
+  await sleepFn(deleteAfterSeconds);
+  await Promise.all(messages.map(item => deleteFn(item.chatId, item.messageId)));
+  return messages.length;
+}
+
+function targetsExcluding(targets, excludedTargets) {
+  const excluded = new Set(chatIds(excludedTargets));
+  return chatIds(targets).filter(target => !excluded.has(target)).join(',');
+}
+
 export function buildFinishedNotificationPlan({
   status,
   dataChanged,
@@ -256,7 +292,12 @@ export function buildFinishedNotificationPlan({
     : dataChanged
       ? 'changed and committed'
       : 'no changes';
-  const shouldDelete = status === 'success' && !dataChanged;
+  const eventCardsEnabled = status === 'success' && dataChanged && eventUpdates.length > 0;
+  const summaryTargets = eventCardsEnabled
+    ? targetsExcluding(statusTargets, eventTargets)
+    : statusTargets;
+  const silentNoChange = status === 'success' && !dataChanged && !notificationTest;
+  const summaryEnabled = !notificationTest && !silentNoChange && (!eventCardsEnabled || Boolean(summaryTargets));
   let text = `${title}
 Project: ${htmlEscape(project)}
 Status: ${htmlEscape(status)}
@@ -276,25 +317,22 @@ Updates: changed, but no newly added event summary was generated`;
   text += `
 Run: <a href="${runUrl}">#${runId}</a>`;
 
-  if (shouldDelete) {
-    text += `
-Note: no repository changes detected; this temporary notice will be deleted.`;
-  }
-
   return {
     eventCards: {
-      enabled: status === 'success' && dataChanged && eventUpdates.length > 0,
-      targets: eventTargets
+      enabled: eventCardsEnabled,
+      targets: eventTargets,
+      deleteAfterSeconds: notificationTest ? transientDeleteAfterSeconds : 0
     },
     summary: {
+      enabled: summaryEnabled,
       text,
-      targets: statusTargets,
-      deleteAfterSeconds: shouldDelete ? transientDeleteAfterSeconds : 0
+      targets: summaryTargets || statusTargets,
+      deleteAfterSeconds: 0
     }
   };
 }
 
-async function sendEventCards(events, targets) {
+async function sendEventCards(events, targets, deleteAfterSeconds = 0) {
   const results = [];
 
   for (const event of events) {
@@ -303,12 +341,13 @@ async function sendEventCards(events, targets) {
 
     for (const target of chatIds(targets)) {
       try {
+        let message;
         if (existsSync(screenshotPath)) {
-          await sendPhoto(caption, target, screenshotPath);
+          message = await sendPhoto(caption, target, screenshotPath);
         } else {
-          await sendMessage(caption, target);
+          message = await sendMessage(caption, target);
         }
-        results.push({ ok: true, target, eventId: event.id });
+        results.push({ ok: true, target, eventId: event.id, message });
       } catch (err) {
         results.push({ ok: false, target, eventId: event.id, error: err.message });
         console.warn(`Failed to send event card for ${event.id || event.title} to ${target}: ${err.message}`);
@@ -316,19 +355,19 @@ async function sendEventCards(events, targets) {
     }
   }
 
-  return summarizeDeliveries(results);
+  const summary = summarizeDeliveries(results);
+  if (deleteAfterSeconds > 0 && summary.sentCount > 0) {
+    await deleteDeliveredMessages(results, deleteAfterSeconds, { label: 'event card' });
+  }
+  return summary;
 }
 
 async function sendToTargets(label, text, targets, deleteAfterSeconds = 0) {
-  const sent = [];
   const results = [];
   for (const target of chatIds(targets)) {
     try {
-      const result = await sendMessage(text, target);
-      results.push({ ok: true, target });
-      if (result?.chat?.id && result?.message_id) {
-        sent.push({ chatId: result.chat.id, messageId: result.message_id });
-      }
+      const message = await sendMessage(text, target);
+      results.push({ ok: true, target, message });
     } catch (err) {
       results.push({ ok: false, target, error: err.message });
       console.warn(`Failed to send Telegram ${label} notification to ${target}: ${err.message}`);
@@ -336,18 +375,13 @@ async function sendToTargets(label, text, targets, deleteAfterSeconds = 0) {
   }
 
   const summary = summarizeDeliveries(results);
+  if (deleteAfterSeconds > 0 && summary.sentCount > 0) {
+    await deleteDeliveredMessages(results, deleteAfterSeconds, { label });
+  }
   if (!summary.ok) {
     throw new Error(
       `Telegram ${label} delivery incomplete: ${summary.sentCount}/${summary.attempted} target(s) succeeded.`
     );
-  }
-
-  if (deleteAfterSeconds > 0) {
-    console.log(`Telegram ${label} notification will be deleted in ${deleteAfterSeconds}s.`);
-    if (!DRY_RUN) {
-      await sleep(deleteAfterSeconds);
-      await Promise.all(sent.map(item => deleteMessage(item.chatId, item.messageId)));
-    }
   }
 
   return summary;
@@ -403,12 +437,17 @@ Run: <a href="${runUrl}">#${runId}</a>`;
     transientDeleteAfterSeconds: TRANSIENT_DELETE_AFTER_SECONDS,
     notificationTest: process.env.TG_NOTIFICATION_TEST === '1'
   });
+  const notificationTest = process.env.TG_NOTIFICATION_TEST === '1';
   let cardDeliveryError;
 
   if (plan.eventCards.enabled) {
-    const cardDelivery = await sendEventCards(eventUpdates, plan.eventCards.targets);
+    const cardDelivery = await sendEventCards(
+      eventUpdates,
+      plan.eventCards.targets,
+      plan.eventCards.deleteAfterSeconds
+    );
     if (cardDelivery.ok) {
-      console.log(`Sent ${cardDelivery.sentCount} persistent event card notification(s).`);
+      console.log(`Sent ${cardDelivery.sentCount} event card notification(s).`);
     } else if (cardDelivery.sentCount > 0) {
       cardDeliveryError = new Error(
         `Event card delivery incomplete: ${cardDelivery.sentCount}/${cardDelivery.attempted} succeeded.`
@@ -419,12 +458,20 @@ Run: <a href="${runUrl}">#${runId}</a>`;
     }
   }
 
-  await sendToTargets(
-    'result',
-    plan.summary.text,
-    plan.summary.targets,
-    plan.summary.deleteAfterSeconds
-  );
+  if (notificationTest && !plan.eventCards.enabled) {
+    throw new Error('Telegram notification test requires at least one synthetic event card.');
+  }
+
+  if (plan.summary.enabled || (cardDeliveryError && !notificationTest)) {
+    await sendToTargets(
+      'result',
+      plan.summary.text,
+      plan.summary.targets,
+      plan.summary.deleteAfterSeconds
+    );
+  } else if (!plan.eventCards.enabled) {
+    console.log('No repository changes detected; skipping Telegram notification.');
+  }
 
   if (cardDeliveryError) throw cardDeliveryError;
 }

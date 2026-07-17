@@ -1,7 +1,11 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { buildFinishedNotificationPlan, resolveTelegramTargets } from '../scripts/tg-notify.js';
+import {
+  buildFinishedNotificationPlan,
+  deleteDeliveredMessages,
+  resolveTelegramTargets
+} from '../scripts/tg-notify.js';
 
 const baseInput = {
   status: 'success',
@@ -12,7 +16,7 @@ const baseInput = {
   runUrl: 'https://github.com/kuaichu/HoYoEventArchive/actions/runs/123',
   statusTargets: '-100-status',
   eventTargets: '-100-channel',
-  transientDeleteAfterSeconds: 90
+  transientDeleteAfterSeconds: 120
 };
 
 test('event cards fall back to the working status chat when no channel is configured', () => {
@@ -26,7 +30,7 @@ test('event cards fall back to the working status chat when no channel is config
   );
 });
 
-test('successful no-change runs send a temporary status summary only', () => {
+test('successful no-change runs stay silent', () => {
   const plan = buildFinishedNotificationPlan({
     ...baseInput,
     dataChanged: false,
@@ -35,10 +39,7 @@ test('successful no-change runs send a temporary status summary only', () => {
   });
 
   assert.equal(plan.eventCards.enabled, false);
-  assert.equal(plan.summary.targets, '-100-status');
-  assert.equal(plan.summary.deleteAfterSeconds, 90);
-  assert.match(plan.summary.text, /Data: no changes/);
-  assert.match(plan.summary.text, /temporary notice will be deleted/);
+  assert.equal(plan.summary.enabled, false);
 });
 
 test('changed runs send event cards to the channel and a persistent summary to the status chat', () => {
@@ -51,11 +52,27 @@ test('changed runs send event cards to the channel and a persistent summary to t
 
   assert.equal(plan.eventCards.enabled, true);
   assert.equal(plan.eventCards.targets, '-100-channel');
+  assert.equal(plan.eventCards.deleteAfterSeconds, 0);
+  assert.equal(plan.summary.enabled, true);
   assert.equal(plan.summary.targets, '-100-status');
   assert.equal(plan.summary.deleteAfterSeconds, 0);
   assert.match(plan.summary.text, /Data: changed and committed/);
   assert.doesNotMatch(plan.summary.text, /no changes/);
   assert.doesNotMatch(plan.summary.text, /temporary notice will be deleted/);
+});
+
+test('changed runs do not duplicate a summary when cards and status share one chat', () => {
+  const plan = buildFinishedNotificationPlan({
+    ...baseInput,
+    dataChanged: true,
+    updateSummary: '新增活动: 通知测试活动',
+    eventUpdates: [{ id: 'notification-test', title: '通知测试活动' }],
+    statusTargets: '-100-status',
+    eventTargets: '-100-status'
+  });
+
+  assert.equal(plan.eventCards.enabled, true);
+  assert.equal(plan.summary.enabled, false);
 });
 
 test('committed non-event changes are not mislabeled or deleted', () => {
@@ -67,13 +84,14 @@ test('committed non-event changes are not mislabeled or deleted', () => {
   });
 
   assert.equal(plan.eventCards.enabled, false);
+  assert.equal(plan.summary.enabled, true);
   assert.equal(plan.summary.deleteAfterSeconds, 0);
   assert.match(plan.summary.text, /changed and committed/);
   assert.match(plan.summary.text, /no newly added event summary was generated/);
   assert.doesNotMatch(plan.summary.text, /no event updates detected/);
 });
 
-test('synthetic notification tests are clearly labeled as uncommitted', () => {
+test('synthetic notification tests send one temporary card and no summary', () => {
   const plan = buildFinishedNotificationPlan({
     ...baseInput,
     dataChanged: true,
@@ -82,11 +100,9 @@ test('synthetic notification tests are clearly labeled as uncommitted', () => {
     notificationTest: true
   });
 
-  assert.match(plan.summary.text, /notification test/);
-  assert.match(plan.summary.text, /simulated change \(not committed\)/);
-  assert.doesNotMatch(plan.summary.text, /changed and committed/);
-  assert.equal(plan.summary.deleteAfterSeconds, 0);
   assert.equal(plan.eventCards.enabled, true);
+  assert.equal(plan.eventCards.deleteAfterSeconds, 120);
+  assert.equal(plan.summary.enabled, false);
 });
 
 test('failed runs always produce a persistent status-chat summary', () => {
@@ -99,7 +115,42 @@ test('failed runs always produce a persistent status-chat summary', () => {
   });
 
   assert.equal(plan.eventCards.enabled, false);
+  assert.equal(plan.summary.enabled, true);
   assert.equal(plan.summary.targets, '-100-status');
   assert.equal(plan.summary.deleteAfterSeconds, 0);
   assert.match(plan.summary.text, /sync failed/);
+});
+
+test('deletion refuses to silently succeed without Telegram message identifiers', async () => {
+  await assert.rejects(
+    deleteDeliveredMessages(
+      [{ ok: true, target: '-100-status' }],
+      120,
+      { sleepFn: async () => {}, deleteFn: async () => true, dryRun: false }
+    ),
+    /missing Telegram message identifiers/
+  );
+});
+
+test('Telegram deletion failures propagate to the workflow', async () => {
+  const delivery = {
+    ok: true,
+    target: '-100-status',
+    message: { chat: { id: -100123 }, message_id: 456 }
+  };
+
+  await assert.rejects(
+    deleteDeliveredMessages(
+      [delivery],
+      120,
+      {
+        sleepFn: async () => {},
+        deleteFn: async () => {
+          throw new Error('delete forbidden');
+        },
+        dryRun: false
+      }
+    ),
+    /delete forbidden/
+  );
 });

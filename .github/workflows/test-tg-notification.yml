@@ -20,6 +20,7 @@ jobs:
       TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       TG_CHANNEL_CHAT_ID: ${{ secrets.TELEGRAM_CHANNEL_CHAT_ID }}
       TG_NOTIFICATION_TEST: '1'
+      TG_TRANSIENT_DELETE_AFTER_SECONDS: '120'
       TEST_EVENT_URL: ${{ inputs.event_url }}
 
     steps:
@@ -39,7 +40,7 @@ jobs:
               game: "通知测试",
               gameKey: "test",
               version: "通用",
-              title: "[通知测试] 虚拟活动（不会写入网站）",
+              title: "[通知测试] 虚拟活动（2 分钟后自动删除）",
               url: process.env.TEST_EVENT_URL,
               date: "2026.07.17",
               startDate: "2026.07.17",
@@ -51,5 +52,4 @@ jobs:
             process.stdout.write(Buffer.from(JSON.stringify([event])).toString("base64"));
           ')
           export EVENT_UPDATE_JSON_B64
-          export EVENT_UPDATE_SUMMARY="[TEST ONLY] Simulated one fake event. No event data was committed and the site was not deployed."
           node scripts/tg-notify.js finished success true workflow_dispatch 0
