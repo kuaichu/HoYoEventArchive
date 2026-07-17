@@ -235,38 +235,99 @@ function escapeHtml(value) {
     .replaceAll('"', '&quot;');
 }
 
-async function renderFallbackScreenshot(page, event, outputPath) {
-  const palettes = {
-    ys: ['#17314f', '#d8a64f'],
-    sr: ['#1f244d', '#9b7ad6'],
-    zzz: ['#17191f', '#f2c84b'],
-    bh3: ['#243d5c', '#63c7df']
+export function buildFallbackScreenshotHtml(event) {
+  const themes = {
+    ys: {
+      background: '#102b45',
+      panel: '#174d69',
+      accent: '#f0bd53',
+      accent2: '#75d4e6',
+      monogram: '原'
+    },
+    sr: {
+      background: '#17183f',
+      panel: '#39285f',
+      accent: '#c6a6ff',
+      accent2: '#f6a75b',
+      monogram: '轨'
+    },
+    zzz: {
+      background: '#17191d',
+      panel: '#393b2d',
+      accent: '#ffd84a',
+      accent2: '#8ce6d1',
+      monogram: 'Z'
+    },
+    bh3: {
+      background: '#102b43',
+      panel: '#16536b',
+      accent: '#69dbff',
+      accent2: '#ff8ab9',
+      monogram: '崩'
+    }
   };
-  const [background, accent] = palettes[event.gameKey] || ['#20263a', '#7f8cff'];
+  const theme = themes[event.gameKey] || {
+    background: '#20263a',
+    panel: '#38415f',
+    accent: '#9ca9ff',
+    accent2: '#77e2d0',
+    monogram: '档'
+  };
   const time = event.startDate && event.endDate
     ? `${event.startDate} — ${event.endDate}`
     : `公告日期 ${event.date || '未识别'}`;
-  await page.setContent(`<!doctype html>
+  const titleLength = Array.from(String(event.title || '')).length;
+  const titleSize = titleLength > 34 ? 43 : titleLength > 24 ? 49 : titleLength > 15 ? 56 : 66;
+  return `<!doctype html>
     <html lang="zh-CN"><head><meta charset="utf-8"><style>
       *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
-      body{font-family:"Microsoft YaHei","Noto Sans CJK SC",Arial,sans-serif;color:#fff;
-        background:radial-gradient(circle at 78% 18%,${accent}55,transparent 34%),linear-gradient(135deg,${background},#090b13 78%)}
-      .frame{height:100%;padding:58px 70px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
-      .frame:after{content:"";position:absolute;inset:22px;border:1px solid ${accent}66;border-radius:24px;pointer-events:none}
-      .game{font-size:25px;color:${accent};font-weight:700;letter-spacing:.12em}
-      h1{font-size:58px;line-height:1.15;margin:20px 0;max-width:850px;text-wrap:balance}
-      .meta{font-size:24px;color:#d8dbea;display:flex;gap:18px;flex-wrap:wrap}
-      .tag{padding:8px 15px;border:1px solid ${accent}88;border-radius:999px;background:#0005}
-      .note{font-size:20px;color:#aeb5c8}.accent{width:105px;height:7px;background:${accent};border-radius:9px;margin-bottom:18px}
-    </style></head><body><div class="frame">
-      <div><div class="game">${escapeHtml(event.game || event.gameKey)}</div><div class="accent"></div>
-        <h1>${escapeHtml(event.title)}</h1><div class="meta">
+      body{font-family:"Microsoft YaHei","Noto Sans CJK SC",Arial,sans-serif;color:#fff;background:${theme.background}}
+      .cover{position:relative;width:100%;height:100%;overflow:hidden;
+        background:
+          radial-gradient(circle at 82% 20%,${theme.accent}55 0,transparent 24%),
+          radial-gradient(circle at 72% 88%,${theme.accent2}44 0,transparent 25%),
+          linear-gradient(118deg,${theme.background} 0%,${theme.panel} 58%,#090b13 100%)}
+      .cover:before{content:"";position:absolute;inset:-35%;opacity:.32;transform:rotate(-14deg);
+        background:repeating-linear-gradient(90deg,transparent 0 72px,${theme.accent}33 73px 75px)}
+      .cover:after{content:"";position:absolute;inset:22px;border:2px solid ${theme.accent}77;
+        clip-path:polygon(0 0,100% 0,100% 72%,92% 100%,0 100%);pointer-events:none}
+      .slice{position:absolute;right:-120px;top:-145px;width:590px;height:810px;transform:rotate(22deg);
+        border:46px solid ${theme.accent}36;border-left-color:${theme.accent2}66;border-radius:48%}
+      .slice.two{right:40px;top:105px;width:310px;height:430px;border-width:18px;opacity:.72}
+      .dots{position:absolute;right:54px;bottom:46px;width:230px;height:92px;opacity:.55;
+        background-image:radial-gradient(${theme.accent} 2.4px,transparent 2.4px);background-size:18px 18px}
+      .monogram{position:absolute;right:60px;top:86px;font-family:Impact,"Arial Black",sans-serif;
+        font-size:286px;line-height:1;color:${theme.accent};opacity:.16;transform:rotate(-7deg);
+        -webkit-text-stroke:3px #fff;text-shadow:0 0 55px ${theme.accent}}
+      .serial{position:absolute;right:58px;top:46px;font:700 17px/1 Arial,sans-serif;letter-spacing:.22em;
+        color:${theme.accent};text-transform:uppercase}
+      .content{position:absolute;left:70px;right:260px;top:118px;bottom:58px;display:flex;flex-direction:column}
+      .game{display:flex;align-items:center;gap:13px;font-size:25px;color:${theme.accent};font-weight:800;letter-spacing:.13em}
+      .game:before{content:"";width:58px;height:8px;background:${theme.accent};box-shadow:18px 0 ${theme.accent2};transform:skewX(-22deg)}
+      h1{font-size:${titleSize}px;line-height:1.08;margin:24px 0 22px;max-width:720px;text-wrap:balance;
+        text-shadow:0 5px 24px #050712cc;font-weight:900;letter-spacing:-.025em}
+      .rule{width:170px;height:5px;margin-bottom:20px;background:linear-gradient(90deg,${theme.accent},${theme.accent2},transparent)}
+      .meta{margin-top:auto;font-size:21px;color:#f3f5ff;display:flex;gap:12px;flex-wrap:wrap}
+      .tag{padding:7px 14px;border:1px solid ${theme.accent}99;border-radius:6px;background:#090b13aa;
+        box-shadow:inset 0 0 18px ${theme.accent}14}
+      .archive{position:absolute;left:70px;bottom:25px;font:700 14px/1 Arial,sans-serif;letter-spacing:.2em;
+        color:#dce2f0aa;text-transform:uppercase}
+    </style></head><body><div class="cover">
+      <div class="slice"></div><div class="slice two"></div><div class="dots"></div>
+      <div class="monogram">${escapeHtml(theme.monogram)}</div>
+      <div class="serial">${escapeHtml(event.gameKey || 'event')} / archive</div>
+      <div class="content"><div class="game">${escapeHtml(event.game || event.gameKey)}</div>
+        <h1>${escapeHtml(event.title)}</h1><div class="rule"></div><div class="meta">
           <span class="tag">${escapeHtml(event.version || '通用')}</span>
           <span class="tag">${escapeHtml(event.type || '网页活动')}</span>
           <span class="tag">${escapeHtml(time)}</span>
         </div></div>
-      <div class="note">活动页面暂无法生成可靠封面 · HoYo Event Archive</div>
-    </div></body></html>`, { waitUntil: 'domcontentloaded' });
+      <div class="archive">HoYo Event Archive · Curated Cover</div>
+    </div></body></html>`;
+}
+
+async function renderFallbackScreenshot(page, event, outputPath) {
+  await page.setContent(buildFallbackScreenshotHtml(event), { waitUntil: 'domcontentloaded' });
   const buffer = await page.screenshot({ type: 'png' });
   if (!isScreenshotBufferUsable(buffer)) throw new Error('Generated fallback screenshot is unexpectedly small.');
   fs.writeFileSync(outputPath, buffer);

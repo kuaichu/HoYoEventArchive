@@ -7,6 +7,7 @@ import {
   shouldFailCrawler
 } from '../scripts/miyoushe-crawler.js';
 import {
+  buildFallbackScreenshotHtml,
   classifyEventPageState,
   classifyGenericPageQuality,
   isScreenshotBufferUsable,
@@ -201,6 +202,24 @@ test('generic screenshot quality rejects loading and error pages', () => {
 test('tiny PNG buffers are rejected as blank or incomplete screenshots', () => {
   assert.equal(isScreenshotBufferUsable(Buffer.alloc(9_999)), false);
   assert.equal(isScreenshotBufferUsable(Buffer.alloc(10_000)), true);
+});
+
+test('fallback covers use a thumbnail-safe poster layout instead of an empty dark panel', () => {
+  const html = buildFallbackScreenshotHtml({
+    game: '原神',
+    gameKey: 'ys',
+    title: '来奇域，快乐一夏！',
+    version: '通用',
+    type: '其他活动',
+    date: '2026.07.15'
+  });
+
+  assert.match(html, /class="monogram">原</);
+  assert.match(html, /class="slice"/);
+  assert.match(html, /top:118px/);
+  assert.match(html, /font-size:66px/);
+  assert.match(html, /来奇域，快乐一夏！/);
+  assert.doesNotMatch(html, /无法生成可靠封面/);
 });
 
 test('metadata changes to an existing event produce a notifiable update', () => {
