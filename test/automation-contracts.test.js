@@ -8,6 +8,8 @@ import {
 } from '../scripts/miyoushe-crawler.js';
 import {
   classifyEventPageState,
+  classifyGenericPageQuality,
+  isScreenshotBufferUsable,
   navigateWithRetries,
   screenshotNavigationUrl,
   selectMissingScreenshotEvents
@@ -175,6 +177,30 @@ test('screenshot navigation strips tracking parameters and retries transient tim
     response
   );
   assert.equal(attempts, 3);
+});
+
+test('generic screenshot quality rejects loading and error pages', () => {
+  assert.equal(
+    classifyGenericPageQuality({ visibleText: '正在加载中，请稍候', hasVisibleLoading: true }),
+    'waiting'
+  );
+  assert.equal(
+    classifyGenericPageQuality({ visibleText: 'auth key解析失败', hasVisibleLoading: false }),
+    'fatal-error'
+  );
+  assert.equal(
+    classifyGenericPageQuality({ visibleText: '您没有登录，请登录后查看', hasVisibleLoading: false }),
+    'fatal-error'
+  );
+  assert.equal(
+    classifyGenericPageQuality({ visibleText: '活动主页面已经加载完成', hasVisibleLoading: false }),
+    'ready'
+  );
+});
+
+test('tiny PNG buffers are rejected as blank or incomplete screenshots', () => {
+  assert.equal(isScreenshotBufferUsable(Buffer.alloc(9_999)), false);
+  assert.equal(isScreenshotBufferUsable(Buffer.alloc(10_000)), true);
 });
 
 test('metadata changes to an existing event produce a notifiable update', () => {

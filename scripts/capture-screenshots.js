@@ -17,6 +17,15 @@ const forcedScreenshotIds = new Set(
     .map(value => value.trim())
     .filter(Boolean)
 );
+const fallbackArg = process.argv.find(arg => arg.startsWith('--fallback='));
+const fallbackScreenshotIds = new Set(
+  (fallbackArg ? fallbackArg.split('=')[1] : '')
+    .split(',')
+    .map(value => value.trim())
+    .filter(Boolean)
+);
+const fallbackOnFailure = process.argv.includes('--fallback-on-failure');
+const requestedScreenshotIds = new Set([...forcedScreenshotIds, ...fallbackScreenshotIds]);
 
 const limitArg = process.argv.find(arg => arg.startsWith('--limit='));
 const parsedLimit = limitArg ? Number.parseInt(limitArg.split('=')[1], 10) : Number.POSITIVE_INFINITY;
@@ -60,6 +69,25 @@ export function classifyEventPageState({
   return homeVisible && loadingComplete && loadingHidden && mainScene && gameReady
     ? 'ready'
     : 'waiting';
+}
+
+export function classifyGenericPageQuality({ visibleText = '', hasVisibleLoading = false }) {
+  const normalizedText = String(visibleText || '').replace(/\s+/g, ' ').trim();
+  if (
+    /auth\s*key.*解析失败|您没有登录|当前暂未登录|请选择登录方式|分享链接有误|活动已下线|资源加载失败/i.test(
+      normalizedText
+    )
+  ) {
+    return 'fatal-error';
+  }
+  if (hasVisibleLoading || /(?:正在)?加载中|loading\.{0,3}|请稍候/i.test(normalizedText)) {
+    return 'waiting';
+  }
+  return 'ready';
+}
+
+export function isScreenshotBufferUsable(buffer) {
+  return Boolean(buffer && buffer.length >= 10_000);
 }
 
 export function screenshotNavigationUrl(rawUrl) {
@@ -113,6 +141,35 @@ async function readEventPageState(page) {
   });
 }
 
+async function readGenericPageQuality(page) {
+  return page.evaluate(() => {
+    const isVisible = element => {
+      if (!element) return false;
+      const style = getComputedStyle(element);
+      const rect = element.getBoundingClientRect();
+      return style.display !== 'none' && style.visibility !== 'hidden' && rect.width > 10 && rect.height > 10;
+    };
+    const loadingSelectors = [
+      '[role="progressbar"]',
+      '[class*="loading"]',
+      '[class*="spinner"]',
+      '[class*="progress"]'
+    ];
+    const hasVisibleLoading = loadingSelectors.some(selector =>
+      [...document.querySelectorAll(selector)].some(element => {
+        if (!isVisible(element)) return false;
+        const style = getComputedStyle(element);
+        const text = String(element.textContent || '');
+        return style.animationName !== 'none' || /加载|loading/i.test(text) || element.getAttribute('role') === 'progressbar';
+      })
+    );
+    return {
+      visibleText: String(document.body?.innerText || '').slice(0, 12000),
+      hasVisibleLoading
+    };
+  });
+}
+
 export async function waitForEventPageReady(
   page,
   { timeoutMs = 30000, genericSettleMs = 5000, pollIntervalMs = 250 } = {}
@@ -153,13 +210,66 @@ export async function waitForEventPageReady(
       return 'event-ui';
     }
     if (!sawEventEngine && Date.now() - startedAt >= genericSettleMs) {
-      return 'generic';
+      const genericQuality = await readGenericPageQuality(page);
+      const genericState = classifyGenericPageQuality(genericQuality);
+      if (genericState === 'fatal-error') {
+        throw new Error(`Generic event page failed quality checks: ${genericQuality.visibleText.slice(0, 160)}`);
+      }
+      if (genericState === 'ready') {
+        await sleep(1000);
+        return 'generic';
+      }
     }
 
     await sleep(pollIntervalMs);
   }
 
   throw new Error('Timed out waiting for the event main UI to become ready.');
+}
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;');
+}
+
+async function renderFallbackScreenshot(page, event, outputPath) {
+  const palettes = {
+    ys: ['#17314f', '#d8a64f'],
+    sr: ['#1f244d', '#9b7ad6'],
+    zzz: ['#17191f', '#f2c84b'],
+    bh3: ['#243d5c', '#63c7df']
+  };
+  const [background, accent] = palettes[event.gameKey] || ['#20263a', '#7f8cff'];
+  const time = event.startDate && event.endDate
+    ? `${event.startDate} — ${event.endDate}`
+    : `公告日期 ${event.date || '未识别'}`;
+  await page.setContent(`<!doctype html>
+    <html lang="zh-CN"><head><meta charset="utf-8"><style>
+      *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden}
+      body{font-family:"Microsoft YaHei","Noto Sans CJK SC",Arial,sans-serif;color:#fff;
+        background:radial-gradient(circle at 78% 18%,${accent}55,transparent 34%),linear-gradient(135deg,${background},#090b13 78%)}
+      .frame{height:100%;padding:58px 70px;display:flex;flex-direction:column;justify-content:space-between;position:relative}
+      .frame:after{content:"";position:absolute;inset:22px;border:1px solid ${accent}66;border-radius:24px;pointer-events:none}
+      .game{font-size:25px;color:${accent};font-weight:700;letter-spacing:.12em}
+      h1{font-size:58px;line-height:1.15;margin:20px 0;max-width:850px;text-wrap:balance}
+      .meta{font-size:24px;color:#d8dbea;display:flex;gap:18px;flex-wrap:wrap}
+      .tag{padding:8px 15px;border:1px solid ${accent}88;border-radius:999px;background:#0005}
+      .note{font-size:20px;color:#aeb5c8}.accent{width:105px;height:7px;background:${accent};border-radius:9px;margin-bottom:18px}
+    </style></head><body><div class="frame">
+      <div><div class="game">${escapeHtml(event.game || event.gameKey)}</div><div class="accent"></div>
+        <h1>${escapeHtml(event.title)}</h1><div class="meta">
+          <span class="tag">${escapeHtml(event.version || '通用')}</span>
+          <span class="tag">${escapeHtml(event.type || '网页活动')}</span>
+          <span class="tag">${escapeHtml(time)}</span>
+        </div></div>
+      <div class="note">活动页面暂无法生成可靠封面 · HoYo Event Archive</div>
+    </div></body></html>`, { waitUntil: 'domcontentloaded' });
+  const buffer = await page.screenshot({ type: 'png' });
+  if (!isScreenshotBufferUsable(buffer)) throw new Error('Generated fallback screenshot is unexpectedly small.');
+  fs.writeFileSync(outputPath, buffer);
 }
 
 export async function captureScreenshots() {
@@ -173,7 +283,7 @@ export async function captureScreenshots() {
     events,
     event => fs.existsSync(path.join(outputDir, `${event.id}.png`)),
     captureLimit,
-    forcedScreenshotIds
+    requestedScreenshotIds
   );
 
   console.log(`Found ${missingEvents.length} missing screenshot(s) eligible for capture.`);
@@ -192,6 +302,7 @@ export async function captureScreenshots() {
 
   let browser;
   let failureCount = 0;
+  let fallbackCount = 0;
   try {
     browser = await puppeteer.launch({
       headless: true,
@@ -212,6 +323,13 @@ export async function captureScreenshots() {
         page.setDefaultNavigationTimeout(45000);
         page.setDefaultTimeout(45000);
 
+      if (fallbackScreenshotIds.has(event.id)) {
+        await renderFallbackScreenshot(page, event, outputPath);
+        fallbackCount++;
+        console.log(`-> Saved curated fallback cover to: ${outputPath}`);
+        continue;
+      }
+
       const navigationUrl = screenshotNavigationUrl(event.url);
       console.log(`-> Navigating to: ${navigationUrl}`);
 
@@ -221,19 +339,33 @@ export async function captureScreenshots() {
       const response = await navigateWithRetries(page, navigationUrl);
       
       if (response && response.status() >= 400) {
-        console.log(`-> URL returned HTTP ${response.status()}. Skipping.`);
-        continue;
+        throw new Error(`URL returned HTTP ${response.status()}.`);
       }
 
       const readinessMode = await waitForEventPageReady(page);
       console.log(`-> Page readiness confirmed (${readinessMode}).`);
 
-      await page.screenshot({ path: outputPath, type: 'png' });
+      const screenshotBuffer = await page.screenshot({ type: 'png' });
+      if (!isScreenshotBufferUsable(screenshotBuffer)) {
+        throw new Error(`Screenshot buffer is too small (${screenshotBuffer.length} bytes).`);
+      }
+      fs.writeFileSync(outputPath, screenshotBuffer);
       console.log(`-> Saved screenshot to: ${outputPath}`);
 
       } catch (error) {
-        failureCount++;
         console.error(`-> Error capturing screenshot for ${event.title}:`, error.message);
+        if (fallbackOnFailure && page) {
+          try {
+            await renderFallbackScreenshot(page, event, outputPath);
+            fallbackCount++;
+            console.log(`-> Saved fallback cover after capture failure: ${outputPath}`);
+          } catch (fallbackError) {
+            failureCount++;
+            console.error(`-> Error rendering fallback for ${event.title}:`, fallbackError.message);
+          }
+        } else {
+          failureCount++;
+        }
       } finally {
         await page?.close().catch(error => {
           console.warn(`-> Failed to close page for ${event.title}:`, error.message);
@@ -248,7 +380,7 @@ export async function captureScreenshots() {
     throw new Error(`${failureCount} screenshot capture(s) failed.`);
   }
 
-  console.log('\nScreenshot capture process completed successfully!');
+  console.log(`\nScreenshot capture process completed successfully (${fallbackCount} fallback cover(s)).`);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {

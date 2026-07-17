@@ -77,7 +77,7 @@ test('the complete event collection satisfies the shared contract', () => {
   assert.deepEqual(validateEventCollection(events), []);
 });
 
-test('July announcement records are restored from the invalid ended state', () => {
+test('July announcement records stay available while preserving verified event windows', () => {
   const julyIds = new Set([
     'ys-38',
     'sr-45',
@@ -91,10 +91,18 @@ test('July announcement records are restored from the invalid ended state', () =
 
   const julyEvents = events.filter(event => julyIds.has(event.id));
   assert.equal(julyEvents.length, julyIds.size);
+  const verifiedEndDates = new Map([
+    ['ys-38', '2026.07.05'],
+    ['sr-46', '2026.07.05'],
+    ['sr-47', '2026.08.18'],
+    ['ys-39', '2026.08.31'],
+    ['ys-40', '2026.07.28']
+  ]);
 
   for (const event of julyEvents) {
     assert.equal(event.status, '可访问', `${event.id} should be available`);
     assert.equal(event.dateType, 'announcement');
-    assert.equal(event.endDate, undefined);
+    assert.equal(event.endDate, verifiedEndDates.get(event.id));
+    if (event.endDate) assert.notEqual(event.endDate, event.date);
   }
 });
