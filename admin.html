@@ -10,7 +10,7 @@
     <meta name="robots" content="noindex, nofollow" />
   </head>
   <body>
-    <div id="admin-app" style="min-height: 100vh; display: flex; flex-direction: column; background: #060713;">
+    <div id="admin-app" style="height: 100vh; display: flex; flex-direction: column; background: #060713;">
       <!-- Header Section -->
       <header class="header-bar" style="position: static; height: 70px; display: flex; justify-content: space-between; align-items: center; padding: 0 24px; background: rgba(9, 11, 28, 0.8); border-bottom: 1px solid var(--border-color); backdrop-filter: blur(10px); flex-shrink: 0;">
         <div class="logo-section">
@@ -32,7 +32,7 @@
       </header>
 
       <!-- Main Layout -->
-      <div style="flex: 1; display: grid; grid-template-columns: 280px 1fr; overflow: hidden; height: calc(100vh - 70px);">
+      <div style="min-height: 0; flex: 1; display: grid; grid-template-columns: 280px 1fr; overflow: hidden; height: calc(100vh - 70px);">
         <!-- Sidebar controls -->
         <aside style="background: rgba(9, 11, 28, 0.6); border-right: 1px solid var(--border-color); padding: 24px; display: flex; flex-direction: column; gap: 24px; overflow-y: auto; backdrop-filter: blur(10px);">
           <div style="display: flex; flex-direction: column; gap: 10px;">
@@ -54,7 +54,7 @@
         </aside>
 
         <!-- Main Content Area -->
-        <main style="padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 24px; background: #060713;">
+        <main style="min-height: 0; padding: 24px; overflow-y: auto; display: flex; flex-direction: column; gap: 24px; background: #060713;">
           <!-- Add/Edit Form (hidden by default) -->
           <div id="adminFormContainer" class="hidden" style="background: rgba(16, 19, 44, 0.85); border: 1.5px solid var(--primary); padding: 24px; border-radius: 16px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 0 30px var(--primary-glow); backdrop-filter: blur(10px);">
             <h3 id="formTitle" style="font-size: 16px; font-weight: 700; color: var(--text-accent); border-left: 3px solid var(--primary); padding-left: 10px;">新增活动档案</h3>
@@ -139,7 +139,7 @@
           </div>
 
           <!-- Table Container -->
-          <div style="flex: 1; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; background: rgba(9, 11, 28, 0.35); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px);">
+          <div style="min-height: 0; flex: 1; border: 1px solid var(--border-color); border-radius: 16px; overflow: hidden; background: rgba(9, 11, 28, 0.35); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); backdrop-filter: blur(10px);">
             <div style="height: 100%; overflow-y: auto;">
               <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 13.5px; color: white;">
                 <thead>
