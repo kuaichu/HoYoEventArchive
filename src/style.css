@@ -1628,6 +1628,14 @@ body {
   margin-bottom: 12px;
 }
 
+.modal-status-badge {
+  position: static;
+  top: auto;
+  left: auto;
+  margin-left: auto;
+  flex: 0 0 auto;
+}
+
 .modal-game-badge {
   padding: 4px 10px;
   border-radius: 6px;

@@ -1091,7 +1091,7 @@ function openDetailModal(eventObj) {
   
   // Status badge styling
   elModalStatusBadge.textContent = eventObj.status;
-  elModalStatusBadge.className = `status-badge ${statusMeta(eventObj.status).className}`;
+  elModalStatusBadge.className = `status-badge modal-status-badge ${statusMeta(eventObj.status).className}`;
   
   // Primary action button href
   const externalUrl = safeExternalUrl(eventObj.url);
