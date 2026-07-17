@@ -28,6 +28,10 @@ test('external URLs allow only absolute credential-free HTTP(S)', () => {
 
 test('screenshot paths accept only archive IDs', () => {
   assert.equal(safeScreenshotUrl('ys-12'), '/images/screenshots/ys-12.png');
+  assert.equal(
+    safeScreenshotUrl('ys-12', 'deploy-2026/07/17'),
+    '/images/screenshots/ys-12.png?v=deploy-2026%2F07%2F17'
+  );
   assert.equal(safeScreenshotUrl(`ys-1" onerror="alert(1)`), null);
   assert.equal(safeScreenshotUrl('../secret'), null);
 });

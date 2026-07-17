@@ -156,10 +156,15 @@ export function safeExternalUrl(value) {
   }
 }
 
-export function safeScreenshotUrl(id) {
-  return typeof id === 'string' && ID_PATTERN.test(id)
-    ? `/images/screenshots/${encodeURIComponent(id)}.png`
-    : null;
+const BUILD_SCREENSHOT_VERSION = typeof __SCREENSHOT_VERSION__ === 'string'
+  ? __SCREENSHOT_VERSION__
+  : '';
+
+export function safeScreenshotUrl(id, version = BUILD_SCREENSHOT_VERSION) {
+  if (typeof id !== 'string' || !ID_PATTERN.test(id)) return null;
+  const base = `/images/screenshots/${encodeURIComponent(id)}.png`;
+  const normalizedVersion = String(version || '').trim();
+  return normalizedVersion ? `${base}?v=${encodeURIComponent(normalizedVersion)}` : base;
 }
 
 export function normalizeGameKey(value) {
