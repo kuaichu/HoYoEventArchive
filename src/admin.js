@@ -17,6 +17,11 @@ import {
   serializeEventState,
   upsertEventInOverlay
 } from './event-storage.js';
+import {
+  adminGameLabel,
+  buildVersionFilterGroups,
+  eventMatchesVersionFilter
+} from './admin-filter-domain.js';
 
 const EVENT_STORAGE_KEY = 'hoyo_archive_custom_events';
 const LEGACY_EVENT_STORAGE_BACKUP_KEY = `${EVENT_STORAGE_KEY}_legacy_backup`;
@@ -146,31 +151,51 @@ function initDOM() {
 
 function uniqueFilterValues(field) {
   const values = state.events
-    .map(event => field === 'version' ? (event.version || '通用') : event[field])
+    .map(event => event[field])
     .filter(Boolean);
-  return [...new Set(values)].sort((a, b) => {
-    if (field === 'version') {
-      if (a === '通用') return 1;
-      if (b === '通用') return -1;
-      return b.localeCompare(a, 'zh-CN', { numeric: true });
-    }
-    return a.localeCompare(b, 'zh-CN', { numeric: true });
-  });
+  return [...new Set(values)].sort((a, b) => a.localeCompare(b, 'zh-CN', { numeric: true }));
 }
 
-function syncFilterSelect(select, field, allLabel) {
+function syncFilterSelect(select, field, allLabel, labelForValue = value => value) {
   const previousValue = select.value;
   const values = uniqueFilterValues(field);
   select.replaceChildren(new Option(allLabel, ''));
-  values.forEach(value => select.add(new Option(value, value)));
+  values.forEach(value => select.add(new Option(labelForValue(value), value)));
   select.value = values.includes(previousValue) ? previousValue : '';
 }
 
+function syncVersionFilterOptions() {
+  const previousValue = elAdminVersionFilter.value;
+  const selectedGame = elAdminGameFilter.value;
+  const groups = buildVersionFilterGroups(state.events, selectedGame);
+  elAdminVersionFilter.replaceChildren(new Option('全部版本', ''));
+
+  groups.forEach(group => {
+    if (selectedGame) {
+      group.options.forEach(option => {
+        elAdminVersionFilter.add(new Option(option.label, option.value));
+      });
+      return;
+    }
+
+    const optionGroup = document.createElement('optgroup');
+    optionGroup.label = group.label;
+    group.options.forEach(option => {
+      optionGroup.appendChild(new Option(option.label, option.value));
+    });
+    elAdminVersionFilter.appendChild(optionGroup);
+  });
+
+  const previousStillExists = [...elAdminVersionFilter.options]
+    .some(option => option.value === previousValue);
+  elAdminVersionFilter.value = previousStillExists ? previousValue : '';
+}
+
 function syncAdminFilterOptions() {
-  syncFilterSelect(elAdminGameFilter, 'game', '全部游戏');
-  syncFilterSelect(elAdminVersionFilter, 'version', '全部版本');
+  syncFilterSelect(elAdminGameFilter, 'game', '全部游戏', adminGameLabel);
   syncFilterSelect(elAdminTypeFilter, 'type', '全部类型');
   syncFilterSelect(elAdminStatusFilter, 'status', '全部状态');
+  syncVersionFilterOptions();
 }
 
 function adminFiltersAreActive() {
@@ -186,6 +211,7 @@ function adminFiltersAreActive() {
 function clearAdminFilters() {
   elAdminSearchInput.value = '';
   elAdminGameFilter.value = '';
+  syncVersionFilterOptions();
   elAdminVersionFilter.value = '';
   elAdminTypeFilter.value = '';
   elAdminStatusFilter.value = '';
@@ -236,7 +262,7 @@ function renderAdminEvents() {
   }
 
   if (game) list = list.filter(event => event.game === game);
-  if (version) list = list.filter(event => (event.version || '通用') === version);
+  if (version) list = list.filter(event => eventMatchesVersionFilter(event, version));
   if (type) list = list.filter(event => event.type === type);
   if (status) list = list.filter(event => event.status === status);
 
@@ -505,7 +531,11 @@ function bindEvents() {
   elAdminExportBtn.addEventListener('click', exportDatabaseJson);
   elAdminResetBtn.addEventListener('click', resetDatabaseDefaults);
   elAdminSearchInput.addEventListener('input', handleAdminSearch);
-  [elAdminGameFilter, elAdminVersionFilter, elAdminTypeFilter, elAdminStatusFilter]
+  elAdminGameFilter.addEventListener('change', () => {
+    syncVersionFilterOptions();
+    renderAdminEvents();
+  });
+  [elAdminVersionFilter, elAdminTypeFilter, elAdminStatusFilter]
     .forEach(select => select.addEventListener('change', handleAdminSearch));
   elAdminClearFiltersBtn.addEventListener('click', clearAdminFilters);
   elFormCancelBtn.addEventListener('click', hideAdminForm);
