@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer';
 import {
   canonicalizeEventUrl,
+  classifyCrawlerVersion,
   classifyEventType,
   enrichEventWithMetadata,
   extractAnnouncementMetadata,
@@ -14,6 +15,7 @@ import {
   resolveEventUrl,
   selectEventTitle
 } from './crawler-rules.js';
+import { isNumericVersion } from './version-classification.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -259,12 +261,7 @@ export async function runCrawler() {
             });
           }
           
-          // Extract version info
           const combinedText = `${postText} ${eventTitle} ${eventDesc}`;
-          const versionRegex = /(?<!\d)([1-9]\.\d)(?!\d)/;
-          const versionMatch = combinedText.match(versionRegex);
-          const version = announcementMetadata.version || (versionMatch ? 'v' + versionMatch[1] : '通用');
-          
           // This is the announcement post date, not necessarily the page's launch date.
           const pubDate = getAnnouncementDate(item);
           if (!pubDate) {
@@ -274,6 +271,19 @@ export async function runCrawler() {
           
           const textToAnalyze = `${postText} ${eventTitle} ${eventDesc}`.toLowerCase();
           const eventType = classifyEventType(textToAnalyze);
+          const version = classifyCrawlerVersion({
+            gameKey: game.gameKey,
+            title: eventTitle,
+            sourcePostTitle: subject,
+            description: eventDesc,
+            body: postText,
+            date: pubDate,
+            eventType
+          });
+          if (eventType === '版本前瞻' && !isNumericVersion(version)) {
+            console.warn(`Skipping ${cleanUrl}: version preview has no confirmed target version.`);
+            continue;
+          }
           
           // Generate new ID suffix safely
           maxNums[game.gameKey] += 1;
@@ -282,7 +292,8 @@ export async function runCrawler() {
           // Assemble tags
           const tags = [];
           if (eventType !== '其他活动') tags.push(eventType);
-          if (version !== '通用') tags.push(`${version}版本`);
+          if (isNumericVersion(version)) tags.push(`${version}版本`);
+          else if (version === '公测前') tags.push('公测前');
           if (textToAnalyze.includes('原石') || textToAnalyze.includes('星琼') || textToAnalyze.includes('菲林')) {
             tags.push('游戏内奖励');
           }

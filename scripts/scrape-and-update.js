@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import puppeteer from 'puppeteer';
+import { classifyEventVersion } from './version-classification.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -9,7 +10,17 @@ const __dirname = path.dirname(__filename);
 const eventsPath = path.join(__dirname, '..', 'src', 'events.json');
 const events = JSON.parse(fs.readFileSync(eventsPath, 'utf8'));
 
-async function scrapeAndUpdate() {
+export function classifyScrapedEventVersion(event, pageMetadata) {
+  return classifyEventVersion({
+    gameKey: event.gameKey,
+    title: pageMetadata.title,
+    description: pageMetadata.metaDesc,
+    currentVersion: event.version,
+    preserveCurrentSpecial: true
+  });
+}
+
+export async function scrapeAndUpdate() {
   // Filter events with status "可访问" or "需登录"
   const activeEvents = events.filter(e => e.status === '可访问' || e.status === '需登录');
   console.log(`Found ${activeEvents.length} active/login events to scrape.`);
@@ -40,19 +51,11 @@ async function scrapeAndUpdate() {
       
       let updated = false;
 
-      // Extract version from meta description or title
-      // Matches pattern like "3.0版本" or "v2.5" or "1.3 version"
-      const versionRegex = /(?<!\d)([1-9]\.\d)(?!\d)/;
-      const combinedText = `${data.title} ${data.metaDesc}`;
-      const versionMatch = combinedText.match(versionRegex);
-      
-      if (versionMatch) {
-        const extractedVersion = 'v' + versionMatch[1];
-        if (evt.version !== extractedVersion) {
-          console.log(`Updating version: ${evt.version} -> ${extractedVersion}`);
-          evt.version = extractedVersion;
-          updated = true;
-        }
+      const classifiedVersion = classifyScrapedEventVersion(evt, data);
+      if (evt.version !== classifiedVersion) {
+        console.log(`Updating version: ${evt.version} -> ${classifiedVersion}`);
+        evt.version = classifiedVersion;
+        updated = true;
       }
       
       // Update description if we got a rich meta description
@@ -82,4 +85,6 @@ async function scrapeAndUpdate() {
   console.log('\nDatabase update completed successfully.');
 }
 
-scrapeAndUpdate();
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  scrapeAndUpdate();
+}

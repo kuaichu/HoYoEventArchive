@@ -146,8 +146,8 @@ function parseEventUpdates() {
   }
 }
 
-function formatVersion(version) {
-  if (!version || version === '通用') return '通用';
+export function formatVersion(version) {
+  if (!version) return '待确认';
   if (/^v/i.test(version)) return `Ver.${version.slice(1)}`;
   return version;
 }
@@ -164,12 +164,15 @@ function cleanHashTag(value) {
   return text ? `#${text}` : '';
 }
 
-function eventHashTags(event) {
+export function eventHashTags(event) {
+  const versionTag = /^v\d+\.\d+$/i.test(event.version || '')
+    ? cleanHashTag(`Ver${event.version.replace(/^v/i, '').replace(/\./g, '')}`)
+    : ['公测前', '待确认'].includes(event.version)
+      ? cleanHashTag(event.version)
+      : '';
   const tags = [
     cleanHashTag(event.game),
-    event.version && event.version !== '通用'
-      ? cleanHashTag(`Ver${event.version.replace(/^v/i, '').replace(/\./g, '')}`)
-      : '',
+    versionTag,
     ...(event.tags || []).map(cleanHashTag),
     cleanHashTag('外链活动')
   ];

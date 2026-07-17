@@ -20,8 +20,11 @@ export function parseVersionFilter(value) {
 }
 
 function compareVersions(a, b) {
-  if (a === '通用') return 1;
-  if (b === '通用') return -1;
+  const specialRank = new Map([['公测前', 1], ['通用', 2], ['待确认', 3]]);
+  const aRank = specialRank.get(a) || 0;
+  const bRank = specialRank.get(b) || 0;
+  if (aRank !== bRank) return aRank - bRank;
+  if (aRank > 0) return 0;
   return b.localeCompare(a, 'zh-CN', { numeric: true });
 }
 
@@ -34,7 +37,7 @@ export function buildVersionFilterGroups(events, selectedGame = '') {
   return games.map(game => {
     const versions = [...new Set(events
       .filter(event => event.game === game)
-      .map(event => event.version || '通用'))]
+      .map(event => event.version || '待确认'))]
       .sort(compareVersions);
 
     return {
@@ -52,5 +55,5 @@ export function buildVersionFilterGroups(events, selectedGame = '') {
 export function eventMatchesVersionFilter(event, value) {
   const selected = parseVersionFilter(value);
   if (!selected) return true;
-  return event.game === selected.game && (event.version || '通用') === selected.version;
+  return event.game === selected.game && (event.version || '待确认') === selected.version;
 }

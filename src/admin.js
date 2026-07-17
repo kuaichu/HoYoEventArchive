@@ -290,7 +290,7 @@ function renderAdminEvents() {
         </td>
         <td style="padding: 14px 20px; color: var(--text-accent);">${escapeHtml(e.game)}</td>
         <td style="padding: 14px 20px;">
-          <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 2px 6px;">${escapeHtml(e.version || '通用')}</span>
+          <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 2px 6px;">${escapeHtml(e.version || '待确认')}</span>
         </td>
         <td style="padding: 14px 20px; color: var(--text-secondary);">${escapeHtml(e.type)}</td>
         <td style="padding: 14px 20px;">
@@ -430,7 +430,7 @@ function saveAdminEvent() {
         status,
         date,
         tags,
-        version: version || '通用',
+        version: version || '待确认',
         description
       }, currentEvent);
   } else {
@@ -446,7 +446,7 @@ function saveAdminEvent() {
       status,
       date,
       tags,
-      version: version || '通用',
+      version: version || '待确认',
       description
     });
   }

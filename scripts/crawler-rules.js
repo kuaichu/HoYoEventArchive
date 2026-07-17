@@ -1,3 +1,9 @@
+import {
+  classifyEventVersion,
+  extractExplicitVersion,
+  isNumericVersion
+} from './version-classification.js';
+
 const permanentResourcePathFragments = [
   '/bbs/event/bbs-lineup-',
   '/event/character-builder/',
@@ -180,7 +186,6 @@ function extractRewardSummary(text) {
 
 export function extractAnnouncementMetadata(rawText) {
   const text = String(rawText || '').replace(/\r/g, '');
-  const versionMatch = text.match(/(?<!\d)([1-9]\d*(?:\.\d+)+)\s*版本/);
   const activityTimeSection = text.match(/【?活动时间】?\s*[:：]?([\s\S]{0,240})/i)?.[1] || '';
   const dateRange = activityTimeSection.match(
     /(\d{4}[./-]\d{1,2}[./-]\d{1,2})\s*(?:-|—|–|~|～|至|到)\s*(\d{4}[./-]\d{1,2}[./-]\d{1,2})/
@@ -191,12 +196,25 @@ export function extractAnnouncementMetadata(rawText) {
     .find(line => line.length >= 12 && !/^【.+】$/.test(line));
 
   return {
-    version: versionMatch ? `v${versionMatch[1]}` : undefined,
+    version: extractExplicitVersion(text),
     startDate: normalizeDateToken(dateRange?.[1]),
     endDate: normalizeDateToken(dateRange?.[2]),
     reward: extractRewardSummary(text),
     description: description?.slice(0, 280)
   };
+}
+
+export function classifyCrawlerVersion({ gameKey, title, sourcePostTitle, description, body, date, eventType }) {
+  const dateFallbackTypes = new Set(['年度报告', '回归活动', '小游戏', '预约/预抽卡', '联动活动']);
+  return classifyEventVersion({
+    gameKey,
+    title,
+    sourcePostTitle,
+    description,
+    body,
+    date,
+    allowDateFallback: dateFallbackTypes.has(eventType)
+  });
 }
 
 export function enrichEventWithMetadata(event, metadata) {
@@ -209,7 +227,7 @@ export function enrichEventWithMetadata(event, metadata) {
     changed = true;
   };
 
-  setIfMissing('version', metadata?.version, value => !value || value === '通用');
+  setIfMissing('version', metadata?.version, value => !value || value === '待确认');
   setIfMissing('startDate', metadata?.startDate, value => !value);
   setIfMissing('endDate', metadata?.endDate, value => !value);
   setIfMissing('reward', metadata?.reward, value => !value || value === '未识别');
@@ -219,7 +237,7 @@ export function enrichEventWithMetadata(event, metadata) {
     value => !value || value === '提瓦特/米游社官方网页活动。' || value === '米游社官方网页活动。'
   );
 
-  if (metadata?.version && metadata.version !== '通用') {
+  if (isNumericVersion(metadata?.version) && enriched.version === metadata.version) {
     const versionTag = `${metadata.version}版本`;
     const tags = Array.isArray(enriched.tags) ? [...enriched.tags] : [];
     if (!tags.includes(versionTag)) {

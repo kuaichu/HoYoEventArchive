@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {
   canonicalizeEventUrl,
+  classifyCrawlerVersion,
   classifyEventType,
   enrichEventWithMetadata,
   extractAnnouncementMetadata,
@@ -86,8 +87,27 @@ assert.match(zzzMetadata.reward, /480菲林/);
 assert.match(zzzMetadata.reward, /iPhone/);
 assert.match(zzzMetadata.description, /绝区零.*3\.1版本/);
 
+assert.equal(
+  classifyCrawlerVersion({
+    gameKey: 'ys',
+    title: '《原神》「月之七」版本前瞻特别节目',
+    date: '2026.04.30',
+    eventType: '版本前瞻'
+  }),
+  'v6.6'
+);
+assert.equal(
+  classifyCrawlerVersion({
+    gameKey: 'ys',
+    title: '全新网页活动开启',
+    date: '2026.06.10',
+    eventType: '其他活动'
+  }),
+  '待确认'
+);
+
 const enrichment = enrichEventWithMetadata(
-  { id: 'zzz-12', version: '通用', tags: ['回归活动'] },
+  { id: 'zzz-12', version: '待确认', tags: ['回归活动'] },
   zzzMetadata
 );
 assert.equal(enrichment.changed, true);
@@ -96,6 +116,13 @@ assert.equal(enrichment.event.startDate, '2026.07.17');
 assert.equal(enrichment.event.endDate, '2026.09.09');
 assert.match(enrichment.event.reward, /160菲林/);
 assert.ok(enrichment.event.tags.includes('v3.1版本'));
+
+const genericEnrichment = enrichEventWithMetadata(
+  { id: 'zzz-tool', version: '通用', tags: ['网页活动'] },
+  zzzMetadata
+);
+assert.equal(genericEnrichment.event.version, '通用');
+assert.ok(!genericEnrichment.event.tags.includes('v3.1版本'));
 
 assert.equal(
   canonicalizeEventUrl('https://example.com/event/index.html?page_sn=abc&utm_source=bbs'),

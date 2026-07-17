@@ -20,6 +20,8 @@ export const EVENT_STATUSES = Object.freeze([
 
 const DATE_PATTERN = /^\d{4}\.\d{2}\.\d{2}$/;
 const ID_PATTERN = /^[a-z0-9]+-[a-z0-9-]+$/i;
+export const VERSION_PATTERN = /^(?:v\d+\.\d+|公测前|通用|待确认)$/;
+const NUMERIC_VERSION_PATTERN = /^v\d+\.\d+$/;
 const FEATURED_KEYWORDS = Object.freeze([
   '三周年',
   '五周年',
@@ -236,7 +238,7 @@ export function normalizeEvent(raw, fallback = {}) {
       : Array.isArray(fallbackEvent.tags)
         ? fallbackEvent.tags.filter(tag => typeof tag === 'string')
         : [],
-    version: pick('version', value => validText(value), '通用'),
+    version: pick('version', value => validText(value), '待确认'),
     description: pick('description', value => validText(value, true), '')
   };
 
@@ -301,6 +303,12 @@ export function validateEvent(event, index = -1) {
   }
   if (!EVENT_STATUSES.includes(event?.status)) {
     issues.push(`${prefix}.status is not supported`);
+  }
+  if (typeof event?.version === 'string' && !VERSION_PATTERN.test(event.version)) {
+    issues.push(`${prefix}.version is not a supported classification`);
+  }
+  if (event?.type === '版本前瞻' && !NUMERIC_VERSION_PATTERN.test(event?.version || '')) {
+    issues.push(`${prefix}.version previews require a numeric target version`);
   }
   if (typeof event?.date === 'string' && (
     !DATE_PATTERN.test(event.date) || !normalizeComparableDate(event.date)

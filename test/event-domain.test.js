@@ -5,6 +5,7 @@ import test from 'node:test';
 import {
   projectEventForDisplay,
   resolveEventStatus,
+  validateEvent,
   validateEventCollection
 } from '../src/event-domain.js';
 
@@ -73,8 +74,50 @@ test('schema rejects unsafe URLs and mismatched game metadata', () => {
   );
 });
 
+test('version schema accepts only normalized classifications', () => {
+  const base = {
+    ...events.find(event => event.id === 'ys-11'),
+    type: '小游戏'
+  };
+
+  for (const version of ['v1.0', 'v12.34', '公测前', '通用', '待确认']) {
+    assert.deepEqual(validateEvent({ ...base, version }), [], version);
+  }
+
+  for (const version of ['1.0', 'v1', 'v1.0 预热', '未知', '']) {
+    assert.notDeepEqual(validateEvent({ ...base, version }), [], version);
+  }
+});
+
+test('version previews require a confirmed numeric target version', () => {
+  const base = {
+    ...events.find(event => event.id === 'ys-29'),
+    version: 'v6.6'
+  };
+
+  assert.deepEqual(validateEvent(base), []);
+  assert.notDeepEqual(validateEvent({ ...base, version: '通用' }), []);
+  assert.notDeepEqual(validateEvent({ ...base, version: '待确认' }), []);
+});
+
 test('the complete event collection satisfies the shared contract', () => {
   assert.deepEqual(validateEventCollection(events), []);
+});
+
+test('known version corrections remain locked to their target classifications', () => {
+  const expectedVersions = new Map([
+    ['ys-5', 'v6.0'], ['ys-11', 'v5.0'], ['ys-16', 'v6.0'], ['ys-20', 'v2.4'],
+    ['ys-27', 'v6.6'], ['ys-29', 'v6.6'], ['ys-31', 'v6.6'], ['ys-32', 'v6.6'],
+    ['ys-35', 'v6.7'], ['ys-36', 'v6.7'], ['ys-37', 'v6.7'], ['ys-40', 'v6.7'],
+    ['sr-1', '公测前'], ['sr-2', 'v3.4'], ['sr-7', 'v3.2'], ['sr-14', 'v3.2'],
+    ['sr-19', '通用'], ['sr-28', '公测前'], ['sr-30', '公测前'], ['sr-31', '公测前'],
+    ['zzz-8', '公测前'], ['bh3-1', 'v8.5']
+  ]);
+  const byId = new Map(events.map(event => [event.id, event]));
+
+  for (const [id, version] of expectedVersions) {
+    assert.equal(byId.get(id)?.version, version, id);
+  }
 });
 
 test('July announcement records stay available while preserving verified event windows', () => {

@@ -318,7 +318,7 @@ export function buildFallbackScreenshotHtml(event) {
       <div class="serial">${escapeHtml(event.gameKey || 'event')} / archive</div>
       <div class="content"><div class="game">${escapeHtml(event.game || event.gameKey)}</div>
         <h1>${escapeHtml(event.title)}</h1><div class="rule"></div><div class="meta">
-          <span class="tag">${escapeHtml(event.version || '通用')}</span>
+          <span class="tag">${escapeHtml(event.version || '待确认')}</span>
           <span class="tag">${escapeHtml(event.type || '网页活动')}</span>
           <span class="tag">${escapeHtml(time)}</span>
         </div></div>

@@ -5,6 +5,8 @@ import test from 'node:test';
 import {
   buildFinishedNotificationPlan,
   deleteDeliveredMessages,
+  eventHashTags,
+  formatVersion,
   resolveTelegramTargets
 } from '../scripts/tg-notify.js';
 
@@ -19,6 +21,13 @@ const baseInput = {
   eventTargets: '-100-channel',
   transientDeleteAfterSeconds: 120
 };
+
+test('pre-launch and pending versions stay readable in Telegram cards', () => {
+  assert.equal(formatVersion('公测前'), '公测前');
+  assert.equal(formatVersion(undefined), '待确认');
+  assert.match(eventHashTags({ game: '星穹铁道', version: '公测前', tags: [] }), /#公测前/);
+  assert.doesNotMatch(eventHashTags({ game: '星穹铁道', version: '公测前', tags: [] }), /Ver公测前/);
+});
 
 test('auto-crawl does not send a redundant running notification', () => {
   const workflow = fs.readFileSync(

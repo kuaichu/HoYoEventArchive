@@ -879,7 +879,7 @@ function renderEvents() {
               <div class="event-meta-header">
                 <span class="event-game-name">${escapeHtml(e.game)}</span>
                 <span>&middot;</span>
-                <span class="event-version-badge ${escapeHtml(e.gameKey)}">${escapeHtml(e.version || '通用')}</span>
+                <span class="event-version-badge ${escapeHtml(e.gameKey)}">${escapeHtml(e.version || '待确认')}</span>
                 <span>&middot;</span>
                 <span>${escapeHtml(e.type)}</span>
               </div>
@@ -928,7 +928,7 @@ function renderEvents() {
             </div>
             <div class="list-game-cell">${escapeHtml(e.game)}</div>
             <div class="list-version-cell">
-              <span class="event-version-badge ${escapeHtml(e.gameKey)}">${escapeHtml(e.version || '通用')}</span>
+              <span class="event-version-badge ${escapeHtml(e.gameKey)}">${escapeHtml(e.version || '待确认')}</span>
             </div>
             <div class="list-type-cell">${escapeHtml(e.type)}</div>
             <div class="list-date-cell">${escapeHtml(formatEventDate(e))}</div>
@@ -1022,7 +1022,7 @@ function renderTimeline() {
                   <div class="timeline-card-meta">
                     <span class="timeline-card-game" style="color:var(--primary);">${escapeHtml(e.game)}</span>
                     <span>&middot;</span>
-                    <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 1px 4px;">${escapeHtml(e.version || '通用')}</span>
+                    <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 1px 4px;">${escapeHtml(e.version || '待确认')}</span>
                     <span>&middot;</span>
                     <span>${escapeHtml(e.type)}</span>
                   </div>
@@ -1087,7 +1087,7 @@ function openDetailModal(eventObj) {
   }
   elModalTitle.textContent = eventObj.title;
   elModalDate.textContent = formatEventDate(eventObj);
-  elModalVersion.textContent = eventObj.version || '通用';
+  elModalVersion.textContent = eventObj.version || '待确认';
   elModalType.textContent = eventObj.type;
   elModalDesc.textContent = eventObj.description || '暂无该活动的详细说明。该活动是米哈游推出的官方网页活动之一。';
   
