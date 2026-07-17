@@ -132,10 +132,29 @@
             </div>
           </div>
 
-          <!-- Search filter -->
-          <div style="display: flex; gap: 12px; align-items: center; background: rgba(9, 11, 28, 0.4); border: 1px solid var(--border-color); padding: 12px 18px; border-radius: 12px; flex-shrink: 0;">
-            <i class="fa-solid fa-magnifying-glass" style="color: var(--text-muted); font-size: 15px;"></i>
-            <input type="text" id="adminSearchInput" placeholder="在后台检索活动标题、链接、标签或版本号..." style="flex:1; background: transparent; border: none; padding: 4px; color: white; outline: none; font-size: 14px; font-family: var(--font-sans);" />
+          <!-- Search and filters -->
+          <div class="admin-filter-panel" aria-label="活动筛选">
+            <label class="admin-search-box" for="adminSearchInput">
+              <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+              <input type="search" id="adminSearchInput" placeholder="检索活动标题、链接、标签或 ID..." autocomplete="off" />
+            </label>
+            <select id="adminGameFilter" class="admin-filter-select" aria-label="按所属游戏筛选">
+              <option value="">全部游戏</option>
+            </select>
+            <select id="adminVersionFilter" class="admin-filter-select" aria-label="按版本筛选">
+              <option value="">全部版本</option>
+            </select>
+            <select id="adminTypeFilter" class="admin-filter-select" aria-label="按活动类型筛选">
+              <option value="">全部类型</option>
+            </select>
+            <select id="adminStatusFilter" class="admin-filter-select" aria-label="按状态筛选">
+              <option value="">全部状态</option>
+            </select>
+            <button type="button" id="adminClearFiltersBtn" class="admin-clear-filters" disabled>
+              <i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i>
+              <span>清除</span>
+            </button>
+            <span id="adminFilterResultCount" class="admin-filter-result" aria-live="polite"></span>
           </div>
 
           <!-- Table Container -->

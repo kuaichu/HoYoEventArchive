@@ -83,6 +83,12 @@ let elAdminAddBtn;
 let elAdminExportBtn;
 let elAdminResetBtn;
 let elAdminSearchInput;
+let elAdminGameFilter;
+let elAdminVersionFilter;
+let elAdminTypeFilter;
+let elAdminStatusFilter;
+let elAdminClearFiltersBtn;
+let elAdminFilterResultCount;
 let elAdminFormContainer;
 
 let elFormTitle;
@@ -102,6 +108,7 @@ let elFormSaveBtn;
 // Initialize App
 document.addEventListener('DOMContentLoaded', () => {
   initDOM();
+  syncAdminFilterOptions();
   bindEvents();
   renderAdminEvents();
   setupStyles();
@@ -114,6 +121,12 @@ function initDOM() {
   elAdminExportBtn = document.getElementById('adminExportBtn');
   elAdminResetBtn = document.getElementById('adminResetBtn');
   elAdminSearchInput = document.getElementById('adminSearchInput');
+  elAdminGameFilter = document.getElementById('adminGameFilter');
+  elAdminVersionFilter = document.getElementById('adminVersionFilter');
+  elAdminTypeFilter = document.getElementById('adminTypeFilter');
+  elAdminStatusFilter = document.getElementById('adminStatusFilter');
+  elAdminClearFiltersBtn = document.getElementById('adminClearFiltersBtn');
+  elAdminFilterResultCount = document.getElementById('adminFilterResultCount');
   elAdminFormContainer = document.getElementById('adminFormContainer');
 
   elFormTitle = document.getElementById('formTitle');
@@ -129,6 +142,55 @@ function initDOM() {
   elFormEventDesc = document.getElementById('formEventDesc');
   elFormCancelBtn = document.getElementById('formCancelBtn');
   elFormSaveBtn = document.getElementById('formSaveBtn');
+}
+
+function uniqueFilterValues(field) {
+  const values = state.events
+    .map(event => field === 'version' ? (event.version || '通用') : event[field])
+    .filter(Boolean);
+  return [...new Set(values)].sort((a, b) => {
+    if (field === 'version') {
+      if (a === '通用') return 1;
+      if (b === '通用') return -1;
+      return b.localeCompare(a, 'zh-CN', { numeric: true });
+    }
+    return a.localeCompare(b, 'zh-CN', { numeric: true });
+  });
+}
+
+function syncFilterSelect(select, field, allLabel) {
+  const previousValue = select.value;
+  const values = uniqueFilterValues(field);
+  select.replaceChildren(new Option(allLabel, ''));
+  values.forEach(value => select.add(new Option(value, value)));
+  select.value = values.includes(previousValue) ? previousValue : '';
+}
+
+function syncAdminFilterOptions() {
+  syncFilterSelect(elAdminGameFilter, 'game', '全部游戏');
+  syncFilterSelect(elAdminVersionFilter, 'version', '全部版本');
+  syncFilterSelect(elAdminTypeFilter, 'type', '全部类型');
+  syncFilterSelect(elAdminStatusFilter, 'status', '全部状态');
+}
+
+function adminFiltersAreActive() {
+  return Boolean(
+    elAdminSearchInput.value.trim() ||
+    elAdminGameFilter.value ||
+    elAdminVersionFilter.value ||
+    elAdminTypeFilter.value ||
+    elAdminStatusFilter.value
+  );
+}
+
+function clearAdminFilters() {
+  elAdminSearchInput.value = '';
+  elAdminGameFilter.value = '';
+  elAdminVersionFilter.value = '';
+  elAdminTypeFilter.value = '';
+  elAdminStatusFilter.value = '';
+  renderAdminEvents();
+  elAdminSearchInput.focus();
 }
 
 // Inject hover and interactive styles for custom admin tables
@@ -155,6 +217,10 @@ function setupStyles() {
 // Render administrative events list
 function renderAdminEvents() {
   const query = elAdminSearchInput.value.trim().toLowerCase();
+  const game = elAdminGameFilter.value;
+  const version = elAdminVersionFilter.value;
+  const type = elAdminTypeFilter.value;
+  const status = elAdminStatusFilter.value;
   let list = [...state.events];
 
   if (query) {
@@ -169,10 +235,22 @@ function renderAdminEvents() {
     );
   }
 
+  if (game) list = list.filter(event => event.game === game);
+  if (version) list = list.filter(event => (event.version || '通用') === version);
+  if (type) list = list.filter(event => event.type === type);
+  if (status) list = list.filter(event => event.status === status);
+
   // Sort by date descending in admin view to see recent first
   list.sort((a, b) => new Date(b.date.replace(/\./g, '/')) - new Date(a.date.replace(/\./g, '/')));
 
-  elAdminEventsList.innerHTML = list.map(e => {
+  elAdminFilterResultCount.textContent = list.length === state.events.length
+    ? `${list.length} 条活动`
+    : `${list.length} / ${state.events.length} 条`;
+  elAdminClearFiltersBtn.disabled = !adminFiltersAreActive();
+  [elAdminGameFilter, elAdminVersionFilter, elAdminTypeFilter, elAdminStatusFilter]
+    .forEach(select => select.classList.toggle('is-active', Boolean(select.value)));
+
+  elAdminEventsList.innerHTML = list.length > 0 ? list.map(e => {
     const statusClass = statusMeta(e.status).className;
     const externalUrl = safeExternalUrl(e.url);
     const titleCell = externalUrl
@@ -204,7 +282,14 @@ function renderAdminEvents() {
         </td>
       </tr>
     `;
-  }).join('');
+  }).join('') : `
+    <tr>
+      <td colspan="7" class="admin-filter-empty">
+        <i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i>
+        <span>没有符合当前筛选条件的活动</span>
+      </td>
+    </tr>
+  `;
 
   // Bind edit & delete buttons
   elAdminEventsList.querySelectorAll('[data-edit-id]').forEach(btn => {
@@ -352,6 +437,7 @@ function saveAdminEvent() {
 
   // Reset and update
   hideAdminForm();
+  syncAdminFilterOptions();
   renderAdminEvents();
   
   alert('活动档案保存成功！(修改已同步保存至本地缓存)');
@@ -366,6 +452,7 @@ function deleteAdminEvent(eventId) {
 
     // Reset and update
     hideAdminForm();
+    syncAdminFilterOptions();
     renderAdminEvents();
   }
 }
@@ -405,8 +492,8 @@ function resetDatabaseDefaults() {
     
     // Reset and update
     hideAdminForm();
-    if (elAdminSearchInput) elAdminSearchInput.value = '';
-    renderAdminEvents();
+    syncAdminFilterOptions();
+    clearAdminFilters();
     
     alert('已成功清除本地缓存并还原默认活动数据库！');
   }
@@ -418,6 +505,9 @@ function bindEvents() {
   elAdminExportBtn.addEventListener('click', exportDatabaseJson);
   elAdminResetBtn.addEventListener('click', resetDatabaseDefaults);
   elAdminSearchInput.addEventListener('input', handleAdminSearch);
+  [elAdminGameFilter, elAdminVersionFilter, elAdminTypeFilter, elAdminStatusFilter]
+    .forEach(select => select.addEventListener('change', handleAdminSearch));
+  elAdminClearFiltersBtn.addEventListener('click', clearAdminFilters);
   elFormCancelBtn.addEventListener('click', hideAdminForm);
   elFormSaveBtn.addEventListener('click', saveAdminEvent);
 }
