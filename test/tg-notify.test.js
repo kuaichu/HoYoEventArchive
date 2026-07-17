@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import test from 'node:test';
 
 import {
@@ -18,6 +19,14 @@ const baseInput = {
   eventTargets: '-100-channel',
   transientDeleteAfterSeconds: 120
 };
+
+test('auto-crawl does not send a redundant running notification', () => {
+  const workflow = fs.readFileSync(
+    new URL('../.github/workflows/auto-crawl.yml', import.meta.url),
+    'utf8'
+  );
+  assert.doesNotMatch(workflow, /tg-notify\.js started/);
+});
 
 test('event cards fall back to the working status chat when no channel is configured', () => {
   assert.deepEqual(
