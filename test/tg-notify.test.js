@@ -84,6 +84,21 @@ test('changed runs do not duplicate a summary when cards and status share one ch
   assert.equal(plan.summary.enabled, false);
 });
 
+test('forced screenshot verification can resend one card without a repository commit', () => {
+  const plan = buildFinishedNotificationPlan({
+    ...baseInput,
+    dataChanged: false,
+    updateSummary: '绝区零 v3.1 活动更新: 初代虚狩，回归',
+    eventUpdates: [{ id: 'zzz-12', title: '初代虚狩，回归' }],
+    statusTargets: '-100-status',
+    eventTargets: '-100-status',
+    forceEventCards: true
+  });
+
+  assert.equal(plan.eventCards.enabled, true);
+  assert.equal(plan.summary.enabled, false);
+});
+
 test('committed non-event changes are not mislabeled or deleted', () => {
   const plan = buildFinishedNotificationPlan({
     ...baseInput,

@@ -5,6 +5,9 @@ import puppeteer from 'puppeteer';
 import {
   canonicalizeEventUrl,
   classifyEventType,
+  enrichEventWithMetadata,
+  extractAnnouncementMetadata,
+  extractPostText,
   getAnnouncementDate,
   isEventCandidateUrl,
   isPermanentResourceUrl,
@@ -27,6 +30,12 @@ const games = [
 
 const pageSize = Number.parseInt(process.env.MIYOUSHE_PAGE_SIZE || '20', 10);
 const maxPagesPerGame = Number.parseInt(process.env.MIYOUSHE_MAX_PAGES || '5', 10);
+const enrichExistingIds = new Set(
+  String(process.env.MIYOUSHE_ENRICH_EXISTING_IDS || '')
+    .split(',')
+    .map(value => value.trim())
+    .filter(Boolean)
+);
 
 export async function fetchForumPosts(game, fetchImpl = fetch) {
   const posts = [];
@@ -80,6 +89,9 @@ export function classifySourceProcessingOutcome(fetchStatus, processedPostCount,
 export async function runCrawler() {
   console.log('Starting automated Miyoushe web event crawler...\n');
   const knownEventUrls = new Set(events.map(event => canonicalizeEventUrl(event.url)));
+  const eventsByCanonicalUrl = new Map(
+    events.map(event => [canonicalizeEventUrl(event.url), event])
+  );
   
   // Track maximum event ID suffixes to prevent duplicates
   const maxNums = {};
@@ -100,6 +112,7 @@ export async function runCrawler() {
 
   let browser;
   let newEventsCount = 0;
+  let updatedEventsCount = 0;
   const sourceOutcomes = [];
 
   try {
@@ -157,6 +170,8 @@ export async function runCrawler() {
             throw new Error('structured_content is not an array');
           }
           processedPostCount++;
+          const postText = extractPostText(post);
+          const announcementMetadata = extractAnnouncementMetadata(postText);
         
           // Extract links from structured content
           const matches = [];
@@ -192,9 +207,18 @@ export async function runCrawler() {
           }
 
           const canonicalUrl = canonicalizeEventUrl(cleanUrl);
-          
-          // Check if it already exists in the database
-          if (knownEventUrls.has(canonicalUrl)) {
+
+          const existingEvent = eventsByCanonicalUrl.get(canonicalUrl);
+          if (existingEvent) {
+            const sameSource = !existingEvent.sourcePostId || String(existingEvent.sourcePostId) === String(postId);
+            if (sameSource && enrichExistingIds.has(existingEvent.id)) {
+              const enrichment = enrichEventWithMetadata(existingEvent, announcementMetadata);
+              if (enrichment.changed) {
+                Object.assign(existingEvent, enrichment.event);
+                updatedEventsCount++;
+                console.log(`Enriched existing event metadata: [${existingEvent.id}] ${existingEvent.title}`);
+              }
+            }
             continue;
           }
           
@@ -236,10 +260,10 @@ export async function runCrawler() {
           }
           
           // Extract version info
-          const combinedText = `${eventTitle} ${eventDesc}`;
+          const combinedText = `${postText} ${eventTitle} ${eventDesc}`;
           const versionRegex = /(?<!\d)([1-9]\.\d)(?!\d)/;
           const versionMatch = combinedText.match(versionRegex);
-          const version = versionMatch ? 'v' + versionMatch[1] : '通用';
+          const version = announcementMetadata.version || (versionMatch ? 'v' + versionMatch[1] : '通用');
           
           // This is the announcement post date, not necessarily the page's launch date.
           const pubDate = getAnnouncementDate(item);
@@ -248,7 +272,7 @@ export async function runCrawler() {
             continue;
           }
           
-          const textToAnalyze = `${eventTitle} ${eventDesc}`.toLowerCase();
+          const textToAnalyze = `${postText} ${eventTitle} ${eventDesc}`.toLowerCase();
           const eventType = classifyEventType(textToAnalyze);
           
           // Generate new ID suffix safely
@@ -277,11 +301,15 @@ export async function runCrawler() {
             sourcePostTitle: subject,
             tags: tags.length > 0 ? tags : ['网页活动'],
             version: version,
-            description: eventDesc
+            description: announcementMetadata.description || eventDesc,
+            ...(announcementMetadata.startDate ? { startDate: announcementMetadata.startDate } : {}),
+            ...(announcementMetadata.endDate ? { endDate: announcementMetadata.endDate } : {}),
+            ...(announcementMetadata.reward ? { reward: announcementMetadata.reward } : {})
           };
           
           events.push(newEvent);
           knownEventUrls.add(canonicalUrl);
+          eventsByCanonicalUrl.set(canonicalUrl, newEvent);
           newEventsCount++;
           console.log(`Added new event: [${newEvent.id}] ${newEvent.title} (${newEvent.version})`);
           }
@@ -305,14 +333,16 @@ export async function runCrawler() {
       throw new Error('All configured Miyoushe sources failed. Refusing to report a successful crawl.');
     }
 
-    if (newEventsCount > 0) {
+    if (newEventsCount > 0 || updatedEventsCount > 0) {
       fs.writeFileSync(eventsPath, `${JSON.stringify(events, null, 2)}\n`, 'utf8');
-      console.log(`\nSuccessfully added ${newEventsCount} new web events and updated events.json.`);
+      console.log(
+        `\nCrawler updated events.json: ${newEventsCount} new event(s), ${updatedEventsCount} enriched event(s).`
+      );
     } else {
       console.log('\nNo new web events found. Database is up to date.');
     }
 
-    return { newEventsCount, sourceOutcomes };
+    return { newEventsCount, updatedEventsCount, sourceOutcomes };
   } finally {
     await browser?.close();
   }

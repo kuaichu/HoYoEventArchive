@@ -6,7 +6,11 @@ import {
   fetchForumPosts,
   shouldFailCrawler
 } from '../scripts/miyoushe-crawler.js';
-import { selectMissingScreenshotEvents } from '../scripts/capture-screenshots.js';
+import {
+  classifyEventPageState,
+  selectMissingScreenshotEvents
+} from '../scripts/capture-screenshots.js';
+import { collectEventUpdates } from '../scripts/summarize-event-updates.js';
 import { summarizeDeliveries } from '../scripts/tg-notify.js';
 
 test('crawler fails only when every configured source failed', () => {
@@ -96,6 +100,84 @@ test('screenshot selection excludes expired and existing images, sorts newest fi
   );
 
   assert.deepEqual(selected.map(event => event.id), ['newest', 'middle']);
+});
+
+test('forced screenshot IDs are recaptured even when an image already exists', () => {
+  const events = [
+    { id: 'existing', date: '2026.07.19', status: '可访问' },
+    { id: 'missing', date: '2026.07.18', status: '可访问' }
+  ];
+
+  const selected = selectMissingScreenshotEvents(
+    events,
+    event => event.id === 'existing',
+    Number.POSITIVE_INFINITY,
+    new Set(['existing'])
+  );
+
+  assert.deepEqual(selected.map(event => event.id), ['existing', 'missing']);
+});
+
+test('event page readiness distinguishes GPU warning, loading, and the main UI', () => {
+  assert.equal(
+    classifyEventPageState({ coverText: '请开启浏览器硬件加速，获得更流畅的动画体验' }),
+    'dismiss-gpu-warning'
+  );
+  assert.equal(
+    classifyEventPageState({
+      engineDetected: true,
+      homeVisible: false,
+      loadingProgress: 100,
+      isShowLoading: true,
+      currentScene: 'scene_loading'
+    }),
+    'waiting'
+  );
+  assert.equal(
+    classifyEventPageState({
+      engineDetected: true,
+      homeVisible: true,
+      loadingProgress: 100,
+      isShowLoading: false,
+      currentScene: 'scene_main',
+      isGameLoading: false
+    }),
+    'ready'
+  );
+  assert.equal(classifyEventPageState({ coverText: '资源加载失败，请重试' }), 'fatal-error');
+});
+
+test('metadata changes to an existing event produce a notifiable update', () => {
+  const base = [{
+    id: 'zzz-12',
+    url: 'https://act.mihoyo.com/zzz/event/example/index.html',
+    title: '初代虚狩，回归',
+    version: '通用'
+  }];
+  const current = [{
+    ...base[0],
+    version: 'v3.1',
+    startDate: '2026.07.17',
+    endDate: '2026.09.09',
+    reward: '预约得160菲林'
+  }];
+
+  const updates = collectEventUpdates(base, current);
+  assert.deepEqual(updates.addedEvents, []);
+  assert.deepEqual(updates.updatedEvents.map(event => event.id), ['zzz-12']);
+  assert.deepEqual(updates.notificationEvents.map(event => event.id), ['zzz-12']);
+});
+
+test('forced screenshot recaptures can explicitly resend the refreshed event card', () => {
+  const event = {
+    id: 'zzz-12',
+    url: 'https://act.mihoyo.com/zzz/event/example/index.html',
+    title: '初代虚狩，回归',
+    version: 'v3.1'
+  };
+
+  const updates = collectEventUpdates([event], [event], new Set(['zzz-12']));
+  assert.deepEqual(updates.notificationEvents.map(item => item.id), ['zzz-12']);
 });
 
 test('Telegram delivery summaries distinguish complete, partial, and total failure', () => {

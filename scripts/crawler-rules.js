@@ -118,6 +118,120 @@ export async function resolveEventUrl(
   return null;
 }
 
+function stripHtml(rawHtml) {
+  return String(rawHtml || '')
+    .replace(/<br\s*\/?>/gi, '\n')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/\r/g, '')
+    .replace(/[ \t]+/g, ' ')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+}
+
+export function extractPostText(post) {
+  try {
+    const ops = typeof post?.structured_content === 'string'
+      ? JSON.parse(post.structured_content)
+      : post?.structured_content;
+    if (Array.isArray(ops)) {
+      const text = ops
+        .map(op => typeof op?.insert === 'string' ? op.insert : '')
+        .filter(Boolean)
+        .join('\n')
+        .replace(/\r/g, '')
+        .trim();
+      if (text) return text;
+    }
+  } catch {
+    // Fall back to the HTML/plain content field below.
+  }
+
+  return stripHtml(post?.content || '');
+}
+
+function normalizeDateToken(rawDate) {
+  const match = String(rawDate || '').match(/(\d{4})[./-](\d{1,2})[./-](\d{1,2})/);
+  if (!match) return undefined;
+  return `${match[1]}.${match[2].padStart(2, '0')}.${match[3].padStart(2, '0')}`;
+}
+
+function extractRewardSummary(text) {
+  const rewardKeyword = /(原石|星琼|菲林|水晶|名片|抽奖|奖励|礼包|兑换码|iPhone|PlayStation|PS5|手办|周边|游戏主机)/i;
+  const rewardAction = /(可得|获得|获赠|赢取|领取|抽奖|奖励|最高可得)/;
+  const rewardScope = String(text || '').split(/【?活动时间】?/)[0];
+  const sentences = rewardScope
+    .replace(/\r/g, '')
+    .split(/(?<=[。！？!?~～])|\n+/)
+    .map(sentence => sentence
+      .trim()
+      .replace(/^[>【】\s]+|[【】\s]+$/g, '')
+      .replace(/[。！？!?~～]+$/g, ''))
+    .filter(sentence => sentence.length >= 8)
+    .filter(sentence => rewardKeyword.test(sentence) && rewardAction.test(sentence));
+
+  const unique = [...new Set(sentences)].slice(0, 6);
+  if (unique.length === 0) return undefined;
+  return unique.join('；').slice(0, 300);
+}
+
+export function extractAnnouncementMetadata(rawText) {
+  const text = String(rawText || '').replace(/\r/g, '');
+  const versionMatch = text.match(/(?<!\d)([1-9]\d*(?:\.\d+)+)\s*版本/);
+  const activityTimeSection = text.match(/【?活动时间】?\s*[:：]?([\s\S]{0,240})/i)?.[1] || '';
+  const dateRange = activityTimeSection.match(
+    /(\d{4}[./-]\d{1,2}[./-]\d{1,2})\s*(?:-|—|–|~|～|至|到)\s*(\d{4}[./-]\d{1,2}[./-]\d{1,2})/
+  );
+  const description = text
+    .split(/\n+/)
+    .map(line => line.trim())
+    .find(line => line.length >= 12 && !/^【.+】$/.test(line));
+
+  return {
+    version: versionMatch ? `v${versionMatch[1]}` : undefined,
+    startDate: normalizeDateToken(dateRange?.[1]),
+    endDate: normalizeDateToken(dateRange?.[2]),
+    reward: extractRewardSummary(text),
+    description: description?.slice(0, 280)
+  };
+}
+
+export function enrichEventWithMetadata(event, metadata) {
+  const enriched = { ...event };
+  let changed = false;
+
+  const setIfMissing = (field, value, isMissing) => {
+    if (!value || !isMissing(enriched[field])) return;
+    enriched[field] = value;
+    changed = true;
+  };
+
+  setIfMissing('version', metadata?.version, value => !value || value === '通用');
+  setIfMissing('startDate', metadata?.startDate, value => !value);
+  setIfMissing('endDate', metadata?.endDate, value => !value);
+  setIfMissing('reward', metadata?.reward, value => !value || value === '未识别');
+  setIfMissing(
+    'description',
+    metadata?.description,
+    value => !value || value === '提瓦特/米游社官方网页活动。' || value === '米游社官方网页活动。'
+  );
+
+  if (metadata?.version && metadata.version !== '通用') {
+    const versionTag = `${metadata.version}版本`;
+    const tags = Array.isArray(enriched.tags) ? [...enriched.tags] : [];
+    if (!tags.includes(versionTag)) {
+      tags.push(versionTag);
+      enriched.tags = tags;
+      changed = true;
+    }
+  }
+
+  return { event: enriched, changed };
+}
+
 export function selectEventTitle(subject, pageTitle, ogTitle = '') {
   if (isUsefulTitle(pageTitle || '')) return pageTitle.trim();
   if (isUsefulTitle(ogTitle || '')) return ogTitle.trim();

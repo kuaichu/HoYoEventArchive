@@ -5,7 +5,17 @@ on:
     # Runs every 12 hours (at 00:00 and 12:00 UTC)
     - cron: '0 */12 * * *'
   workflow_dispatch:
-    # Allows manual triggering from the GitHub Actions tab
+    inputs:
+      enrich_event_ids:
+        description: Comma-separated existing event IDs to enrich from their source announcement
+        required: false
+        default: ''
+        type: string
+      force_screenshot_ids:
+        description: Comma-separated event IDs whose screenshots must be recaptured
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: write
@@ -30,6 +40,7 @@ jobs:
       TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       TG_CHANNEL_CHAT_ID: ${{ secrets.TELEGRAM_CHANNEL_CHAT_ID }}
       TG_TRANSIENT_DELETE_AFTER_SECONDS: ${{ vars.TELEGRAM_TRANSIENT_DELETE_AFTER_SECONDS }}
+      MIYOUSHE_ENRICH_EXISTING_IDS: ${{ inputs.enrich_event_ids }}
 
     steps:
       - name: Checkout Repository
@@ -64,10 +75,19 @@ jobs:
         run: node scripts/update-statuses.js
 
       - name: Capture Missing Event Screenshots
-        run: npm run screenshots
+        env:
+          FORCE_SCREENSHOT_IDS: ${{ inputs.force_screenshot_ids }}
+        run: |
+          if [ -n "$FORCE_SCREENSHOT_IDS" ]; then
+            npm run screenshots -- --force="$FORCE_SCREENSHOT_IDS"
+          else
+            npm run screenshots
+          fi
 
       - name: Summarize Event Updates
         id: summary_step
+        env:
+          EVENT_UPDATE_INCLUDE_IDS: ${{ inputs.force_screenshot_ids }}
         run: |
           summary_file="${RUNNER_TEMP}/hoyo-event-updates.txt"
           summary_json_file="${RUNNER_TEMP}/hoyo-event-updates.json"
@@ -142,6 +162,7 @@ jobs:
       TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       TG_CHANNEL_CHAT_ID: ${{ secrets.TELEGRAM_CHANNEL_CHAT_ID }}
       TG_TRANSIENT_DELETE_AFTER_SECONDS: ${{ vars.TELEGRAM_TRANSIENT_DELETE_AFTER_SECONDS }}
+      TG_FORCE_EVENT_CARDS: ${{ inputs.force_screenshot_ids != '' && '1' || '0' }}
       SUMMARY_B64: ${{ needs.crawl.outputs.event_update_summary_b64 }}
       EVENT_UPDATE_JSON_B64: ${{ needs.crawl.outputs.event_update_json_b64 }}
 

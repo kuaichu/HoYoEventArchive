@@ -188,7 +188,7 @@ function truncateCaption(text, maxLength = 1000) {
 }
 
 function eventCaption(event) {
-  const reward = truncateField(event.reward || event.rewards || '未识别', 120);
+  const reward = truncateField(event.reward || event.rewards || '未识别', 240);
   const time = event.startDate && event.endDate
     ? `${formatDate(event.startDate)} - ${formatDate(event.endDate)}`
     : `${event.dateType === 'announcement' ? '公告：' : ''}${formatDate(event.date)}`;
@@ -280,7 +280,8 @@ export function buildFinishedNotificationPlan({
   statusTargets,
   eventTargets,
   transientDeleteAfterSeconds,
-  notificationTest = false
+  notificationTest = false,
+  forceEventCards = false
 }) {
   const title = notificationTest
     ? 'HoYo Event Archive notification test'
@@ -292,11 +293,11 @@ export function buildFinishedNotificationPlan({
     : dataChanged
       ? 'changed and committed'
       : 'no changes';
-  const eventCardsEnabled = status === 'success' && dataChanged && eventUpdates.length > 0;
+  const eventCardsEnabled = status === 'success' && (dataChanged || forceEventCards) && eventUpdates.length > 0;
   const summaryTargets = eventCardsEnabled
     ? targetsExcluding(statusTargets, eventTargets)
     : statusTargets;
-  const silentNoChange = status === 'success' && !dataChanged && !notificationTest;
+  const silentNoChange = status === 'success' && !dataChanged && !notificationTest && !forceEventCards;
   const summaryEnabled = !notificationTest && !silentNoChange && (!eventCardsEnabled || Boolean(summaryTargets));
   let text = `${title}
 Project: ${htmlEscape(project)}
@@ -435,7 +436,8 @@ Run: <a href="${runUrl}">#${runId}</a>`;
     statusTargets: transientTargets,
     eventTargets: persistentTargets,
     transientDeleteAfterSeconds: TRANSIENT_DELETE_AFTER_SECONDS,
-    notificationTest: process.env.TG_NOTIFICATION_TEST === '1'
+    notificationTest: process.env.TG_NOTIFICATION_TEST === '1',
+    forceEventCards: process.env.TG_FORCE_EVENT_CARDS === '1'
   });
   const notificationTest = process.env.TG_NOTIFICATION_TEST === '1';
   let cardDeliveryError;

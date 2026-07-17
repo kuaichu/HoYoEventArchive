@@ -3,6 +3,8 @@ import fs from 'node:fs';
 import {
   canonicalizeEventUrl,
   classifyEventType,
+  enrichEventWithMetadata,
+  extractAnnouncementMetadata,
   getAnnouncementDate,
   isEventCandidateUrl,
   isPermanentResourceUrl,
@@ -65,6 +67,35 @@ const rejectedRedirect = await resolveEventUrl('https://mhyurl.cn/untrusted', as
 });
 assert.equal(rejectedRedirect, null);
 assert.equal(untrustedFetchCount, 1, 'Untrusted redirect targets must not be fetched');
+
+const zzzAnnouncement = `
+亲爱的绳匠，《绝区零》3.1版本「初代虚狩，回归」预约&回归活动现已开启。
+网页内，参与预约活动可得160菲林和游戏内纪念名片！邀请好友回归或注册游戏，最高可得340菲林！
+游戏内签到活动期间，累计登录7日即可获赠480菲林！
+参与网页内抽奖活动，赢取iPhone、游戏主机、手办、菲林等奖励~
+【活动时间】
+2026/07/17- 2026/09/09 05:59
+`;
+const zzzMetadata = extractAnnouncementMetadata(zzzAnnouncement);
+assert.equal(zzzMetadata.version, 'v3.1');
+assert.equal(zzzMetadata.startDate, '2026.07.17');
+assert.equal(zzzMetadata.endDate, '2026.09.09');
+assert.match(zzzMetadata.reward, /160菲林/);
+assert.match(zzzMetadata.reward, /340菲林/);
+assert.match(zzzMetadata.reward, /480菲林/);
+assert.match(zzzMetadata.reward, /iPhone/);
+assert.match(zzzMetadata.description, /绝区零.*3\.1版本/);
+
+const enrichment = enrichEventWithMetadata(
+  { id: 'zzz-12', version: '通用', tags: ['回归活动'] },
+  zzzMetadata
+);
+assert.equal(enrichment.changed, true);
+assert.equal(enrichment.event.version, 'v3.1');
+assert.equal(enrichment.event.startDate, '2026.07.17');
+assert.equal(enrichment.event.endDate, '2026.09.09');
+assert.match(enrichment.event.reward, /160菲林/);
+assert.ok(enrichment.event.tags.includes('v3.1版本'));
 
 assert.equal(
   canonicalizeEventUrl('https://example.com/event/index.html?page_sn=abc&utm_source=bbs'),
