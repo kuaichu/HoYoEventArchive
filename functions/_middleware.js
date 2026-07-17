@@ -7,9 +7,8 @@ function decodeBase64(value) {
 
 const ADMIN_AUTH_CONFIG = Object.freeze({
   username: 'admin',
-  iterations: 150_000,
   salt: decodeBase64('9td0Uu8wEXvaRhcg239IEQ=='),
-  verifier: decodeBase64('ancaPmp2kBYd48NwP4R+GW0y5U2Ue5O53YQiLAWgpyg=')
+  verifier: decodeBase64('OF+L15008HcVTc4YWhTakFyzPXt3qcIP7TrSMmp6T2g=')
 });
 
 function parseBasicAuthorization(value) {
@@ -37,25 +36,12 @@ function timingSafeEqual(left, right) {
   return difference === 0;
 }
 
-async function derivePasswordVerifier(password, config) {
-  const key = await crypto.subtle.importKey(
-    'raw',
-    textEncoder.encode(password),
-    'PBKDF2',
-    false,
-    ['deriveBits']
-  );
-  const bits = await crypto.subtle.deriveBits(
-    {
-      name: 'PBKDF2',
-      hash: 'SHA-256',
-      salt: config.salt,
-      iterations: config.iterations
-    },
-    key,
-    256
-  );
-  return new Uint8Array(bits);
+async function deriveCredentialVerifier(username, password, config) {
+  const credentials = textEncoder.encode(`${username}:${password}`);
+  const material = new Uint8Array(config.salt.length + 1 + credentials.length);
+  material.set(config.salt, 0);
+  material.set(credentials, config.salt.length + 1);
+  return new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', material));
 }
 
 export async function verifyBasicAuthorization(value, config = ADMIN_AUTH_CONFIG) {
@@ -63,7 +49,7 @@ export async function verifyBasicAuthorization(value, config = ADMIN_AUTH_CONFIG
   if (!credentials || credentials.username !== config.username || credentials.password.length === 0) {
     return false;
   }
-  const verifier = await derivePasswordVerifier(credentials.password, config);
+  const verifier = await deriveCredentialVerifier(credentials.username, credentials.password, config);
   return timingSafeEqual(verifier, config.verifier);
 }
 

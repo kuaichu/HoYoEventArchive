@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { pbkdf2Sync } from 'node:crypto';
+import { createHash } from 'node:crypto';
 import test from 'node:test';
 
 import { handleAdminRequest, verifyBasicAuthorization } from '../functions/_middleware.js';
@@ -8,9 +8,16 @@ const fixturePassword = 'fixture-password';
 const fixtureSalt = new TextEncoder().encode('fixture-salt-123');
 const fixtureConfig = {
   username: 'admin',
-  iterations: 1_000,
   salt: fixtureSalt,
-  verifier: new Uint8Array(pbkdf2Sync(fixturePassword, fixtureSalt, 1_000, 32, 'sha256'))
+  verifier: new Uint8Array(
+    createHash('sha256')
+      .update(Buffer.concat([
+        Buffer.from(fixtureSalt),
+        Buffer.from([0]),
+        Buffer.from(`admin:${fixturePassword}`, 'utf8')
+      ]))
+      .digest()
+  )
 };
 
 function basic(username, password) {
