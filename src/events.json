@@ -1770,5 +1770,23 @@
     ],
     "version": "通用",
     "description": "邀请开拓者回归，赢星琼、电竞笔记本、iPhone 17等惊喜好礼！"
+  },
+  {
+    "id": "zzz-12",
+    "title": "初代虚狩，回归",
+    "url": "https://act.mihoyo.com/zzz/event/e20260717reserve-pvy5cf/index.html?game_biz=nap_cn&mhy_presentation_style=fullscreen&mhy_auth_required=true&mhy_landscape=true&mhy_hide_status_bar=true&mode=fullscreen&win_mode=fullscreen&utm_source=oomys",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "回归活动",
+    "status": "可访问",
+    "date": "2026.07.17",
+    "dateType": "announcement",
+    "sourcePostId": "76755210",
+    "sourcePostTitle": "🎁初代虚狩，回归",
+    "tags": [
+      "回归活动"
+    ],
+    "version": "通用",
+    "description": "提瓦特/米游社官方网页活动。"
   }
 ]
