@@ -39,37 +39,56 @@ function isEventLink(rawUrl) {
   }
 }
 
-async function fetchForumPosts(game) {
+export async function fetchForumPosts(game, fetchImpl = fetch) {
   const posts = [];
   let lastId = '';
 
   for (let page = 1; page <= maxPagesPerGame; page++) {
-    const url = `https://bbs-api.miyoushe.com/post/wapi/getForumPostList?forum_id=${game.forumId}&is_good=false&is_top=false&last_id=${encodeURIComponent(lastId)}&page_size=${pageSize}&sort_type=2`;
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Referer': 'https://www.miyoushe.com/'
+    try {
+      const url = `https://bbs-api.miyoushe.com/post/wapi/getForumPostList?forum_id=${game.forumId}&is_good=false&is_top=false&last_id=${encodeURIComponent(lastId)}&page_size=${pageSize}&sort_type=2`;
+      const res = await fetchImpl(url, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Referer': 'https://www.miyoushe.com/'
+        }
+      });
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}`);
       }
-    });
-    const json = await res.json();
 
-    if (json.retcode !== 0 || !json.data || !Array.isArray(json.data.list)) {
-      console.error(`Failed to fetch forum list page ${page} for ${game.name}: retcode=${json.retcode}, message=${json.message}`);
-      break;
+      const json = await res.json();
+      if (json.retcode !== 0 || !json.data || !Array.isArray(json.data.list)) {
+        throw new Error(`retcode=${json.retcode}, message=${json.message}`);
+      }
+
+      posts.push(...json.data.list);
+
+      if (json.data.is_last || !json.data.last_id || json.data.list.length === 0) {
+        break;
+      }
+      lastId = json.data.last_id;
+    } catch (error) {
+      const status = posts.length === 0 ? 'failed' : 'partial';
+      console.error(`Failed to fetch forum list page ${page} for ${game.name}: ${error.message}`);
+      return { posts, status, error: error.message };
     }
-
-    posts.push(...json.data.list);
-
-    if (json.data.is_last || !json.data.last_id || json.data.list.length === 0) {
-      break;
-    }
-    lastId = json.data.last_id;
   }
 
-  return posts;
+  return { posts, status: 'ok', error: null };
 }
 
-async function runCrawler() {
+export function shouldFailCrawler(sourceOutcomes) {
+  return sourceOutcomes.length === 0 || sourceOutcomes.every(result => result.status === 'failed');
+}
+
+export function classifySourceProcessingOutcome(fetchStatus, processedPostCount, parseErrorCount) {
+  if (fetchStatus === 'failed') return 'failed';
+  if (parseErrorCount > 0 && processedPostCount === 0) return 'failed';
+  if (fetchStatus === 'partial' || parseErrorCount > 0) return 'partial';
+  return 'ok';
+}
+
+export async function runCrawler() {
   console.log('Starting automated Miyoushe web event crawler...\n');
   const knownEventUrls = new Set(events.map(event => canonicalizeEventUrl(event.url)));
   
@@ -90,53 +109,81 @@ async function runCrawler() {
     maxNums[g.gameKey] = maxNum;
   });
 
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
+  let browser;
   let newEventsCount = 0;
-  for (const game of games) {
-    try {
+  const sourceOutcomes = [];
+
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
+
+    for (const game of games) {
       console.log(`>>> Fetching forum post list for game: ${game.name} (${game.gameKey.toUpperCase()})`);
 
-      const posts = await fetchForumPosts(game);
+      const sourceResult = await fetchForumPosts(game);
+      const sourceOutcome = {
+        gameKey: game.gameKey,
+        status: sourceResult.status,
+        error: sourceResult.error
+      };
+      sourceOutcomes.push(sourceOutcome);
+
+      if (sourceResult.status === 'failed') {
+        continue;
+      }
+
+      const posts = sourceResult.posts;
       if (posts.length === 0) {
         continue;
       }
 
-      console.log(`Found total ${posts.length} announcement posts for ${game.name}. Parsing details...`);
+      console.log(
+        `Found total ${posts.length} announcement posts for ${game.name}` +
+        `${sourceResult.status === 'partial' ? ' (partial source result)' : ''}. Parsing details...`
+      );
+
+      let processedPostCount = 0;
+      let parseErrorCount = 0;
 
       for (const item of posts) {
-        const postId = item.post.post_id;
-        const subject = item.post.subject;
-        const structuredStr = item.post.structured_content;
-        
-        if (!structuredStr) continue;
-        
-        let ops = [];
         try {
-          ops = JSON.parse(structuredStr);
-        } catch (e) {
-          continue;
-        }
-        
-        if (!Array.isArray(ops)) continue;
-        
-        // Extract links from structured content
-        const matches = [];
-        ops.forEach(op => {
-          if (op.attributes && op.attributes.link) {
-            const link = op.attributes.link;
-            if (isEventLink(link)) {
-              matches.push(link.replace(/&amp;/g, '&').replace(/[.,;!?]$/, ''));
-            }
+          const post = item?.post;
+          if (!post || typeof post.post_id === 'undefined' || typeof post.subject !== 'string') {
+            throw new Error('post is missing required fields');
           }
-        });
+
+          const postId = post.post_id;
+          const subject = post.subject;
+          const structuredStr = post.structured_content;
+
+          if (!structuredStr) {
+            processedPostCount++;
+            continue;
+          }
+
+          const ops = JSON.parse(structuredStr);
+          if (!Array.isArray(ops)) {
+            throw new Error('structured_content is not an array');
+          }
+          processedPostCount++;
         
-        // Process unique URLs found in this post
-        const uniqueUrls = [...new Set(matches.map(u => u.replace(/&amp;/g, '&').replace(/[.,;!?]$/, '')))];
+          // Extract links from structured content
+          const matches = [];
+          ops.forEach(op => {
+            if (op.attributes && op.attributes.link) {
+              const link = op.attributes.link;
+              if (isEventLink(link)) {
+                matches.push(link.replace(/&amp;/g, '&').replace(/[.,;!?]$/, ''));
+              }
+            }
+          });
         
-        for (const rawUrl of uniqueUrls) {
+          // Process unique URLs found in this post
+          const uniqueUrls = [...new Set(matches.map(u => u.replace(/&amp;/g, '&').replace(/[.,;!?]$/, '')))];
+        
+          for (const rawUrl of uniqueUrls) {
           // Exclude generic links like webstatic.mihoyo.com/common/ or static image resources
           if (rawUrl.includes('/common/') || rawUrl.match(/\.(png|jpg|jpeg|gif|svg)/i)) {
             continue;
@@ -162,10 +209,11 @@ async function runCrawler() {
           let eventTitle = subject;
           let eventDesc = '提瓦特/米游社官方网页活动。';
           
-          const page = await browser.newPage();
-          await page.setViewport({ width: 1280, height: 720 });
+          let page;
           
           try {
+            page = await browser.newPage();
+            await page.setViewport({ width: 1280, height: 720 });
             await page.goto(cleanUrl, { waitUntil: 'networkidle2', timeout: 20000 });
             await new Promise(r => setTimeout(r, 2000));
             
@@ -186,7 +234,9 @@ async function runCrawler() {
           } catch (err) {
             console.warn(`Could not fetch details for ${cleanUrl}: ${err.message}. Using post subject.`);
           } finally {
-            await page.close();
+            await page?.close().catch(error => {
+              console.warn(`Could not close metadata page for ${cleanUrl}: ${error.message}`);
+            });
           }
           
           // Extract version info
@@ -238,25 +288,43 @@ async function runCrawler() {
           knownEventUrls.add(canonicalUrl);
           newEventsCount++;
           console.log(`Added new event: [${newEvent.id}] ${newEvent.title} (${newEvent.version})`);
+          }
+        } catch (err) {
+          parseErrorCount++;
+          console.error(`Skipping malformed post for ${game.name}: ${err.message}`);
         }
       }
-    } catch (err) {
-      console.error(`Error processing ${game.name}:`, err.message);
+
+      sourceOutcome.status = classifySourceProcessingOutcome(
+        sourceResult.status,
+        processedPostCount,
+        parseErrorCount
+      );
+      if (parseErrorCount > 0) {
+        sourceOutcome.error = `${parseErrorCount} malformed post(s)`;
+      }
     }
-  }
 
-  await browser.close();
+    if (shouldFailCrawler(sourceOutcomes)) {
+      throw new Error('All configured Miyoushe sources failed. Refusing to report a successful crawl.');
+    }
 
-  if (newEventsCount > 0) {
-    // Write back to events.json
-    fs.writeFileSync(eventsPath, JSON.stringify(events, null, 2), 'utf8');
-    console.log(`\nSuccessfully added ${newEventsCount} new web events and updated events.json.`);
-  } else {
-    console.log('\nNo new web events found. Database is up to date.');
+    if (newEventsCount > 0) {
+      fs.writeFileSync(eventsPath, `${JSON.stringify(events, null, 2)}\n`, 'utf8');
+      console.log(`\nSuccessfully added ${newEventsCount} new web events and updated events.json.`);
+    } else {
+      console.log('\nNo new web events found. Database is up to date.');
+    }
+
+    return { newEventsCount, sourceOutcomes };
+  } finally {
+    await browser?.close();
   }
 }
 
-runCrawler().catch(err => {
-  console.error('Crawler failed:', err);
-  process.exit(1);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  runCrawler().catch(err => {
+    console.error('Crawler failed:', err);
+    process.exitCode = 1;
+  });
+}

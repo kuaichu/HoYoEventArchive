@@ -5,6 +5,17 @@ on:
     branches:
       - main
   workflow_dispatch:
+  workflow_call:
+    inputs:
+      ref:
+        description: Git commit or ref to deploy
+        required: false
+        type: string
+        default: ''
+
+concurrency:
+  group: cloudflare-pages-main
+  cancel-in-progress: false
 
 permissions:
   contents: read
@@ -19,6 +30,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref || github.sha }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -28,6 +41,9 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
+
+      - name: Test
+        run: npm test
 
       - name: Build
         run: npm run build

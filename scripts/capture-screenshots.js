@@ -18,24 +18,30 @@ const captureLimit = Number.isFinite(parsedLimit) && parsedLimit > 0
 
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-async function captureScreenshots() {
+export function selectMissingScreenshotEvents(
+  events,
+  hasScreenshot,
+  limit = Number.POSITIVE_INFINITY
+) {
+  return events
+    .filter(event => event.status !== '已失效')
+    .filter(event => !hasScreenshot(event))
+    .sort((a, b) => b.date.localeCompare(a.date))
+    .slice(0, limit);
+}
+
+export async function captureScreenshots() {
   console.log('Starting screenshot capture process...');
-  
-  // Ensure output directory exists
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-    console.log('Created screenshots directory:', outputDir);
-  }
 
   // Load events and capture only thumbnails that are actually missing.
   const events = JSON.parse(fs.readFileSync(eventsPath, 'utf8'));
   console.log(`Loaded ${events.length} events from database.`);
 
-  const missingEvents = events
-    .filter(event => event.status !== '已失效')
-    .filter(event => !fs.existsSync(path.join(outputDir, `${event.id}.png`)))
-    .sort((a, b) => b.date.localeCompare(a.date))
-    .slice(0, captureLimit);
+  const missingEvents = selectMissingScreenshotEvents(
+    events,
+    event => fs.existsSync(path.join(outputDir, `${event.id}.png`)),
+    captureLimit
+  );
 
   console.log(`Found ${missingEvents.length} missing screenshot(s) eligible for capture.`);
 
@@ -45,25 +51,33 @@ async function captureScreenshots() {
     }
     return;
   }
-  
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox']
-  });
 
-  for (let i = 0; i < missingEvents.length; i++) {
-    const event = missingEvents[i];
-    const outputPath = path.join(outputDir, `${event.id}.png`);
+  if (!fs.existsSync(outputDir)) {
+    fs.mkdirSync(outputDir, { recursive: true });
+    console.log('Created screenshots directory:', outputDir);
+  }
 
-    console.log(`\n[${i + 1}/${missingEvents.length}] Processing: ${event.title}`);
+  let browser;
+  try {
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    });
 
-    const page = await browser.newPage();
-    await page.setViewport({ width: 1024, height: 576, deviceScaleFactor: 1 });
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36');
-    page.setDefaultNavigationTimeout(45000);
-    page.setDefaultTimeout(45000);
+    for (let i = 0; i < missingEvents.length; i++) {
+      const event = missingEvents[i];
+      const outputPath = path.join(outputDir, `${event.id}.png`);
+      let page;
 
-    try {
+      console.log(`\n[${i + 1}/${missingEvents.length}] Processing: ${event.title}`);
+
+      try {
+        page = await browser.newPage();
+        await page.setViewport({ width: 1024, height: 576, deviceScaleFactor: 1 });
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36');
+        page.setDefaultNavigationTimeout(45000);
+        page.setDefaultTimeout(45000);
+
       console.log(`-> Navigating to: ${event.url}`);
 
       // Many event pages keep analytics and game resources connected forever, so
@@ -85,17 +99,24 @@ async function captureScreenshots() {
       await page.screenshot({ path: outputPath, type: 'png' });
       console.log(`-> Saved screenshot to: ${outputPath}`);
 
-    } catch (error) {
-      console.error(`-> Error capturing screenshot for ${event.title}:`, error.message);
-    } finally {
-      await page.close();
+      } catch (error) {
+        console.error(`-> Error capturing screenshot for ${event.title}:`, error.message);
+      } finally {
+        await page?.close().catch(error => {
+          console.warn(`-> Failed to close page for ${event.title}:`, error.message);
+        });
+      }
     }
+  } finally {
+    await browser?.close();
   }
 
-  await browser.close();
   console.log('\nScreenshot capture process completed successfully!');
 }
 
-captureScreenshots().catch(err => {
-  console.error('Fatal error in capture script:', err);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  captureScreenshots().catch(err => {
+    console.error('Fatal error in capture script:', err);
+    process.exitCode = 1;
+  });
+}

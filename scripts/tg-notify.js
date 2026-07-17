@@ -2,6 +2,9 @@ import { argv } from 'node:process';
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
 
 const BOT_TOKEN = process.env.TG_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TG_CHAT_ID || process.env.TELEGRAM_CHAT_ID || '-1003962096060';
@@ -56,8 +59,8 @@ async function telegram(method, body) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
-  const json = await res.json();
-  if (!json.ok) {
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || !json.ok) {
     const migrateTo = json.parameters?.migrate_to_chat_id;
     if (method === 'sendMessage' && migrateTo) {
       return telegram(method, { ...body, chat_id: migrateTo });
@@ -103,8 +106,8 @@ async function sendPhoto(caption, target, photoPath) {
     method: 'POST',
     body: form
   });
-  const json = await res.json();
-  if (!json.ok) {
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok || !json.ok) {
     const migrateTo = json.parameters?.migrate_to_chat_id;
     if (migrateTo) {
       return sendPhoto(caption, migrateTo, photoPath);
@@ -209,8 +212,20 @@ ${cleanHashTag(event.status || '未知')}
 ${htmlEscape(eventHashTags(event))}`);
 }
 
+export function summarizeDeliveries(results) {
+  const attempted = results.length;
+  const sentCount = results.filter(result => result.ok).length;
+  const failedCount = attempted - sentCount;
+  return {
+    attempted,
+    sentCount,
+    failedCount,
+    ok: attempted > 0 && failedCount === 0
+  };
+}
+
 async function sendEventCards(events, targets) {
-  let sentCount = 0;
+  const results = [];
 
   for (const event of events) {
     const caption = eventCaption(event);
@@ -223,42 +238,52 @@ async function sendEventCards(events, targets) {
         } else {
           await sendMessage(caption, target);
         }
-        sentCount++;
+        results.push({ ok: true, target, eventId: event.id });
       } catch (err) {
+        results.push({ ok: false, target, eventId: event.id, error: err.message });
         console.warn(`Failed to send event card for ${event.id || event.title} to ${target}: ${err.message}`);
       }
     }
   }
 
-  return sentCount;
+  return summarizeDeliveries(results);
 }
 
 async function sendToTargets(label, text, targets, deleteAfterSeconds = 0) {
   const sent = [];
+  const results = [];
   for (const target of chatIds(targets)) {
     try {
       const result = await sendMessage(text, target);
+      results.push({ ok: true, target });
       if (result?.chat?.id && result?.message_id) {
         sent.push({ chatId: result.chat.id, messageId: result.message_id });
       }
     } catch (err) {
+      results.push({ ok: false, target, error: err.message });
       console.warn(`Failed to send Telegram ${label} notification to ${target}: ${err.message}`);
     }
   }
 
-  if (sent.length === 0) {
-    console.warn(`No Telegram ${label} notification was sent.`);
-    return;
+  const summary = summarizeDeliveries(results);
+  if (!summary.ok) {
+    throw new Error(
+      `Telegram ${label} delivery incomplete: ${summary.sentCount}/${summary.attempted} target(s) succeeded.`
+    );
   }
 
   if (deleteAfterSeconds > 0) {
     console.log(`Telegram ${label} notification will be deleted in ${deleteAfterSeconds}s.`);
-    await sleep(deleteAfterSeconds);
-    await Promise.all(sent.map(item => deleteMessage(item.chatId, item.messageId)));
+    if (!DRY_RUN) {
+      await sleep(deleteAfterSeconds);
+      await Promise.all(sent.map(item => deleteMessage(item.chatId, item.messageId)));
+    }
   }
+
+  return summary;
 }
 
-async function main() {
+export async function main() {
   const type = argv[2]; // 'started' | 'finished'
   const runId = process.env.GITHUB_RUN_ID || '0';
   const repository = process.env.GITHUB_REPOSITORY || 'kuaichu/HoYoEventArchive';
@@ -282,8 +307,7 @@ Run: <a href="${runUrl}">#${runId}</a>`;
   }
 
   if (type !== 'finished') {
-    console.error('Invalid notification type');
-    process.exit(1);
+    throw new Error('Invalid notification type');
   }
 
   const status = argv[3] || 'success';
@@ -298,10 +322,15 @@ Run: <a href="${runUrl}">#${runId}</a>`;
   const transientTargets = CHAT_ID || CHANNEL_CHAT_ID;
 
   if (status === 'success' && eventUpdates.length > 0) {
-    const sentCount = await sendEventCards(eventUpdates, persistentTargets);
-    if (sentCount > 0) {
-      console.log(`Sent ${sentCount} persistent event card notification(s).`);
+    const cardDelivery = await sendEventCards(eventUpdates, persistentTargets);
+    if (cardDelivery.ok) {
+      console.log(`Sent ${cardDelivery.sentCount} persistent event card notification(s).`);
       return;
+    }
+    if (cardDelivery.sentCount > 0) {
+      throw new Error(
+        `Event card delivery incomplete: ${cardDelivery.sentCount}/${cardDelivery.attempted} succeeded.`
+      );
     }
     console.warn('No event card notification was sent; falling back to summary message.');
   }
@@ -339,7 +368,9 @@ Note: no event updates detected; this temporary notice will be deleted.`;
   );
 }
 
-main().catch(err => {
-  console.error(`Failed to send TG notification: ${err.message}`);
-  process.exit(0);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  main().catch(err => {
+    console.error(`Failed to send TG notification: ${err.message}`);
+    process.exitCode = 1;
+  });
+}

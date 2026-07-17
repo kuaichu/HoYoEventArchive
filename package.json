@@ -3,11 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=24 <25"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
     "screenshots": "node scripts/capture-screenshots.js",
+    "test": "node --test test/*.test.js scripts/test-crawler-rules.js",
     "test:crawler": "node scripts/test-crawler-rules.js"
   },
   "devDependencies": {

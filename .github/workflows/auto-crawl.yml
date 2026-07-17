@@ -9,10 +9,22 @@ on:
 
 permissions:
   contents: write
+  deployments: write
+
+concurrency:
+  group: auto-crawl-main
+  cancel-in-progress: false
 
 jobs:
   crawl:
     runs-on: ubuntu-latest
+    outputs:
+      changed: ${{ steps.change_step.outputs.changed }}
+      committed: ${{ steps.commit_step.outputs.changed }}
+      commit_sha: ${{ steps.commit_step.outputs.commit_sha }}
+      start_time: ${{ steps.start_step.outputs.start_time }}
+      event_update_summary_b64: ${{ steps.summary_step.outputs.summary_b64 }}
+      event_update_json_b64: ${{ steps.summary_step.outputs.json_b64 }}
     env:
       TG_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
       TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -39,9 +51,14 @@ jobs:
         run: npx puppeteer browsers install chrome
 
       - name: Record Start Time
-        run: echo "START_TIME=$(date +%s)" >> $GITHUB_ENV
+        id: start_step
+        run: |
+          START_TIME=$(date +%s)
+          echo "START_TIME=$START_TIME" >> $GITHUB_ENV
+          echo "start_time=$START_TIME" >> $GITHUB_OUTPUT
 
       - name: Send Sync Started Notification
+        continue-on-error: true
         run: node scripts/tg-notify.js started ${{ github.event_name }}
 
       - name: Run Miyoushe Crawler
@@ -54,66 +71,116 @@ jobs:
         run: npm run screenshots
 
       - name: Summarize Event Updates
+        id: summary_step
         run: |
           summary_file="${RUNNER_TEMP}/hoyo-event-updates.txt"
           summary_json_file="${RUNNER_TEMP}/hoyo-event-updates.json"
           node scripts/summarize-event-updates.js > "$summary_file"
           node scripts/summarize-event-updates.js --json > "$summary_json_file"
+          echo "summary_b64=$(base64 -w 0 "$summary_file")" >> "$GITHUB_OUTPUT"
+          echo "json_b64=$(base64 -w 0 "$summary_json_file")" >> "$GITHUB_OUTPUT"
+
+      - name: Detect Generated Changes
+        id: change_step
+        run: |
+          git add src/events.json public/images/screenshots
+
+          if git diff --cached --quiet; then
+            echo "No new events or updates found."
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Generated changes detected."
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate Generated Data
+        if: steps.change_step.outputs.changed == 'true'
+        run: npm test
+
+      - name: Build Site
+        if: steps.change_step.outputs.changed == 'true'
+        run: npm run build
+
+      - name: Commit & Push Validated Changes
+        id: commit_step
+        if: steps.change_step.outputs.changed == 'true'
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "chore(data): update events and screenshots from miyoushe [skip ci]"
+
+          for attempt in 1 2 3; do
+            if git push origin main; then
+              echo "changed=true" >> $GITHUB_OUTPUT
+              echo "commit_sha=$(git rev-parse HEAD)" >> $GITHUB_OUTPUT
+              exit 0
+            fi
+            if [ "$attempt" -eq 3 ]; then
+              break
+            fi
+            echo "::warning::Push failed on attempt ${attempt}/3; rebasing on latest origin/main before retry."
+            git fetch origin main
+            git rebase origin/main
+            npm ci
+            npm test
+            npm run build
+          done
+
+          echo "::error::Unable to push validated generated changes after 3 attempts."
+          exit 1
+
+  deploy:
+    needs: crawl
+    if: needs.crawl.outputs.changed == 'true'
+    uses: ./.github/workflows/deploy-pages.yml
+    with:
+      ref: ${{ needs.crawl.outputs.commit_sha }}
+    secrets: inherit
+
+  notify:
+    needs: [crawl, deploy]
+    if: always()
+    runs-on: ubuntu-latest
+    env:
+      TG_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+      TG_CHANNEL_CHAT_ID: ${{ secrets.TELEGRAM_CHANNEL_CHAT_ID }}
+      TG_TRANSIENT_DELETE_AFTER_SECONDS: ${{ vars.TELEGRAM_TRANSIENT_DELETE_AFTER_SECONDS }}
+      SUMMARY_B64: ${{ needs.crawl.outputs.event_update_summary_b64 }}
+      EVENT_UPDATE_JSON_B64: ${{ needs.crawl.outputs.event_update_json_b64 }}
+
+    steps:
+      - name: Checkout Notification Script
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.crawl.outputs.commit_sha || github.sha }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Restore Event Summary
+        run: |
           {
             echo "EVENT_UPDATE_SUMMARY<<__HOYO_EVENT_UPDATES__"
-            if [ -s "$summary_file" ]; then
-              cat "$summary_file"
+            if [ -n "$SUMMARY_B64" ]; then
+              echo "$SUMMARY_B64" | base64 -d
               echo
             fi
             echo "__HOYO_EVENT_UPDATES__"
           } >> "$GITHUB_ENV"
-          echo "EVENT_UPDATE_JSON_B64=$(base64 -w 0 "$summary_json_file")" >> "$GITHUB_ENV"
-
-      - name: Check for Changes & Commit
-        id: commit_step
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-
-          git add src/events.json public/images/screenshots
-
-          if git diff --cached --quiet; then
-            echo "No new events or updates found. Skipping commit."
-            echo "changed=false" >> $GITHUB_OUTPUT
-          else
-            git commit -m "chore(data): update events and screenshots from miyoushe"
-            for attempt in 1 2 3; do
-              if git push origin main; then
-                echo "changed=true" >> $GITHUB_OUTPUT
-                exit 0
-              fi
-              if [ "$attempt" -eq 3 ]; then
-                break
-              fi
-              echo "::warning::Push failed on attempt ${attempt}/3; rebasing on latest origin/main before retry."
-              git fetch origin main
-              git rebase origin/main
-            done
-            git push origin main
-            echo "changed=true" >> $GITHUB_OUTPUT
-          fi
-
-      - name: Build Site
-        if: steps.commit_step.outputs.changed == 'true'
-        run: npm run build
-
-      - name: Deploy to Cloudflare Pages
-        if: steps.commit_step.outputs.changed == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=hoyo-event-archive --branch=main
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Send Sync Finished Notification
-        if: always()
         run: |
-          START=${START_TIME:-$(date +%s)}
+          STATUS=success
+          if [ "${{ needs.crawl.result }}" != "success" ]; then
+            STATUS=failure
+          elif [ "${{ needs.crawl.outputs.changed }}" = "true" ] && [ "${{ needs.deploy.result }}" != "success" ]; then
+            STATUS=failure
+          fi
+
+          START=${{ needs.crawl.outputs.start_time || '0' }}
+          if [ "$START" -le 0 ]; then START=$(date +%s); fi
           DURATION=$(( $(date +%s) - START ))
-          node scripts/tg-notify.js finished ${{ job.status }} ${{ steps.commit_step.outputs.changed || 'false' }} ${{ github.event_name }} $DURATION
+          node scripts/tg-notify.js finished "$STATUS" "${{ needs.crawl.outputs.committed || 'false' }}" "${{ github.event_name }}" "$DURATION"

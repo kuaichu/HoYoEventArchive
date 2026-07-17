@@ -1,59 +1,72 @@
 import './style.css';
 import eventsData from './events.json';
+import {
+  escapeHtml,
+  GAME_META,
+  isAvailable,
+  isFeaturedEvent,
+  normalizeBookmarks,
+  projectEventForDisplay,
+  safeExternalUrl,
+  safeScreenshotUrl,
+  statusMeta
+} from './event-domain.js';
+import {
+  mergeEventState,
+  parsePersistedEventState,
+  serializeEventState
+} from './event-storage.js';
 
-// Game image mappings
-const gameCovers = {
-  ys: '/images/genshin_cover.png',
-  sr: '/images/hsr_cover.png',
-  zzz: '/images/zzz_cover.png',
-  bh3: '/images/bh3_cover.png',
-  all: '/images/hero_banner_bg.png'
-};
+const EVENT_STORAGE_KEY = 'hoyo_archive_custom_events';
+const LEGACY_EVENT_STORAGE_BACKUP_KEY = `${EVENT_STORAGE_KEY}_legacy_backup`;
+const BOOKMARK_STORAGE_KEY = 'hoyo_archive_bookmarks';
+const gameCovers = Object.fromEntries(
+  Object.entries(GAME_META).map(([key, meta]) => [key, meta.cover])
+);
 
-// Load custom events from localStorage if they exist, otherwise fall back to default.
-// Repository-backed events should always refresh from src/events.json so automated crawler
-// changes (status/date/title/tags/etc.) are visible even when localStorage is present.
-const localEvents = localStorage.getItem('hoyo_archive_custom_events');
-let eventsList = eventsData;
 const retiredEventIds = new Set(['sr-34', 'sr-35', 'sr-36', 'sr-37', 'zzz-10']);
 
-if (localEvents) {
-  let updated = false;
-  const parsedLocalEvents = JSON.parse(localEvents);
-  const localById = new Map(parsedLocalEvents.map(evt => [evt.id, evt]));
-
-  eventsList = eventsData.map(defaultEvt => {
-    const localEvt = localById.get(defaultEvt.id);
-    if (!localEvt) {
-      return defaultEvt;
-    }
-
-    const mergedEvt = { ...defaultEvt };
-    if (JSON.stringify(localEvt) !== JSON.stringify(mergedEvt)) {
-      updated = true;
-    }
-    return mergedEvt;
-  });
-
-  // Preserve local-only custom entries created from the admin panel.
-  const defaultIds = new Set(eventsData.map(evt => evt.id));
-  const customOnlyEvents = parsedLocalEvents.filter(evt => {
-    return !defaultIds.has(evt.id) && !retiredEventIds.has(evt.id);
-  });
-  if (customOnlyEvents.length > 0) {
-    eventsList.push(...customOnlyEvents);
+function loadEvents() {
+  let raw = null;
+  try {
+    raw = localStorage.getItem(EVENT_STORAGE_KEY);
+  } catch (error) {
+    console.warn('Unable to read local event edits:', error.message);
   }
 
-  const normalizedLocalState = JSON.stringify(eventsList);
-  if (normalizedLocalState !== localEvents || updated) {
-    localStorage.setItem('hoyo_archive_custom_events', normalizedLocalState);
+  const parsed = parsePersistedEventState(raw, eventsData);
+  if (parsed.error) {
+    console.warn(`Ignoring invalid local event edits: ${parsed.error}`);
+  }
+  if (parsed.migrated) {
+    try {
+      if (!localStorage.getItem(LEGACY_EVENT_STORAGE_BACKUP_KEY)) {
+        localStorage.setItem(LEGACY_EVENT_STORAGE_BACKUP_KEY, raw);
+      }
+      localStorage.setItem(EVENT_STORAGE_KEY, serializeEventState(parsed.overlay));
+    } catch (error) {
+      console.warn('Unable to persist migrated local event edits:', error.message);
+    }
+  }
+
+  return mergeEventState(eventsData, parsed.overlay)
+    .map(event => projectEventForDisplay(event))
+    .filter(event => !retiredEventIds.has(event.id));
+}
+
+function loadBookmarks() {
+  try {
+    return normalizeBookmarks(JSON.parse(localStorage.getItem(BOOKMARK_STORAGE_KEY) || '[]'));
+  } catch (error) {
+    console.warn('Ignoring invalid bookmark storage:', error.message);
+    return [];
   }
 }
 
 // Application State
 const state = {
-  events: eventsList,
-  bookmarks: JSON.parse(localStorage.getItem('hoyo_archive_bookmarks') || '[]'),
+  events: loadEvents(),
+  bookmarks: loadBookmarks(),
   currentTab: 'home',      // home | library | timeline | reports | reflow | expired | about
   currentSubtab: 'all',    // all | latest | ending | popular | favorites (Only inside Home/Library)
   filters: {
@@ -308,7 +321,7 @@ function bindEvents() {
   // Modal Favorite toggle
   elModalFavoriteBtn.addEventListener('click', () => {
     if (!state.selectedEvent) return;
-    toggleBookmark(state.selectedEvent.id);
+    if (!toggleBookmark(state.selectedEvent.id)) return;
     updateModalFavoriteButton();
     renderEvents(); // Update cards UI
   });
@@ -538,7 +551,7 @@ function syncSidebarActiveFilters() {
 // Calculate and render stats in dashboard
 function updateStats() {
   const total = state.events.length;
-  const available = state.events.filter(e => e.status !== '已失效').length;
+  const available = state.events.filter(isAvailable).length;
   const expired = state.events.filter(e => e.status === '已失效').length;
   
   elStatTotal.textContent = total;
@@ -687,14 +700,14 @@ function renderRecentlyUpdated() {
   const listEl = document.getElementById('recentlyUpdatedList');
   listEl.innerHTML = recentList.map(e => {
     return `
-      <li class="update-item" data-id="${e.id}">
+      <li class="update-item" data-id="${escapeHtml(e.id)}">
         <div class="update-item-left">
-          <span class="update-game-badge ${e.gameKey}"></span>
-          <span class="update-name" title="${e.title}">${e.title}</span>
+          <span class="update-game-badge ${escapeHtml(e.gameKey)}"></span>
+          <span class="update-name" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</span>
         </div>
         <div class="update-info">
-          <span>${e.game}</span>
-          <span>${formatEventDate(e, true)}</span>
+          <span>${escapeHtml(e.game)}</span>
+          <span>${escapeHtml(formatEventDate(e, true))}</span>
         </div>
       </li>
     `;
@@ -740,11 +753,7 @@ function getFilteredEvents() {
     list = list.filter(e => e.status === '已结束' || e.status === '已失效');
   } 
   else if (state.currentSubtab === 'popular') {
-    // Events carrying popular tags or specific titles
-    const popularTags = ['三周年', '五周年', '周年庆', '二周年', '预抽卡', 'WIKI', '概念站'];
-    list = list.filter(e => 
-      popularTags.some(tag => e.title.includes(tag) || e.tags.some(t => t.includes(tag)))
-    );
+    list = list.filter(isFeaturedEvent);
   } 
   else if (state.currentSubtab === 'favorites') {
     list = list.filter(e => state.bookmarks.includes(e.id));
@@ -802,32 +811,15 @@ function renderEvents() {
         
         // Update Game Zone Details
         const gameKey = state.filters.game;
-        const gameCoversLocal = {
-          ys: '/images/genshin_cover.png',
-          sr: '/images/hsr_cover.png',
-          zzz: '/images/zzz_cover.png',
-          bh3: '/images/bh3_cover.png'
-        };
-        const gameTitles = {
-          ys: '原神活动专区',
-          sr: '崩坏：星穹铁道活动专区',
-          zzz: '绝区零活动专区',
-          bh3: '崩坏3活动专区'
-        };
-        const gameDescs = {
-          ys: '收录原神历年网页活动、概念网页与官方特别企划',
-          sr: '收录星铁历年网页活动、数据报告及年度入梦指南',
-          zzz: '收录绝区零历次测试预约、公测活动及趣味H5',
-          bh3: '收录崩坏3历次版本大型H5网页企划与特别福利活动'
-        };
+        const gameMeta = GAME_META[gameKey] || GAME_META.all;
         
-        if (elGameZoneLogo) elGameZoneLogo.src = gameCoversLocal[gameKey] || '';
-        if (elGameZoneTitle) elGameZoneTitle.textContent = gameTitles[gameKey] || '游戏专区';
-        if (elGameZoneDesc) elGameZoneDesc.textContent = gameDescs[gameKey] || '';
+        if (elGameZoneLogo) elGameZoneLogo.src = gameMeta.cover;
+        if (elGameZoneTitle) elGameZoneTitle.textContent = gameMeta.title;
+        if (elGameZoneDesc) elGameZoneDesc.textContent = gameMeta.description;
         
         // Calculate stats for this game
         const total = state.events.filter(e => e.gameKey === gameKey).length;
-        const available = state.events.filter(e => e.gameKey === gameKey && e.status !== '已失效').length;
+        const available = state.events.filter(e => e.gameKey === gameKey && isAvailable(e)).length;
         const expired = state.events.filter(e => e.gameKey === gameKey && e.status === '已失效').length;
         
         if (elZoneStatTotal) elZoneStatTotal.textContent = total;
@@ -861,44 +853,39 @@ function renderEvents() {
     elEventsContainer.innerHTML = filtered.map(e => {
       const isBookmarked = state.bookmarks.includes(e.id);
       const gameCover = gameCovers[e.gameKey] || gameCovers.all;
-      const statusClass = e.status === '可访问' ? 'available' : 
-                          e.status === '已失效' ? 'expired' : 
-                          e.status === '需登录' ? 'login' : 'ended';
-      
-      const badgeIcon = e.status === '可访问' ? 'fa-circle-check' :
-                        e.status === '已失效' ? 'fa-triangle-exclamation' :
-                        e.status === '需登录' ? 'fa-lock' : 'fa-clock';
-      
-      const imageSrc = e.status === '已失效' ? gameCover : `/images/screenshots/${e.id}.png`;
+      const status = statusMeta(e.status);
+      const imageSrc = e.status === '已失效'
+        ? gameCover
+        : (safeScreenshotUrl(e.id) || gameCover);
       return `
-        <div class="event-card" data-id="${e.id}">
+        <div class="event-card" data-id="${escapeHtml(e.id)}">
           <div class="card-img-wrapper">
-            <span class="status-badge ${statusClass}">
-              <i class="fa-solid ${badgeIcon}"></i>${e.status}
+            <span class="status-badge ${status.className}">
+              <i class="fa-solid ${status.icon}"></i>${escapeHtml(e.status)}
             </span>
-            <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-id="${e.id}" title="${isBookmarked ? '取消收藏' : '加入收藏'}">
+            <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-id="${escapeHtml(e.id)}" title="${isBookmarked ? '取消收藏' : '加入收藏'}">
               <i class="${isBookmarked ? 'fa-solid' : 'fa-regular'} fa-star"></i>
             </button>
-            <img class="card-img" src="${imageSrc}" onerror="this.onerror=null; this.src='${gameCover}';" alt="${e.title}" loading="lazy" />
+            <img class="card-img" data-event-image data-game-key="${escapeHtml(e.gameKey)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" />
           </div>
           <div class="event-details">
             <div class="event-info-top">
               <div class="event-meta-header">
-                <span class="event-game-name">${e.game}</span>
+                <span class="event-game-name">${escapeHtml(e.game)}</span>
                 <span>&middot;</span>
-                <span class="event-version-badge ${e.gameKey}">${e.version || '通用'}</span>
+                <span class="event-version-badge ${escapeHtml(e.gameKey)}">${escapeHtml(e.version || '通用')}</span>
                 <span>&middot;</span>
-                <span>${e.type}</span>
+                <span>${escapeHtml(e.type)}</span>
               </div>
-              <h3 class="event-title-h3" title="${e.title}">${e.title}</h3>
+              <h3 class="event-title-h3" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</h3>
             </div>
             
             <div class="event-tags">
-              ${e.tags.slice(0, 3).map(t => `<span class="event-tag-badge">${t}</span>`).join('')}
+              ${e.tags.slice(0, 3).map(t => `<span class="event-tag-badge">${escapeHtml(t)}</span>`).join('')}
             </div>
             
             <div class="event-date-row">
-              <span>${formatEventDate(e)}</span>
+              <span>${escapeHtml(formatEventDate(e))}</span>
               <span style="color: var(--primary); font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 4px;">
                 查看详情 <i class="fa-solid fa-angle-right" style="font-size: 10px;"></i>
               </span>
@@ -923,28 +910,27 @@ function renderEvents() {
       ${filtered.map(e => {
         const isBookmarked = state.bookmarks.includes(e.id);
         const gameCover = gameCovers[e.gameKey] || gameCovers.all;
-        const statusClass = e.status === '可访问' ? 'available' : 
-                            e.status === '已失效' ? 'expired' : 
-                            e.status === '需登录' ? 'login' : 'ended';
-        
-        const imageSrc = e.status === '已失效' ? gameCover : `/images/screenshots/${e.id}.png`;
+        const status = statusMeta(e.status);
+        const imageSrc = e.status === '已失效'
+          ? gameCover
+          : (safeScreenshotUrl(e.id) || gameCover);
         return `
-          <div class="event-list-row" data-id="${e.id}">
+          <div class="event-list-row" data-id="${escapeHtml(e.id)}">
             <div class="list-title-cell">
-              <img class="list-img-thumbnail" src="${imageSrc}" onerror="this.onerror=null; this.src='${gameCover}';" alt="${e.title}" loading="lazy" />
-              <span class="list-title-text" title="${e.title}">${e.title}</span>
+              <img class="list-img-thumbnail" data-event-image data-game-key="${escapeHtml(e.gameKey)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" />
+              <span class="list-title-text" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</span>
             </div>
-            <div class="list-game-cell">${e.game}</div>
+            <div class="list-game-cell">${escapeHtml(e.game)}</div>
             <div class="list-version-cell">
-              <span class="event-version-badge ${e.gameKey}">${e.version || '通用'}</span>
+              <span class="event-version-badge ${escapeHtml(e.gameKey)}">${escapeHtml(e.version || '通用')}</span>
             </div>
-            <div class="list-type-cell">${e.type}</div>
-            <div class="list-date-cell">${formatEventDate(e)}</div>
+            <div class="list-type-cell">${escapeHtml(e.type)}</div>
+            <div class="list-date-cell">${escapeHtml(formatEventDate(e))}</div>
             <div class="list-status-cell">
-              <span class="list-status-badge ${statusClass}">${e.status}</span>
+              <span class="list-status-badge ${status.className}">${escapeHtml(e.status)}</span>
             </div>
             <div class="list-action-cell">
-              <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" style="position:static; margin-right:8px;" data-id="${e.id}" title="加入收藏">
+              <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" style="position:static; margin-right:8px;" data-id="${escapeHtml(e.id)}" title="加入收藏">
                 <i class="${isBookmarked ? 'fa-solid' : 'fa-regular'} fa-star"></i>
               </button>
             </div>
@@ -953,6 +939,12 @@ function renderEvents() {
       }).join('')}
     `;
   }
+
+  elEventsContainer.querySelectorAll('img[data-event-image]').forEach(image => {
+    image.addEventListener('error', () => {
+      image.src = gameCovers[image.dataset.gameKey] || gameCovers.all;
+    }, { once: true });
+  });
 
   // Bind click handlers to cards and lists
   elEventsContainer.querySelectorAll('.event-card, .event-list-row').forEach(card => {
@@ -973,7 +965,7 @@ function renderEvents() {
     btn.addEventListener('click', (e) => {
       e.stopPropagation();
       const eventId = btn.getAttribute('data-id');
-      toggleBookmark(eventId);
+      if (!toggleBookmark(eventId)) return;
       
       // Visual toggle
       const isBookmarked = state.bookmarks.includes(eventId);
@@ -1009,29 +1001,29 @@ function renderTimeline() {
     return `
       <div class="timeline-year-group">
         <div class="timeline-year-header">
-          <div class="timeline-year-dot">${year}</div>
+          <div class="timeline-year-dot">${escapeHtml(year)}</div>
         </div>
         ${yearEvents.map(e => {
           return `
-            <div class="timeline-item" data-id="${e.id}">
+            <div class="timeline-item" data-id="${escapeHtml(e.id)}">
               <div class="timeline-item-left">
                 <div class="timeline-item-dot"></div>
               </div>
               <div class="timeline-item-card">
                 <div class="timeline-card-left">
-                  <span class="timeline-card-date">${e.dateType === 'announcement' ? '公告 ' : ''}${e.date.substring(5)}</span>
-                  <div class="timeline-card-title">${e.title}</div>
+                  <span class="timeline-card-date">${escapeHtml(e.dateType === 'announcement' ? `公告 ${e.date.substring(5)}` : e.date.substring(5))}</span>
+                  <div class="timeline-card-title">${escapeHtml(e.title)}</div>
                   <div class="timeline-card-meta">
-                    <span class="timeline-card-game" style="color:var(--primary);">${e.game}</span>
+                    <span class="timeline-card-game" style="color:var(--primary);">${escapeHtml(e.game)}</span>
                     <span>&middot;</span>
-                    <span class="event-version-badge ${e.gameKey}" style="font-size:10px; padding: 1px 4px;">${e.version || '通用'}</span>
+                    <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 1px 4px;">${escapeHtml(e.version || '通用')}</span>
                     <span>&middot;</span>
-                    <span>${e.type}</span>
+                    <span>${escapeHtml(e.type)}</span>
                   </div>
                 </div>
                 <div>
-                  <span class="list-status-badge ${e.status === '可访问' ? 'available' : e.status === '已失效' ? 'expired' : e.status === '需登录' ? 'login' : 'ended'}" style="font-size:10px; padding: 2px 6px;">
-                    ${e.status}
+                  <span class="list-status-badge ${statusMeta(e.status).className}" style="font-size:10px; padding: 2px 6px;">
+                    ${escapeHtml(e.status)}
                   </span>
                 </div>
               </div>
@@ -1054,26 +1046,37 @@ function renderTimeline() {
 
 // Bookmarks toggle logic
 function toggleBookmark(id) {
-  const index = state.bookmarks.indexOf(id);
+  const nextBookmarks = [...state.bookmarks];
+  const index = nextBookmarks.indexOf(id);
   if (index === -1) {
-    state.bookmarks.push(id);
+    nextBookmarks.push(id);
   } else {
-    state.bookmarks.splice(index, 1);
+    nextBookmarks.splice(index, 1);
   }
-  localStorage.setItem('hoyo_archive_bookmarks', JSON.stringify(state.bookmarks));
+  try {
+    localStorage.setItem(BOOKMARK_STORAGE_KEY, JSON.stringify(nextBookmarks));
+    state.bookmarks = nextBookmarks;
+    return true;
+  } catch (error) {
+    console.warn('Unable to persist bookmarks:', error.message);
+    alert('收藏保存失败：浏览器本地存储不可用。');
+    return false;
+  }
 }
 
 // Detail Popup modal logic
 function openDetailModal(eventObj) {
   state.selectedEvent = eventObj;
   
-  if (eventObj.status === '已失效') {
-    elModalHeroImg.src = gameCovers[eventObj.gameKey] || gameCovers.all;
+  const fallbackCover = gameCovers[eventObj.gameKey] || gameCovers.all;
+  const screenshotUrl = safeScreenshotUrl(eventObj.id);
+  if (eventObj.status === '已失效' || !screenshotUrl) {
+    elModalHeroImg.src = fallbackCover;
   } else {
-    elModalHeroImg.src = `/images/screenshots/${eventObj.id}.png`;
+    elModalHeroImg.src = screenshotUrl;
     elModalHeroImg.onerror = function() {
       this.onerror = null;
-      this.src = gameCovers[eventObj.gameKey] || gameCovers.all;
+      this.src = fallbackCover;
     };
   }
   elModalTitle.textContent = eventObj.title;
@@ -1087,17 +1090,26 @@ function openDetailModal(eventObj) {
   elModalGameBadge.className = `modal-game-badge ${eventObj.gameKey}`;
   
   // Status badge styling
-  const statusClass = eventObj.status === '可访问' ? 'available' : 
-                      eventObj.status === '已失效' ? 'expired' : 
-                      eventObj.status === '需登录' ? 'login' : 'ended';
   elModalStatusBadge.textContent = eventObj.status;
-  elModalStatusBadge.className = `status-badge ${statusClass}`;
+  elModalStatusBadge.className = `status-badge ${statusMeta(eventObj.status).className}`;
   
   // Primary action button href
-  elModalPrimaryLink.href = eventObj.url;
+  const externalUrl = safeExternalUrl(eventObj.url);
+  if (externalUrl) {
+    elModalPrimaryLink.href = externalUrl;
+    elModalPrimaryLink.removeAttribute('aria-disabled');
+  } else {
+    elModalPrimaryLink.removeAttribute('href');
+    elModalPrimaryLink.setAttribute('aria-disabled', 'true');
+  }
   
   // Tags rendering
-  elModalTags.innerHTML = eventObj.tags.map(t => `<span class="event-tag-badge">${t}</span>`).join('');
+  elModalTags.replaceChildren(...eventObj.tags.map(tag => {
+    const badge = document.createElement('span');
+    badge.className = 'event-tag-badge';
+    badge.textContent = tag;
+    return badge;
+  }));
   
   updateModalFavoriteButton();
   

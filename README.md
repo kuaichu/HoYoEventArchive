@@ -13,20 +13,22 @@
 
 2. **自动米游社活动爬虫 (Automated Scraper)**
    * 独立的 Node.js 命令行脚本（[miyoushe-crawler.js](file:///s:/Projects/Active/HoYo%20Event%20Archive/scripts/miyoushe-crawler.js)），基于 Puppeteer 无头浏览器。
-   * 自动爬取并去重米游社对应游戏的“公告”、“活动”和“资讯”板块。
+   * 分页扫描米游社四款游戏论坛，规范化并去重官方活动 URL；单个来源或页面失败会降级继续，全部来源失败时任务以失败退出。
    * 解析新闻详情，提取包含的 H5 网页链接，并利用 Puppeteer 动态加载解析页面 Meta 标签以自动获取活动标题、描述和关联版本，智能归档入库。
 
 3. **多维筛选与智能搜索 (Advanced Filtering & Search)**
    * 支持按游戏种类、活动类型（年度报告、回归活动、版本前瞻、预约/预抽卡、小游戏等）以及可用状态（可访问、已失效、需登录、已结束）进行交叉筛选。
    * 内置实时输入模糊搜索，并在 Banner 底部提供热门搜索标签快捷引导。
 
-4. **网页可用性状态自动监测 (Link Status Checker)**
-   * 提供 [update-statuses.js](file:///s:/Projects/Active/HoYo%20Event%20Archive/scripts/update-statuses.js) 定期检测脚本。
-   * 发起 HTTP 请求探测网页可用状态，智能判定并标记“可访问（正常）”、“已失效（404等）”、“需登录（重定向至登录页）”及“已结束”。
+4. **状态数据校验与生命周期更新 (Status Validation)**
+   * 提供 [update-statuses.js](file:///s:/Projects/Active/HoYo%20Event%20Archive/scripts/update-statuses.js) 确定性更新脚本。
+   * `date` 仅表示展示或公告日期；只有活动提供明确且已过期的 `endDate` 时，脚本才自动标记“已结束”。网页连通性、登录要求和失效状态不再根据活动年龄猜测。
+   * 全量事件会在测试和自动提交前检查必填字段、枚举、日期、URL 以及 ID/URL 唯一性。
 
-5. **前后端解耦的独立管理后台 (Standalone Admin Panel)**
-   * 将高权限管理功能完全迁移至独立的 [admin.html](file:///s:/Projects/Active/HoYo%20Event%20Archive/admin.html)（`/admin`）。
-   * 面向管理员提供可视化 CRUD（增删改查）界面、一键导出最新 `events.json` 数据库，以及清空/重置 localStorage 初始状态的功能。
+5. **独立本地管理工具 (Standalone Local Admin Tool)**
+   * [admin.html](file:///s:/Projects/Active/HoYo%20Event%20Archive/admin.html) 是纯浏览器本地编辑工具，不具有服务端或仓库写权限。
+   * 编辑使用带版本的 localStorage overlay：内置记录保存字段补丁、删除保存 tombstone、自定义记录单独保存；刷新后仍会保留修改，同时能接收仓库新增记录。
+   * 支持一键导出合并后的 `events.json`，由维护者审核后替换仓库数据。
 
 6. **本地收藏夹 (Personal Bookmarks)**
    * 采用浏览器 LocalStorage 实现纯前端持久化收藏功能，用户可以收藏喜爱的年度报告或绝版活动网页。
@@ -38,16 +40,16 @@
 * **核心前端**: HTML5 语义化标签、JavaScript (ES Modules 规范)
 * **样式系统**: 原生 CSS3，全面引入 CSS 自定义变量设计系统，适配深色科技感玻璃拟态（Glassmorphism）与微动效。
 * **构建/打包**: Vite
-* **脚本/自动化**: Node.js, Puppeteer (Headless Chrome)
+* **脚本/自动化**: Node.js 24, Puppeteer (Headless Chrome), GitHub Actions
 
 ---
 
 ## 🚀 快速上手 (Quick Start)
 
 ### 1. 克隆与安装依赖
-首先克隆本项目到本地，并在项目根目录下安装所需的开发依赖（主要是 Puppeteer）：
+首先安装 Node.js 24，克隆项目并按锁文件安装依赖：
 ```bash
-npm install
+npm ci
 ```
 
 ### 2. 运行本地开发服务器
@@ -67,6 +69,12 @@ npm run build
 ```
 打包产物将输出在 `dist/` 目录中。
 
+### 4. 运行测试
+```bash
+npm test
+```
+测试覆盖爬虫规则、事件数据契约、生命周期状态、自动化失败边界、本地编辑 overlay 以及 HTML/URL 安全规则。
+
 ---
 
 ## 📁 实用维护脚本 (Maintenance Scripts)
@@ -79,11 +87,11 @@ npm run build
   ```
   执行后会自动扫描米游社官网，获取最新的官方活动信息，更新数据库。
   
-* **活动链接状态检测**：
+* **活动生命周期状态更新**：
   ```bash
   node scripts/update-statuses.js
   ```
-  定期执行该脚本，可以检测归档链接是否已经不可访问，避免用户踩坑失效网页。
+  根据明确的 `endDate` 更新生命周期状态；不会从公告日期或活动年龄推断网页是否失效。
   
 * **官方封面标志下载**：
   ```bash
@@ -95,7 +103,9 @@ npm run build
   ```bash
   node scripts/capture-screenshots.js
   ```
-  读取活动数据库，利用 Puppeteer 对有效的活动进行长网页截图，保存至 `public/images/screenshots/` 目录作为卡片预览图。
+  读取活动数据库，利用 Puppeteer 为缺失预览图的非失效活动生成 1024×576 缩略图，保存至 `public/images/screenshots/`。
+
+自动维护工作流会在生成数据后运行完整测试和生产构建，只有验证成功才提交到 `main`。Cloudflare Pages 的构建与部署统一由 `.github/workflows/deploy-pages.yml` 执行。
 
 ---
 

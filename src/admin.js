@@ -1,45 +1,81 @@
 import './style.css';
 import eventsData from './events.json';
+import {
+  escapeHtml,
+  gameKeyForName,
+  normalizeEvent,
+  safeExternalUrl,
+  statusMeta,
+  validateEvent
+} from './event-domain.js';
+import {
+  createEmptyEventOverlay,
+  deleteEventFromOverlay,
+  mergeEventState,
+  nextEventId,
+  parsePersistedEventState,
+  serializeEventState,
+  upsertEventInOverlay
+} from './event-storage.js';
 
-// Load custom events from localStorage if they exist, otherwise fall back to default.
-// Repository-backed events should refresh from src/events.json so crawler updates remain visible.
-const localEvents = localStorage.getItem('hoyo_archive_custom_events');
-let eventsList = eventsData;
+const EVENT_STORAGE_KEY = 'hoyo_archive_custom_events';
+const LEGACY_EVENT_STORAGE_BACKUP_KEY = `${EVENT_STORAGE_KEY}_legacy_backup`;
 
-if (localEvents) {
-  let updated = false;
-  const parsedLocalEvents = JSON.parse(localEvents);
-  const localById = new Map(parsedLocalEvents.map(evt => [evt.id, evt]));
-
-  eventsList = eventsData.map(defaultEvt => {
-    const localEvt = localById.get(defaultEvt.id);
-    if (!localEvt) {
-      return defaultEvt;
-    }
-
-    const mergedEvt = { ...defaultEvt };
-    if (JSON.stringify(localEvt) !== JSON.stringify(mergedEvt)) {
-      updated = true;
-    }
-    return mergedEvt;
-  });
-
-  const defaultIds = new Set(eventsData.map(evt => evt.id));
-  const customOnlyEvents = parsedLocalEvents.filter(evt => !defaultIds.has(evt.id));
-  if (customOnlyEvents.length > 0) {
-    eventsList.push(...customOnlyEvents);
+function loadEventOverlay() {
+  let raw = null;
+  try {
+    raw = localStorage.getItem(EVENT_STORAGE_KEY);
+  } catch (error) {
+    console.warn('Unable to read local event edits:', error.message);
   }
 
-  const normalizedLocalState = JSON.stringify(eventsList);
-  if (normalizedLocalState !== localEvents || updated) {
-    localStorage.setItem('hoyo_archive_custom_events', normalizedLocalState);
+  const parsed = parsePersistedEventState(raw, eventsData);
+  if (parsed.error) {
+    console.warn(`Ignoring invalid local event edits: ${parsed.error}`);
   }
+  if (parsed.migrated) {
+    try {
+      if (!localStorage.getItem(LEGACY_EVENT_STORAGE_BACKUP_KEY)) {
+        localStorage.setItem(LEGACY_EVENT_STORAGE_BACKUP_KEY, raw);
+      }
+      localStorage.setItem(EVENT_STORAGE_KEY, serializeEventState(parsed.overlay));
+    } catch (error) {
+      console.warn('Unable to persist migrated local event edits:', error.message);
+    }
+  }
+  return parsed.overlay;
 }
 
 // Application State
 const state = {
-  events: eventsList
+  overlay: loadEventOverlay(),
+  events: []
 };
+state.events = mergeEventState(eventsData, state.overlay);
+
+function readLatestOverlay() {
+  try {
+    const raw = localStorage.getItem(EVENT_STORAGE_KEY);
+    return parsePersistedEventState(raw, eventsData).overlay;
+  } catch (error) {
+    console.warn('Unable to refresh local event edits:', error.message);
+    return state.overlay;
+  }
+}
+
+function commitOverlay(updateOverlay) {
+  try {
+    const nextOverlay = updateOverlay(readLatestOverlay());
+    localStorage.setItem(EVENT_STORAGE_KEY, serializeEventState(nextOverlay));
+    state.overlay = nextOverlay;
+    state.events = mergeEventState(eventsData, state.overlay);
+    return true;
+  } catch (error) {
+    console.error('Unable to persist local event edits:', error);
+    alert('保存失败：浏览器本地存储不可用或空间不足。');
+    return false;
+  }
+}
 
 // DOM Elements
 let elAdminEventsList;
@@ -137,29 +173,31 @@ function renderAdminEvents() {
   list.sort((a, b) => new Date(b.date.replace(/\./g, '/')) - new Date(a.date.replace(/\./g, '/')));
 
   elAdminEventsList.innerHTML = list.map(e => {
-    const statusClass = e.status === '可访问' ? 'available' : 
-                        e.status === '已失效' ? 'expired' : 
-                        e.status === '需登录' ? 'login' : 'ended';
+    const statusClass = statusMeta(e.status).className;
+    const externalUrl = safeExternalUrl(e.url);
+    const titleCell = externalUrl
+      ? `<a href="${escapeHtml(externalUrl)}" target="_blank" rel="noopener noreferrer" style="color: white; text-decoration: none; hover:text-decoration: underline;">${escapeHtml(e.title)}</a>`
+      : `<span title="链接格式无效">${escapeHtml(e.title)}</span>`;
     return `
       <tr style="border-bottom: 1px solid rgba(255,255,255,0.05); transition: background 0.2s;">
-        <td style="padding: 14px 20px; font-family: 'Outfit'; color: var(--text-muted); font-size: 13px;">${e.id}</td>
+        <td style="padding: 14px 20px; font-family: 'Outfit'; color: var(--text-muted); font-size: 13px;">${escapeHtml(e.id)}</td>
         <td style="padding: 14px 20px; font-weight: 600; max-width: 250px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-          <a href="${e.url}" target="_blank" style="color: white; text-decoration: none; hover:text-decoration: underline;">${e.title}</a>
+          ${titleCell}
         </td>
-        <td style="padding: 14px 20px; color: var(--text-accent);">${e.game}</td>
+        <td style="padding: 14px 20px; color: var(--text-accent);">${escapeHtml(e.game)}</td>
         <td style="padding: 14px 20px;">
-          <span class="event-version-badge ${e.gameKey || 'all'}" style="font-size:10px; padding: 2px 6px;">${e.version || '通用'}</span>
+          <span class="event-version-badge ${escapeHtml(e.gameKey)}" style="font-size:10px; padding: 2px 6px;">${escapeHtml(e.version || '通用')}</span>
         </td>
-        <td style="padding: 14px 20px; color: var(--text-secondary);">${e.type}</td>
+        <td style="padding: 14px 20px; color: var(--text-secondary);">${escapeHtml(e.type)}</td>
         <td style="padding: 14px 20px;">
-          <span class="list-status-badge ${statusClass}" style="font-size:10px; padding: 2px 6px;">${e.status}</span>
+          <span class="list-status-badge ${statusClass}" style="font-size:10px; padding: 2px 6px;">${escapeHtml(e.status)}</span>
         </td>
         <td style="padding: 14px 20px;">
           <div style="display: flex; justify-content: center; gap: 8px;">
-            <button class="control-tab" data-edit-id="${e.id}" style="padding: 4px 10px; font-size: 11px; background: rgba(93,107,250,0.15); border: 1px solid rgba(93,107,250,0.3); color: white; border-radius: 4px; cursor: pointer;">
+            <button class="control-tab" data-edit-id="${escapeHtml(e.id)}" style="padding: 4px 10px; font-size: 11px; background: rgba(93,107,250,0.15); border: 1px solid rgba(93,107,250,0.3); color: white; border-radius: 4px; cursor: pointer;">
               编辑
             </button>
-            <button class="control-tab" data-delete-id="${e.id}" style="padding: 4px 10px; font-size: 11px; background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.3); color: var(--status-expired); border-radius: 4px; cursor: pointer;">
+            <button class="control-tab" data-delete-id="${escapeHtml(e.id)}" style="padding: 4px 10px; font-size: 11px; background: rgba(248,113,113,0.15); border: 1px solid rgba(248,113,113,0.3); color: var(--status-expired); border-radius: 4px; cursor: pointer;">
               删除
             </button>
           </div>
@@ -255,23 +293,26 @@ function saveAdminEvent() {
   // Parse tags
   const tags = tagsStr ? tagsStr.split(',').map(t => t.trim()).filter(Boolean) : [];
 
-  // Determine gameKey
-  let gameKey = 'all';
-  if (game === '原神') gameKey = 'ys';
-  else if (game === '星穹铁道') gameKey = 'sr';
-  else if (game === '绝区零') gameKey = 'zzz';
-  else if (game === '崩坏3') gameKey = 'bh3';
+  const gameKey = gameKeyForName(game);
+  const externalUrl = safeExternalUrl(url);
+  if (!externalUrl) {
+    alert('网页链接必须是有效的 HTTP 或 HTTPS 地址，且不能包含用户名或密码。');
+    return;
+  }
 
   const id = elFormEventId.value;
+  let event;
   if (id) {
-    // Edit existing
-    const index = state.events.findIndex(e => e.id === id);
-    if (index !== -1) {
-      state.events[index] = {
-        ...state.events[index],
+    const currentEvent = state.events.find(e => e.id === id);
+    if (!currentEvent) {
+      alert('未找到要编辑的活动，可能已在其他页面被删除。');
+      return;
+    }
+    event = normalizeEvent({
+        ...currentEvent,
         id,
         title,
-        url,
+        url: externalUrl,
         game,
         gameKey,
         type,
@@ -280,28 +321,14 @@ function saveAdminEvent() {
         tags,
         version: version || '通用',
         description
-      };
-    }
+      }, currentEvent);
   } else {
-    // Generate new ID
-    // Find maximum numeric suffix for this gameKey to prevent duplicate ID collision
-    const gameEvents = state.events.filter(e => e.gameKey === gameKey);
-    let maxNum = 0;
-    gameEvents.forEach(e => {
-      const parts = e.id.split('-');
-      if (parts.length === 2) {
-        const num = parseInt(parts[1], 10);
-        if (!isNaN(num) && num > maxNum) {
-          maxNum = num;
-        }
-      }
-    });
-    const newId = `${gameKey}-${maxNum + 1}`;
+    const newId = nextEventId(gameKey, eventsData, readLatestOverlay());
     
-    state.events.push({
+    event = normalizeEvent({
       id: newId,
       title,
-      url,
+      url: externalUrl,
       game,
       gameKey,
       type,
@@ -313,8 +340,15 @@ function saveAdminEvent() {
     });
   }
 
-  // Save to LocalStorage
-  localStorage.setItem('hoyo_archive_custom_events', JSON.stringify(state.events));
+  const validationIssues = validateEvent(event);
+  if (validationIssues.length > 0) {
+    alert(`活动数据无效：\n${validationIssues.join('\n')}`);
+    return;
+  }
+
+  if (!commitOverlay(currentOverlay => (
+    upsertEventInOverlay(currentOverlay, eventsData, event)
+  ))) return;
 
   // Reset and update
   hideAdminForm();
@@ -326,10 +360,9 @@ function saveAdminEvent() {
 // Delete administrative event
 function deleteAdminEvent(eventId) {
   if (confirm(`确定要删除活动档案 ${eventId} 吗？`)) {
-    state.events = state.events.filter(e => e.id !== eventId);
-    
-    // Save to LocalStorage
-    localStorage.setItem('hoyo_archive_custom_events', JSON.stringify(state.events));
+    if (!commitOverlay(currentOverlay => (
+      deleteEventFromOverlay(currentOverlay, eventsData, eventId)
+    ))) return;
 
     // Reset and update
     hideAdminForm();
@@ -359,8 +392,16 @@ function exportDatabaseJson() {
 // Reset database defaults
 function resetDatabaseDefaults() {
   if (confirm('确定要清除所有自定义修改，恢复至档案馆默认数据吗？此操作不可逆！')) {
-    localStorage.removeItem('hoyo_archive_custom_events');
-    state.events = [...eventsData];
+    try {
+      localStorage.removeItem(EVENT_STORAGE_KEY);
+      localStorage.removeItem(LEGACY_EVENT_STORAGE_BACKUP_KEY);
+      state.overlay = createEmptyEventOverlay();
+      state.events = mergeEventState(eventsData, state.overlay);
+    } catch (error) {
+      console.error('Unable to reset local event edits:', error);
+      alert('重置失败：浏览器本地存储不可用。');
+      return;
+    }
     
     // Reset and update
     hideAdminForm();
