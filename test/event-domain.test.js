@@ -111,7 +111,7 @@ test('known version corrections remain locked to their target classifications', 
     ['ys-35', 'v6.7'], ['ys-36', 'v6.7'], ['ys-37', 'v6.7'], ['ys-40', 'v6.7'],
     ['sr-1', '公测前'], ['sr-2', 'v3.4'], ['sr-7', 'v3.2'], ['sr-14', 'v3.2'],
     ['sr-19', '通用'], ['sr-28', '公测前'], ['sr-30', '公测前'], ['sr-31', '公测前'],
-    ['zzz-8', '公测前'], ['bh3-1', 'v8.5']
+    ['zzz-8', '公测前'], ['bh3-1', 'v8.5'], ['bh3-8', 'v9.0']
   ]);
   const byId = new Map(events.map(event => [event.id, event]));
 
@@ -120,7 +120,7 @@ test('known version corrections remain locked to their target classifications', 
   }
 });
 
-test('July announcement records stay available while preserving verified event windows', () => {
+test('July announcement records preserve verified event windows and lifecycle boundaries', () => {
   const julyIds = new Set([
     'ys-38',
     'sr-45',
@@ -143,9 +143,15 @@ test('July announcement records stay available while preserving verified event w
   ]);
 
   for (const event of julyEvents) {
-    assert.equal(event.status, '可访问', `${event.id} should be available`);
     assert.equal(event.dateType, 'announcement');
     assert.equal(event.endDate, verifiedEndDates.get(event.id));
-    if (event.endDate) assert.notEqual(event.endDate, event.date);
+    if (event.endDate) {
+      assert.notEqual(event.endDate, event.date);
+      assert.equal(
+        resolveEventStatus({ ...event, status: '可访问' }, '2026.07.18'),
+        event.endDate < '2026.07.18' ? '已结束' : '可访问',
+        `${event.id} should respect its verified end date`
+      );
+    }
   }
 });
