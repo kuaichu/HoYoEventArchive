@@ -300,7 +300,18 @@ export function buildFinishedNotificationPlan({
   const summaryTargets = eventCardsEnabled
     ? targetsExcluding(statusTargets, eventTargets)
     : statusTargets;
-  const silentNoChange = status === 'success' && !dataChanged && !notificationTest && !forceEventCards;
+  const manualNoChange =
+    status === 'success' &&
+    !dataChanged &&
+    trigger !== 'schedule' &&
+    !notificationTest &&
+    !forceEventCards;
+  const silentNoChange =
+    status === 'success' &&
+    !dataChanged &&
+    trigger === 'schedule' &&
+    !notificationTest &&
+    !forceEventCards;
   const summaryEnabled = !notificationTest && !silentNoChange && (!eventCardsEnabled || Boolean(summaryTargets));
   let text = `${title}
 Project: ${htmlEscape(project)}
@@ -316,6 +327,9 @@ ${htmlEscape(updateSummary)}`;
   } else if (dataChanged) {
     text += `
 Updates: changed, but no newly added event summary was generated`;
+  } else if (manualNoChange) {
+    text += `
+Note: no event updates detected; this temporary manual-run receipt will be deleted.`;
   }
 
   text += `
@@ -331,7 +345,7 @@ Run: <a href="${runUrl}">#${runId}</a>`;
       enabled: summaryEnabled,
       text,
       targets: summaryTargets || statusTargets,
-      deleteAfterSeconds: 0
+      deleteAfterSeconds: manualNoChange ? transientDeleteAfterSeconds : 0
     }
   };
 }

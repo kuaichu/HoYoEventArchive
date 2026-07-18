@@ -48,7 +48,7 @@ test('event cards fall back to the working status chat when no channel is config
   );
 });
 
-test('successful no-change runs stay silent', () => {
+test('scheduled successful no-change runs stay silent', () => {
   const plan = buildFinishedNotificationPlan({
     ...baseInput,
     dataChanged: false,
@@ -58,6 +58,23 @@ test('successful no-change runs stay silent', () => {
 
   assert.equal(plan.eventCards.enabled, false);
   assert.equal(plan.summary.enabled, false);
+});
+
+test('manual successful no-change runs send one temporary completion notice', () => {
+  const plan = buildFinishedNotificationPlan({
+    ...baseInput,
+    trigger: 'manual',
+    dataChanged: false,
+    updateSummary: '',
+    eventUpdates: []
+  });
+
+  assert.equal(plan.eventCards.enabled, false);
+  assert.equal(plan.summary.enabled, true);
+  assert.equal(plan.summary.targets, '-100-status');
+  assert.equal(plan.summary.deleteAfterSeconds, 120);
+  assert.match(plan.summary.text, /Data: no changes/);
+  assert.match(plan.summary.text, /temporary manual-run receipt will be deleted/);
 });
 
 test('changed runs send event cards to the channel and a persistent summary to the status chat', () => {
