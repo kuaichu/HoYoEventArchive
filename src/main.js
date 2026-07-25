@@ -16,8 +16,10 @@ import {
   parsePersistedEventState,
   serializeEventState
 } from './event-storage.js';
-import { resolveEventRoute } from './app-route.js';
+import { parseLocation, resolveEventRoute, serializeRoute } from './app-route.js';
 import { createDetailNavigation } from './detail-navigation.js';
+import { shouldNavigateInApp } from './navigation-link.js';
+import { activeNavTabForViewState, deriveViewState } from './route-view-state.js';
 import { groupTimelineEvents, timelineDayLabel } from './timeline-domain.js';
 
 const EVENT_STORAGE_KEY = 'hoyo_archive_custom_events';
@@ -70,7 +72,7 @@ function loadBookmarks() {
 const state = {
   events: loadEvents(),
   bookmarks: loadBookmarks(),
-  currentTab: 'home',      // home | library | timeline | reports | reflow | expired | about
+  currentTab: 'home',      // home | game | library | timeline | reports | reflow | expired | about
   currentSubtab: 'all',    // all | latest | ending | popular | favorites (Only inside Home/Library)
   filters: {
     game: 'all',           // all | ys | sr | zzz | bh3
@@ -82,6 +84,7 @@ const state = {
   sortKey: 'date-desc',    // date-desc | date-asc | title-asc | status-asc
   selectedEvent: null
 };
+let hasRenderedRoute = false;
 
 const detailNavigation = createDetailNavigation({
   history: window.history,
@@ -109,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
   updateStats();
   renderSidebarFilters();
   renderRecentlyUpdated();
-  applyTabChange(state.currentTab);
   detailNavigation.replay();
 });
 
@@ -174,41 +176,35 @@ function initDOM() {
 
 // Bind event listeners
 function bindEvents() {
-  // Navigation tabs
-  document.querySelectorAll('.nav-item').forEach(navLink => {
-    navLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-      navLink.classList.add('active');
-      const tabName = navLink.getAttribute('data-tab');
-      applyTabChange(tabName);
+  // Same-origin route links retain native modified-click/new-tab behavior.
+  document.addEventListener('click', event => {
+    const anchor = event.target.closest('a[data-route-link]');
+    if (!anchor || !shouldNavigateInApp(event, anchor, window.location)) return;
+    const url = new URL(anchor.href, window.location.href);
+    const route = parseLocation(url.pathname, url.search);
+    event.preventDefault();
+    if (route.name === 'event') {
+      detailNavigation.openEvent(route.eventId);
+    } else {
+      detailNavigation.navigate(route);
+    }
 
-      // Close mobile navigation drawer
-      if (elNavMenu) elNavMenu.classList.remove('open');
-      if (elDrawerOverlay) elDrawerOverlay.classList.remove('active');
-      if (elMobileNavToggle) {
-        const icon = elMobileNavToggle.querySelector('i');
-        if (icon) icon.className = 'fa-solid fa-bars';
-      }
-    });
+    if (anchor.matches('.portal-card, #recentMoreBtn')) scrollToEvents();
   });
 
   // Main Category Sub-tabs
   document.querySelectorAll('.control-tab').forEach(tabBtn => {
     tabBtn.addEventListener('click', () => {
-      document.querySelectorAll('.control-tab').forEach(btn => btn.classList.remove('active'));
-      tabBtn.classList.add('active');
-      state.currentSubtab = tabBtn.getAttribute('data-subtab');
+      if (tabBtn.matches('a[data-route-link]')) return;
+      const subtab = tabBtn.getAttribute('data-subtab');
+      if (!['home', 'game', 'library'].includes(state.currentTab)) {
+        detailNavigation.navigate({ name: 'events' });
+      } else if (state.currentSubtab === 'favorites') {
+        detailNavigation.navigate({ name: 'events' });
+      }
+      state.currentSubtab = subtab;
+      syncControlTabs();
       renderEvents();
-    });
-  });
-
-  // Game card portals
-  document.querySelectorAll('.portal-card').forEach(card => {
-    card.addEventListener('click', () => {
-      const gameKey = card.getAttribute('data-game');
-      setGameFilter(gameKey);
-      scrollToEvents();
     });
   });
 
@@ -288,7 +284,7 @@ function bindEvents() {
   const elHeaderSearchBtn = document.getElementById('headerSearchBtn');
   if (elHeaderSearchBtn) {
     elHeaderSearchBtn.addEventListener('click', () => {
-      setTab('home');
+      detailNavigation.navigate({ name: 'home' });
       elHeroSearchInput.focus();
       elHeroSearchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
@@ -298,17 +294,6 @@ function bindEvents() {
   const elMainContent = document.getElementById('mainContent');
   if (elMainContent) {
     elMainContent.addEventListener('scroll', updateHeaderSearchVisibility);
-  }
-
-  // Back to Home button click inside Game Zone
-  if (elBackToHomeBtn) {
-    elBackToHomeBtn.addEventListener('click', () => {
-      setGameFilter('all');
-      const elPaneHome = document.getElementById('paneHome');
-      if (elPaneHome) {
-        elPaneHome.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
   }
 
   // Hot Tags click
@@ -336,7 +321,8 @@ function bindEvents() {
   });
   window.addEventListener('popstate', () => detailNavigation.replay());
   elModalPrimaryLink.addEventListener('click', (e) => {
-    if (elModalPrimaryLink.dataset.routeHome !== 'true') return;
+    if (elModalPrimaryLink.dataset.routeClose !== 'true') return;
+    if (!shouldNavigateInApp(e, elModalPrimaryLink, window.location)) return;
     e.preventDefault();
     detailNavigation.closeDetail();
   });
@@ -347,17 +333,6 @@ function bindEvents() {
     if (!toggleBookmark(state.selectedEvent.id)) return;
     updateModalFavoriteButton();
     renderEvents(); // Update cards UI
-  });
-
-
-
-  // "Recent updates" list more button
-  document.getElementById('recentMoreBtn').addEventListener('click', () => {
-    setTab('library');
-    // Set to latest subtab
-    const latestTabBtn = document.querySelector('[data-subtab="latest"]');
-    if (latestTabBtn) latestTabBtn.click();
-    scrollToEvents();
   });
 
   // Mobile navigation drawer toggle
@@ -418,104 +393,91 @@ function scrollToEvents() {
   }
 }
 
-// Set game filter specifically
-function setGameFilter(gameKey) {
-  state.filters.game = gameKey;
-  // Update sidebar active classes
-  document.querySelectorAll('#gameFilters .filter-btn').forEach(btn => {
-    if (btn.getAttribute('data-value') === gameKey) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
-  });
-  renderEvents();
+function applyRoute(route) {
+  hideDetailModal();
+  applyViewState(deriveViewState(route));
+  renderActiveView();
 }
 
-// Handle global tab change
-function applyTabChange(tabName) {
-  state.currentTab = tabName;
-  
-  // Hide all panes
-  document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.add('hidden'));
-  
-  // Reset layouts
+function applyViewState(viewState) {
+  state.currentTab = viewState.currentTab;
+  state.currentSubtab = viewState.currentSubtab;
+  state.filters = { ...viewState.filters };
+  state.searchQuery = viewState.searchQuery;
+  if (elHeroSearchInput) elHeroSearchInput.value = viewState.searchQuery;
+}
+
+function renderActiveView() {
+  const showTimeline = state.currentTab === 'timeline';
+  const showAbout = state.currentTab === 'about';
+  const showEventList = !showTimeline && !showAbout;
+  const showHomeChrome = state.currentTab === 'home';
+  const showGameHeader = state.currentTab === 'game';
+
+  document.querySelectorAll('.tab-pane').forEach(pane => {
+    pane.classList.add('hidden');
+    pane.classList.remove('active');
+  });
+  const activePane = document.getElementById(
+    showTimeline ? 'paneTimeline' : (showAbout ? 'paneAbout' : 'paneHome')
+  );
+  activePane.classList.remove('hidden');
+  activePane.classList.add('active');
+
   const elHeroWrapper = document.querySelector('.hero-wrapper');
   const elGamePortals = document.querySelector('.game-portals');
   const elControlBar = document.querySelector('.control-bar');
   const elGridContainer = document.querySelector('.event-grid-container');
 
-  // Show corresponding panes & apply filter states
-  if (tabName === 'home') {
-    document.getElementById('paneHome').classList.remove('hidden');
-    elHeroWrapper.classList.remove('hidden');
-    elGamePortals.classList.remove('hidden');
-    elControlBar.classList.remove('hidden');
-    elGridContainer.classList.remove('hidden');
-    
-    // Reset filters
-    resetAllFilters();
-    state.currentSubtab = 'all';
-    document.querySelectorAll('.control-tab').forEach(btn => {
-      btn.classList.toggle('active', btn.getAttribute('data-subtab') === 'all');
-    });
-    renderEvents();
-  } 
-  else if (tabName === 'library') {
-    document.getElementById('paneHome').classList.remove('hidden');
-    elHeroWrapper.classList.add('hidden');
-    elGamePortals.classList.add('hidden');
-    elControlBar.classList.remove('hidden');
-    elGridContainer.classList.remove('hidden');
-    
-    resetAllFilters();
-    renderEvents();
-  } 
-  else if (tabName === 'timeline') {
-    document.getElementById('paneTimeline').classList.remove('hidden');
-    renderTimeline();
-  } 
-  else if (tabName === 'reports') {
-    document.getElementById('paneHome').classList.remove('hidden');
-    elHeroWrapper.classList.add('hidden');
-    elGamePortals.classList.add('hidden');
-    elControlBar.classList.remove('hidden');
-    elGridContainer.classList.remove('hidden');
-    
-    resetAllFilters();
-    state.filters.type = '年度报告';
-    syncSidebarActiveFilters();
-    renderEvents();
-  } 
-  else if (tabName === 'reflow') {
-    document.getElementById('paneHome').classList.remove('hidden');
-    elHeroWrapper.classList.add('hidden');
-    elGamePortals.classList.add('hidden');
-    elControlBar.classList.remove('hidden');
-    elGridContainer.classList.remove('hidden');
-    
-    resetAllFilters();
-    state.filters.type = '回归活动';
-    syncSidebarActiveFilters();
-    renderEvents();
-  } 
-  else if (tabName === 'expired') {
-    document.getElementById('paneHome').classList.remove('hidden');
-    elHeroWrapper.classList.add('hidden');
-    elGamePortals.classList.add('hidden');
-    elControlBar.classList.remove('hidden');
-    elGridContainer.classList.remove('hidden');
-    
-    resetAllFilters();
-    state.filters.status = '已失效';
-    syncSidebarActiveFilters();
-    renderEvents();
-  } 
-  else if (tabName === 'about') {
-    document.getElementById('paneAbout').classList.remove('hidden');
-  }
-  
+  elHeroWrapper.classList.toggle('hidden', !showHomeChrome);
+  elGamePortals.classList.toggle('hidden', !showHomeChrome);
+  elControlBar.classList.toggle('hidden', !showEventList);
+  elGridContainer.classList.toggle('hidden', !showEventList);
+  elGameZoneHeader.classList.toggle('hidden', !showGameHeader);
+
+  const activeNavTab = activeNavTabForViewState(state);
+  document.querySelectorAll('.nav-item').forEach(item => {
+    item.classList.toggle('active', item.getAttribute('data-tab') === activeNavTab);
+  });
+
+  syncControlTabs();
+  syncSidebarActiveFilters();
+  if (showGameHeader) renderGameZoneHeader();
+  if (showTimeline) renderTimeline();
+  else if (showEventList) renderEvents();
+  closeMobileNavigation();
   updateHeaderSearchVisibility();
+}
+
+function syncControlTabs() {
+  document.querySelectorAll('.control-tab').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-subtab') === state.currentSubtab);
+  });
+}
+
+function renderGameZoneHeader() {
+  const gameKey = state.filters.game;
+  const gameMeta = GAME_META[gameKey];
+  if (!gameMeta) return;
+  elGameZoneHeader.setAttribute('data-zone', gameKey);
+  if (elGameZoneLogo) elGameZoneLogo.src = gameMeta.cover;
+  if (elGameZoneTitle) elGameZoneTitle.textContent = gameMeta.title;
+  if (elGameZoneDesc) elGameZoneDesc.textContent = gameMeta.description;
+
+  const total = state.events.filter(event => event.gameKey === gameKey).length;
+  const available = state.events.filter(event => event.gameKey === gameKey && isAvailable(event)).length;
+  const expired = state.events.filter(event => event.gameKey === gameKey && event.status === '已失效').length;
+  if (elZoneStatTotal) elZoneStatTotal.textContent = total;
+  if (elZoneStatAvailable) elZoneStatAvailable.textContent = available;
+  if (elZoneStatExpired) elZoneStatExpired.textContent = expired;
+}
+
+function closeMobileNavigation() {
+  if (elNavMenu) elNavMenu.classList.remove('open');
+  if (elDrawerOverlay) elDrawerOverlay.classList.remove('active');
+  if (!elMobileNavToggle) return;
+  const icon = elMobileNavToggle.querySelector('i');
+  if (icon) icon.className = 'fa-solid fa-bars';
 }
 
 // Update visibility of the header quick search button based on scroll and active tab
@@ -537,25 +499,6 @@ function updateHeaderSearchVisibility() {
     elHeaderSearchBtn.style.opacity = '1';
     elHeaderSearchBtn.style.pointerEvents = 'all';
   }
-}
-
-// Utility to change nav active state programmatically
-function setTab(tabName) {
-  const targetNav = document.querySelector(`.nav-item[data-tab="${tabName}"]`);
-  if (targetNav) {
-    targetNav.click();
-  }
-}
-
-// Reset filter state
-function resetAllFilters() {
-  state.filters.game = 'all';
-  state.filters.type = 'all';
-  state.filters.status = 'all';
-  state.searchQuery = '';
-  if (elHeroSearchInput) elHeroSearchInput.value = '';
-  
-  syncSidebarActiveFilters();
 }
 
 // Sync CSS classes on sidebar list
@@ -728,27 +671,22 @@ function renderRecentlyUpdated() {
 
   const listEl = document.getElementById('recentlyUpdatedList');
   listEl.innerHTML = recentList.map(e => {
+    const detailHref = serializeRoute({ name: 'event', eventId: e.id });
     return `
-      <li class="update-item" data-id="${escapeHtml(e.id)}">
-        <div class="update-item-left">
-          <span class="update-game-badge ${escapeHtml(e.gameKey)}"></span>
-          <span class="update-name" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</span>
-        </div>
-        <div class="update-info">
-          <span>${escapeHtml(e.game)}</span>
-          <span>${escapeHtml(formatEventDate(e, true))}</span>
-        </div>
+      <li>
+        <a class="update-item" href="${escapeHtml(detailHref)}" data-route-link>
+          <div class="update-item-left">
+            <span class="update-game-badge ${escapeHtml(e.gameKey)}"></span>
+            <span class="update-name" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</span>
+          </div>
+          <div class="update-info">
+            <span>${escapeHtml(e.game)}</span>
+            <span>${escapeHtml(formatEventDate(e, true))}</span>
+          </div>
+        </a>
       </li>
     `;
   }).join('');
-
-  // Bind click events
-  listEl.querySelectorAll('.update-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const id = item.getAttribute('data-id');
-      detailNavigation.openEvent(id);
-    });
-  });
 }
 
 // Filter and Sort the datasets
@@ -821,47 +759,6 @@ function getFilteredEvents() {
 
 // Render events in Grid or List layout
 function renderEvents() {
-  // Sync page headers and game zone visibility
-  const elHeroWrapper = document.querySelector('.hero-wrapper');
-  const elGamePortals = document.querySelector('.game-portals');
-  
-  if (state.currentTab === 'home') {
-    if (state.filters.game === 'all') {
-      if (elHeroWrapper) elHeroWrapper.classList.remove('hidden');
-      if (elGamePortals) elGamePortals.classList.remove('hidden');
-      if (elGameZoneHeader) elGameZoneHeader.classList.add('hidden');
-    } else {
-      if (elHeroWrapper) elHeroWrapper.classList.add('hidden');
-      if (elGamePortals) elGamePortals.classList.add('hidden');
-      if (elGameZoneHeader) {
-        elGameZoneHeader.classList.remove('hidden');
-        elGameZoneHeader.setAttribute('data-zone', state.filters.game);
-        
-        // Update Game Zone Details
-        const gameKey = state.filters.game;
-        const gameMeta = GAME_META[gameKey] || GAME_META.all;
-        
-        if (elGameZoneLogo) elGameZoneLogo.src = gameMeta.cover;
-        if (elGameZoneTitle) elGameZoneTitle.textContent = gameMeta.title;
-        if (elGameZoneDesc) elGameZoneDesc.textContent = gameMeta.description;
-        
-        // Calculate stats for this game
-        const total = state.events.filter(e => e.gameKey === gameKey).length;
-        const available = state.events.filter(e => e.gameKey === gameKey && isAvailable(e)).length;
-        const expired = state.events.filter(e => e.gameKey === gameKey && e.status === '已失效').length;
-        
-        if (elZoneStatTotal) elZoneStatTotal.textContent = total;
-        if (elZoneStatAvailable) elZoneStatAvailable.textContent = available;
-        if (elZoneStatExpired) elZoneStatExpired.textContent = expired;
-      }
-    }
-  } else {
-    // Other tabs (library, timeline, etc.)
-    if (elHeroWrapper) elHeroWrapper.classList.add('hidden');
-    if (elGamePortals) elGamePortals.classList.add('hidden');
-    if (elGameZoneHeader) elGameZoneHeader.classList.add('hidden');
-  }
-
   const filtered = getFilteredEvents();
   
   if (filtered.length === 0) {
@@ -885,8 +782,10 @@ function renderEvents() {
       const imageSrc = e.status === '已失效'
         ? gameCover
         : (safeScreenshotUrl(e.id) || gameCover);
+      const detailHref = serializeRoute({ name: 'event', eventId: e.id });
       return `
         <div class="event-card" data-id="${escapeHtml(e.id)}">
+          <a class="event-detail-link" href="${escapeHtml(detailHref)}" data-route-link aria-label="查看 ${escapeHtml(e.title)} 详情"></a>
           <div class="card-img-wrapper">
             <span class="status-badge ${status.className}">
               <i class="fa-solid ${status.icon}"></i>${escapeHtml(e.status)}
@@ -942,8 +841,10 @@ function renderEvents() {
         const imageSrc = e.status === '已失效'
           ? gameCover
           : (safeScreenshotUrl(e.id) || gameCover);
+        const detailHref = serializeRoute({ name: 'event', eventId: e.id });
         return `
           <div class="event-list-row" data-id="${escapeHtml(e.id)}">
+            <a class="event-detail-link" href="${escapeHtml(detailHref)}" data-route-link aria-label="查看 ${escapeHtml(e.title)} 详情"></a>
             <div class="list-title-cell">
               <img class="list-img-thumbnail" data-event-image data-game-key="${escapeHtml(e.gameKey)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" />
               <span class="list-title-text" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</span>
@@ -972,17 +873,6 @@ function renderEvents() {
     image.addEventListener('error', () => {
       image.src = gameCovers[image.dataset.gameKey] || gameCovers.all;
     }, { once: true });
-  });
-
-  // Bind click handlers to cards and lists
-  elEventsContainer.querySelectorAll('.event-card, .event-list-row').forEach(card => {
-    card.addEventListener('click', (e) => {
-      // Prevent modal opening when clicking the bookmark star button
-      if (e.target.closest('.bookmark-btn')) return;
-
-      const eventId = card.getAttribute('data-id');
-      detailNavigation.openEvent(eventId);
-    });
   });
 
   // Bind click handlers to bookmark buttons
@@ -1026,8 +916,9 @@ function renderTimeline() {
               </div>
               <div class="timeline-month-events">
                 ${events.map(e => {
+                  const detailHref = serializeRoute({ name: 'event', eventId: e.id });
                   return `
-                    <div class="timeline-item" data-id="${escapeHtml(e.id)}">
+                    <a class="timeline-item" href="${escapeHtml(detailHref)}" data-route-link>
                       <div class="timeline-item-left">
                         <div class="timeline-item-dot"></div>
                       </div>
@@ -1049,7 +940,7 @@ function renderTimeline() {
                           </span>
                         </div>
                       </div>
-                    </div>
+                    </a>
                   `;
                 }).join('')}
               </div>
@@ -1059,14 +950,6 @@ function renderTimeline() {
       </div>
     `;
   }).join('');
-
-  // Bind click handlers to timeline elements
-  elTimelineContainer.querySelectorAll('.timeline-item').forEach(item => {
-    item.addEventListener('click', () => {
-      const id = item.getAttribute('data-id');
-      detailNavigation.openEvent(id);
-    });
-  });
 }
 
 // Bookmarks toggle logic
@@ -1091,13 +974,25 @@ function toggleBookmark(id) {
 
 // Detail Popup modal logic
 function renderRoute(route) {
+  if (route.name !== 'event' && route.name !== 'not-found') {
+    applyRoute(route);
+    hasRenderedRoute = true;
+    return;
+  }
+
+  if (!hasRenderedRoute) {
+    const backgroundRoute = route.name === 'event' || route.pathname.startsWith('/events/')
+      ? { name: 'events' }
+      : { name: 'home' };
+    applyRoute(backgroundRoute);
+  }
+  hasRenderedRoute = true;
+
   const resolution = resolveEventRoute(route, state.events);
-  if (resolution.status === 'home') {
-    hideDetailModal();
-  } else if (resolution.status === 'found') {
+  if (resolution.status === 'found') {
     openDetailModal(resolution.event);
   } else {
-    openMissingDetail();
+    openMissingDetail(route);
   }
 }
 
@@ -1138,7 +1033,8 @@ function openDetailModal(eventObj) {
     elModalPrimaryLink.removeAttribute('href');
     elModalPrimaryLink.setAttribute('aria-disabled', 'true');
   }
-  delete elModalPrimaryLink.dataset.routeHome;
+  delete elModalPrimaryLink.dataset.routeClose;
+  elModalPrimaryLink.target = '_blank';
   elModalPrimaryLink.querySelector('i').className = 'fa-solid fa-arrow-up-right-from-square';
   elModalPrimaryLink.querySelector('span').textContent = '立即访问活动网页';
   elModalFavoriteBtn.hidden = false;
@@ -1157,7 +1053,8 @@ function openDetailModal(eventObj) {
   elDetailModal.classList.add('active');
 }
 
-function openMissingDetail() {
+function openMissingDetail(route) {
+  const returnsToEvents = route.name === 'event' || route.pathname.startsWith('/events/');
   state.selectedEvent = null;
   elModalHeroImg.onerror = null;
   elModalHeroImg.src = gameCovers.all;
@@ -1171,11 +1068,12 @@ function openMissingDetail() {
   elModalStatusBadge.textContent = '未找到';
   elModalStatusBadge.className = 'status-badge modal-status-badge expired';
   elModalTags.replaceChildren();
-  elModalPrimaryLink.href = '/';
+  elModalPrimaryLink.href = returnsToEvents ? '/events' : '/';
   elModalPrimaryLink.removeAttribute('aria-disabled');
-  elModalPrimaryLink.dataset.routeHome = 'true';
+  elModalPrimaryLink.dataset.routeClose = 'true';
+  elModalPrimaryLink.removeAttribute('target');
   elModalPrimaryLink.querySelector('i').className = 'fa-solid fa-arrow-left';
-  elModalPrimaryLink.querySelector('span').textContent = '返回首页';
+  elModalPrimaryLink.querySelector('span').textContent = returnsToEvents ? '返回活动库' : '返回首页';
   elModalFavoriteBtn.hidden = true;
   elDetailModal.classList.add('active');
 }

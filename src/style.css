@@ -648,6 +648,8 @@ body {
   border-radius: 8px;
   transition: var(--transition-fast);
   cursor: pointer;
+  color: inherit;
+  text-decoration: none;
 }
 
 .update-item:hover {
@@ -714,6 +716,7 @@ body {
   cursor: pointer;
   appearance: none;
   color: inherit;
+  text-decoration: none;
   font: inherit;
   text-align: left;
   transition: var(--transition-normal);
@@ -897,6 +900,7 @@ body {
   font-size: 13px;
   font-weight: 600;
   transition: var(--transition-fast);
+  text-decoration: none;
 }
 
 .back-to-home-btn:hover {
@@ -980,6 +984,8 @@ body {
 }
 
 .control-tab {
+  display: inline-flex;
+  align-items: center;
   padding: 6px 16px;
   border-radius: 8px;
   border: none;
@@ -989,6 +995,7 @@ body {
   font-weight: 500;
   cursor: pointer;
   transition: var(--transition-fast);
+  text-decoration: none;
 }
 
 .control-tab:hover {
@@ -1152,6 +1159,18 @@ body {
   backdrop-filter: blur(10px);
 }
 
+.event-detail-link {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+}
+
+.event-detail-link:focus-visible {
+  outline: 2px solid var(--primary-hover);
+  outline-offset: -3px;
+}
+
 .card-img-wrapper {
   position: relative;
   height: 150px;
@@ -1200,7 +1219,7 @@ body {
   position: absolute;
   top: 12px;
   right: 12px;
-  z-index: 2;
+  z-index: 4;
   width: 28px;
   height: 28px;
   border-radius: 50%;
@@ -1331,6 +1350,7 @@ body {
   border-radius: 12px;
   transition: var(--transition-fast);
   cursor: pointer;
+  position: relative;
 }
 
 .event-list-row:hover {
@@ -1406,7 +1426,8 @@ body {
 }
 
 .list-bookmark-btn {
-  position: static;
+  position: relative;
+  z-index: 4;
   inset: auto;
   margin: 0;
   width: 32px;
@@ -1533,6 +1554,8 @@ body {
   position: relative;
   z-index: 2;
   margin-left: 20px;
+  color: inherit;
+  text-decoration: none;
 }
 
 .timeline-item-left {

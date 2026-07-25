@@ -12,5 +12,9 @@ test('Cloudflare Pages Functions are limited to the admin namespace', async () =
     '/admin.html/*'
   ]));
   assert.deepEqual(config.exclude, []);
-  assert.equal(config.include.some(route => route.startsWith('/events')), false);
+  for (const publicPath of [
+    '/', '/events', '/games/ys', '/timeline', '/reports', '/returns', '/expired', '/favorites', '/about'
+  ]) {
+    assert.equal(config.include.some(route => publicPath.startsWith(route.replace('/*', '/'))), false);
+  }
 });

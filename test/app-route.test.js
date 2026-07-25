@@ -20,6 +20,51 @@ test('the home location always serializes as the root path', () => {
   assert.equal(serializeRoute({ name: 'home' }), '/');
 });
 
+test('primary archive views have stable public paths', () => {
+  const routes = new Map([
+    ['/events', { name: 'events' }],
+    ['/timeline', { name: 'timeline' }],
+    ['/reports', { name: 'reports' }],
+    ['/returns', { name: 'returns' }],
+    ['/expired', { name: 'expired' }],
+    ['/favorites', { name: 'favorites' }],
+    ['/about', { name: 'about' }]
+  ]);
+
+  for (const [pathname, route] of routes) {
+    assert.deepEqual(parseLocation(pathname, ''), route);
+    assert.equal(serializeRoute(route), pathname);
+  }
+});
+
+test('game routes accept only the archive game keys', () => {
+  for (const gameKey of ['ys', 'sr', 'zzz', 'bh3']) {
+    const route = { name: 'game', gameKey };
+    assert.deepEqual(parseLocation(`/games/${gameKey}`, ''), route);
+    assert.equal(serializeRoute(route), `/games/${gameKey}`);
+  }
+
+  for (const pathname of ['/games/all', '/games/genshin', '/games/YS', '/games/ys/extra']) {
+    assert.deepEqual(parseLocation(pathname, ''), { name: 'not-found', pathname });
+  }
+});
+
+test('legacy, trailing-slash, and encoded paths canonicalize without changing route meaning', () => {
+  const examples = new Map([
+    ['/index.html', { name: 'home' }],
+    ['/events/', { name: 'events' }],
+    ['/timeline///', { name: 'timeline' }],
+    ['/games/ys/', { name: 'game', gameKey: 'ys' }],
+    ['/games/%79%73', { name: 'game', gameKey: 'ys' }]
+  ]);
+
+  for (const [pathname, route] of examples) {
+    assert.deepEqual(parseLocation(pathname, '?ignored=phase-two'), route);
+    assert.deepEqual(parseLocation(serializeRoute(route), ''), route);
+  }
+  assert.equal(serializeRoute(parseLocation('/index.html', '')), '/');
+});
+
 test('ordinary and cross-game event ids parse as opaque event routes', () => {
   for (const eventId of ['ys-1', 'gen-1']) {
     const route = { name: 'event', eventId };
@@ -99,6 +144,17 @@ test('event routes resolve only against the final visible event collection', () 
 test('parse and serialize reach a stable canonical route', () => {
   for (const pathname of [
     '/',
+    '/index.html',
+    '/events',
+    '/events/',
+    '/games/ys',
+    '/games/%79%73',
+    '/timeline/',
+    '/reports',
+    '/returns',
+    '/expired',
+    '/favorites',
+    '/about',
     '/events/ys-1',
     '/events/gen-1/',
     '/events/gen%2D1',

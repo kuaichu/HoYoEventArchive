@@ -103,7 +103,10 @@ test('authenticated legacy admin paths are internally rewritten without a redire
 });
 
 test('public routes bypass admin authentication', async () => {
-  for (const pathname of ['/index.html', '/events/ys-1', '/administrator']) {
+  for (const pathname of [
+    '/', '/index.html', '/events', '/events/ys-1', '/games/ys', '/timeline',
+    '/reports', '/returns', '/expired', '/favorites', '/about', '/administrator'
+  ]) {
     const fixture = contextFor(pathname);
     const response = await handleAdminRequest(fixture.context, fixtureConfig);
     assert.equal(response.status, 200);

@@ -25,13 +25,13 @@
         
         <nav>
           <ul class="nav-links">
-            <li><a class="nav-item active" data-tab="home"><i class="fa-solid fa-house"></i>首页</a></li>
-            <li><a class="nav-item" data-tab="library"><i class="fa-solid fa-box-archive"></i>活动库</a></li>
-            <li><a class="nav-item" data-tab="timeline"><i class="fa-solid fa-timeline"></i>时间轴</a></li>
-            <li><a class="nav-item" data-tab="reports"><i class="fa-solid fa-file-invoice"></i>年度报告</a></li>
-            <li><a class="nav-item" data-tab="reflow"><i class="fa-solid fa-person-walking-arrow-loop-left"></i>回归活动</a></li>
-            <li><a class="nav-item" data-tab="expired"><i class="fa-solid fa-circle-xmark"></i>失效页面</a></li>
-            <li><a class="nav-item" data-tab="about"><i class="fa-solid fa-circle-info"></i>关于本站</a></li>
+            <li><a class="nav-item active" data-tab="home" href="/" data-route-link><i class="fa-solid fa-house"></i>首页</a></li>
+            <li><a class="nav-item" data-tab="library" href="/events" data-route-link><i class="fa-solid fa-box-archive"></i>活动库</a></li>
+            <li><a class="nav-item" data-tab="timeline" href="/timeline" data-route-link><i class="fa-solid fa-timeline"></i>时间轴</a></li>
+            <li><a class="nav-item" data-tab="reports" href="/reports" data-route-link><i class="fa-solid fa-file-invoice"></i>年度报告</a></li>
+            <li><a class="nav-item" data-tab="reflow" href="/returns" data-route-link><i class="fa-solid fa-person-walking-arrow-loop-left"></i>回归活动</a></li>
+            <li><a class="nav-item" data-tab="expired" href="/expired" data-route-link><i class="fa-solid fa-circle-xmark"></i>失效页面</a></li>
+            <li><a class="nav-item" data-tab="about" href="/about" data-route-link><i class="fa-solid fa-circle-info"></i>关于本站</a></li>
           </ul>
         </nav>
         
@@ -155,7 +155,7 @@
             <div class="recently-updated-panel">
               <div class="panel-header">
                 <span class="panel-title"><i class="fa-solid fa-clock-rotate-left"></i>最近更新</span>
-                <span class="panel-more" id="recentMoreBtn">更多 &gt;</span>
+                <a class="panel-more" id="recentMoreBtn" href="/events" data-route-link>更多 &gt;</a>
               </div>
               <ul class="update-list" id="recentlyUpdatedList">
                 <!-- Dynamically Rendered -->
@@ -165,42 +165,42 @@
 
           <!-- Game Portal Cards -->
           <div class="game-portals">
-            <button type="button" class="portal-card" data-game="ys" aria-label="进入原神专区">
+            <a class="portal-card" data-game="ys" href="/games/ys" data-route-link aria-label="进入原神专区">
               <span class="portal-cover ys" aria-hidden="true"></span>
               <span class="portal-footer">
                 <span class="portal-count" id="countYs">0 项收录</span>
                 <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
               </span>
-            </button>
-            <button type="button" class="portal-card" data-game="sr" aria-label="进入星穹铁道专区">
+            </a>
+            <a class="portal-card" data-game="sr" href="/games/sr" data-route-link aria-label="进入星穹铁道专区">
               <span class="portal-cover sr" aria-hidden="true"></span>
               <span class="portal-footer">
                 <span class="portal-count" id="countSr">0 项收录</span>
                 <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
               </span>
-            </button>
-            <button type="button" class="portal-card" data-game="zzz" aria-label="进入绝区零专区">
+            </a>
+            <a class="portal-card" data-game="zzz" href="/games/zzz" data-route-link aria-label="进入绝区零专区">
               <span class="portal-cover zzz" aria-hidden="true"></span>
               <span class="portal-footer">
                 <span class="portal-count" id="countZzz">0 项收录</span>
                 <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
               </span>
-            </button>
-            <button type="button" class="portal-card" data-game="bh3" aria-label="进入崩坏3专区">
+            </a>
+            <a class="portal-card" data-game="bh3" href="/games/bh3" data-route-link aria-label="进入崩坏3专区">
               <span class="portal-cover bh3" aria-hidden="true"></span>
               <span class="portal-footer">
                 <span class="portal-count" id="countBh3">0 项收录</span>
                 <span class="portal-enter-icon" aria-hidden="true"><i class="fa-solid fa-arrow-right"></i></span>
               </span>
-            </button>
+            </a>
           </div>
 
           <!-- Game Zone Header (Hidden by default, shown when a game is selected) -->
           <div class="game-zone-header hidden" id="gameZoneHeader">
             <div class="game-zone-left">
-              <button class="back-to-home-btn" id="backToHomeBtn">
+              <a class="back-to-home-btn" id="backToHomeBtn" href="/" data-route-link>
                 <i class="fa-solid fa-chevron-left"></i>返回全部游戏
-              </button>
+              </a>
               <div class="game-zone-title-wrapper">
                 <img src="" alt="Game Logo" class="game-zone-logo" id="gameZoneLogo" />
                 <div class="game-zone-text">
@@ -233,7 +233,7 @@
               <button class="control-tab" data-subtab="latest">最新上线</button>
               <button class="control-tab" data-subtab="ending">已结束</button>
               <button class="control-tab" data-subtab="popular">主题精选</button>
-              <button class="control-tab" data-subtab="favorites">我收藏的</button>
+              <a class="control-tab" data-subtab="favorites" href="/favorites" data-route-link>我收藏的</a>
             </div>
             
             <div class="control-actions">
