@@ -16,9 +16,10 @@ export function createDetailNavigation({ history, location, renderRoute }) {
   function replay() {
     backPending = false;
     const route = parseLocation(location.pathname, location.search);
-    const canonicalPathname = serializeRoute(route);
-    if (canonicalPathname !== location.pathname) {
-      history.replaceState(history.state, '', `${canonicalPathname}${location.search || ''}`);
+    const canonicalUrl = serializeRoute(route);
+    const currentUrl = `${location.pathname}${location.search || ''}`;
+    if (canonicalUrl !== currentUrl) {
+      history.replaceState(history.state, '', canonicalUrl);
     }
     renderRoute(route);
     return route;
@@ -39,7 +40,7 @@ export function createDetailNavigation({ history, location, renderRoute }) {
 
   function navigate(route, options = {}) {
     const target = serializeRoute(route);
-    if (location.pathname === target && !location.search) return replay();
+    if (`${location.pathname}${location.search || ''}` === target) return replay();
     const method = options.replace === true ? 'replaceState' : 'pushState';
     history[method](pageState(), '', target);
     return replay();

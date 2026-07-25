@@ -19,15 +19,6 @@ export function parseVersionFilter(value) {
   }
 }
 
-function compareVersions(a, b) {
-  const specialRank = new Map([['公测前', 1], ['通用', 2], ['待确认', 3]]);
-  const aRank = specialRank.get(a) || 0;
-  const bRank = specialRank.get(b) || 0;
-  if (aRank !== bRank) return aRank - bRank;
-  if (aRank > 0) return 0;
-  return b.localeCompare(a, 'zh-CN', { numeric: true });
-}
-
 export function buildVersionFilterGroups(events, selectedGame = '') {
   const games = selectedGame
     ? [selectedGame]
@@ -57,3 +48,4 @@ export function eventMatchesVersionFilter(event, value) {
   if (!selected) return true;
   return event.game === selected.game && (event.version || '待确认') === selected.version;
 }
+import { compareVersions } from './version-domain.js';

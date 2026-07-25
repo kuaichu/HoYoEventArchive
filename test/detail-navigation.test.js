@@ -1,8 +1,10 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { parseLocation } from '../src/app-route.js';
+import { DEFAULT_LIST_STATE, parseLocation } from '../src/app-route.js';
 import { createDetailNavigation } from '../src/detail-navigation.js';
+
+const listRoute = name => ({ name, listState: { ...DEFAULT_LIST_STATE } });
 
 function createBrowserHarness(initialUrl = '/', initialState = null, deferBack = false) {
   const entries = [{ url: initialUrl, state: initialState }];
@@ -85,8 +87,8 @@ test('page navigation pushes, replaces, and avoids duplicate history entries', (
 
   assert.equal(browser.location.pathname, '/timeline');
   assert.deepEqual(rendered, [
-    { name: 'events' },
-    { name: 'events' },
+    listRoute('events'),
+    listRoute('events'),
     { name: 'timeline' }
   ]);
   assert.deepEqual(browser.counts(), { pushCalls: 1, replaceCalls: 1, backCalls: 0 });
@@ -104,8 +106,64 @@ test('replay canonicalizes legacy and trailing-slash paths with replace only', (
   navigation.replay();
 
   assert.equal(browser.location.pathname, '/');
-  assert.deepEqual(rendered, [{ name: 'home' }]);
+  assert.deepEqual(rendered, [listRoute('home')]);
   assert.deepEqual(browser.counts(), { pushCalls: 0, replaceCalls: 1, backCalls: 0 });
+});
+
+test('replay canonicalizes the complete pathname and search with replace only', () => {
+  const browser = createBrowserHarness('/events?layout=list&game=ys&unknown=1');
+  const rendered = [];
+  const navigation = createDetailNavigation({
+    history: browser.history,
+    location: browser.location,
+    renderRoute: route => rendered.push(route)
+  });
+
+  navigation.replay();
+
+  assert.equal(browser.location.pathname, '/events');
+  assert.equal(browser.location.search, '?game=ys&layout=list');
+  assert.equal(rendered[0].listState.game, 'ys');
+  assert.equal(rendered[0].listState.layout, 'list');
+  assert.deepEqual(browser.counts(), { pushCalls: 0, replaceCalls: 1, backCalls: 0 });
+});
+
+test('same-path query updates replace in place and identical canonical URLs do not write history', () => {
+  const browser = createBrowserHarness('/events?game=ys');
+  const navigation = createDetailNavigation({
+    history: browser.history,
+    location: browser.location,
+    renderRoute: () => {}
+  });
+
+  navigation.replace(parseLocation('/events', '?game=ys&layout=list'));
+  navigation.replace(parseLocation('/events', '?game=ys&layout=list'));
+
+  assert.equal(browser.location.search, '?game=ys&layout=list');
+  assert.deepEqual(browser.counts(), { pushCalls: 0, replaceCalls: 1, backCalls: 0 });
+});
+
+test('detail URLs stay clean and Back replays the complete filtered source URL', () => {
+  const browser = createBrowserHarness('/events?tab=latest&game=ys&layout=list');
+  const rendered = [];
+  const navigation = createDetailNavigation({
+    history: browser.history,
+    location: browser.location,
+    renderRoute: route => rendered.push(route)
+  });
+
+  navigation.openEvent('ys-1');
+  assert.equal(`${browser.location.pathname}${browser.location.search}`, '/events/ys-1');
+  navigation.closeDetail();
+  navigation.replay();
+
+  assert.equal(
+    `${browser.location.pathname}${browser.location.search}`,
+    '/events?tab=latest&game=ys&layout=list'
+  );
+  assert.equal(rendered.at(-1).listState.tab, 'latest');
+  assert.equal(rendered.at(-1).listState.game, 'ys');
+  assert.deepEqual(browser.counts(), { pushCalls: 1, replaceCalls: 0, backCalls: 1 });
 });
 
 test('Back closes an internally opened detail and Forward reopens it without another push', () => {
@@ -125,7 +183,7 @@ test('Back closes an internally opened detail and Forward reopens it without ano
 
   assert.deepEqual(rendered, [
     { name: 'event', eventId: 'gen-1' },
-    { name: 'home' },
+    listRoute('home'),
     { name: 'event', eventId: 'gen-1' }
   ]);
   assert.deepEqual(browser.counts(), { pushCalls: 1, replaceCalls: 0, backCalls: 1 });
@@ -171,15 +229,15 @@ test('a directly loaded detail closes safely by replacing the URL with the event
   assert.deepEqual(browser.history.state, { unrelated: 'preserved' });
   assert.deepEqual(rendered, [
     { name: 'event', eventId: 'ys-1' },
-    { name: 'events' }
+    listRoute('events')
   ]);
   assert.deepEqual(browser.counts(), { pushCalls: 0, replaceCalls: 1, backCalls: 0 });
 });
 
 test('invalid event paths close to the library while unrelated unknown paths close home', () => {
   for (const [initialPath, expectedPath, expectedRoute] of [
-    ['/events/not-an-id!', '/events', { name: 'events' }],
-    ['/unknown/path', '/', { name: 'home' }]
+    ['/events/not-an-id!', '/events', listRoute('events')],
+    ['/unknown/path', '/', listRoute('home')]
   ]) {
     const browser = createBrowserHarness(initialPath);
     const rendered = [];

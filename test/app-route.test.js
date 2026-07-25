@@ -11,23 +11,148 @@ import {
 } from '../src/app-route.js';
 import { mergeEventState } from '../src/event-storage.js';
 
+const defaultListState = {
+  tab: 'all', game: 'all', version: 'all', type: 'all', status: 'all',
+  q: '', sort: 'date-desc', layout: 'grid'
+};
+
+function listRoute(name, listState = {}, extra = {}) {
+  const fixed = name === 'game' ? { game: extra.gameKey }
+    : name === 'reports' ? { type: '年度报告' }
+      : name === 'returns' ? { type: '回归活动' }
+        : name === 'expired' ? { status: '已失效' }
+          : {};
+  return { name, ...extra, listState: { ...defaultListState, ...fixed, ...listState } };
+}
+
 const repositoryEvents = JSON.parse(
   readFileSync(new URL('../src/events.json', import.meta.url), 'utf8')
 );
 
 test('the home location always serializes as the root path', () => {
-  assert.deepEqual(parseLocation('/', ''), { name: 'home' });
+  assert.deepEqual(parseLocation('/', ''), listRoute('home'));
   assert.equal(serializeRoute({ name: 'home' }), '/');
+});
+
+test('list routes parse valid query values and serialize them in canonical order', () => {
+  const route = parseLocation(
+    '/events',
+    '?layout=list&status=available&type=preview&version=v6.0&game=ys&tab=latest&sort=date-asc'
+  );
+
+  assert.deepEqual(route, {
+    name: 'events',
+    listState: {
+      tab: 'latest',
+      game: 'ys',
+      version: 'v6.0',
+      type: '版本前瞻',
+      status: '可访问',
+      q: '',
+      sort: 'date-asc',
+      layout: 'list'
+    }
+  });
+  assert.equal(
+    serializeRoute(route),
+    '/events?tab=latest&game=ys&version=v6.0&type=preview&status=available&sort=date-asc&layout=list'
+  );
+});
+
+test('every documented enum value round-trips through the public query contract', () => {
+  for (const tab of ['latest', 'ending', 'popular']) {
+    assert.equal(serializeRoute(parseLocation('/events', `?tab=${tab}`)), `/events?tab=${tab}`);
+  }
+  for (const game of ['ys', 'sr', 'zzz', 'bh3']) {
+    assert.equal(serializeRoute(parseLocation('/events', `?game=${game}`)), `/events?game=${game}`);
+  }
+  for (const type of ['report', 'return', 'preview', 'minigame', 'resource', 'prereg', 'collab', 'other']) {
+    assert.equal(serializeRoute(parseLocation('/events', `?type=${type}`)), `/events?type=${type}`);
+  }
+  for (const status of ['available', 'expired', 'login', 'ended']) {
+    assert.equal(serializeRoute(parseLocation('/events', `?status=${status}`)), `/events?status=${status}`);
+  }
+  for (const sort of ['date-asc', 'title-asc', 'status-asc']) {
+    assert.equal(serializeRoute(parseLocation('/events', `?sort=${sort}`)), `/events?sort=${sort}`);
+  }
+  assert.equal(serializeRoute(parseLocation('/events', '?layout=list')), '/events?layout=list');
+});
+
+test('list query canonicalization removes unknown, invalid, default, repeated, and conflicting values', () => {
+  assert.deepEqual(
+    parseLocation('/events', '?tab=bogus&tab=latest&game=all&version=v6.0&sort=date-desc&layout=grid&x=1'),
+    { name: 'events', listState: defaultListState }
+  );
+  assert.equal(
+    serializeRoute(parseLocation('/events', '?tab=bogus&tab=latest&game=all&version=v6.0&x=1')),
+    '/events'
+  );
+  assert.deepEqual(parseLocation('/games/ys', '?game=sr&type=preview').listState, {
+    ...defaultListState,
+    game: 'ys',
+    type: '版本前瞻'
+  });
+  assert.equal(
+    serializeRoute(parseLocation('/games/ys', '?game=sr&type=preview')),
+    '/games/ys?type=preview'
+  );
+});
+
+test('search text is home-only, trimmed, encoded safely, and limited to 100 characters', () => {
+  const longQuery = `  周年${'测'.repeat(120)}  `;
+  const route = parseLocation('/', `?q=${encodeURIComponent(longQuery)}`);
+  assert.equal(Array.from(route.listState.q).length, 100);
+  assert.equal(route.listState.q.startsWith('周年'), true);
+  assert.equal(serializeRoute(route).startsWith('/?q=%E5%91%A8%E5%B9%B4'), true);
+
+  assert.equal(parseLocation('/events', '?q=周年').listState.q, '');
+  assert.equal(serializeRoute(parseLocation('/events', '?q=周年')), '/events');
+});
+
+test('special version slugs map to internal values only when a valid game is selected', () => {
+  for (const [slug, value] of [
+    ['prelaunch', '公测前'], ['general', '通用'], ['pending', '待确认']
+  ]) {
+    const route = parseLocation('/events', `?game=sr&version=${slug}`);
+    assert.equal(route.listState.version, value);
+    assert.equal(serializeRoute(route), `/events?game=sr&version=${slug}`);
+  }
+  assert.equal(parseLocation('/events', '?version=general').listState.version, 'all');
+  assert.equal(serializeRoute(parseLocation('/events', '?version=general')), '/events');
+});
+
+test('fixed list routes remove query values that conflict with pathname semantics', () => {
+  const cases = [
+    ['/favorites?tab=popular', '/favorites', 'tab', 'all'],
+    ['/reports?type=return', '/reports', 'type', '年度报告'],
+    ['/returns?type=report', '/returns', 'type', '回归活动'],
+    ['/expired?status=available', '/expired', 'status', '已失效']
+  ];
+  for (const [url, canonicalUrl, key, value] of cases) {
+    const route = parseLocation(url);
+    assert.equal(route.listState[key], value);
+    assert.equal(serializeRoute(route), canonicalUrl);
+  }
+});
+
+test('non-list routes discard list query and parse/serialize remains idempotent', () => {
+  for (const url of ['/timeline?game=ys', '/about?layout=list', '/events/ys-1?tab=latest']) {
+    const first = parseLocation(url);
+    const canonicalUrl = serializeRoute(first);
+    const second = parseLocation(canonicalUrl);
+    assert.deepEqual(second, first);
+    assert.equal(canonicalUrl.includes('?'), false);
+  }
 });
 
 test('primary archive views have stable public paths', () => {
   const routes = new Map([
-    ['/events', { name: 'events' }],
+    ['/events', listRoute('events')],
     ['/timeline', { name: 'timeline' }],
-    ['/reports', { name: 'reports' }],
-    ['/returns', { name: 'returns' }],
-    ['/expired', { name: 'expired' }],
-    ['/favorites', { name: 'favorites' }],
+    ['/reports', listRoute('reports')],
+    ['/returns', listRoute('returns')],
+    ['/expired', listRoute('expired')],
+    ['/favorites', listRoute('favorites')],
     ['/about', { name: 'about' }]
   ]);
 
@@ -39,7 +164,7 @@ test('primary archive views have stable public paths', () => {
 
 test('game routes accept only the archive game keys', () => {
   for (const gameKey of ['ys', 'sr', 'zzz', 'bh3']) {
-    const route = { name: 'game', gameKey };
+    const route = listRoute('game', {}, { gameKey });
     assert.deepEqual(parseLocation(`/games/${gameKey}`, ''), route);
     assert.equal(serializeRoute(route), `/games/${gameKey}`);
   }
@@ -51,11 +176,11 @@ test('game routes accept only the archive game keys', () => {
 
 test('legacy, trailing-slash, and encoded paths canonicalize without changing route meaning', () => {
   const examples = new Map([
-    ['/index.html', { name: 'home' }],
-    ['/events/', { name: 'events' }],
+    ['/index.html', listRoute('home')],
+    ['/events/', listRoute('events')],
     ['/timeline///', { name: 'timeline' }],
-    ['/games/ys/', { name: 'game', gameKey: 'ys' }],
-    ['/games/%79%73', { name: 'game', gameKey: 'ys' }]
+    ['/games/ys/', listRoute('game', {}, { gameKey: 'ys' })],
+    ['/games/%79%73', listRoute('game', {}, { gameKey: 'ys' })]
   ]);
 
   for (const [pathname, route] of examples) {

@@ -61,6 +61,15 @@
           </ul>
         </div>
 
+        <!-- Version Filter Group -->
+        <div class="filter-group">
+          <label class="filter-title" for="versionFilter">版本筛选</label>
+          <select class="public-filter-select" id="versionFilter" disabled>
+            <option value="all">请先选择游戏</option>
+          </select>
+          <p class="filter-hint" id="versionFilterHint">请先选择游戏</p>
+        </div>
+
         <!-- Type Filter Group -->
         <div class="filter-group">
           <div class="filter-title">类型筛选</div>
@@ -76,6 +85,10 @@
             <!-- Rendered Dynamically -->
           </ul>
         </div>
+
+        <button class="clear-filters-btn" id="clearFiltersBtn" type="button" disabled>
+          <i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i>清除筛选
+        </button>
 
         <!-- Statistics Panel -->
         <div class="stats-box">
@@ -229,10 +242,10 @@
           <!-- Events Listing Section -->
           <div class="control-bar" style="margin-top: 16px;">
             <div class="control-tabs">
-              <button class="control-tab active" data-subtab="all">全部活动</button>
-              <button class="control-tab" data-subtab="latest">最新上线</button>
-              <button class="control-tab" data-subtab="ending">已结束</button>
-              <button class="control-tab" data-subtab="popular">主题精选</button>
+              <button class="control-tab active" data-subtab="all" aria-pressed="true">全部活动</button>
+              <button class="control-tab" data-subtab="latest" aria-pressed="false">最新上线</button>
+              <button class="control-tab" data-subtab="ending" aria-pressed="false">已结束</button>
+              <button class="control-tab" data-subtab="popular" aria-pressed="false">主题精选</button>
               <a class="control-tab" data-subtab="favorites" href="/favorites" data-route-link>我收藏的</a>
             </div>
             
@@ -241,10 +254,10 @@
                 <i class="fa-solid fa-filter"></i>筛选
               </button>
               <div class="view-switchers">
-                <button class="view-btn active" id="viewGrid" title="卡片视图">
+                <button class="view-btn active" id="viewGrid" title="卡片视图" aria-pressed="true">
                   <i class="fa-solid fa-grip"></i>卡片视图
                 </button>
-                <button class="view-btn" id="viewList" title="列表视图">
+                <button class="view-btn" id="viewList" title="列表视图" aria-pressed="false">
                   <i class="fa-solid fa-list"></i>列表视图
                 </button>
               </div>

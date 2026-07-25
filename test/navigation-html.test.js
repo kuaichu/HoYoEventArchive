@@ -37,3 +37,15 @@ test('game portals and atomic archive actions expose real route links', () => {
     /<a[^>]*class="[^"]*control-tab[^"]*"[^>]*data-subtab="favorites"[^>]*href="\/favorites"[^>]*data-route-link/
   );
 });
+
+test('public filters expose an accessible version select and clear action', () => {
+  assert.match(html, /<label[^>]*for="versionFilter"[^>]*>版本筛选<\/label>/);
+  assert.match(html, /<select[^>]*id="versionFilter"[^>]*disabled/);
+  assert.match(html, /<button[^>]*id="clearFiltersBtn"[^>]*>[^<]*(?:<[^>]+>[^<]*<\/[^>]+>[^<]*)*清除筛选/);
+});
+
+test('route-replayed tab and layout toggles expose assistive selected state', () => {
+  assert.match(html, /data-subtab="all"[^>]*aria-pressed="true"/);
+  assert.match(html, /id="viewGrid"[^>]*aria-pressed="true"/);
+  assert.match(html, /id="viewList"[^>]*aria-pressed="false"/);
+});

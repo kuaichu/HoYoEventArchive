@@ -4,7 +4,6 @@ import {
   escapeHtml,
   GAME_META,
   isAvailable,
-  isFeaturedEvent,
   normalizeBookmarks,
   projectEventForDisplay,
   safeExternalUrl,
@@ -18,6 +17,13 @@ import {
 } from './event-storage.js';
 import { parseLocation, resolveEventRoute, serializeRoute } from './app-route.js';
 import { createDetailNavigation } from './detail-navigation.js';
+import { buildVersionOptions, selectEvents } from './event-list-domain.js';
+import {
+  clearListRoute,
+  hasClearableListState,
+  routeMatchesLocation,
+  updateListRoute
+} from './list-route-actions.js';
 import { shouldNavigateInApp } from './navigation-link.js';
 import { activeNavTabForViewState, deriveViewState } from './route-view-state.js';
 import { groupTimelineEvents, timelineDayLabel } from './timeline-domain.js';
@@ -76,6 +82,7 @@ const state = {
   currentSubtab: 'all',    // all | latest | ending | popular | favorites (Only inside Home/Library)
   filters: {
     game: 'all',           // all | ys | sr | zzz | bh3
+    version: 'all',        // all | vN.N | 公测前 | 通用 | 待确认
     type: 'all',           // all | 年度报告 | 回归活动 | 版本前瞻 | 小游戏 | 资料站 | 预约/预抽卡 | 联动活动 | 其他活动
     status: 'all'          // all | 可访问 | 已失效 | 需登录 | 已结束
   },
@@ -85,6 +92,8 @@ const state = {
   selectedEvent: null
 };
 let hasRenderedRoute = false;
+let activeListRoute = null;
+let searchReplaceTimer = null;
 
 const detailNavigation = createDetailNavigation({
   history: window.history,
@@ -93,7 +102,7 @@ const detailNavigation = createDetailNavigation({
 });
 
 // DOM Elements
-let elGameFilters, elTypeFilters, elStatusFilters;
+let elGameFilters, elTypeFilters, elStatusFilters, elVersionFilter, elVersionFilterHint, elClearFiltersBtn;
 let elEventsContainer, elTimelineContainer;
 let elStatTotal, elStatAvailable, elStatExpired;
 let elHeroStatTotal, elHeroStatAvailable, elHeroStatExpired;
@@ -120,6 +129,9 @@ function initDOM() {
   elGameFilters = document.getElementById('gameFilters');
   elTypeFilters = document.getElementById('typeFilters');
   elStatusFilters = document.getElementById('statusFilters');
+  elVersionFilter = document.getElementById('versionFilter');
+  elVersionFilterHint = document.getElementById('versionFilterHint');
+  elClearFiltersBtn = document.getElementById('clearFiltersBtn');
   
   elEventsContainer = document.getElementById('eventsContainer');
   elTimelineContainer = document.getElementById('timelineContainer');
@@ -183,6 +195,7 @@ function bindEvents() {
     const url = new URL(anchor.href, window.location.href);
     const route = parseLocation(url.pathname, url.search);
     event.preventDefault();
+    cancelPendingSearch();
     if (route.name === 'event') {
       detailNavigation.openEvent(route.eventId);
     } else {
@@ -197,36 +210,22 @@ function bindEvents() {
     tabBtn.addEventListener('click', () => {
       if (tabBtn.matches('a[data-route-link]')) return;
       const subtab = tabBtn.getAttribute('data-subtab');
-      if (!['home', 'game', 'library'].includes(state.currentTab)) {
-        detailNavigation.navigate({ name: 'events' });
-      } else if (state.currentSubtab === 'favorites') {
-        detailNavigation.navigate({ name: 'events' });
-      }
-      state.currentSubtab = subtab;
-      syncControlTabs();
-      renderEvents();
+      replaceListState({ tab: subtab });
     });
   });
 
   // View switches
   elViewGridBtn.addEventListener('click', () => {
-    elViewGridBtn.classList.add('active');
-    elViewListBtn.classList.remove('active');
-    state.viewLayout = 'grid';
-    renderEvents();
+    replaceListState({ layout: 'grid' });
   });
 
   elViewListBtn.addEventListener('click', () => {
-    elViewListBtn.classList.add('active');
-    elViewGridBtn.classList.remove('active');
-    state.viewLayout = 'list';
-    renderEvents();
+    replaceListState({ layout: 'list' });
   });
 
   // Custom Select Dropdown logic
   const dropdown = document.getElementById('sortSelectDropdown');
   const trigger = document.getElementById('sortSelectTrigger');
-  const selectedText = document.getElementById('sortSelectedText');
   const options = document.getElementById('sortSelectOptions');
 
   if (trigger && options) {
@@ -241,23 +240,9 @@ function bindEvents() {
       opt.addEventListener('click', (e) => {
         e.stopPropagation();
         
-        // Remove active class from other options
-        options.querySelectorAll('.select-option').forEach(o => o.classList.remove('active'));
-        
-        // Add active class
-        opt.classList.add('active');
-        
-        // Update trigger text
-        selectedText.textContent = opt.textContent;
-        
-        // Update state
-        state.sortKey = opt.getAttribute('data-value');
-        
         // Close dropdown
         dropdown.classList.remove('open');
-        
-        // Render events
-        renderEvents();
+        replaceListState({ sort: opt.getAttribute('data-value') });
       });
     });
 
@@ -271,20 +256,27 @@ function bindEvents() {
 
   // Hero Search box
   elHeroSearchInput.addEventListener('input', (e) => {
-    state.searchQuery = e.target.value.trim().toLowerCase();
-    renderEvents();
+    clearTimeout(searchReplaceTimer);
+    const originRoute = activeListRoute;
+    const value = e.target.value;
+    searchReplaceTimer = setTimeout(() => {
+      searchReplaceTimer = null;
+      if (!routeMatchesLocation(originRoute, window.location.pathname, window.location.search)) return;
+      replaceListState({ q: value });
+    }, 300);
   });
 
   document.getElementById('heroSearchBtn').addEventListener('click', () => {
-    state.searchQuery = elHeroSearchInput.value.trim().toLowerCase();
-    renderEvents();
+    clearTimeout(searchReplaceTimer);
+    replaceListState({ q: elHeroSearchInput.value });
   });
 
   // Header quick search button
   const elHeaderSearchBtn = document.getElementById('headerSearchBtn');
   if (elHeaderSearchBtn) {
     elHeaderSearchBtn.addEventListener('click', () => {
-      detailNavigation.navigate({ name: 'home' });
+      const currentRoute = parseLocation(window.location.pathname, window.location.search);
+      if (currentRoute.name !== 'home') detailNavigation.navigate({ name: 'home' });
       elHeroSearchInput.focus();
       elHeroSearchInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
     });
@@ -300,11 +292,19 @@ function bindEvents() {
   document.querySelectorAll('.hot-tag').forEach(tagEl => {
     tagEl.addEventListener('click', () => {
       const tagText = tagEl.textContent;
-      elHeroSearchInput.value = tagText;
-      state.searchQuery = tagText.toLowerCase();
-      renderEvents();
+      replaceListState({ q: tagText });
       scrollToEvents();
     });
+  });
+
+  elVersionFilter.addEventListener('change', event => {
+    replaceListState({ version: event.target.value });
+    closeMobileFilters();
+  });
+
+  elClearFiltersBtn.addEventListener('click', clearActiveListFilters);
+  document.addEventListener('click', event => {
+    if (event.target.closest('[data-clear-filters]')) clearActiveListFilters();
   });
 
   // Modal actions
@@ -319,7 +319,10 @@ function bindEvents() {
       detailNavigation.closeDetail();
     }
   });
-  window.addEventListener('popstate', () => detailNavigation.replay());
+  window.addEventListener('popstate', () => {
+    cancelPendingSearch();
+    detailNavigation.replay();
+  });
   elModalPrimaryLink.addEventListener('click', (e) => {
     if (elModalPrimaryLink.dataset.routeClose !== 'true') return;
     if (!shouldNavigateInApp(e, elModalPrimaryLink, window.location)) return;
@@ -393,8 +396,41 @@ function scrollToEvents() {
   }
 }
 
+function replaceListState(changes) {
+  if (!activeListRoute?.listState) return;
+  if (!Object.hasOwn(changes, 'q')) cancelPendingSearch();
+  const nextRoute = updateListRoute(activeListRoute, changes, state.events);
+  detailNavigation.replace(nextRoute);
+}
+
+function cancelPendingSearch() {
+  clearTimeout(searchReplaceTimer);
+  searchReplaceTimer = null;
+}
+
+function clearActiveListFilters() {
+  if (!activeListRoute?.listState) return;
+  cancelPendingSearch();
+  closeMobileFilters();
+  detailNavigation.replace(clearListRoute(activeListRoute));
+}
+
+function closeMobileFilters() {
+  if (window.innerWidth > 1024) return;
+  elSidebarPanel?.classList.remove('open');
+  elDrawerOverlay?.classList.remove('active');
+}
+
 function applyRoute(route) {
+  if (
+    route.listState?.version !== 'all'
+    && !buildVersionOptions(state.events, route.listState.game).includes(route.listState.version)
+  ) {
+    detailNavigation.replace(updateListRoute(route, { game: route.listState.game }, state.events));
+    return;
+  }
   hideDetailModal();
+  activeListRoute = route.listState ? route : null;
   applyViewState(deriveViewState(route));
   renderActiveView();
 }
@@ -404,7 +440,11 @@ function applyViewState(viewState) {
   state.currentSubtab = viewState.currentSubtab;
   state.filters = { ...viewState.filters };
   state.searchQuery = viewState.searchQuery;
-  if (elHeroSearchInput) elHeroSearchInput.value = viewState.searchQuery;
+  state.sortKey = viewState.sortKey;
+  state.viewLayout = viewState.viewLayout;
+  if (elHeroSearchInput && elHeroSearchInput.value !== viewState.searchQuery) {
+    elHeroSearchInput.value = viewState.searchQuery;
+  }
 }
 
 function renderActiveView() {
@@ -413,6 +453,7 @@ function renderActiveView() {
   const showEventList = !showTimeline && !showAbout;
   const showHomeChrome = state.currentTab === 'home';
   const showGameHeader = state.currentTab === 'game';
+  const elApp = document.getElementById('app');
 
   document.querySelectorAll('.tab-pane').forEach(pane => {
     pane.classList.add('hidden');
@@ -434,14 +475,22 @@ function renderActiveView() {
   elControlBar.classList.toggle('hidden', !showEventList);
   elGridContainer.classList.toggle('hidden', !showEventList);
   elGameZoneHeader.classList.toggle('hidden', !showGameHeader);
+  elSidebarPanel.classList.toggle('hidden', !showEventList);
+  elMobileFilterBtn.classList.toggle('hidden', !showEventList);
+  elApp.classList.toggle('no-sidebar', !showEventList);
 
   const activeNavTab = activeNavTabForViewState(state);
   document.querySelectorAll('.nav-item').forEach(item => {
-    item.classList.toggle('active', item.getAttribute('data-tab') === activeNavTab);
+    const active = item.getAttribute('data-tab') === activeNavTab;
+    item.classList.toggle('active', active);
+    if (active) item.setAttribute('aria-current', 'page');
+    else item.removeAttribute('aria-current');
   });
 
   syncControlTabs();
   syncSidebarActiveFilters();
+  syncSortAndLayoutControls();
+  syncClearFiltersControl();
   if (showGameHeader) renderGameZoneHeader();
   if (showTimeline) renderTimeline();
   else if (showEventList) renderEvents();
@@ -451,7 +500,11 @@ function renderActiveView() {
 
 function syncControlTabs() {
   document.querySelectorAll('.control-tab').forEach(btn => {
-    btn.classList.toggle('active', btn.getAttribute('data-subtab') === state.currentSubtab);
+    const active = btn.getAttribute('data-subtab') === state.currentSubtab;
+    btn.classList.toggle('active', active);
+    if (btn.matches('button')) btn.setAttribute('aria-pressed', String(active));
+    if (active) btn.setAttribute('aria-current', 'page');
+    else btn.removeAttribute('aria-current');
   });
 }
 
@@ -474,6 +527,7 @@ function renderGameZoneHeader() {
 
 function closeMobileNavigation() {
   if (elNavMenu) elNavMenu.classList.remove('open');
+  if (elSidebarPanel) elSidebarPanel.classList.remove('open');
   if (elDrawerOverlay) elDrawerOverlay.classList.remove('active');
   if (!elMobileNavToggle) return;
   const icon = elMobileNavToggle.querySelector('i');
@@ -512,6 +566,55 @@ function syncSidebarActiveFilters() {
   document.querySelectorAll('#statusFilters .filter-btn').forEach(btn => {
     btn.classList.toggle('active', btn.getAttribute('data-value') === state.filters.status);
   });
+  syncVersionFilter();
+}
+
+function syncVersionFilter() {
+  if (!elVersionFilter) return;
+  const versions = buildVersionOptions(state.events, state.filters.game);
+  elVersionFilter.replaceChildren();
+
+  const defaultOption = document.createElement('option');
+  defaultOption.value = 'all';
+  defaultOption.textContent = versions.length ? '全部版本' : '请先选择游戏';
+  elVersionFilter.append(defaultOption);
+  versions.forEach(version => {
+    const option = document.createElement('option');
+    option.value = version;
+    option.textContent = version;
+    elVersionFilter.append(option);
+  });
+
+  elVersionFilter.disabled = versions.length === 0;
+  elVersionFilter.value = versions.includes(state.filters.version) ? state.filters.version : 'all';
+  if (elVersionFilterHint) {
+    elVersionFilterHint.textContent = versions.length
+      ? `仅显示${GAME_META[state.filters.game]?.title || '当前游戏'}版本`
+      : '请先选择游戏';
+  }
+}
+
+function syncSortAndLayoutControls() {
+  elViewGridBtn.classList.toggle('active', state.viewLayout === 'grid');
+  elViewListBtn.classList.toggle('active', state.viewLayout === 'list');
+  elViewGridBtn.setAttribute('aria-pressed', String(state.viewLayout === 'grid'));
+  elViewListBtn.setAttribute('aria-pressed', String(state.viewLayout === 'list'));
+  const options = document.querySelectorAll('#sortSelectOptions .select-option');
+  let selectedLabel = '';
+  options.forEach(option => {
+    const active = option.getAttribute('data-value') === state.sortKey;
+    option.classList.toggle('active', active);
+    if (active) selectedLabel = option.textContent;
+  });
+  const selectedText = document.getElementById('sortSelectedText');
+  if (selectedText && selectedLabel) selectedText.textContent = selectedLabel;
+}
+
+function syncClearFiltersControl() {
+  if (!elClearFiltersBtn) return;
+  const canClear = activeListRoute && hasClearableListState(activeListRoute);
+  elClearFiltersBtn.disabled = !canClear;
+  elClearFiltersBtn.classList.toggle('active', Boolean(canClear));
 }
 
 // Calculate and render stats in dashboard
@@ -628,26 +731,16 @@ function renderSidebarFilters() {
     btn.addEventListener('click', () => {
       const parentList = btn.closest('.filter-list');
       const val = btn.getAttribute('data-value');
-      
-      // Clear active states in this group
-      parentList.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-
+      let changes = null;
       if (parentList.id === 'gameFilters') {
-        state.filters.game = val;
+        changes = { game: val };
       } else if (parentList.id === 'typeFilters') {
-        state.filters.type = val;
+        changes = { type: val };
       } else if (parentList.id === 'statusFilters') {
-        state.filters.status = val;
+        changes = { status: val };
       }
-      
-      renderEvents();
-      
-      // Close mobile filters drawer after selection
-      if (window.innerWidth <= 1024) {
-        if (elSidebarPanel) elSidebarPanel.classList.remove('open');
-        if (elDrawerOverlay) elDrawerOverlay.classList.remove('active');
-      }
+      if (changes) replaceListState(changes);
+      closeMobileFilters();
     });
   });
 }
@@ -691,70 +784,13 @@ function renderRecentlyUpdated() {
 
 // Filter and Sort the datasets
 function getFilteredEvents() {
-  let list = [...state.events];
-
-  // 1. Sidebar Game Filter
-  if (state.filters.game !== 'all') {
-    list = list.filter(e => e.gameKey === state.filters.game);
-  }
-
-  // 2. Sidebar Type Filter
-  if (state.filters.type !== 'all') {
-    list = list.filter(e => e.type === state.filters.type);
-  }
-
-  // 3. Sidebar Status Filter
-  if (state.filters.status !== 'all') {
-    list = list.filter(e => e.status === state.filters.status);
-  }
-
-  // 4. Subtabs (Horizontal control bar)
-  if (state.currentSubtab === 'latest') {
-    // Top 12 latest events
-    list = list
-      .sort((a, b) => new Date(b.date.replace(/\./g, '/')) - new Date(a.date.replace(/\./g, '/')))
-      .slice(0, 12);
-  } 
-  else if (state.currentSubtab === 'ending') {
-    list = list.filter(e => e.status === '已结束' || e.status === '已失效');
-  } 
-  else if (state.currentSubtab === 'popular') {
-    list = list.filter(isFeaturedEvent);
-  } 
-  else if (state.currentSubtab === 'favorites') {
-    list = list.filter(e => state.bookmarks.includes(e.id));
-  }
-
-  // 5. Text Search query
-  if (state.searchQuery) {
-    list = list.filter(e => 
-      e.title.toLowerCase().includes(state.searchQuery) ||
-      e.game.toLowerCase().includes(state.searchQuery) ||
-      (e.version && e.version.toLowerCase().includes(state.searchQuery)) ||
-      e.type.toLowerCase().includes(state.searchQuery) ||
-      e.description.toLowerCase().includes(state.searchQuery) ||
-      e.tags.some(tag => tag.toLowerCase().includes(state.searchQuery))
-    );
-  }
-
-  // 6. Sorting
-  list.sort((a, b) => {
-    if (state.sortKey === 'date-desc') {
-      return new Date(b.date.replace(/\./g, '/')) - new Date(a.date.replace(/\./g, '/'));
-    } 
-    else if (state.sortKey === 'date-asc') {
-      return new Date(a.date.replace(/\./g, '/')) - new Date(b.date.replace(/\./g, '/'));
-    } 
-    else if (state.sortKey === 'title-asc') {
-      return a.title.localeCompare(b.title, 'zh');
-    } 
-    else if (state.sortKey === 'status-asc') {
-      return a.status.localeCompare(b.status, 'zh');
-    }
-    return 0;
+  return selectEvents(state.events, {
+    filters: state.filters,
+    currentSubtab: state.currentSubtab,
+    searchQuery: state.searchQuery,
+    sortKey: state.sortKey,
+    bookmarks: state.bookmarks
   });
-
-  return list;
 }
 
 // Render events in Grid or List layout
@@ -768,6 +804,9 @@ function renderEvents() {
         <i class="fa-regular fa-folder-open"></i>
         <h4>未找到符合条件的档案活动</h4>
         <p style="font-size: 12px; margin-top: 4px;">请尝试清除筛选条件或更换搜索词</p>
+        <button class="empty-clear-filters-btn" type="button" data-clear-filters ${hasClearableListState(activeListRoute) ? '' : 'disabled'}>
+          <i class="fa-solid fa-filter-circle-xmark" aria-hidden="true"></i>清除筛选
+        </button>
       </div>
     `;
     return;

@@ -1,53 +1,72 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
+import { parseLocation } from '../src/app-route.js';
 import { activeNavTabForViewState, deriveViewState } from '../src/route-view-state.js';
 
-const allFilters = { game: 'all', type: 'all', status: 'all' };
+const allFilters = { game: 'all', version: 'all', type: 'all', status: 'all' };
+const defaultControls = { searchQuery: '', sortKey: 'date-desc', viewLayout: 'grid' };
+
+test('query state deterministically hydrates every shareable list control', () => {
+  const route = parseLocation(
+    '/events',
+    '?tab=ending&game=ys&version=v6.0&type=preview&status=available&sort=title-asc&layout=list'
+  );
+  assert.deepEqual(deriveViewState(route), {
+    currentTab: 'library',
+    currentSubtab: 'ending',
+    filters: {
+      game: 'ys', version: 'v6.0', type: '版本前瞻', status: '可访问'
+    },
+    searchQuery: '',
+    sortKey: 'title-asc',
+    viewLayout: 'list'
+  });
+});
 
 test('home, events, and game routes produce complete independent view states', () => {
   assert.deepEqual(deriveViewState({ name: 'home' }), {
     currentTab: 'home',
     currentSubtab: 'all',
     filters: allFilters,
-    searchQuery: ''
+    ...defaultControls
   });
   assert.deepEqual(deriveViewState({ name: 'events' }), {
     currentTab: 'library',
     currentSubtab: 'all',
     filters: allFilters,
-    searchQuery: ''
+    ...defaultControls
   });
   assert.deepEqual(deriveViewState({ name: 'game', gameKey: 'sr' }), {
     currentTab: 'game',
     currentSubtab: 'all',
     filters: { ...allFilters, game: 'sr' },
-    searchQuery: ''
+    ...defaultControls
   });
 });
 
 test('special archive routes apply only their documented preset', () => {
   assert.deepEqual(deriveViewState({ name: 'reports' }), {
     currentTab: 'reports', currentSubtab: 'all',
-    filters: { ...allFilters, type: '年度报告' }, searchQuery: ''
+    filters: { ...allFilters, type: '年度报告' }, ...defaultControls
   });
   assert.deepEqual(deriveViewState({ name: 'returns' }), {
     currentTab: 'reflow', currentSubtab: 'all',
-    filters: { ...allFilters, type: '回归活动' }, searchQuery: ''
+    filters: { ...allFilters, type: '回归活动' }, ...defaultControls
   });
   assert.deepEqual(deriveViewState({ name: 'expired' }), {
     currentTab: 'expired', currentSubtab: 'all',
-    filters: { ...allFilters, status: '已失效' }, searchQuery: ''
+    filters: { ...allFilters, status: '已失效' }, ...defaultControls
   });
   assert.deepEqual(deriveViewState({ name: 'favorites' }), {
     currentTab: 'library', currentSubtab: 'favorites',
-    filters: allFilters, searchQuery: ''
+    filters: allFilters, ...defaultControls
   });
   assert.deepEqual(deriveViewState({ name: 'timeline' }), {
-    currentTab: 'timeline', currentSubtab: 'all', filters: allFilters, searchQuery: ''
+    currentTab: 'timeline', currentSubtab: 'all', filters: allFilters, ...defaultControls
   });
   assert.deepEqual(deriveViewState({ name: 'about' }), {
-    currentTab: 'about', currentSubtab: 'all', filters: allFilters, searchQuery: ''
+    currentTab: 'about', currentSubtab: 'all', filters: allFilters, ...defaultControls
   });
 });
 
