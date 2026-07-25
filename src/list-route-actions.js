@@ -65,6 +65,13 @@ export function hasClearableListState(route) {
     && serializeRoute(current) !== serializeRoute(clearListRoute(current));
 }
 
+export function hasUnavailableListVersion(route, events = []) {
+  const current = canonicalizeRoute(route);
+  return Boolean(current.listState)
+    && current.listState.version !== 'all'
+    && !buildVersionOptions(events, current.listState.game).includes(current.listState.version);
+}
+
 export function routeMatchesLocation(route, pathname, search = '') {
   if (!route?.listState) return false;
   return serializeRoute(route) === `${pathname}${search || ''}`;

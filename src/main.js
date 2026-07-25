@@ -21,6 +21,7 @@ import { buildVersionOptions, selectEvents } from './event-list-domain.js';
 import {
   clearListRoute,
   hasClearableListState,
+  hasUnavailableListVersion,
   routeMatchesLocation,
   updateListRoute
 } from './list-route-actions.js';
@@ -422,10 +423,7 @@ function closeMobileFilters() {
 }
 
 function applyRoute(route) {
-  if (
-    route.listState?.version !== 'all'
-    && !buildVersionOptions(state.events, route.listState.game).includes(route.listState.version)
-  ) {
+  if (hasUnavailableListVersion(route, state.events)) {
     detailNavigation.replace(updateListRoute(route, { game: route.listState.game }, state.events));
     return;
   }

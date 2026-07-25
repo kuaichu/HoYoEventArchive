@@ -4,6 +4,7 @@ import test from 'node:test';
 import { parseLocation, serializeRoute } from '../src/app-route.js';
 import {
   clearListRoute,
+  hasUnavailableListVersion,
   routeMatchesLocation,
   updateListRoute
 } from '../src/list-route-actions.js';
@@ -64,4 +65,17 @@ test('deferred list updates apply only while the originating canonical route is 
   assert.equal(routeMatchesLocation(route, '/', '?q=%E5%91%A8%E5%B9%B4&layout=list'), true);
   assert.equal(routeMatchesLocation(route, '/events/ys-1', ''), false);
   assert.equal(routeMatchesLocation(route, '/', '?layout=list'), false);
+});
+
+test('version availability checks skip static routes without list state', () => {
+  assert.equal(hasUnavailableListVersion(parseLocation('/timeline'), events), false);
+  assert.equal(hasUnavailableListVersion(parseLocation('/about'), events), false);
+  assert.equal(
+    hasUnavailableListVersion(parseLocation('/events', '?game=ys&version=v6.0'), events),
+    false
+  );
+  assert.equal(
+    hasUnavailableListVersion(parseLocation('/events', '?game=ys&version=v9.9'), events),
+    true
+  );
 });
