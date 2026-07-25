@@ -53,9 +53,15 @@ export async function verifyBasicAuthorization(value, config = ADMIN_AUTH_CONFIG
   return timingSafeEqual(verifier, config.verifier);
 }
 
-function isAdminPath(pathname) {
+function classifyAdminPath(pathname) {
   const normalized = pathname.length > 1 ? pathname.replace(/\/+$/, '') : pathname;
-  return normalized === '/admin' || normalized === '/admin.html';
+  if (normalized === '/admin' || normalized === '/admin.html') {
+    return { canonical: true };
+  }
+  if (normalized.startsWith('/admin/') || normalized.startsWith('/admin.html/')) {
+    return { canonical: false };
+  }
+  return null;
 }
 
 function unauthorizedResponse() {
@@ -65,6 +71,7 @@ function unauthorizedResponse() {
       'Cache-Control': 'private, no-store',
       'Content-Type': 'text/plain; charset=UTF-8',
       'Referrer-Policy': 'no-referrer',
+      'Vary': 'Authorization',
       'WWW-Authenticate': 'Basic realm="HoYo Event Archive Admin", charset="UTF-8"',
       'X-Content-Type-Options': 'nosniff'
     }
@@ -91,13 +98,21 @@ function privateAdminResponse(response) {
 
 export async function handleAdminRequest(context, config = ADMIN_AUTH_CONFIG) {
   const pathname = new URL(context.request.url).pathname;
-  if (!isAdminPath(pathname)) return context.next();
+  const adminRoute = classifyAdminPath(pathname);
+  if (!adminRoute) return context.next();
 
   const authorized = await verifyBasicAuthorization(
     context.request.headers.get('Authorization'),
     config
   );
   if (!authorized) return unauthorizedResponse();
+
+  if (!adminRoute.canonical) {
+    return privateAdminResponse(new Response('Admin route not found.', {
+      status: 404,
+      headers: { 'Content-Type': 'text/plain; charset=UTF-8' }
+    }));
+  }
 
   let nextRequest;
   if (pathname !== '/admin') {

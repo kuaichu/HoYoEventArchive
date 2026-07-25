@@ -16,6 +16,8 @@ import {
   parsePersistedEventState,
   serializeEventState
 } from './event-storage.js';
+import { resolveEventRoute } from './app-route.js';
+import { createDetailNavigation } from './detail-navigation.js';
 import { groupTimelineEvents, timelineDayLabel } from './timeline-domain.js';
 
 const EVENT_STORAGE_KEY = 'hoyo_archive_custom_events';
@@ -81,6 +83,12 @@ const state = {
   selectedEvent: null
 };
 
+const detailNavigation = createDetailNavigation({
+  history: window.history,
+  location: window.location,
+  renderRoute
+});
+
 // DOM Elements
 let elGameFilters, elTypeFilters, elStatusFilters;
 let elEventsContainer, elTimelineContainer;
@@ -102,6 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSidebarFilters();
   renderRecentlyUpdated();
   applyTabChange(state.currentTab);
+  detailNavigation.replay();
 });
 
 // Cache DOM Elements
@@ -314,9 +323,22 @@ function bindEvents() {
   });
 
   // Modal actions
-  document.getElementById('modalCloseBtn').addEventListener('click', closeModal);
+  document.getElementById('modalCloseBtn').addEventListener('click', () => {
+    detailNavigation.closeDetail();
+  });
   elDetailModal.addEventListener('click', (e) => {
-    if (e.target === elDetailModal) closeModal();
+    if (e.target === elDetailModal) detailNavigation.closeDetail();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && elDetailModal.classList.contains('active')) {
+      detailNavigation.closeDetail();
+    }
+  });
+  window.addEventListener('popstate', () => detailNavigation.replay());
+  elModalPrimaryLink.addEventListener('click', (e) => {
+    if (elModalPrimaryLink.dataset.routeHome !== 'true') return;
+    e.preventDefault();
+    detailNavigation.closeDetail();
   });
 
   // Modal Favorite toggle
@@ -724,8 +746,7 @@ function renderRecentlyUpdated() {
   listEl.querySelectorAll('.update-item').forEach(item => {
     item.addEventListener('click', () => {
       const id = item.getAttribute('data-id');
-      const eventObj = state.events.find(x => x.id === id);
-      if (eventObj) openDetailModal(eventObj);
+      detailNavigation.openEvent(id);
     });
   });
 }
@@ -960,10 +981,7 @@ function renderEvents() {
       if (e.target.closest('.bookmark-btn')) return;
 
       const eventId = card.getAttribute('data-id');
-      const eventObj = state.events.find(x => x.id === eventId);
-      if (eventObj) {
-        openDetailModal(eventObj);
-      }
+      detailNavigation.openEvent(eventId);
     });
   });
 
@@ -1046,8 +1064,7 @@ function renderTimeline() {
   elTimelineContainer.querySelectorAll('.timeline-item').forEach(item => {
     item.addEventListener('click', () => {
       const id = item.getAttribute('data-id');
-      const eventObj = state.events.find(x => x.id === id);
-      if (eventObj) openDetailModal(eventObj);
+      detailNavigation.openEvent(id);
     });
   });
 }
@@ -1073,6 +1090,17 @@ function toggleBookmark(id) {
 }
 
 // Detail Popup modal logic
+function renderRoute(route) {
+  const resolution = resolveEventRoute(route, state.events);
+  if (resolution.status === 'home') {
+    hideDetailModal();
+  } else if (resolution.status === 'found') {
+    openDetailModal(resolution.event);
+  } else {
+    openMissingDetail();
+  }
+}
+
 function openDetailModal(eventObj) {
   state.selectedEvent = eventObj;
   
@@ -1110,6 +1138,10 @@ function openDetailModal(eventObj) {
     elModalPrimaryLink.removeAttribute('href');
     elModalPrimaryLink.setAttribute('aria-disabled', 'true');
   }
+  delete elModalPrimaryLink.dataset.routeHome;
+  elModalPrimaryLink.querySelector('i').className = 'fa-solid fa-arrow-up-right-from-square';
+  elModalPrimaryLink.querySelector('span').textContent = '立即访问活动网页';
+  elModalFavoriteBtn.hidden = false;
   
   // Tags rendering
   elModalTags.replaceChildren(...eventObj.tags.map(tag => {
@@ -1125,7 +1157,30 @@ function openDetailModal(eventObj) {
   elDetailModal.classList.add('active');
 }
 
-function closeModal() {
+function openMissingDetail() {
+  state.selectedEvent = null;
+  elModalHeroImg.onerror = null;
+  elModalHeroImg.src = gameCovers.all;
+  elModalTitle.textContent = '活动不存在或已移除';
+  elModalDate.textContent = '—';
+  elModalVersion.textContent = '—';
+  elModalType.textContent = '—';
+  elModalDesc.textContent = '无法在当前活动档案中找到该活动，它可能已被删除或从档案中移除。';
+  elModalGameBadge.textContent = '活动档案';
+  elModalGameBadge.className = 'modal-game-badge all';
+  elModalStatusBadge.textContent = '未找到';
+  elModalStatusBadge.className = 'status-badge modal-status-badge expired';
+  elModalTags.replaceChildren();
+  elModalPrimaryLink.href = '/';
+  elModalPrimaryLink.removeAttribute('aria-disabled');
+  elModalPrimaryLink.dataset.routeHome = 'true';
+  elModalPrimaryLink.querySelector('i').className = 'fa-solid fa-arrow-left';
+  elModalPrimaryLink.querySelector('span').textContent = '返回首页';
+  elModalFavoriteBtn.hidden = true;
+  elDetailModal.classList.add('active');
+}
+
+function hideDetailModal() {
   elDetailModal.classList.remove('active');
   state.selectedEvent = null;
 }
