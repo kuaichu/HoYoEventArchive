@@ -49,27 +49,35 @@ test('crawler fails only when every configured source failed', () => {
 test('forum pagination distinguishes failed, partial, and valid empty sources', async () => {
   const game = { name: '测试游戏', forumId: 1 };
 
-  const failed = await fetchForumPosts(game, async () => {
-    throw new Error('offline');
-  });
+  const failed = await fetchForumPosts(
+    game,
+    async () => {
+      throw new Error('offline');
+    },
+    { maxAttempts: 1 }
+  );
   assert.equal(failed.status, 'failed');
   assert.deepEqual(failed.posts, []);
 
   let requestCount = 0;
-  const partial = await fetchForumPosts(game, async () => {
-    requestCount++;
-    if (requestCount === 1) {
-      return {
-        ok: true,
-        status: 200,
-        json: async () => ({
-          retcode: 0,
-          data: { list: [{ post: { post_id: 1 } }], is_last: false, last_id: 'next' }
-        })
-      };
-    }
-    return { ok: false, status: 503, json: async () => ({}) };
-  });
+  const partial = await fetchForumPosts(
+    game,
+    async () => {
+      requestCount++;
+      if (requestCount === 1) {
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            retcode: 0,
+            data: { list: [{ post: { post_id: 1 } }], is_last: false, last_id: 'next' }
+          })
+        };
+      }
+      return { ok: false, status: 503, json: async () => ({}) };
+    },
+    { maxAttempts: 1 }
+  );
   assert.equal(partial.status, 'partial');
   assert.equal(partial.posts.length, 1);
 
@@ -80,6 +88,45 @@ test('forum pagination distinguishes failed, partial, and valid empty sources', 
   }));
   assert.equal(empty.status, 'ok');
   assert.deepEqual(empty.posts, []);
+});
+
+test('forum pagination retries transient request failures before rejecting a source', async () => {
+  const game = { name: '测试游戏', forumId: 1 };
+  let attempts = 0;
+  const result = await fetchForumPosts(
+    game,
+    async () => {
+      attempts++;
+      if (attempts < 3) throw new TypeError('fetch failed');
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ retcode: 0, data: { list: [], is_last: true, last_id: '' } })
+      };
+    },
+    { maxAttempts: 3, retryDelayMs: 0, sleepFn: async () => {} }
+  );
+
+  assert.equal(attempts, 3);
+  assert.equal(result.status, 'ok');
+  assert.deepEqual(result.posts, []);
+});
+
+test('forum pagination does not retry permanent HTTP failures', async () => {
+  const game = { name: '测试游戏', forumId: 1 };
+  let attempts = 0;
+  const result = await fetchForumPosts(
+    game,
+    async () => {
+      attempts++;
+      return { ok: false, status: 404, json: async () => ({}) };
+    },
+    { maxAttempts: 3, retryDelayMs: 0, sleepFn: async () => {} }
+  );
+
+  assert.equal(attempts, 1);
+  assert.equal(result.status, 'failed');
+  assert.equal(result.error, 'HTTP 404');
 });
 
 test('source processing fails when every fetched post is structurally invalid', () => {

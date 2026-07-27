@@ -32,6 +32,14 @@ const games = [
 
 const pageSize = Number.parseInt(process.env.MIYOUSHE_PAGE_SIZE || '20', 10);
 const maxPagesPerGame = Number.parseInt(process.env.MIYOUSHE_MAX_PAGES || '5', 10);
+const fetchMaxAttempts = Math.min(
+  5,
+  Math.max(1, Number.parseInt(process.env.MIYOUSHE_FETCH_ATTEMPTS || '3', 10) || 3)
+);
+const fetchRetryDelayMs = Math.max(
+  0,
+  Number.parseInt(process.env.MIYOUSHE_RETRY_DELAY_MS || '750', 10) || 750
+);
 const enrichExistingIds = new Set(
   String(process.env.MIYOUSHE_ENRICH_EXISTING_IDS || '')
     .split(',')
@@ -39,13 +47,25 @@ const enrichExistingIds = new Set(
     .filter(Boolean)
 );
 
-export async function fetchForumPosts(game, fetchImpl = fetch) {
-  const posts = [];
-  let lastId = '';
+function sleep(milliseconds) {
+  return new Promise(resolve => setTimeout(resolve, milliseconds));
+}
 
-  for (let page = 1; page <= maxPagesPerGame; page++) {
+function isRetryableFetchError(error) {
+  const status = error?.httpStatus;
+  return status === undefined
+    || status === 408
+    || status === 425
+    || status === 429
+    || status >= 500;
+}
+
+async function fetchForumPage(game, page, lastId, fetchImpl, options) {
+  const url = `https://bbs-api.miyoushe.com/post/wapi/getForumPostList?forum_id=${game.forumId}&is_good=false&is_top=false&last_id=${encodeURIComponent(lastId)}&page_size=${pageSize}&sort_type=2`;
+  let lastError;
+
+  for (let attempt = 1; attempt <= options.maxAttempts; attempt++) {
     try {
-      const url = `https://bbs-api.miyoushe.com/post/wapi/getForumPostList?forum_id=${game.forumId}&is_good=false&is_top=false&last_id=${encodeURIComponent(lastId)}&page_size=${pageSize}&sort_type=2`;
       const res = await fetchImpl(url, {
         headers: {
           'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -53,13 +73,44 @@ export async function fetchForumPosts(game, fetchImpl = fetch) {
         }
       });
       if (!res.ok) {
-        throw new Error(`HTTP ${res.status}`);
+        const error = new Error(`HTTP ${res.status}`);
+        error.httpStatus = res.status;
+        throw error;
       }
 
       const json = await res.json();
       if (json.retcode !== 0 || !json.data || !Array.isArray(json.data.list)) {
         throw new Error(`retcode=${json.retcode}, message=${json.message}`);
       }
+      return json;
+    } catch (error) {
+      lastError = error;
+      if (attempt >= options.maxAttempts || !isRetryableFetchError(error)) throw error;
+      const delayMs = options.retryDelayMs * attempt;
+      console.warn(
+        `Retrying forum list page ${page} for ${game.name} after ${error.message} ` +
+        `(attempt ${attempt}/${options.maxAttempts}, delay ${delayMs}ms).`
+      );
+      await options.sleepFn(delayMs);
+    }
+  }
+
+  throw lastError;
+}
+
+export async function fetchForumPosts(game, fetchImpl = fetch, options = {}) {
+  const posts = [];
+  let lastId = '';
+  const requestOptions = {
+    maxAttempts: Math.min(5, Math.max(1, Number.parseInt(options.maxAttempts, 10) || fetchMaxAttempts)),
+    retryDelayMs: Math.max(0, Number.parseInt(options.retryDelayMs, 10) || 0),
+    sleepFn: options.sleepFn || sleep
+  };
+  if (options.retryDelayMs === undefined) requestOptions.retryDelayMs = fetchRetryDelayMs;
+
+  for (let page = 1; page <= maxPagesPerGame; page++) {
+    try {
+      const json = await fetchForumPage(game, page, lastId, fetchImpl, requestOptions);
 
       posts.push(...json.data.list);
 
