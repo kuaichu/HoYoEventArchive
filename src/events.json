@@ -1874,5 +1874,23 @@
     "startDate": "2026.07.28",
     "endDate": "2026.08.10",
     "reward": "《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包"
+  },
+  {
+    "id": "zzz-14",
+    "title": "法厄同年度大揭秘",
+    "url": "https://act.mihoyo.com/zzz/event/e20260729-anniversary-smcfj5/index.html",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "年度报告",
+    "status": "需登录",
+    "date": "2026.07.29",
+    "tags": [
+      "年度报告",
+      "v3.1版本",
+      "游戏内奖励"
+    ],
+    "version": "v3.1",
+    "description": "参与活动，即有机会获取「奇迹的中奖者」限定名片与菲林奖励！",
+    "reward": "参与活动，即有机会获取「奇迹的中奖者」限定名片与菲林奖励"
   }
 ]

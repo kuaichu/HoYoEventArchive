@@ -354,7 +354,12 @@ export function classifyEventType(text) {
   ) {
     return '版本前瞻';
   }
-  if (normalized.includes('年度报告') || normalized.includes('年报') || normalized.includes('足迹')) {
+  if (
+    normalized.includes('年度报告') ||
+    normalized.includes('年度大揭秘') ||
+    normalized.includes('年报') ||
+    normalized.includes('足迹')
+  ) {
     return '年度报告';
   }
   if (normalized.includes('回归') || normalized.includes('重聚') || normalized.includes('召回')) {

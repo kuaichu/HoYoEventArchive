@@ -145,6 +145,24 @@ assert.equal(
   '通用'
 );
 
+const zzzAnnualReportPageText =
+  '法厄同年度大揭秘。参与活动，即有机会获取「奇迹的中奖者」限定名片与菲林奖励！';
+const zzzAnnualReportMetadata = extractAnnouncementMetadata(zzzAnnualReportPageText);
+assert.equal(classifyEventType(zzzAnnualReportPageText), '年度报告');
+assert.match(zzzAnnualReportMetadata.reward, /限定名片/);
+assert.match(zzzAnnualReportMetadata.reward, /菲林奖励/);
+assert.equal(
+  classifyCrawlerVersion({
+    gameKey: 'zzz',
+    title: '法厄同年度大揭秘',
+    description: zzzAnnualReportPageText,
+    date: '2026.07.29',
+    eventType: '年度报告',
+    eventUrl: 'https://act.mihoyo.com/zzz/event/e20260729-anniversary-smcfj5/index.html'
+  }),
+  'v3.1'
+);
+
 assert.equal(
   classifyCrawlerVersion({
     gameKey: 'ys',
