@@ -11,6 +11,18 @@ test('stored event URLs remove ordinary-browser presentation and tracking parame
     ),
     'https://act.mihoyo.com/ys/event/e20260715ugc-4svbyl/index.html'
   );
+  assert.equal(
+    normalizeStoredEventUrl(
+      'https://y.qq.com/forest/dWx0qP3Z130jnshg/index.html?&channelid=2005001153&ADTAG=nr_clnr_yx187'
+    ),
+    'https://y.qq.com/forest/dWx0qP3Z130jnshg/index.html'
+  );
+  assert.equal(
+    normalizeStoredEventUrl(
+      'https://m.kugou.com/ssr/musicip/ip?ssr_header_param=48&ssr_url_param=790663&isHideTitleBar=1&ip_id=113857'
+    ),
+    'https://m.kugou.com/ssr/musicip/ip?ip_id=113857'
+  );
 });
 
 test('stored event URLs preserve parameters that identify shared event shells', () => {

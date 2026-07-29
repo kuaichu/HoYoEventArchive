@@ -13,6 +13,7 @@ import {
   isEventCandidateUrl,
   isPermanentResourceUrl,
   resolveStoredEventUrl,
+  selectEventCandidateUrls,
   selectEventTitle
 } from './crawler-rules.js';
 import { isNumericVersion } from './version-classification.js';
@@ -238,7 +239,7 @@ export async function runCrawler() {
           });
         
           // Process unique URLs found in this post
-          const uniqueUrls = [...new Set(matches.map(u => u.replace(/&amp;/g, '&').replace(/[.,;!?]$/, '')))];
+          const uniqueUrls = selectEventCandidateUrls(matches);
         
           for (const rawUrl of uniqueUrls) {
           let cleanUrl;
@@ -329,7 +330,8 @@ export async function runCrawler() {
             description: eventDesc,
             body: postText,
             date: pubDate,
-            eventType
+            eventType,
+            eventUrl: cleanUrl
           });
           if (eventType === '版本前瞻' && !isNumericVersion(version)) {
             console.warn(`Skipping ${cleanUrl}: version preview has no confirmed target version.`);
@@ -345,6 +347,8 @@ export async function runCrawler() {
           if (eventType !== '其他活动') tags.push(eventType);
           if (isNumericVersion(version)) tags.push(`${version}版本`);
           else if (version === '公测前') tags.push('公测前');
+          else if (version === '通用') tags.push('通用');
+          if (/音乐平台活动/.test(textToAnalyze)) tags.push('音乐平台');
           if (textToAnalyze.includes('原石') || textToAnalyze.includes('星琼') || textToAnalyze.includes('菲林')) {
             tags.push('游戏内奖励');
           }

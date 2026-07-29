@@ -9,8 +9,10 @@ import {
   getAnnouncementDate,
   isEventCandidateUrl,
   isPermanentResourceUrl,
+  isPlatformCampaignUrl,
   resolveEventUrl,
   resolveStoredEventUrl,
+  selectEventCandidateUrls,
   selectEventTitle
 } from './crawler-rules.js';
 
@@ -39,6 +41,18 @@ realActivities.forEach(url => {
 assert.equal(isEventCandidateUrl('https://act.mihoyo.com/zzz/event/example/index.html'), true);
 assert.equal(isEventCandidateUrl('https://mhyurl.cn/ufdx1aofg'), true);
 assert.equal(isEventCandidateUrl('https://example.com/not-an-event'), false);
+
+const zzzQqMusicUrl = 'https://y.qq.com/forest/dWx0qP3Z130jnshg/index.html?&channelid=2005001153&ADTAG=nr_clnr_yx187';
+const zzzKugouMusicUrl = 'https://m.kugou.com/ssr/musicip/ip?ssr_header_param=48&ssr_url_param=790663&isHideTitleBar=1&ip_id=113857';
+assert.equal(isEventCandidateUrl(zzzQqMusicUrl), true);
+assert.equal(isEventCandidateUrl(zzzKugouMusicUrl), true);
+assert.equal(isPlatformCampaignUrl(zzzQqMusicUrl), true);
+assert.equal(isEventCandidateUrl('https://y.qq.com/n/ryqq/songDetail/ordinary-track'), false);
+assert.deepEqual(selectEventCandidateUrls([zzzQqMusicUrl, zzzKugouMusicUrl]), [zzzQqMusicUrl]);
+assert.equal(
+  await resolveStoredEventUrl(zzzQqMusicUrl),
+  'https://y.qq.com/forest/dWx0qP3Z130jnshg/index.html'
+);
 
 const finalZzzUrl = 'https://act.mihoyo.com/zzz/event/e20260717reserve-pvy5cf/index.html';
 const redirectRequests = [];
@@ -106,6 +120,30 @@ assert.match(zzzMetadata.reward, /340菲林/);
 assert.match(zzzMetadata.reward, /480菲林/);
 assert.match(zzzMetadata.reward, /iPhone/);
 assert.match(zzzMetadata.description, /绝区零.*3\.1版本/);
+
+const zzzMusicAnnouncement = `
+《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包。
+▼ 活动时间
+2026年7月28日12:00 -- 2026年8月10日23:59
+▼ 活动简介
+活动期间，完成活动任务即可获得限量菲林礼包兑换码奖励。
+`;
+const zzzMusicMetadata = extractAnnouncementMetadata(zzzMusicAnnouncement);
+assert.equal(zzzMusicMetadata.startDate, '2026.07.28');
+assert.equal(zzzMusicMetadata.endDate, '2026.08.10');
+assert.equal(classifyEventType(zzzMusicAnnouncement), '联动活动');
+assert.equal(
+  classifyCrawlerVersion({
+    gameKey: 'zzz',
+    title: '《绝区零》二周年音乐活动',
+    sourcePostTitle: '新歌活动丨《绝区零》二周年音乐平台活动现已开启',
+    body: zzzMusicAnnouncement,
+    date: '2026.07.28',
+    eventType: '联动活动',
+    eventUrl: zzzQqMusicUrl
+  }),
+  '通用'
+);
 
 assert.equal(
   classifyCrawlerVersion({

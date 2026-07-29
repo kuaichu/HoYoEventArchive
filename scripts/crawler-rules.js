@@ -22,6 +22,19 @@ const eventHostnames = new Set([
 
 const eventShortLinkHostnames = new Set(['mhyurl.cn']);
 
+function isExternalMusicPlatformPage(url) {
+  const hostname = url?.hostname?.toLowerCase();
+  const pathname = url?.pathname || '';
+  return (
+    hostname === 'y.qq.com'
+    && /^\/forest\/[^/]+\/index\.html$/i.test(pathname)
+  ) || (
+    hostname === 'm.kugou.com'
+    && pathname === '/ssr/musicip/ip'
+    && url.searchParams.has('ip_id')
+  );
+}
+
 const identityQueryParams = new Set([
   'act_id',
   'activity_id',
@@ -63,7 +76,7 @@ function isEventPageUrl(rawUrl) {
   const url = parseHttpUrl(rawUrl);
   return Boolean(
     url &&
-    eventHostnames.has(url.hostname) &&
+    (eventHostnames.has(url.hostname) || isExternalMusicPlatformPage(url)) &&
     !url.pathname.includes('/common/') &&
     !url.pathname.match(/\.(png|jpg|jpeg|gif|svg)$/i)
   );
@@ -76,6 +89,27 @@ function isEventShortLink(rawUrl) {
 
 export function isEventCandidateUrl(rawUrl) {
   return isEventPageUrl(rawUrl) || isEventShortLink(rawUrl);
+}
+
+export function isPlatformCampaignUrl(rawUrl) {
+  return isExternalMusicPlatformPage(parseHttpUrl(rawUrl));
+}
+
+export function selectEventCandidateUrls(rawUrls) {
+  const candidates = [...new Set(
+    (Array.isArray(rawUrls) ? rawUrls : [])
+      .map(cleanEventUrl)
+      .filter(isEventCandidateUrl)
+  )];
+  const musicPlatformCandidates = candidates.filter(isPlatformCampaignUrl);
+  const musicPlatformHosts = new Set(
+    musicPlatformCandidates.map(candidate => parseHttpUrl(candidate)?.hostname)
+  );
+  if (musicPlatformHosts.size < 2) return candidates;
+
+  const preferred = musicPlatformCandidates.find(candidate => parseHttpUrl(candidate)?.hostname === 'y.qq.com')
+    || musicPlatformCandidates[0];
+  return candidates.filter(candidate => !isPlatformCampaignUrl(candidate) || candidate === preferred);
 }
 
 export async function resolveEventUrl(
@@ -166,7 +200,9 @@ export function extractPostText(post) {
 }
 
 function normalizeDateToken(rawDate) {
-  const match = String(rawDate || '').match(/(\d{4})[./-](\d{1,2})[./-](\d{1,2})/);
+  const match = String(rawDate || '').match(
+    /(\d{4})\s*(?:年|[./-])\s*(\d{1,2})\s*(?:月|[./-])\s*(\d{1,2})\s*日?/
+  );
   if (!match) return undefined;
   return `${match[1]}.${match[2].padStart(2, '0')}.${match[3].padStart(2, '0')}`;
 }
@@ -194,7 +230,7 @@ export function extractAnnouncementMetadata(rawText) {
   const text = String(rawText || '').replace(/\r/g, '');
   const activityTimeSection = text.match(/【?活动时间】?\s*[:：]?([\s\S]{0,240})/i)?.[1] || '';
   const dateRange = activityTimeSection.match(
-    /(\d{4}[./-]\d{1,2}[./-]\d{1,2})\s*(?:-|—|–|~|～|至|到)\s*(\d{4}[./-]\d{1,2}[./-]\d{1,2})/
+    /(\d{4}\s*(?:年|[./-])\s*\d{1,2}\s*(?:月|[./-])\s*\d{1,2}\s*日?)\s*(?:\d{1,2}:\d{2})?\s*(?:--?|—|–|~|～|至|到)\s*(\d{4}\s*(?:年|[./-])\s*\d{1,2}\s*(?:月|[./-])\s*\d{1,2}\s*日?)/
   );
   const description = text
     .split(/\n+/)
@@ -210,7 +246,8 @@ export function extractAnnouncementMetadata(rawText) {
   };
 }
 
-export function classifyCrawlerVersion({ gameKey, title, sourcePostTitle, description, body, date, eventType }) {
+export function classifyCrawlerVersion({ gameKey, title, sourcePostTitle, description, body, date, eventType, eventUrl }) {
+  if (isPlatformCampaignUrl(eventUrl)) return '通用';
   const dateFallbackTypes = new Set(['年度报告', '回归活动', '小游戏', '预约/预抽卡', '联动活动']);
   return classifyEventVersion({
     gameKey,
@@ -323,7 +360,7 @@ export function classifyEventType(text) {
   if (normalized.includes('回归') || normalized.includes('重聚') || normalized.includes('召回')) {
     return '回归活动';
   }
-  if (normalized.includes('联动') || normalized.includes('合作')) {
+  if (normalized.includes('联动') || normalized.includes('合作') || normalized.includes('音乐平台活动')) {
     return '联动活动';
   }
   if (

@@ -35,6 +35,11 @@ test('Star Rail release days belong to the new version in UTC+8', () => {
   }
 });
 
+test('Zenless Zone Zero 3.1 release day belongs to v3.1', () => {
+  assert.equal(inferVersionFromDate('zzz', '2026.07.28'), 'v3.0');
+  assert.equal(inferVersionFromDate('zzz', '2026.07.29'), 'v3.1');
+});
+
 test('explicit content version wins over publication-date fallback', () => {
   assert.equal(classifyEventVersion({
     gameKey: 'sr',

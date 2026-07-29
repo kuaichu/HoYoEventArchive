@@ -43,6 +43,20 @@ function isRedundantGameBiz(url) {
 function shouldRemoveQueryParam(url, name, value) {
   const normalizedName = name.toLowerCase();
   if (isTrackingParam(normalizedName) || removableContextParams.has(normalizedName)) return true;
+  if (
+    url.hostname.toLowerCase() === 'y.qq.com'
+    && url.pathname.toLowerCase().startsWith('/forest/')
+    && ['adtag', 'channelid'].includes(normalizedName)
+  ) {
+    return true;
+  }
+  if (
+    url.hostname.toLowerCase() === 'm.kugou.com'
+    && url.pathname.toLowerCase() === '/ssr/musicip/ip'
+    && ['ssr_header_param', 'ssr_url_param', 'ishidetitlebar'].includes(normalizedName)
+  ) {
+    return true;
+  }
   if (normalizedName === 'game_biz') return isRedundantGameBiz(url);
   if (
     normalizedName === 'act_id' &&
