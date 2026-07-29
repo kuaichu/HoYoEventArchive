@@ -197,6 +197,10 @@ test('event page readiness distinguishes GPU warning, loading, and the main UI',
     'ready'
   );
   assert.equal(classifyEventPageState({ coverText: '资源加载失败，请重试' }), 'fatal-error');
+  assert.equal(
+    classifyEventPageState({ engineDetected: false, hasBuildLoading: true }),
+    'waiting'
+  );
 });
 
 test('screenshot navigation strips tracking parameters and retries transient timeouts', async () => {
@@ -249,6 +253,14 @@ test('generic screenshot quality rejects loading and error pages', () => {
   assert.equal(
     classifyGenericPageQuality({ visibleText: '活动主页面已经加载完成', hasVisibleLoading: false }),
     'ready'
+  );
+  assert.equal(
+    classifyGenericPageQuality({
+      visibleText: '',
+      hasVisibleLoading: false,
+      hasBuildLoading: true
+    }),
+    'waiting'
   );
 });
 

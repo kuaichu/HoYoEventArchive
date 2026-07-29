@@ -52,6 +52,7 @@ export function classifyEventPageState({
   engineDetected = false,
   homeVisible = false,
   coverText = '',
+  hasBuildLoading = false,
   loadingProgress,
   isShowLoading,
   currentScene,
@@ -60,6 +61,7 @@ export function classifyEventPageState({
   if (coverText) {
     return /硬件加速/.test(coverText) ? 'dismiss-gpu-warning' : 'fatal-error';
   }
+  if (hasBuildLoading) return 'waiting';
   if (!engineDetected) return 'generic';
 
   const loadingComplete = loadingProgress === undefined || loadingProgress === 100;
@@ -71,7 +73,11 @@ export function classifyEventPageState({
     : 'waiting';
 }
 
-export function classifyGenericPageQuality({ visibleText = '', hasVisibleLoading = false }) {
+export function classifyGenericPageQuality({
+  visibleText = '',
+  hasVisibleLoading = false,
+  hasBuildLoading = false
+}) {
   const normalizedText = String(visibleText || '').replace(/\s+/g, ' ').trim();
   if (
     /auth\s*key.*解析失败|您没有登录|当前暂未登录|请选择登录方式|分享链接有误|活动已下线|资源加载失败/i.test(
@@ -80,7 +86,7 @@ export function classifyGenericPageQuality({ visibleText = '', hasVisibleLoading
   ) {
     return 'fatal-error';
   }
-  if (hasVisibleLoading || /(?:正在)?加载中|loading\.{0,3}|请稍候/i.test(normalizedText)) {
+  if (hasBuildLoading || hasVisibleLoading || /(?:正在)?加载中|loading\.{0,3}|请稍候/i.test(normalizedText)) {
     return 'waiting';
   }
   return 'ready';
@@ -124,6 +130,7 @@ async function readEventPageState(page) {
 
     const cover = document.querySelector('.me-err-cover');
     const home = document.querySelector('.home_page');
+    const buildLoading = document.getElementById('build-loading-mask');
     const vue = window.player?.vue;
     const aniStore = vue?.$parent?.aniStore || vue?.aniStore || window.aniStore;
 
@@ -131,6 +138,7 @@ async function readEventPageState(page) {
       engineDetected: Boolean(vue || home),
       homeVisible: isVisible(home),
       coverText: isVisible(cover) ? String(cover.textContent || '').trim() : '',
+      hasBuildLoading: isVisible(buildLoading) || typeof window.__removeBuildLoading === 'function',
       loadingProgress: Number.isFinite(Number(vue?.loadingProgress))
         ? Number(vue.loadingProgress)
         : undefined,
@@ -165,7 +173,10 @@ async function readGenericPageQuality(page) {
     );
     return {
       visibleText: String(document.body?.innerText || '').slice(0, 12000),
-      hasVisibleLoading
+      hasVisibleLoading,
+      hasBuildLoading:
+        isVisible(document.getElementById('build-loading-mask')) ||
+        typeof window.__removeBuildLoading === 'function'
     };
   });
 }
