@@ -1850,5 +1850,29 @@
     ],
     "version": "v9.0",
     "description": "登场，参与「希娜狄雅」协同补给至多可获取"
+  },
+  {
+    "id": "zzz-13",
+    "title": "《绝区零》二周年音乐活动",
+    "url": "https://y.qq.com/forest/dWx0qP3Z130jnshg/index.html",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "联动活动",
+    "status": "可访问",
+    "date": "2026.07.28",
+    "dateType": "announcement",
+    "sourcePostId": "76998463",
+    "sourcePostTitle": "新歌活动丨《绝区零》二周年音乐平台活动现已开启",
+    "tags": [
+      "联动活动",
+      "通用",
+      "音乐平台",
+      "游戏内奖励"
+    ],
+    "version": "通用",
+    "description": "《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包。欢迎各位绳匠前往平台收听。",
+    "startDate": "2026.07.28",
+    "endDate": "2026.08.10",
+    "reward": "《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包"
   }
 ]
