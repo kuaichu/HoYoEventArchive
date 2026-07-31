@@ -1915,5 +1915,28 @@
     "startDate": "2026.07.29",
     "endDate": "2026.07.31",
     "reward": "，抽取纠缠之缘奖励"
+  },
+  {
+    "id": "ys-42",
+    "title": "【网页活动上线】「至冬将至」网页活动限时开启",
+    "url": "https://act.mihoyo.com/ys/event/e20260731reserve-y2xckt/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "预约/预抽卡",
+    "status": "可访问",
+    "date": "2026.07.31",
+    "dateType": "announcement",
+    "sourcePostId": "77073847",
+    "sourcePostTitle": "【网页活动上线】「至冬将至」网页活动限时开启",
+    "tags": [
+      "预约/预抽卡",
+      "v7.0版本",
+      "游戏内奖励"
+    ],
+    "version": "v7.0",
+    "description": "「至冬将至」网页活动限时开启。快来预约新版本领原石奖励吧！",
+    "startDate": "2026.07.31",
+    "endDate": "2026.08.11",
+    "reward": "快来预约新版本领原石奖励吧"
   }
 ]
