@@ -141,6 +141,22 @@ test('committed non-event changes are not mislabeled or deleted', () => {
   assert.doesNotMatch(plan.summary.text, /no event updates detected/);
 });
 
+test('status-only event changes send one explicit summary without an event card', () => {
+  const plan = buildFinishedNotificationPlan({
+    ...baseInput,
+    dataChanged: true,
+    updateSummary:
+      '原神 v7.0 状态更新: 《原神》7.0版本前瞻特别节目（可访问 → 已结束）',
+    eventUpdates: []
+  });
+
+  assert.equal(plan.eventCards.enabled, false);
+  assert.equal(plan.summary.enabled, true);
+  assert.equal(plan.summary.deleteAfterSeconds, 0);
+  assert.match(plan.summary.text, /可访问 → 已结束/);
+  assert.doesNotMatch(plan.summary.text, /no newly added event summary was generated/);
+});
+
 test('synthetic notification tests send one temporary card and no summary', () => {
   const plan = buildFinishedNotificationPlan({
     ...baseInput,

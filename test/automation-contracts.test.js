@@ -15,7 +15,10 @@ import {
   screenshotNavigationUrl,
   selectMissingScreenshotEvents
 } from '../scripts/capture-screenshots.js';
-import { collectEventUpdates } from '../scripts/summarize-event-updates.js';
+import {
+  buildEventUpdateSummary,
+  collectEventUpdates
+} from '../scripts/summarize-event-updates.js';
 import { summarizeDeliveries } from '../scripts/tg-notify.js';
 
 test('crawler fails only when every configured source failed', () => {
@@ -306,6 +309,30 @@ test('metadata changes to an existing event produce a notifiable update', () => 
   assert.deepEqual(updates.addedEvents, []);
   assert.deepEqual(updates.updatedEvents.map(event => event.id), ['zzz-12']);
   assert.deepEqual(updates.notificationEvents.map(event => event.id), ['zzz-12']);
+});
+
+test('status-only transitions produce a summary without an event card', () => {
+  const base = [{
+    id: 'ys-41',
+    url: 'https://act.mihoyo.com/ys/event/e20260729preview/index.html',
+    game: '原神',
+    title: '《原神》7.0版本前瞻特别节目',
+    version: 'v7.0',
+    status: '可访问'
+  }];
+  const current = [{ ...base[0], status: '已结束' }];
+
+  const updates = collectEventUpdates(base, current);
+  assert.deepEqual(updates.notificationEvents, []);
+  assert.deepEqual(updates.statusChanges, [{
+    event: current[0],
+    beforeStatus: '可访问',
+    afterStatus: '已结束'
+  }]);
+  assert.equal(
+    buildEventUpdateSummary(updates),
+    '原神 v7.0 状态更新: 《原神》7.0版本前瞻特别节目（可访问 → 已结束）'
+  );
 });
 
 test('forced screenshot recaptures can explicitly resend the refreshed event card', () => {

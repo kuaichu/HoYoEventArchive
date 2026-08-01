@@ -42,6 +42,7 @@ export function collectEventUpdates(baseEvents, currentEvents, includeIds = new 
   const baseByKey = new Map(baseEvents.map(event => [eventKey(event), event]));
   const addedEvents = [];
   const updatedEvents = [];
+  const statusChanges = [];
 
   for (const event of currentEvents) {
     const baseEvent = baseByKey.get(eventKey(event));
@@ -49,6 +50,12 @@ export function collectEventUpdates(baseEvents, currentEvents, includeIds = new 
       addedEvents.push(event);
     } else if (notificationSignature(baseEvent) !== notificationSignature(event)) {
       updatedEvents.push(event);
+    } else if ((baseEvent.status ?? null) !== (event.status ?? null)) {
+      statusChanges.push({
+        event,
+        beforeStatus: baseEvent.status ?? '未知',
+        afterStatus: event.status ?? '未知'
+      });
     }
   }
 
@@ -63,8 +70,34 @@ export function collectEventUpdates(baseEvents, currentEvents, includeIds = new 
   return {
     addedEvents,
     updatedEvents,
-    notificationEvents: [...addedEvents, ...updatedEvents]
+    notificationEvents: [...addedEvents, ...updatedEvents],
+    statusChanges: statusChanges.filter(change => !selectedIds.has(change.event.id))
   };
+}
+
+export function buildEventUpdateSummary(updates, maxLines = 20) {
+  const addedIds = new Set((updates.addedEvents || []).map(event => event.id));
+  const entries = (updates.notificationEvents || []).map(event => {
+    const version = event.version && event.version !== '通用' ? ` ${event.version}` : '';
+    const label = addedIds.has(event.id) ? '新增活动' : '活动更新';
+    return `${event.game || event.gameKey}${version} ${label}: ${event.title}`;
+  });
+
+  for (const change of updates.statusChanges || []) {
+    const event = change.event;
+    const version = event.version && event.version !== '通用' ? ` ${event.version}` : '';
+    entries.push(
+      `${event.game || event.gameKey}${version} 状态更新: ${event.title}` +
+      `（${change.beforeStatus} → ${change.afterStatus}）`
+    );
+  }
+
+  const limit = Number.isInteger(maxLines) && maxLines > 0 ? maxLines : 20;
+  const lines = entries.slice(0, limit);
+  if (entries.length > limit) {
+    lines.push(`...and ${entries.length - limit} more`);
+  }
+  return lines.join('\n');
 }
 
 export function main() {
@@ -83,21 +116,9 @@ export function main() {
     return;
   }
 
-  if (updates.notificationEvents.length === 0) return;
-
   const maxLines = Number.parseInt(process.env.EVENT_UPDATE_SUMMARY_MAX_LINES || '20', 10);
-  const addedIds = new Set(updates.addedEvents.map(event => event.id));
-  const lines = updates.notificationEvents.slice(0, maxLines).map(event => {
-    const version = event.version && event.version !== '通用' ? ` ${event.version}` : '';
-    const label = addedIds.has(event.id) ? '新增活动' : '活动更新';
-    return `${event.game || event.gameKey}${version} ${label}: ${event.title}`;
-  });
-
-  if (updates.notificationEvents.length > maxLines) {
-    lines.push(`...and ${updates.notificationEvents.length - maxLines} more`);
-  }
-
-  console.log(lines.join('\n'));
+  const summary = buildEventUpdateSummary(updates, maxLines);
+  if (summary) console.log(summary);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
