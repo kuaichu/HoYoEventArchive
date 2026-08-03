@@ -1938,5 +1938,23 @@
     "startDate": "2026.07.31",
     "endDate": "2026.08.11",
     "reward": "快来预约新版本领原石奖励吧"
+  },
+  {
+    "id": "ys-43",
+    "title": "【有奖活动】「翾风回雪」奥黛塔绘画征集活动开启！",
+    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202607311621488820&act_id=ea202607311621488820",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.08.03",
+    "dateType": "announcement",
+    "sourcePostId": "77160485",
+    "sourcePostTitle": "【有奖活动】「翾风回雪」奥黛塔绘画征集活动开启！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "旅行者好呀！这里是提瓦特徒步团(*/ω＼*)"
   }
 ]
