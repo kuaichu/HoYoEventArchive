@@ -1956,5 +1956,25 @@
     ],
     "version": "待确认",
     "description": "旅行者好呀！这里是提瓦特徒步团(*/ω＼*)"
+  },
+  {
+    "id": "zzz-15",
+    "title": "米游币抽抽乐-绝区零专场现已开启！",
+    "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202607301813271&game_biz=nap",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.08.07",
+    "dateType": "announcement",
+    "sourcePostId": "77256044",
+    "sourcePostTitle": "米游币抽抽乐-绝区零专场现已开启！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "2026/8/7 11:00-2026/8/9 23:59",
+    "startDate": "2026.08.07",
+    "endDate": "2026.08.09"
   }
 ]
