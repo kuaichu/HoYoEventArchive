@@ -1976,5 +1976,23 @@
     "description": "2026/8/7 11:00-2026/8/9 23:59",
     "startDate": "2026.08.07",
     "endDate": "2026.08.09"
+  },
+  {
+    "id": "ys-44",
+    "title": "7.0版本「无神怜爱的雪国」内容专题页上线！",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=585c4649a63142d9",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.08.10",
+    "dateType": "announcement",
+    "sourcePostId": "77322292",
+    "sourcePostTitle": "7.0版本「无神怜爱的雪国」内容专题页上线！",
+    "tags": [
+      "v7.0版本"
+    ],
+    "version": "v7.0",
+    "description": "7.0版本「无神怜爱的雪国」内容专题页上线啦！"
   }
 ]
