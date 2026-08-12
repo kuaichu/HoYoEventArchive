@@ -1994,5 +1994,49 @@
     ],
     "version": "v7.0",
     "description": "7.0版本「无神怜爱的雪国」内容专题页上线啦！"
+  },
+  {
+    "id": "ys-45",
+    "title": "【网页活动上线】「至冬漫游手册」网页活动限时开启",
+    "url": "https://act.mihoyo.com/ys/event/e20260812winter-1npovj/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "回归活动",
+    "status": "可访问",
+    "date": "2026.08.12",
+    "dateType": "announcement",
+    "sourcePostId": "77378172",
+    "sourcePostTitle": "【网页活动上线】「至冬漫游手册」网页活动限时开启",
+    "tags": [
+      "回归活动",
+      "v6.7版本",
+      "游戏内奖励"
+    ],
+    "version": "v6.7",
+    "description": "「至冬漫游手册」网页活动上线，快来开启「雪国的馈赠」抽取原石等奖励吧！",
+    "startDate": "2026.08.12",
+    "endDate": "2026.08.25",
+    "reward": "「至冬漫游手册」网页活动上线，快来开启「雪国的馈赠」抽取原石等奖励吧"
+  },
+  {
+    "id": "ys-46",
+    "title": "《原神》千星奇域 创作赛启动！",
+    "url": "https://act.mihoyo.com/ys/event/e20260812creator/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "联动活动",
+    "status": "可访问",
+    "date": "2026.08.12",
+    "dateType": "announcement",
+    "sourcePostId": "77371944",
+    "sourcePostTitle": "「千星创作赛」正式启动！",
+    "tags": [
+      "联动活动",
+      "v6.7版本",
+      "游戏内奖励"
+    ],
+    "version": "v6.7",
+    "description": "《原神》千星奇域首届面向全体创作者的创作赛终于到来了！",
+    "reward": "本次活动不限品类、不限玩法，制作奇域并投稿即有机会获得原石奖励，优秀奇域更可额外获一号创作票券奖励，甚至有机会得到与官方合作的机会；其中，我们还为各位新手奇匠设置了专属奖励，只要你有想法、有创意， 本次创作赛将会是你大展拳脚的舞台"
   }
 ]
