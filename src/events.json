@@ -2058,5 +2058,43 @@
     "description": "2026/8/14 12:00-2026/8/16 23:59",
     "startDate": "2026.08.14",
     "endDate": "2026.08.16"
+  },
+  {
+    "id": "sr-50",
+    "title": "4.5版本「挥掷千星的筹码」专题展示页",
+    "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260807version_847959e2a2/index.html",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.08.14",
+    "dateType": "announcement",
+    "sourcePostId": "77461137",
+    "sourcePostTitle": "4.5版本「挥掷千星的筹码」专题展示页",
+    "tags": [
+      "v4.5版本"
+    ],
+    "version": "v4.5",
+    "description": "亲爱的开拓者，4.5版本「挥掷千星的筹码」专题展示页现已上线，一起看看新版本都有哪些内容吧！"
+  },
+  {
+    "id": "sr-51",
+    "title": "《崩坏：星穹铁道》4.5版本前瞻特别节目",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202608101635141038",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "版本前瞻",
+    "status": "可访问",
+    "date": "2026.08.14",
+    "dateType": "announcement",
+    "sourcePostId": "77447230",
+    "sourcePostTitle": "【有奖活动】4.5版本前瞻讨论活动开启，参与赢648现金",
+    "tags": [
+      "版本前瞻",
+      "v4.5版本"
+    ],
+    "version": "v4.5",
+    "description": "开拓者好呀~《崩坏：星穹铁道》「",
+    "reward": "在本次节目播送期间，阿姬为开拓者准备了648元现金奖励、；阿姬将从成功参与活动的开拓者中随机选取25名，各获得648元现金奖励*1或；648元现金奖励*5；3、请获得周边奖励的开拓者在系统通知发出后的4个工作日内完成周边收货地址填写，否则将视为放弃奖励；公告】周边奖励地址填写教程；获得现金奖励的开拓者在中奖公示后4个工作日内关注私信，并回复相关收款信息"
   }
 ]
