@@ -2115,5 +2115,24 @@
     "version": "待确认",
     "description": "「知更鸟•晴歌」主题绘画征集活动现已开启！",
     "reward": "，以确保星琼奖励的正常发放；※头像挂件奖励将在绘画征集活动获奖结果公示后20个工作日内发放"
+  },
+  {
+    "id": "ys-48",
+    "title": "【奇匠小贴士】奇域共创计划使用指南",
+    "url": "https://act.mihoyo.com/miliastra_wonderland/cocreation#/creatorIndex",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "小游戏",
+    "status": "可访问",
+    "date": "2026.09.03",
+    "dateType": "announcement",
+    "sourcePostId": "77952930",
+    "sourcePostTitle": "【奇匠小贴士】奇域共创计划使用指南",
+    "tags": [
+      "小游戏",
+      "v6.7版本"
+    ],
+    "version": "v6.7",
+    "description": "各位奇匠好呀，奇匠小助手又来啦！"
   }
 ]
