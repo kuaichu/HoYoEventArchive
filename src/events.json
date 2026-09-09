@@ -2197,5 +2197,23 @@
     "startDate": "2026.09.07",
     "endDate": "2026.09.12",
     "reward": "，抽取纠缠之缘奖励"
+  },
+  {
+    "id": "zzz-16",
+    "title": "维尔乌姆假日相册",
+    "url": "https://act.mihoyo.com/zzz/event/e20260909flintworkshop-s3ou3r/index.html",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.09",
+    "dateType": "announcement",
+    "sourcePostId": "78058511",
+    "sourcePostTitle": "🎁维尔乌姆假日相册",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "弗林特工坊的休假日！克拉蕾和洛克茜的行程规划中…"
   }
 ]
