@@ -2215,5 +2215,25 @@
     ],
     "version": "待确认",
     "description": "弗林特工坊的休假日！克拉蕾和洛克茜的行程规划中…"
+  },
+  {
+    "id": "zzz-17",
+    "title": "添加Z宝领菲林",
+    "url": "https://act.mihoyo.com/zzz/event/wechat-landing-2sjz4e/index.html",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.10",
+    "dateType": "announcement",
+    "sourcePostId": "78074434",
+    "sourcePostTitle": "30菲林奖励刷新！添加Z宝领取版本福利",
+    "tags": [
+      "v3.2版本",
+      "游戏内奖励"
+    ],
+    "version": "v3.2",
+    "description": "版本上线后，已完成账号绑定验证的绳匠，可再次领取",
+    "reward": "添加『Z宝』为好友，也能即刻领取菲林奖励；三、完成绑定后，即可通过版本任务，领取30菲林奖励；四、除此之外，首次添加Z宝的绳匠，还可领取60菲林奖励嗯呢"
   }
 ]
