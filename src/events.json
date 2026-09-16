@@ -2253,5 +2253,61 @@
     ],
     "version": "待确认",
     "description": "亲爱的观众，万众瞩目的「火力全开！银河梦幻擂台！」就要开始了~那是最充满期待的假期，在一堆水费电费燃气费的账单里，一张比赛的宣传单格外醒目……"
+  },
+  {
+    "id": "ys-50",
+    "title": "【有奖活动】「幽歌萦渊」沃雅妮莎绘画征集活动开启！",
+    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202609141824580514&act_id=ea202609141824580514",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.15",
+    "dateType": "announcement",
+    "sourcePostId": "78179678",
+    "sourcePostTitle": "【有奖活动】「幽歌萦渊」沃雅妮莎绘画征集活动开启！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "旅行者好呀！这里是提瓦特徒步团(*/ω＼*)"
+  },
+  {
+    "id": "ys-51",
+    "title": "【有奖活动】「雪宴之锋」薇斯纳绘画征集活动开启！",
+    "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202609121641261735&act_id=ea202609121641261735",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.14",
+    "dateType": "announcement",
+    "sourcePostId": "78159165",
+    "sourcePostTitle": "【有奖活动】「雪宴之锋」薇斯纳绘画征集活动开启！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "旅行者好呀！这里是提瓦特徒步团(*/ω＼*)"
+  },
+  {
+    "id": "bh3-10",
+    "title": "《崩坏3》十周年庆典特别节目",
+    "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202609101428456900",
+    "game": "崩坏3",
+    "gameKey": "bh3",
+    "type": "版本前瞻",
+    "status": "可访问",
+    "date": "2026.09.15",
+    "dateType": "announcement",
+    "sourcePostId": "78184544",
+    "sourcePostTitle": "【资讯】《崩坏3》十周年庆典特别节目预告",
+    "tags": [
+      "版本前瞻",
+      "v9.1版本"
+    ],
+    "version": "v9.1",
+    "description": "9月19日本周六晚19:30",
+    "reward": "米游社的直播间页面内设有兑换码一键复制功能，舰长可以便捷地领取特别节目福利"
   }
 ]
