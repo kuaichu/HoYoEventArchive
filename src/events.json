@@ -2309,5 +2309,25 @@
     "version": "v9.1",
     "description": "9月19日本周六晚19:30",
     "reward": "米游社的直播间页面内设有兑换码一键复制功能，舰长可以便捷地领取特别节目福利"
+  },
+  {
+    "id": "bh3-11",
+    "title": "【公告】V9.1时序照新丨新版本内容前瞻",
+    "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_910_1452/index.html",
+    "game": "崩坏3",
+    "gameKey": "bh3",
+    "type": "版本前瞻",
+    "status": "可访问",
+    "date": "2026.09.19",
+    "dateType": "announcement",
+    "sourcePostId": "78268966",
+    "sourcePostTitle": "【公告】V9.1时序照新丨新版本内容前瞻",
+    "tags": [
+      "版本前瞻",
+      "v9.1版本"
+    ],
+    "version": "v9.1",
+    "description": "角色补给时首次十连免费。点击下方链接查看新版本情报吧~",
+    "reward": "奖励，9.1版本期间还将开放更多登录活动，累计登录可领取；周年累消活动即将开放，参与各类补给累计消耗3万水晶，即可领取"
   }
 ]
