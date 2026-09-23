@@ -2367,5 +2367,81 @@
     "version": "v4.6",
     "description": "开拓者好呀~《崩坏：星穹铁道》「月升之前，与兽共舞」前瞻特别节目即将开始，请开拓者在9月20日19点30分准时点击下方链接前往观看。",
     "reward": "在本次节目播送期间，阿姬为开拓者准备了648元现金奖励、；阿姬将从成功参与活动的开拓者中随机选取25名，各获得648元现金奖励*1或；648元现金奖励*5；3、请获得周边奖励的开拓者在系统通知发出后的4个工作日内完成周边收货地址填写，否则将视为放弃奖励；公告】周边奖励地址填写教程；获得现金奖励的开拓者在中奖公示后4个工作日内关注私信，并回复相关收款信息"
+  },
+  {
+    "id": "ys-52",
+    "title": "「朝会」召开，针对死之执政的计划是…？",
+    "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=75da15071f6043b5",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.23",
+    "dateType": "announcement",
+    "sourcePostId": "78341677",
+    "sourcePostTitle": "「朝会」召开，针对死之执政的计划是…？",
+    "tags": [
+      "v7.1版本"
+    ],
+    "version": "v7.1",
+    "description": "暂停的严冬计划、惶惶不安的民众…至冬的黎明仍被深锁在漫天风雪中。"
+  },
+  {
+    "id": "ys-53",
+    "title": "千星之约·奇域创作大赛",
+    "url": "https://act.mihoyo.com/ys/event/e20260923creator/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.23",
+    "dateType": "announcement",
+    "sourcePostId": "78341540",
+    "sourcePostTitle": "「千星之约·奇域创作大赛」活动现已开启！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "本次创作赛活动不设玩法品类与题材限制。在千星沙箱中开启创作之旅并按照参赛规则发布奇域，即有机会竞逐",
+    "reward": "的丰富奖励，优质奇域作品还将获得更多官方宣传资源"
+  },
+  {
+    "id": "ys-54",
+    "title": "旅途回忆 —— 提瓦特回忆征集企划",
+    "url": "https://act.mihoyo.com/ys/community-player-works-upload/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "年度报告",
+    "status": "可访问",
+    "date": "2026.09.21",
+    "dateType": "announcement",
+    "sourcePostId": "78304228",
+    "sourcePostTitle": "「旅途回忆」视频共创活动征集",
+    "tags": [
+      "年度报告",
+      "v6.7版本"
+    ],
+    "version": "v6.7",
+    "description": "六年、七国。不知不觉间，旅行者的足迹已经遍布提瓦特。",
+    "reward": "违反法律法规、用户协议与社区规则的内容，将无法用于领取奖励；10月16日，获奖名单将在审核结束后的10个工作日内公布，请获奖的旅行者及时关注官方信息，并在规定时间内按照获奖公告要求提交奖品收货信息（姓名、收货地址、手机号），逾期视为自动放弃奖励；填写收货信息的行为则视为获奖者授权活动运营方将信息用于奖品通知及寄送，奖品发放将在获奖名单公布后60个工作日内通过邮寄方式完成，请获奖的旅行者耐心等待；本活动可多次投递，但不可重复领取奖励"
+  },
+  {
+    "id": "sr-57",
+    "title": "「真珠」角色绘画征集活动开启！",
+    "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202609031728067124&act_id=ea202609031728067124#/rpg/act",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.23",
+    "dateType": "announcement",
+    "sourcePostId": "78342118",
+    "sourcePostTitle": "「真珠」角色绘画征集活动开启！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "「真珠」主题绘画征集活动现已开启！",
+    "reward": "，以确保星琼奖励的正常发放；※头像挂件奖励将在绘画征集活动获奖结果公示后20个工作日内发放"
   }
 ]
