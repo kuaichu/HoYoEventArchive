@@ -2483,5 +2483,61 @@
     "description": "2026/9/25 12:00-2026/9/27 23:59",
     "startDate": "2026.09.25",
     "endDate": "2026.09.27"
+  },
+  {
+    "id": "ys-56",
+    "title": "「原神」周年拾光册",
+    "url": "https://act.mihoyo.com/ys/event/e20260928-review-kkmxf9/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.28",
+    "dateType": "announcement",
+    "sourcePostId": "78467497",
+    "sourcePostTitle": "【网页活动上线】周年拾光册——与派蒙一起回顾提瓦特之旅吧！",
+    "tags": [
+      "游戏内奖励"
+    ],
+    "version": "待确认",
+    "description": "旅行者好呀~距离我们初次相遇已经过去了六年时光，与旅行者相伴旅行的每一天，派蒙都认真地记在心里哦~",
+    "startDate": "2026.09.28",
+    "endDate": "2026.10.18"
+  },
+  {
+    "id": "ys-57",
+    "title": "「拾音邮局」原神六周年特别公益行动",
+    "url": "https://act.mihoyo.com/ys/event/e20260927ysgy-b998y6/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.27",
+    "dateType": "announcement",
+    "sourcePostId": "78446193",
+    "sourcePostTitle": "「拾音邮局」原神六周年特别公益行动正式开启！",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "待确认",
+    "description": "「拾音邮局」原神六周年特别公益行动正式开启！"
+  },
+  {
+    "id": "bh3-13",
+    "title": "【公告】忆旅的流彩叙映丨完成数据回顾获取水晶等奖励",
+    "url": "https://act.mihoyo.com/bh3/event/e20260928anniversary-khr27n/index.html?game_biz=bh3_cn",
+    "game": "崩坏3",
+    "gameKey": "bh3",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.09.28",
+    "dateType": "announcement",
+    "sourcePostId": "78465974",
+    "sourcePostTitle": "【公告】忆旅的流彩叙映丨完成数据回顾获取水晶等奖励",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "待确认",
+    "description": "「用一帧帧影像，为你记录回忆的绚烂多彩。」"
   }
 ]
