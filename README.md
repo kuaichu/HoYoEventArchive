@@ -2,6 +2,8 @@
 
 米游活动档案馆是一个致力于收录、展示并监测米哈游（miHoYo / HoYoverse）旗下游戏历年网页活动、年度数据报告、限时回归活动与纪念册页面的非官方公益项目。项目支持原神、崩坏：星穹铁道、绝区零和崩坏3四款主流游戏。
 
+线上网站：[hoyo.yeque.top](https://hoyo.yeque.top/)。项目采用静态前端与离线 API 同步脚本，管理后台及其鉴权接口已移除。实现细节见[项目功能与架构文档](PROJECT_DOCUMENTATION.md)。
+
 ---
 
 ## 🌟 核心功能 (Core Features)
@@ -21,7 +23,7 @@
    * 内置实时输入模糊搜索，并在 Banner 底部提供热门搜索标签快捷引导。
 
 4. **状态数据校验与生命周期更新 (Status Validation)**
-   * 提供 [update-statuses.js](file:///s:/Projects/Active/HoYo%20Event%20Archive/scripts/update-statuses.js) 确定性更新脚本。
+   * 提供 [update-statuses.js](scripts/update-statuses.js) 确定性更新脚本。
    * `date` 仅表示展示或公告日期；只有活动提供明确且已过期的 `endDate` 时，脚本才自动标记“已结束”。网页连通性、登录要求和失效状态不再根据活动年龄猜测。
    * 全量事件会在测试和自动提交前检查必填字段、枚举、日期、URL 以及 ID/URL 唯一性。
 
@@ -74,7 +76,7 @@ npm test
 
 ## 📁 实用维护脚本 (Maintenance Scripts)
 
-项目在 [scripts/](file:///s:/Projects/Active/HoYo%20Event%20Archive/scripts/) 目录下提供了一系列易于执行的自动化维护脚本：
+项目在 [scripts/](scripts/) 目录下提供了一系列易于执行的自动化维护脚本：
 
 * **官方新闻 API 同步**：
   ```bash
@@ -112,7 +114,7 @@ npm test
   ```bash
   node scripts/download-official-covers.js
   ```
-  一键重新从 miHoYo 官方 CDN 下载各游戏官方透明 PNG 高精标志与最新静态资产。
+  从脚本中配置的官方地址重新下载四款游戏的默认 Logo 图片；不会扫描官网查找新素材，也不更新活动封面。
 
 * **归档活动官方封面**：
   ```bash
@@ -137,6 +139,8 @@ npm test
   读取活动数据库，利用 Puppeteer 为没有有效归档封面且缺少截图的非失效活动生成 1024×576 缩略图，保存至 `public/images/screenshots/`。已有截图继续作为兜底保留；`--force=活动ID` 可强制重拍。自动维护先归档官方封面，再补截图，并安装中文字库用于截图。
 
 自动维护工作流会在生成数据后运行完整测试和生产构建，只有验证成功才提交到 `main`。Cloudflare Pages 的构建与部署统一由 `.github/workflows/deploy-pages.yml` 执行。
+
+定时同步配置为每天 UTC 00:00、12:00，即北京时间 08:00、20:00，实际启动时间由 GitHub Actions 调度决定。手动推送 `main` 会触发部署工作流；自动同步产生的数据提交则由同步工作流直接调用部署工作流。发布使用 Wrangler 上传 `dist/` 到 Cloudflare Pages，不依赖 Cloudflare 直接连接 GitHub 后自行构建。
 
 ---
 
