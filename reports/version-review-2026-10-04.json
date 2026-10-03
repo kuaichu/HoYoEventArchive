@@ -1,0 +1,335 @@
+{
+  "checkedDate": "2026-10-04",
+  "scope": "既有待确认活动的人工版本归档",
+  "policy": "角色主题活动按对应新角色上线版本关联；无明确主题归属的限时活动按开始时版本区间归档。这两种结论均为来源辅助推断，不宣称活动公告直接给出了版本。通用自动识别规则保持保守，未放开其他活动的日期推断。 十周年签到依据用户确认归入9.1，作为人工确认例外记录。",
+  "network": "本次使用官方新闻Content API与HoYoPlay正式分支接口；未请求米游社帖子接口。原始米游社文章链接仅保留既有出处。",
+  "launcherVersions": {
+    "ys": {
+      "version": "v7.1",
+      "branchVersion": "7.1.0"
+    },
+    "sr": {
+      "version": "v4.6",
+      "branchVersion": "4.6.0"
+    },
+    "zzz": {
+      "version": "v3.2",
+      "branchVersion": "3.2.0"
+    },
+    "bh3": {
+      "version": "v9.1",
+      "branchVersion": "9.1.0"
+    }
+  },
+  "summary": {
+    "pendingBefore": 17,
+    "updated": 17,
+    "pendingAfter": 0
+  },
+  "sources": {
+    "ys-165682": {
+      "gameKey": "ys",
+      "sourceNewsId": "165682",
+      "title": "「无神怜爱的雪国」7.0版本更新说明",
+      "url": "https://ys.mihoyo.com/main/news/detail/165682"
+    },
+    "ys-166392": {
+      "gameKey": "ys",
+      "sourceNewsId": "166392",
+      "title": "「往冥府的安魂歌」7.1版本更新说明",
+      "url": "https://ys.mihoyo.com/main/news/detail/166392"
+    },
+    "sr-165896": {
+      "gameKey": "sr",
+      "sourceNewsId": "165896",
+      "title": "4.5版本「挥掷千星的筹码」版本更新说明",
+      "url": "https://sr.mihoyo.com/news/165896"
+    },
+    "sr-166489": {
+      "gameKey": "sr",
+      "sourceNewsId": "166489",
+      "title": "4.6版本「月升之前，与兽共舞」版本更新说明",
+      "url": "https://sr.mihoyo.com/news/166489"
+    },
+    "zzz-165415": {
+      "gameKey": "zzz",
+      "sourceNewsId": "165415",
+      "title": "3.1版本「漫长的告别」更新公告",
+      "url": "https://zzz.mihoyo.com/news/165415"
+    },
+    "zzz-166026": {
+      "gameKey": "zzz",
+      "sourceNewsId": "166026",
+      "title": "3.2版本「她与她的隐秘往事」更新公告",
+      "url": "https://zzz.mihoyo.com/news/166026"
+    },
+    "bh3-165305": {
+      "gameKey": "bh3",
+      "sourceNewsId": "165305",
+      "title": "《崩坏3》9.0版本维护通知、新活动预告",
+      "url": "https://bh3.mihoyo.com/news/693/165305"
+    },
+    "bh3-166324": {
+      "gameKey": "bh3",
+      "sourceNewsId": "166324",
+      "title": "《崩坏3》9.1版本维护通知、新活动预告",
+      "url": "https://bh3.mihoyo.com/news/693/166324"
+    },
+    "bh3-166078": {
+      "gameKey": "bh3",
+      "sourceNewsId": "166078",
+      "title": "火力全开！银河梦幻擂台！丨参与竞猜获取水晶等奖励",
+      "url": "https://bh3.mihoyo.com/news/693/166078"
+    },
+    "bh3-166494": {
+      "gameKey": "bh3",
+      "sourceNewsId": "166494",
+      "title": "忆旅的流彩叙映丨完成数据回顾获取水晶等奖励",
+      "url": "https://bh3.mihoyo.com/news/693/166494"
+    },
+    "zzz-166028": {
+      "gameKey": "zzz",
+      "sourceNewsId": "166028",
+      "title": "🎁维尔乌姆假日相册",
+      "url": "https://zzz.mihoyo.com/news/166028"
+    },
+    "ys-166508": {
+      "gameKey": "ys",
+      "sourceNewsId": "166508",
+      "title": "【网页活动上线】周年拾光册——与派蒙一起回顾提瓦特之旅吧！",
+      "url": "https://ys.mihoyo.com/main/news/detail/166508"
+    }
+  },
+  "records": [
+    {
+      "id": "ys-43",
+      "title": "【有奖活动】「翾风回雪」奥黛塔绘画征集活动开启！",
+      "before": "待确认",
+      "after": "v7.0",
+      "basis": "character-release",
+      "referenceDate": "2026.08.03",
+      "reason": "征集对象为新角色奥黛塔；7.0正式更新说明的全新角色章节收录该角色。活动提前于8月3日开启，不能按当日旧版本6.7归类。",
+      "sources": [
+        "ys-165682"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/77160485"
+    },
+    {
+      "id": "ys-50",
+      "title": "【有奖活动】「幽歌萦渊」沃雅妮莎绘画征集活动开启！",
+      "before": "待确认",
+      "after": "v7.1",
+      "basis": "character-release",
+      "referenceDate": "2026.09.15",
+      "reason": "征集对象为新角色沃雅妮莎；7.1正式更新说明的全新角色章节收录该角色。活动提前于9月15日开启。",
+      "sources": [
+        "ys-166392"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/78179678"
+    },
+    {
+      "id": "ys-51",
+      "title": "【有奖活动】「雪宴之锋」薇斯纳绘画征集活动开启！",
+      "before": "待确认",
+      "after": "v7.1",
+      "basis": "character-release",
+      "referenceDate": "2026.09.14",
+      "reason": "征集对象为新角色薇斯纳；7.1正式更新说明的全新角色章节收录该角色。活动提前于9月14日开启。",
+      "sources": [
+        "ys-166392"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/78159165"
+    },
+    {
+      "id": "sr-52",
+      "title": "「知更鸟•晴歌」角色绘画征集活动开启！",
+      "before": "待确认",
+      "after": "v4.5",
+      "basis": "character-release",
+      "referenceDate": "2026.08.19",
+      "reason": "征集对象为知更鸟•晴歌；4.5正式更新说明的全新角色章节收录该角色。活动提前于8月19日开启，不能按当日4.4归类。",
+      "sources": [
+        "sr-165896"
+      ],
+      "activitySource": "https://www.miyoushe.com/sr/article/77595646"
+    },
+    {
+      "id": "sr-53",
+      "title": "「砂金•戏浪」角色绘画征集活动开启！",
+      "before": "待确认",
+      "after": "v4.5",
+      "basis": "character-release",
+      "referenceDate": "2026.09.04",
+      "reason": "征集对象为砂金•戏浪；4.5正式更新说明的全新角色章节收录该角色。",
+      "sources": [
+        "sr-165896"
+      ],
+      "activitySource": "https://www.miyoushe.com/sr/article/77971226"
+    },
+    {
+      "id": "sr-57",
+      "title": "「真珠」角色绘画征集活动开启！",
+      "before": "待确认",
+      "after": "v4.6",
+      "basis": "character-release",
+      "referenceDate": "2026.09.23",
+      "reason": "征集对象为新角色真珠；4.6正式更新说明的全新角色章节收录该角色。活动提前于9月23日开启，不能按当日4.5归类。",
+      "sources": [
+        "sr-166489"
+      ],
+      "activitySource": "https://www.miyoushe.com/sr/article/78342118"
+    },
+    {
+      "id": "zzz-16",
+      "title": "维尔乌姆假日相册",
+      "before": "待确认",
+      "after": "v3.2",
+      "basis": "themed-release",
+      "referenceDate": "2026.09.09",
+      "reason": "活动公告为克拉蕾和洛克茜规划休假；3.2正式更新公告将两者列为全新代理人。依主题归入3.2，未用9月9日维护当天的日期推断。",
+      "sources": [
+        "zzz-166028",
+        "zzz-166026"
+      ],
+      "activitySource": "https://www.miyoushe.com/zzz/article/78058511"
+    },
+    {
+      "id": "ys-47",
+      "title": "米游币抽抽乐-原神专场现已开启！",
+      "before": "待确认",
+      "after": "v7.0",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.08.14",
+      "reason": "抽抽乐8月14日开始，位于8月12日7.0更新后、9月23日7.1更新前；按活动开始时版本归档，并非公告直接声明版本。",
+      "sources": [
+        "ys-165682",
+        "ys-166392"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/77447225"
+    },
+    {
+      "id": "ys-55",
+      "title": "米游币抽抽乐-原神专场现已开启！",
+      "before": "待确认",
+      "after": "v7.1",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.09.25",
+      "reason": "抽抽乐9月25日开始，位于9月23日7.1更新后；正式分支与已生效公告共同确认当前7.1。按开始时版本归档。",
+      "sources": [
+        "ys-166392"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/78396032"
+    },
+    {
+      "id": "sr-54",
+      "title": "米游币抽抽乐-星穹铁道专场现已开启！",
+      "before": "待确认",
+      "after": "v4.5",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.09.04",
+      "reason": "抽抽乐9月4日开始，位于8月26日4.5更新后、9月28日4.6更新前；按开始时版本归档。",
+      "sources": [
+        "sr-165896",
+        "sr-166489"
+      ],
+      "activitySource": "https://www.miyoushe.com/sr/article/77969673"
+    },
+    {
+      "id": "zzz-15",
+      "title": "米游币抽抽乐-绝区零专场现已开启！",
+      "before": "待确认",
+      "after": "v3.1",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.08.07",
+      "reason": "抽抽乐8月7日开始，位于7月29日3.1更新后、9月9日3.2更新前；按开始时版本归档。",
+      "sources": [
+        "zzz-165415",
+        "zzz-166026"
+      ],
+      "activitySource": "https://www.miyoushe.com/zzz/article/77256044"
+    },
+    {
+      "id": "ys-56",
+      "title": "「原神」周年拾光册",
+      "before": "待确认",
+      "after": "v7.1",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.09.28",
+      "reason": "官网活动公告明确周年拾光册9月28日开始，位于9月23日7.1更新后。按开始时版本归档。",
+      "sources": [
+        "ys-166508",
+        "ys-166392"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/78467497"
+    },
+    {
+      "id": "ys-57",
+      "title": "「拾音邮局」原神六周年特别公益行动",
+      "before": "待确认",
+      "after": "v7.1",
+      "basis": "announcement-date-interval",
+      "referenceDate": "2026.09.27",
+      "reason": "已有经人工复核记录的正式开启日期为9月27日，位于7.1更新后；按正式开启时版本归档。官网9月13日预告未给出开始日期，不用预告发布日期替代。",
+      "sources": [
+        "ys-166392"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/78446193"
+    },
+    {
+      "id": "ys-58",
+      "title": "「绮星盛会」——《原神》千星奇域网页活动上线！",
+      "before": "待确认",
+      "after": "v7.1",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.10.01",
+      "reason": "已有活动记录的开始日期为10月1日，位于7.1更新后。按开始时版本归档；未将当前官网未匹配到的原始米游社公告视作本次重新核验的来源。",
+      "sources": [
+        "ys-166392"
+      ],
+      "activitySource": "https://www.miyoushe.com/ys/article/78607067"
+    },
+    {
+      "id": "bh3-9",
+      "title": "【公告】火力全开！银河梦幻擂台！丨参与竞猜获取水晶等奖励",
+      "before": "待确认",
+      "after": "v9.0",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.09.14",
+      "reason": "官网活动时间为9月14日10:00至9月24日04:00，全程早于9月24日06:00的9.1维护；按活动期间版本归档。",
+      "sources": [
+        "bh3-166078",
+        "bh3-165305",
+        "bh3-166324"
+      ],
+      "activitySource": "https://www.miyoushe.com/bh3/article/78157203"
+    },
+    {
+      "id": "bh3-13",
+      "title": "【公告】忆旅的流彩叙映丨完成数据回顾获取水晶等奖励",
+      "before": "待确认",
+      "after": "v9.1",
+      "basis": "start-date-interval",
+      "referenceDate": "2026.09.28",
+      "reason": "官网活动9月28日10:00开始，晚于9月24日9.1维护；按开始时版本归档。活动结束跨版本，不因此改成结束时版本。",
+      "sources": [
+        "bh3-166494",
+        "bh3-166324"
+      ],
+      "activitySource": "https://www.miyoushe.com/bh3/article/78465974"
+    },
+    {
+      "id": "bh3-12",
+      "title": "【崩坏3】每日签到",
+      "before": "待确认",
+      "after": "v9.1",
+      "basis": "user-confirmed",
+      "referenceDate": "2026.09.24",
+      "reason": "用户确认十周年庆典特别签到按9.1版本归档。开始日与9.1维护同日；本次采用用户确认，不将其记录为官网活动公告明确声明的版本。",
+      "sources": [
+        "bh3-166324"
+      ],
+      "activitySource": "https://www.miyoushe.com/bh3/article/78369082"
+    }
+  ],
+  "remaining": []
+}
