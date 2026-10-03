@@ -431,7 +431,8 @@ function saveAdminEvent() {
         date,
         tags,
         version: version || '待确认',
-        description
+        description,
+        ...(description !== (currentEvent.description || '') ? { descriptionSource: 'manual' } : {})
       }, currentEvent);
   } else {
     const newId = nextEventId(gameKey, eventsData, readLatestOverlay());
@@ -447,7 +448,8 @@ function saveAdminEvent() {
       date,
       tags,
       version: version || '待确认',
-      description
+      description,
+      descriptionSource: 'manual'
     });
   }
 

@@ -14,6 +14,25 @@ const SOURCE = 'https://upload-bbs.miyoushe.com/cover.png';
 const lookupImpl = async () => [{ address: '8.8.8.8', family: 4 }];
 const quietLogger = { log() {}, warn() {} };
 const imageResponse = () => new Response(PNG, { headers: { 'content-type': 'image/png' } });
+
+test('complete PNGs with official trailing watermarks remain valid', () => {
+  assert.equal(detectImageExtension(Buffer.concat([PNG, Buffer.from('mi_yiwen.yang')])), 'png');
+  assert.equal(detectImageExtension(PNG.subarray(0, PNG.length - 3)), null);
+  const broken = Buffer.from(PNG);
+  broken.writeUInt32BE(0xffffffff, 8);
+  assert.equal(detectImageExtension(broken), null);
+});
+
+test('agreement pages cannot acquire unrelated announcement artwork during backfills', async () => {
+  const event = { id: 'ys-34', title: '千星奇域创作者中心服务协议',
+    url: 'https://act.mihoyo.com/miliastra_wonderland/agreement?id=156266',
+    sourcePostId: '123', coverSourceUrl: SOURCE };
+  const result = await updateEventCovers({ events: [event], force: true,
+    logger: quietLogger, fetchImpl: async () => { throw new Error('A linked agreement must not fetch activity covers'); } });
+  assert.deepEqual(result.events, [event]);
+  assert.equal(result.summary.skipped, 1);
+  assert.equal(result.summary.requests, 0);
+});
 async function temporaryDirectory(t) {
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), 'hoyo-covers-'));
   t.after(() => fs.rm(directory, { recursive: true, force: true }));

@@ -1,0 +1,1394 @@
+{
+  "checkedDate": "2026-10-03",
+  "summary": {
+    "existingStarRailRecords": 53,
+    "officialNewsScanned": 820,
+    "historicalUrls": 47,
+    "historicalHttp200": 22,
+    "historicalHttp404": 25,
+    "recentAdditionalUrls": 5,
+    "historicalCategories": {
+      "AR拍照": 1,
+      "其他网页企划": 4,
+      "版本专题": 23,
+      "平台H5": 3,
+      "音乐H5": 12,
+      "回归活动": 4
+    }
+  },
+  "notes": [
+    "本清单尚未合并进src/events.json；发布状态以GitHub Actions部署记录为准。",
+    "公告日期不等于活动开始日期。",
+    "HTTP 200仅表示本次请求成功，未验证登录、互动、奖励领取；404入口可作为失效历史档案保存。",
+    "official表示已读取官网公告或官方活动页；cached-announcement表示入口由参考项目公告缓存发现，原公告详情尚需进一步复核。",
+    "未把国服/国际服镜像、已收录活动的重定向别名、云游戏或常驻工具算作新增独立活动。"
+  ],
+  "historicalCandidates": [
+    {
+      "url": "https://webstatic.mihoyo.com/sr/event/march7thARinvitation/index.html?game_biz=hkrpg_cn&lang=zh-cn",
+      "sources": [
+        {
+          "id": "21155998",
+          "title": "【已发奖】「开拓！ 新地点的冒险」：AR拍照H5活动开启",
+          "date": "2022-04-28T04:05:02.000Z",
+          "source": "https://www.miyoushe.com/sr/article/21155998",
+          "mode": "reference-cache"
+        },
+        {
+          "title": "官方AR拍照H5页面",
+          "date": "2022-04-28",
+          "source": "https://webstatic.mihoyo.com/sr/event/march7thARinvitation/index.html?game_biz=hkrpg_cn&lang=zh-cn",
+          "mode": "official-activity-page"
+        }
+      ],
+      "confidence": "official",
+      "title": "【已发奖】「开拓！ 新地点的冒险」：AR拍照H5活动开启",
+      "date": "2022-04-28",
+      "category": "AR拍照",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://webstatic.mihoyo.com/sr/event/march7thARinvitation/index.html?game_biz=hkrpg_cn&lang=zh-cn",
+        "contentType": "text/html; charset=utf-8",
+        "title": "「开拓！ 新地点的冒险」——《崩坏：星穹铁道》AR拍照H5"
+      }
+    },
+    {
+      "url": "https://webstatic.mihoyo.com/hkrpg/event/puzzle/pz_jM954kKicm/index.html?game_biz=hkrpg_cn",
+      "sources": [
+        {
+          "id": 111257,
+          "title": "1.0版本「通往群星的轨道」激励计划现已开启",
+          "date": "2023-04-26 11:00:00",
+          "source": "https://sr.mihoyo.com/news/111257"
+        }
+      ],
+      "confidence": "official",
+      "title": "1.0版本「通往群星的轨道」激励计划现已开启",
+      "date": "2023-04-26",
+      "category": "其他网页企划",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://webstatic.mihoyo.com/hkrpg/event/puzzle/pz_jM954kKicm/index.html?game_biz=hkrpg_cn",
+        "contentType": "text/html; charset=utf-8",
+        "title": "「通往群星的轨道」创作征集活动"
+      }
+    },
+    {
+      "url": "https://webstatic.mihoyo.com/sr/event/e20230313version-4j4a57/index.html?game_biz=hkrpg_cn",
+      "sources": [
+        {
+          "id": 111770,
+          "title": "1.1版本更新维护预告",
+          "date": "2023-06-05 12:00:00",
+          "source": "https://sr.mihoyo.com/news/111770"
+        },
+        {
+          "id": "39755780",
+          "title": "《崩坏：星穹铁道》1.1版本专题展示页",
+          "date": "2023-05-27T04:10:02.000Z",
+          "source": "https://www.miyoushe.com/sr/article/39755780",
+          "mode": "reference-cache"
+        }
+      ],
+      "confidence": "official",
+      "title": "《崩坏：星穹铁道》1.1版本专题展示页",
+      "date": "2023-05-27",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20230708version-8138dd/index.html",
+      "sources": [
+        {
+          "id": 112319,
+          "title": "1.2版本更新维护预告",
+          "date": "2023-07-15 12:30:00",
+          "source": "https://sr.mihoyo.com/news/112319"
+        },
+        {
+          "id": 112227,
+          "title": "《崩坏：星穹铁道》1.2版本专题展示页",
+          "date": "2023-07-08 21:00:00",
+          "source": "https://sr.mihoyo.com/news/112227"
+        }
+      ],
+      "confidence": "official",
+      "title": "《崩坏：星穹铁道》1.2版本专题展示页",
+      "date": "2023-07-08",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20230818version-u88u8o/index.html",
+      "sources": [
+        {
+          "id": 112757,
+          "title": "《崩坏：星穹铁道》1.3版本专题展示页",
+          "date": "2023-08-18 20:30:00",
+          "source": "https://sr.mihoyo.com/news/112757"
+        }
+      ],
+      "confidence": "official",
+      "title": "《崩坏：星穹铁道》1.3版本专题展示页",
+      "date": "2023-08-18",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://jianye.hd.weibo.com/site/minisite/20230821mihayou/",
+      "sources": [
+        {
+          "id": 112849,
+          "title": "1.3版本「天镜映劫尘」激励计划现已开启",
+          "date": "2023-08-30 11:00:00",
+          "source": "https://sr.mihoyo.com/news/112849"
+        }
+      ],
+      "confidence": "official",
+      "title": "1.3版本「天镜映劫尘」激励计划现已开启",
+      "date": "2023-08-30",
+      "category": "平台H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://jianye.hd.weibo.com/site/minisite/20230821mihayou/",
+        "contentType": "text/html",
+        "title": "【星穹铁道】天镜映劫尘"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20230929version-rpg/index.html",
+      "sources": [
+        {
+          "id": 113218,
+          "title": "《崩坏：星穹铁道》1.4版本专题展示页",
+          "date": "2023-09-29 20:30:00",
+          "source": "https://sr.mihoyo.com/news/113218"
+        }
+      ],
+      "confidence": "official",
+      "title": "《崩坏：星穹铁道》1.4版本专题展示页",
+      "date": "2023-09-29",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://jianye.hd.weibo.com/site/minisite/20231011mihayou/",
+      "sources": [
+        {
+          "id": 113284,
+          "title": "1.4版本「冬梦激醒」激励计划现已开启",
+          "date": "2023-10-11 11:00:00",
+          "source": "https://sr.mihoyo.com/news/113284"
+        }
+      ],
+      "confidence": "official",
+      "title": "1.4版本「冬梦激醒」激励计划现已开启",
+      "date": "2023-10-11",
+      "category": "平台H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://jianye.hd.weibo.com/site/minisite/20231011mihayou/",
+        "contentType": "text/html",
+        "title": "【星穹铁道】冬梦激醒"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/pz_sMdfP2DrUb/index.html",
+      "sources": [
+        {
+          "id": 113425,
+          "title": "「《崩坏：星穹铁道》全新专辑上线",
+          "date": "2023-11-03 12:00:00",
+          "source": "https://sr.mihoyo.com/news/113425"
+        }
+      ],
+      "confidence": "official",
+      "title": "「行于命途Vol.1」音乐专辑宣传H5",
+      "date": "2023-11-03",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/puzzle/hkrpg/pz_sMdfP2DrUb/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": "《崩坏：星穹铁道》全新PV音乐专辑正式上线"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20231018version-5kx3qh/index.html",
+      "sources": [
+        {
+          "id": "45094191",
+          "title": "1.5版本「迷离幻夜谈」专题展示页",
+          "date": "2023-11-03T12:35:07.000Z",
+          "source": "https://www.miyoushe.com/sr/article/45094191",
+          "mode": "reference-cache"
+        }
+      ],
+      "confidence": "cached-announcement",
+      "title": "1.5版本「迷离幻夜谈」专题展示页",
+      "date": "2023-11-03",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20231215version-92kbcf/index.html",
+      "sources": [
+        {
+          "id": 114068,
+          "title": " 1.6版本「庸与神的冠冕」专题展示页",
+          "date": "2023-12-15 20:35:00",
+          "source": "https://sr.mihoyo.com/news/114068"
+        }
+      ],
+      "confidence": "official",
+      "title": "1.6版本「庸与神的冠冕」专题展示页",
+      "date": "2023-12-15",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240126version-pp3ay8/index.html",
+      "sources": [
+        {
+          "id": 122286,
+          "title": "2.0版本更新维护预告",
+          "date": "2024-02-03 13:30:00",
+          "source": "https://sr.mihoyo.com/news/122286"
+        },
+        {
+          "id": 122068,
+          "title": " 2.0版本「假如在午夜入梦」专题展示页",
+          "date": "2024-01-26 20:30:00",
+          "source": "https://sr.mihoyo.com/news/122068"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.0版本「假如在午夜入梦」专题展示页",
+      "date": "2024-01-26",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240127painting-ce168/index.html",
+      "sources": [
+        {
+          "id": 123094,
+          "title": "「逐梦大都绘」匹诺康尼主题绘画大赛总决选投票开始！",
+          "date": "2024-04-03 12:00:00",
+          "source": "https://sr.mihoyo.com/news/123094"
+        },
+        {
+          "id": 122069,
+          "title": "「逐梦大都绘」匹诺康尼主题同人绘画大赛开启！",
+          "date": "2024-01-27 11:30:00",
+          "source": "https://sr.mihoyo.com/news/122069"
+        }
+      ],
+      "confidence": "official",
+      "title": "「逐梦大都绘」匹诺康尼主题同人绘画大赛开启！",
+      "date": "2024-01-27",
+      "category": "其他网页企划",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/sr/event/e20240127painting-ce168/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": "[逐梦大都绘]匹诺康尼主题绘画大赛进行中！"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/j7-Q0lwKPHC9GI0e/index.html",
+      "sources": [
+        {
+          "id": 122070,
+          "title": "匹诺康尼全新主题曲上线",
+          "date": "2024-01-27 12:00:00",
+          "source": "https://sr.mihoyo.com/news/122070"
+        }
+      ],
+      "confidence": "official",
+      "title": "匹诺康尼全新主题曲上线",
+      "date": "2024-01-27",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/j7-Q0lwKPHC9GI0e/index.html",
+        "contentType": "text/html",
+        "title": "【崩坏：星穹铁道】单曲上线"
+      }
+    },
+    {
+      "url": "https://jianye.hd.weibo.com/site/minisite/20240206benghuai/",
+      "sources": [
+        {
+          "title": "「假如在午夜入梦」微博H5",
+          "date": "2024-02-06",
+          "source": "https://jianye.hd.weibo.com/site/minisite/20240206benghuai/"
+        }
+      ],
+      "confidence": "official",
+      "title": "「假如在午夜入梦」微博H5",
+      "date": "2024-02-06",
+      "category": "平台H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://jianye.hd.weibo.com/site/minisite/20240206benghuai/",
+        "contentType": "text/html",
+        "title": "【星穹铁道】假如在午夜入梦"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240316version-hyue7h/index.html",
+      "sources": [
+        {
+          "id": 122980,
+          "title": "2.1版本更新维护预告",
+          "date": "2024-03-24 13:00:00",
+          "source": "https://sr.mihoyo.com/news/122980"
+        },
+        {
+          "id": 122879,
+          "title": "2.1版本「狂热奔向深渊」专题展示页",
+          "date": "2024-03-16 21:05:00",
+          "source": "https://sr.mihoyo.com/news/122879"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.1版本「狂热奔向深渊」专题展示页",
+      "date": "2024-03-16",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240222rpg-mys/index.html",
+      "sources": [
+        {
+          "id": "50563454",
+          "title": "【已开奖】「周年庆典之约」网页活动开启，总计15万张月卡等您",
+          "date": "2024-03-22T04:00:17.000Z",
+          "source": "https://www.miyoushe.com/sr/article/50563454",
+          "mode": "reference-cache"
+        }
+      ],
+      "confidence": "cached-announcement",
+      "title": "【已开奖】「周年庆典之约」网页活动开启，总计15万张月卡等您",
+      "date": "2024-03-22",
+      "category": "其他网页企划",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/sr/event/e20240222rpg-mys/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": ""
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/iP5ClidRff79JX4A/index.html",
+      "sources": [
+        {
+          "id": 123201,
+          "title": "《行于命途2》全新PV音乐专辑上线",
+          "date": "2024-04-13 12:30:00",
+          "source": "https://sr.mihoyo.com/news/123201"
+        }
+      ],
+      "confidence": "official",
+      "title": "《行于命途2》全新PV音乐专辑上线",
+      "date": "2024-04-13",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/iP5ClidRff79JX4A/index.html",
+        "contentType": "text/html",
+        "title": "崩坏：星穹铁道音乐专辑上线"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240426version-48v1wy/index.html",
+      "sources": [
+        {
+          "id": 123562,
+          "title": "2.2版本更新维护预告",
+          "date": "2024-05-05 13:00:00",
+          "source": "https://sr.mihoyo.com/news/123562"
+        },
+        {
+          "id": 123477,
+          "title": "2.2版本「等醒来再哭泣」专题展示页",
+          "date": "2024-04-26 20:35:00",
+          "source": "https://sr.mihoyo.com/news/123477"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.2版本「等醒来再哭泣」专题展示页",
+      "date": "2024-04-26",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/IoI3NCtmzLJj3F9J/index.html",
+      "sources": [
+        {
+          "id": 123664,
+          "title": "知更鸟全新专辑《空气蛹》活动上线",
+          "date": "2024-05-09 12:45:00",
+          "source": "https://sr.mihoyo.com/news/123664"
+        }
+      ],
+      "confidence": "official",
+      "title": "知更鸟全新专辑《空气蛹》活动上线",
+      "date": "2024-05-09",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/IoI3NCtmzLJj3F9J/index.html",
+        "contentType": "text/html",
+        "title": "崩坏：星穹铁道音乐专辑上线"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240607version-qf68ql/index.html",
+      "sources": [
+        {
+          "id": 124141,
+          "title": "2.3版本更新维护预告",
+          "date": "2024-06-16 12:00:00",
+          "source": "https://sr.mihoyo.com/news/124141"
+        },
+        {
+          "id": 124067,
+          "title": "2.3版本「再见，匹诺康尼」专题展示页",
+          "date": "2024-06-07 20:30:00",
+          "source": "https://sr.mihoyo.com/news/124067"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.3版本「再见，匹诺康尼」专题展示页",
+      "date": "2024-06-07",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/2BgyRPt7BEP35_Z8/index.html",
+      "sources": [
+        {
+          "id": 124218,
+          "title": "知更鸟全新单曲&匹诺康尼全新音乐H5正式上线",
+          "date": "2024-06-22 12:30:00",
+          "source": "https://sr.mihoyo.com/news/124218"
+        }
+      ],
+      "confidence": "official",
+      "title": "知更鸟全新单曲&匹诺康尼全新音乐H5正式上线",
+      "date": "2024-06-22",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/2BgyRPt7BEP35_Z8/index.html",
+        "contentType": "text/html",
+        "title": "崩坏：星穹铁道全新单曲上线"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240719version-37c63r/index.html",
+      "sources": [
+        {
+          "id": 125008,
+          "title": "2.4版本更新维护预告",
+          "date": "2024-07-28 12:00:00",
+          "source": "https://sr.mihoyo.com/news/125008"
+        },
+        {
+          "id": 124905,
+          "title": "2.4版本「明霄竞武试锋芒」专题展示页\t\t\t\t",
+          "date": "2024-07-19 20:30:00",
+          "source": "https://sr.mihoyo.com/news/124905"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.4版本「明霄竞武试锋芒」专题展示页",
+      "date": "2024-07-19",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240830version-2zj3e2/index.html",
+      "sources": [
+        {
+          "id": 125750,
+          "title": "2.5版本更新维护预告",
+          "date": "2024-09-08 13:30:00",
+          "source": "https://sr.mihoyo.com/news/125750"
+        },
+        {
+          "id": 125608,
+          "title": "2.5版本「碧羽飞黄射天狼」专题展示页",
+          "date": "2024-08-30 20:40:00",
+          "source": "https://sr.mihoyo.com/news/125608"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.5版本「碧羽飞黄射天狼」专题展示页",
+      "date": "2024-08-30",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20240910reflow-k29l1n/index.html",
+      "sources": [
+        {
+          "id": "57487875",
+          "title": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+          "date": "2024-09-10T04:30:10.000Z",
+          "source": "https://www.miyoushe.com/sr/article/57487875",
+          "mode": "reference-cache"
+        }
+      ],
+      "confidence": "cached-announcement",
+      "title": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+      "date": "2024-09-10",
+      "category": "回归活动",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/YqOJ6szRfknOVHIa/index.html",
+      "sources": [
+        {
+          "id": 126121,
+          "title": "《崩坏：星穹铁道》全新专辑上线",
+          "date": "2024-09-27 15:00:00",
+          "source": "https://sr.mihoyo.com/news/126121"
+        }
+      ],
+      "confidence": "official",
+      "title": "《崩坏：星穹铁道》全新专辑上线",
+      "date": "2024-09-27",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/YqOJ6szRfknOVHIa/index.html",
+        "contentType": "text/html",
+        "title": "崩坏：星穹铁道全新PV音乐专辑上线"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20241011version-yjlwks/index.html",
+      "sources": [
+        {
+          "id": 126514,
+          "title": "2.6版本更新维护预告",
+          "date": "2024-10-20 13:00:00",
+          "source": "https://sr.mihoyo.com/news/126514"
+        },
+        {
+          "id": 126365,
+          "title": "2.6版本「毗乃昆尼末法世记」专题展示页",
+          "date": "2024-10-11 20:30:00",
+          "source": "https://sr.mihoyo.com/news/126365"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.6版本「毗乃昆尼末法世记」专题展示页",
+      "date": "2024-10-11",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20241012dlc-xqgvp8/index.html",
+      "sources": [
+        {
+          "id": 126366,
+          "title": "「模拟宇宙：不可知域」专题展示页现已上线",
+          "date": "2024-10-12 12:00:00",
+          "source": "https://sr.mihoyo.com/news/126366"
+        }
+      ],
+      "confidence": "official",
+      "title": "「模拟宇宙：不可知域」专题展示页现已上线",
+      "date": "2024-10-12",
+      "category": "其他网页企划",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/sr/event/e20241012dlc-xqgvp8/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": "「模拟宇宙：不可知域」专题展示页"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/gJzXyqRwX6Rm-hna/index.html",
+      "sources": [
+        {
+          "id": 126563,
+          "title": "「不乱不破」乱破PV音乐宣传H5正式上线",
+          "date": "2024-10-23 12:30:00",
+          "source": "https://sr.mihoyo.com/news/126563"
+        }
+      ],
+      "confidence": "official",
+      "title": "「不乱不破」乱破PV音乐宣传H5正式上线",
+      "date": "2024-10-23",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/gJzXyqRwX6Rm-hna/index.html",
+        "contentType": "text/html",
+        "title": "崩坏：星穹铁道全新PV音乐专辑上线"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20241122version-xuj19x/index.html",
+      "sources": [
+        {
+          "id": 127202,
+          "title": "2.7版本更新维护预告",
+          "date": "2024-12-01 14:30:00",
+          "source": "https://sr.mihoyo.com/news/127202"
+        },
+        {
+          "id": 127080,
+          "title": "2.7版本「在第八日启程」专题展示页",
+          "date": "2024-11-22 20:30:00",
+          "source": "https://sr.mihoyo.com/news/127080"
+        }
+      ],
+      "confidence": "official",
+      "title": "2.7版本「在第八日启程」专题展示页",
+      "date": "2024-11-22",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20241204reflow-o7nnlf/index.html",
+      "sources": [
+        {
+          "id": "59890477",
+          "title": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+          "date": "2024-12-04T04:30:11.000Z",
+          "source": "https://www.miyoushe.com/sr/article/59890477",
+          "mode": "reference-cache"
+        },
+        {
+          "title": "「重返群星之旅」2.7回归网页活动",
+          "date": "2024-12-04",
+          "source": "https://www.taptap.cn/moment/613324671827313118"
+        }
+      ],
+      "confidence": "official",
+      "title": "「重返群星之旅」2.7回归网页活动",
+      "date": "2024-12-04",
+      "category": "回归活动",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20250101version-saokss/index.html",
+      "sources": [
+        {
+          "id": 127946,
+          "title": "3.0版本更新维护预告",
+          "date": "2025-01-12 13:00:00",
+          "source": "https://sr.mihoyo.com/news/127946"
+        },
+        {
+          "id": 127793,
+          "title": "3.0版本「再创世的凯歌」专题展示页",
+          "date": "2025-01-01 21:30:00",
+          "source": "https://sr.mihoyo.com/news/127793"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.0版本「再创世的凯歌」专题展示页",
+      "date": "2025-01-01",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/o0PerK9lnOKfUVWw/index.html?keep_cid=1",
+      "sources": [
+        {
+          "id": 127826,
+          "title": "听歌领150星琼！翁法罗斯主题曲《何者》音乐活动已上线！",
+          "date": "2025-01-02 12:00:00",
+          "source": "https://sr.mihoyo.com/news/127826"
+        }
+      ],
+      "confidence": "official",
+      "title": "听歌领150星琼！翁法罗斯主题曲《何者》音乐活动已上线！",
+      "date": "2025-01-02",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/o0PerK9lnOKfUVWw/index.html?keep_cid=1",
+        "contentType": "text/html",
+        "title": "QQ音乐丨崩坏：星穹铁道《何者》限定活动"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20250115reflow-634x03/index.html",
+      "sources": [
+        {
+          "id": "61062662",
+          "title": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+          "date": "2025-01-15T04:30:11.000Z",
+          "source": "https://www.miyoushe.com/sr/article/61062662",
+          "mode": "reference-cache"
+        }
+      ],
+      "confidence": "cached-announcement",
+      "title": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+      "date": "2025-01-15",
+      "category": "回归活动",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/sr/event/e20250115reflow-634x03/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": "《崩坏：星穹铁道》「重返群星之旅」回归网页活动现已开启！"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20250214version-833ooe/index.html",
+      "sources": [
+        {
+          "id": 154447,
+          "title": "3.1版本预下载&更新预告",
+          "date": "2025-02-24 14:30:00",
+          "source": "https://sr.mihoyo.com/news/154447"
+        },
+        {
+          "id": 154373,
+          "title": "3.1版本「门扉之启，王座之终」专题展示页",
+          "date": "2025-02-14 20:40:00",
+          "source": "https://sr.mihoyo.com/news/154373"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.1版本「门扉之启，王座之终」专题展示页",
+      "date": "2025-02-14",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20250328version-ebbbcb/index.html",
+      "sources": [
+        {
+          "id": 155376,
+          "title": "3.2版本预下载&更新预告",
+          "date": "2025-04-07 14:30:00",
+          "source": "https://sr.mihoyo.com/news/155376"
+        },
+        {
+          "id": 155262,
+          "title": "3.2版本「走过安眠地的花丛」专题展示页",
+          "date": "2025-03-28 20:50:00",
+          "source": "https://sr.mihoyo.com/news/155262"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.2版本「走过安眠地的花丛」专题展示页",
+      "date": "2025-03-28",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/t7XeM42JMwvQ7f5_/index.html?keep_cid=1",
+      "sources": [
+        {
+          "id": 155686,
+          "title": "听歌领80星琼！星穹铁道新歌《不虚此行》已上线音乐平台",
+          "date": "2025-04-27 14:30:00",
+          "source": "https://sr.mihoyo.com/news/155686"
+        }
+      ],
+      "confidence": "official",
+      "title": "听歌领80星琼！星穹铁道新歌《不虚此行》已上线音乐平台",
+      "date": "2025-04-27",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/t7XeM42JMwvQ7f5_/index.html?keep_cid=1",
+        "contentType": "text/html",
+        "title": "QQ音乐丨《崩坏：星穹铁道》两周年限定活动"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20250509version-kvx5ju/index.html",
+      "sources": [
+        {
+          "id": 155959,
+          "title": "3.3版本预下载&更新预告",
+          "date": "2025-05-19 14:30:00",
+          "source": "https://sr.mihoyo.com/news/155959"
+        },
+        {
+          "id": 155860,
+          "title": "3.3版本「在黎明升起时坠落」专题展示页",
+          "date": "2025-05-09 20:30:00",
+          "source": "https://sr.mihoyo.com/news/155860"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.3版本「在黎明升起时坠落」专题展示页",
+      "date": "2025-05-09",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/I8_vlyl6ueLc8TTb/index.html?keep_cid=1",
+      "sources": [
+        {
+          "id": 156050,
+          "title": "歌曲「拂晓 Proi Proi」音乐活动正式上线",
+          "date": "2025-05-24 13:00:00",
+          "source": "https://sr.mihoyo.com/news/156050"
+        }
+      ],
+      "confidence": "official",
+      "title": "歌曲「拂晓 Proi Proi」音乐活动正式上线",
+      "date": "2025-05-24",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/I8_vlyl6ueLc8TTb/index.html?keep_cid=1",
+        "contentType": "text/html",
+        "title": "QQ音乐丨《崩坏：星穹铁道》限定活动"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20250620version-1rnehr/index.html",
+      "sources": [
+        {
+          "id": 157424,
+          "title": "3.4版本预下载&更新预告",
+          "date": "2025-06-30 14:30:00",
+          "source": "https://sr.mihoyo.com/news/157424"
+        },
+        {
+          "id": 157215,
+          "title": "3.4版本「因为太阳将要毁伤」专题展示页",
+          "date": "2025-06-20 20:50:00",
+          "source": "https://sr.mihoyo.com/news/157215"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.4版本「因为太阳将要毁伤」专题展示页",
+      "date": "2025-06-20",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/cT9VYHpUl9iJIg_R/index.html?keep_cid=1",
+      "sources": [
+        {
+          "id": 157468,
+          "title": "「耀斑」：参与白厄动画音乐活动领80星琼",
+          "date": "2025-07-03 13:00:00",
+          "source": "https://sr.mihoyo.com/news/157468"
+        }
+      ],
+      "confidence": "official",
+      "title": "「耀斑」：参与白厄动画音乐活动领80星琼",
+      "date": "2025-07-03",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/cT9VYHpUl9iJIg_R/index.html?keep_cid=1",
+        "contentType": "text/html",
+        "title": "QQ音乐丨《崩坏：星穹铁道》白厄动画单曲限定活动"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20250802version-fbil7u/index.html",
+      "sources": [
+        {
+          "id": 158574,
+          "title": "3.5版本预下载&更新预告",
+          "date": "2025-08-11 14:30:00",
+          "source": "https://sr.mihoyo.com/news/158574"
+        },
+        {
+          "id": 158203,
+          "title": "3.5版本「英雄未死之前」专题展示页",
+          "date": "2025-08-02 20:30:00",
+          "source": "https://sr.mihoyo.com/news/158203"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.5版本「英雄未死之前」专题展示页",
+      "date": "2025-08-02",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e20250912version_1303/index.html",
+      "sources": [
+        {
+          "id": 159601,
+          "title": "3.6版本预下载&更新预告",
+          "date": "2025-09-22 14:30:00",
+          "source": "https://sr.mihoyo.com/news/159601"
+        },
+        {
+          "id": 159390,
+          "title": "3.6版本「于长夜重返大地」专题展示页",
+          "date": "2025-09-12 20:35:00",
+          "source": "https://sr.mihoyo.com/news/159390"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.6版本「于长夜重返大地」专题展示页",
+      "date": "2025-09-12",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e20251024vesion_1316/index.html",
+      "sources": [
+        {
+          "id": 160688,
+          "title": "3.7版本预下载&更新预告",
+          "date": "2025-11-02 11:30:00",
+          "source": "https://sr.mihoyo.com/news/160688"
+        },
+        {
+          "id": 160595,
+          "title": "3.7版本「成为昨日的明天」专题展示页",
+          "date": "2025-10-24 20:30:00",
+          "source": "https://sr.mihoyo.com/news/160595"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.7版本「成为昨日的明天」专题展示页",
+      "date": "2025-10-24",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20251105return-tb31ya/index.html",
+      "sources": [
+        {
+          "id": "70305362",
+          "title": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+          "date": "2025-11-05T04:45:16.000Z",
+          "source": "https://www.miyoushe.com/sr/article/70305362",
+          "mode": "reference-cache"
+        },
+        {
+          "title": "「重返群星之旅」回归网页活动上线",
+          "date": "2025-11-05",
+          "source": "https://www.taptap.cn/moment/734854080983204378",
+          "mode": "official-account-announcement"
+        }
+      ],
+      "confidence": "cached-announcement",
+      "title": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+      "date": "2025-11-05",
+      "category": "回归活动",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/sr/event/e20251105return-tb31ya/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": "《崩坏：星穹铁道》「重返群星之旅」回归网页活动现已开启！"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/JYKP03tFulD335JF/index.html",
+      "sources": [
+        {
+          "id": 160764,
+          "title": "听歌领80星琼！新歌《昔涟》已上线音乐平台",
+          "date": "2025-11-06 13:00:00",
+          "source": "https://sr.mihoyo.com/news/160764"
+        }
+      ],
+      "confidence": "official",
+      "title": "听歌领80星琼！新歌《昔涟》已上线音乐平台",
+      "date": "2025-11-06",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/JYKP03tFulD335JF/index.html",
+        "contentType": "text/html",
+        "title": "QQ音乐丨《崩坏：星穹铁道》限时活动"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/rpg_version_page_380_1327/index.html",
+      "sources": [
+        {
+          "id": 161503,
+          "title": "3.8版本预下载&更新预告",
+          "date": "2025-12-15 14:30:00",
+          "source": "https://sr.mihoyo.com/news/161503"
+        },
+        {
+          "id": 161315,
+          "title": "3.8版本「记忆是梦的开场白」专题展示页",
+          "date": "2025-12-05 20:10:00",
+          "source": "https://sr.mihoyo.com/news/161315"
+        }
+      ],
+      "confidence": "official",
+      "title": "3.8版本「记忆是梦的开场白」专题展示页",
+      "date": "2025-12-05",
+      "category": "版本专题",
+      "historical": true,
+      "check": {
+        "error": "HTTP 404"
+      }
+    }
+  ],
+  "recentAdditionalCandidates": [
+    {
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260410version_1370/index.html",
+      "sources": [
+        {
+          "id": 163585,
+          "title": "4.2版本更新维护预告",
+          "date": "2026-04-20 14:00:00",
+          "source": "https://sr.mihoyo.com/news/163585"
+        },
+        {
+          "id": 163496,
+          "title": "4.2版本「如是，众生欢笑不已」专题展示页现已上线",
+          "date": "2026-04-10 21:10:00",
+          "source": "https://sr.mihoyo.com/news/163496"
+        }
+      ],
+      "confidence": "official",
+      "title": "4.2版本「如是，众生欢笑不已」专题展示页现已上线",
+      "date": "2026-04-10",
+      "category": "版本专题",
+      "historical": false,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/puzzle/hkrpg/e20260410version_1370/index.html",
+        "contentType": "text/html",
+        "title": "《崩坏：星穹铁道》4.2版本「如是，众生欢笑不已」专题展示页现已上线"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/XzMp_WIhJ0x3QD1S/index.html",
+      "sources": [
+        {
+          "id": 163523,
+          "title": "听歌领80星琼！星穹铁道新歌《天生鬼才》已上线音乐平台",
+          "date": "2026-04-11 13:00:00",
+          "source": "https://sr.mihoyo.com/news/163523"
+        }
+      ],
+      "confidence": "official",
+      "title": "听歌领80星琼！星穹铁道新歌《天生鬼才》已上线音乐平台",
+      "date": "2026-04-11",
+      "category": "音乐H5",
+      "historical": false,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/XzMp_WIhJ0x3QD1S/index.html",
+        "contentType": "text/html",
+        "title": "QQ音乐丨《崩坏：星穹铁道》三周年音乐主题活动"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260313version_1365/index.html",
+      "sources": [
+        {
+          "id": 163231,
+          "title": "4.1版本预下载&更新预告",
+          "date": "2026-03-23 14:30:00",
+          "source": "https://sr.mihoyo.com/news/163231"
+        },
+        {
+          "id": 163131,
+          "title": "4.1版本「献给破晓的失控」专题展示页",
+          "date": "2026-03-13 20:25:00",
+          "source": "https://sr.mihoyo.com/news/163131"
+        }
+      ],
+      "confidence": "official",
+      "title": "4.1版本「献给破晓的失控」专题展示页",
+      "date": "2026-03-13",
+      "category": "版本专题",
+      "historical": false,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/puzzle/hkrpg/e20260313version_1365/index.html",
+        "contentType": "text/html",
+        "title": "《崩坏：星穹铁道》4.1版本「献给破晓的失控」专题展示页现已上线"
+      }
+    },
+    {
+      "url": "https://y.qq.com/forest/fG4tXJBl25hd3n4k/index.html",
+      "sources": [
+        {
+          "id": 162996,
+          "title": "听歌领80星琼！火花PV曲《痴人说梦》已上线音乐平台",
+          "date": "2026-03-03 13:00:00",
+          "source": "https://sr.mihoyo.com/news/162996"
+        }
+      ],
+      "confidence": "official",
+      "title": "听歌领80星琼！火花PV曲《痴人说梦》已上线音乐平台",
+      "date": "2026-03-03",
+      "category": "音乐H5",
+      "historical": false,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://y.qq.com/forest/fG4tXJBl25hd3n4k/index.html",
+        "contentType": "text/html",
+        "title": "QQ音乐丨《崩坏：星穹铁道》火花PV音乐主题活动"
+      }
+    },
+    {
+      "url": "https://act.mihoyo.com/sr/event/e20260206version-nwlbwa/index.html",
+      "sources": [
+        {
+          "id": 162651,
+          "title": "4.0版本预下载&更新预告",
+          "date": "2026-02-11 14:30:00",
+          "source": "https://sr.mihoyo.com/news/162651"
+        },
+        {
+          "id": 162585,
+          "title": "4.0版本「满月是神不在的时间」专题展示页",
+          "date": "2026-02-06 21:00:00",
+          "source": "https://sr.mihoyo.com/news/162585"
+        }
+      ],
+      "confidence": "official",
+      "title": "4.0版本「满月是神不在的时间」专题展示页",
+      "date": "2026-02-06",
+      "category": "版本专题",
+      "historical": false,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/sr/event/e20260206version-nwlbwa/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": "《崩坏：星穹铁道》4.0版本「满月是神不在的时间 ‌」专题展示页现已上线"
+      }
+    }
+  ],
+  "sharedPlatformEntries": [
+    {
+      "url": "https://m.kugou.com/ssr/musicip/ip?ip_id=112095",
+      "sources": [
+        {
+          "id": 163523,
+          "title": "听歌领80星琼！星穹铁道新歌《天生鬼才》已上线音乐平台",
+          "date": "2026-04-11 13:00:00",
+          "source": "https://sr.mihoyo.com/news/163523"
+        },
+        {
+          "id": 162996,
+          "title": "听歌领80星琼！火花PV曲《痴人说梦》已上线音乐平台",
+          "date": "2026-03-03 13:00:00",
+          "source": "https://sr.mihoyo.com/news/162996"
+        },
+        {
+          "id": 160764,
+          "title": "听歌领80星琼！新歌《昔涟》已上线音乐平台",
+          "date": "2025-11-06 13:00:00",
+          "source": "https://sr.mihoyo.com/news/160764"
+        },
+        {
+          "id": 157468,
+          "title": "「耀斑」：参与白厄动画音乐活动领80星琼",
+          "date": "2025-07-03 13:00:00",
+          "source": "https://sr.mihoyo.com/news/157468"
+        },
+        {
+          "id": 156050,
+          "title": "歌曲「拂晓 Proi Proi」音乐活动正式上线",
+          "date": "2025-05-24 13:00:00",
+          "source": "https://sr.mihoyo.com/news/156050"
+        },
+        {
+          "id": 155686,
+          "title": "听歌领80星琼！星穹铁道新歌《不虚此行》已上线音乐平台",
+          "date": "2025-04-27 14:30:00",
+          "source": "https://sr.mihoyo.com/news/155686"
+        }
+      ],
+      "confidence": "official",
+      "title": "听歌领80星琼！星穹铁道新歌《不虚此行》已上线音乐平台",
+      "date": "2025-04-27",
+      "category": "音乐H5",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://m.kugou.com/ssr/musicip/ip?ip_id=112095",
+        "contentType": "text/html; charset=utf-8",
+        "title": "崩坏：星穹铁道 三周年主题曲《天生鬼才》上线活动"
+      },
+      "reason": "多篇公告共用同一酷狗入口，当前已更新为三周年活动，不代表每次历史活动"
+    }
+  ],
+  "excludedAliases": [
+    {
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/pz_2WvCbKsHL2/index.html",
+      "sources": [
+        {
+          "id": 163513,
+          "title": "「星穹贺礼」：240万份纪念册免费领！",
+          "date": "2026-04-11 11:00:00",
+          "source": "https://sr.mihoyo.com/news/163513"
+        }
+      ],
+      "confidence": "official",
+      "title": "「星穹贺礼」：240万份纪念册免费领！",
+      "date": "2026-04-11",
+      "category": "其他网页企划",
+      "historical": false,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://act.mihoyo.com/sr/event/e20260422album-en1jh8/index.html",
+        "contentType": "text/html; charset=utf-8",
+        "title": "《崩坏：星穹铁道》纪念册！"
+      },
+      "reason": "重定向至现有活动，不新增"
+    },
+    {
+      "url": "https://webstatic.mihoyo.com/hkrpg/event/puzzle/pz_7W_xXWP1Gc/index.html?game_biz=hkrpg_cn&_bbs=1&post=",
+      "sources": [
+        {
+          "id": "37178912",
+          "title": "「群星邀约」预抽卡网页活动现已开启",
+          "date": "2023-03-24T12:45:03.000Z",
+          "source": "https://www.miyoushe.com/sr/article/37178912",
+          "mode": "reference-cache"
+        }
+      ],
+      "confidence": "cached-announcement",
+      "title": "「群星邀约」预抽卡网页活动现已开启",
+      "date": "2023-03-24",
+      "category": "其他网页企划",
+      "historical": true,
+      "check": {
+        "httpStatus": 200,
+        "finalUrl": "https://webstatic.mihoyo.com/hkrpg/event/puzzle/pz_7W_xXWP1Gc/index.html?game_biz=hkrpg_cn&_bbs=1&post=",
+        "contentType": "text/html; charset=utf-8",
+        "title": "《崩坏：星穹铁道》4月26日正式公测！"
+      },
+      "reason": "公测宣传入口，与群星邀约公告关联，未确认是独立活动"
+    }
+  ],
+  "internationalCandidates": [
+    {
+      "title": "英雄汇聚！再创世的凯歌！",
+      "url": "https://act.hoyoverse.com/sr/event/e20250101reserve-wi0ht7/index.html",
+      "source": "https://www.hoyolab.com/creatorCollection/650285",
+      "relation": "国际服独立候选，原官方公告入口尚未完全核对",
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "title": "重返群星之旅（2024.12，国际服）",
+      "url": "https://act.hoyoverse.com/sr/event/e20241204reflow-o7nnlf/index.html",
+      "source": "https://www.hoyolab.com/article/35361865",
+      "relation": "与国服2024.12活动同名，不重复计算为另一活动",
+      "check": {
+        "error": "HTTP 404"
+      }
+    },
+    {
+      "title": "群星的寓言（国际服）",
+      "url": "https://act.hoyoverse.com/sr/event/e20231230card-d0a2c0/index.html",
+      "source": "https://www.hoyolab.com/article/23956861",
+      "relation": "已有sr-23的国际服对应页，出处为官方feed转发，原帖待核对",
+      "check": {
+        "error": "HTTP 404"
+      }
+    }
+  ]
+}

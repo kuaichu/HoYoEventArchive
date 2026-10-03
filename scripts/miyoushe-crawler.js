@@ -7,6 +7,7 @@ import {
   classifyCrawlerVersion,
   classifyEventType,
   enrichEventWithMetadata,
+  enrichEventDescription,
   extractAnnouncementMetadata,
   extractPostText,
   getAnnouncementDate,
@@ -227,7 +228,7 @@ export async function runCrawler() {
           }
           processedPostCount++;
           const postText = extractPostText(post);
-          const announcementMetadata = extractAnnouncementMetadata(postText);
+          const announcementMetadata = extractAnnouncementMetadata(postText, { title: subject });
         
           // Extract links from structured content
           const matches = [];
@@ -272,6 +273,13 @@ export async function runCrawler() {
               existingEvent.sourcePostId ||= String(postId);
               existingEvent.sourcePostTitle ||= subject;
               updatedEventsCount++;
+            }
+            if (sameSource) {
+              const descriptionUpdate = enrichEventDescription(existingEvent, postText);
+              if (descriptionUpdate.changed) {
+                Object.assign(existingEvent, descriptionUpdate.event);
+                updatedEventsCount++;
+              }
             }
             if (sameSource && enrichExistingIds.has(existingEvent.id)) {
               const enrichment = enrichEventWithMetadata(existingEvent, announcementMetadata);
@@ -334,7 +342,7 @@ export async function runCrawler() {
           }
           
           const textToAnalyze = `${postText} ${eventTitle} ${eventDesc}`.toLowerCase();
-          const eventType = classifyEventType(textToAnalyze);
+          const eventType = classifyEventType(textToAnalyze, { title: subject });
           const version = classifyCrawlerVersion({
             gameKey: game.gameKey,
             title: eventTitle,
@@ -381,6 +389,8 @@ export async function runCrawler() {
             tags: tags.length > 0 ? tags : ['网页活动'],
             version: version,
             description: announcementMetadata.description || eventDesc,
+            ...(announcementMetadata.description ? { descriptionSource: 'announcement' }
+              : eventDesc !== '提瓦特/米游社官方网页活动。' ? { descriptionSource: 'page' } : {}),
             ...(announcementMetadata.startDate ? { startDate: announcementMetadata.startDate } : {}),
             ...(announcementMetadata.endDate ? { endDate: announcementMetadata.endDate } : {}),
             ...(announcementMetadata.reward ? { reward: announcementMetadata.reward } : {})

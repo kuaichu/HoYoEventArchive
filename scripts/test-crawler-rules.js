@@ -21,7 +21,9 @@ const permanentResources = [
   'https://act.mihoyo.com/zzz/event/character-builder/index.html#/',
   'https://act.mihoyo.com/sr/event/cultivation-tool/index.html',
   'https://webstatic.mihoyo.com/app/community-game-records/rpg/index.html',
-  'https://webstatic.mihoyo.com/sr/app/interactive-map/index.html#/map/682'
+  'https://webstatic.mihoyo.com/sr/app/interactive-map/index.html#/map/682',
+  'https://act.mihoyo.com/miliastra_wonderland/agreement?id=156266',
+  'https://act.mihoyo.com/app/mihoyo-zzz-game-record/m.html#/zzz/roles/0/detail'
 ];
 
 permanentResources.forEach(url => {
@@ -120,6 +122,51 @@ assert.match(zzzMetadata.reward, /340菲林/);
 assert.match(zzzMetadata.reward, /480菲林/);
 assert.match(zzzMetadata.reward, /iPhone/);
 assert.match(zzzMetadata.description, /绝区零.*3\.1版本/);
+
+const impossibleDateMetadata = extractAnnouncementMetadata(`
+【活动时间】
+2026年2月31日-2026年3月2日
+`);
+assert.equal(impossibleDateMetadata.startDate, undefined, 'Impossible calendar dates must not be saved');
+assert.equal(impossibleDateMetadata.endDate, undefined, 'An invalid range must not save only one endpoint');
+const leapDayMetadata = extractAnnouncementMetadata(`
+【活动时间】
+2024年2月29日-2024年3月2日
+`);
+assert.equal(leapDayMetadata.startDate, '2024.02.29', 'Valid leap days must be accepted');
+
+const submissionPhaseMetadata = extractAnnouncementMetadata(`
+投稿征集阶段：
+2026年8月19日 - 2026年9月9日
+`);
+assert.equal(submissionPhaseMetadata.startDate, '2026.08.19');
+assert.equal(submissionPhaseMetadata.endDate, '2026.09.09');
+const abbreviatedSubmissionMetadata = extractAnnouncementMetadata(`
+报名投稿：2026年8月12日12:00~9月16日11:59
+`);
+assert.equal(abbreviatedSubmissionMetadata.startDate, '2026.08.12');
+assert.equal(abbreviatedSubmissionMetadata.endDate, '2026.09.16');
+const rolloverSubmissionMetadata = extractAnnouncementMetadata(`
+报名投稿：2026年12月20日-1月5日
+`);
+assert.equal(rolloverSubmissionMetadata.startDate, undefined, 'Do not guess the year for abbreviated cross-year ranges');
+assert.equal(rolloverSubmissionMetadata.endDate, undefined);
+
+const drawingAnnouncementOptions = { title: '绘画征集活动' };
+const publicNoticeMetadata = extractAnnouncementMetadata(`
+公示时间：2026年8月19日 - 2026年9月9日
+`, drawingAnnouncementOptions);
+assert.equal(publicNoticeMetadata.startDate, undefined, 'Publicity dates are not submission dates');
+assert.equal(publicNoticeMetadata.endDate, undefined);
+const standalonePreviewDateMetadata = extractAnnouncementMetadata(`
+2026年8月14日19:30-2026年8月16日23:59
+`, { sourcePostTitle: '版本前瞻特别节目讨论' });
+assert.equal(standalonePreviewDateMetadata.startDate, '2026.08.14');
+assert.equal(standalonePreviewDateMetadata.endDate, '2026.08.16');
+const unrelatedStandaloneDateMetadata = extractAnnouncementMetadata(`
+2026年8月14日19:30-2026年8月16日23:59
+`);
+assert.equal(unrelatedStandaloneDateMetadata.startDate, undefined, 'Standalone ranges need an explicitly eligible announcement title');
 
 const zzzMusicAnnouncement = `
 《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包。
@@ -225,6 +272,9 @@ assert.equal(classifyEventType('3.0版本前瞻预热'), '版本前瞻');
 assert.equal(classifyEventType('浮生孰来 八重神子预热小游戏'), '小游戏');
 assert.equal(classifyEventType('群星邀约 预抽卡'), '预约/预抽卡');
 assert.equal(classifyEventType('「恣锐锋镞」洛恩绘画征集活动开启'), '其他活动');
+assert.equal(classifyEventType('足迹已经遍布提瓦特，分享视频回忆', { title: '「旅途回忆」视频共创活动征集' }), '其他活动');
+assert.equal(classifyEventType('优秀作品有机会得到与官方合作的机会', { title: '「千星创作赛」正式启动！' }), '其他活动');
+assert.equal(classifyEventType('年度报告开放，也欢迎分享视频回忆', { title: '年度开拓报告' }), '年度报告');
 
 assert.equal(
   selectEventTitle('「月之七」版本活动祈愿预告第二期', '原神版本页'),

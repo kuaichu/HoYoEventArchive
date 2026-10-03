@@ -30,10 +30,14 @@
       "邀请奖励",
       "星穹"
     ],
-    "description": "崩坏：星穹铁道回归活动。邀请流失的开拓者重返星穹列车，参与可获得星穹等好礼。回归开拓者可完成专属任务获取丰厚奖励。",
+    "description": "分享专属邀请码，邀请符合条件的开拓者回归，参与网页活动可获得星琼奖励及抽奖机会，最高可获480星琼。",
     "version": "v3.4",
     "coverUrl": "/images/covers/sr-2.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250515hy6ci0x9mo/upload/f90bd4b45fb2d8216a1b8458d17859d3_9215482119036244432.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250515hy6ci0x9mo/upload/f90bd4b45fb2d8216a1b8458d17859d3_9215482119036244432.png",
+    "sourcePostId": "65987082",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+    "descriptionSource": "manual",
+    "reward": "最高480星琼及抽奖机会。"
   },
   {
     "id": "sr-3",
@@ -49,8 +53,16 @@
       "1.3版本",
       "邀请奖励"
     ],
-    "description": "1.3版本「天镜映劫尘」限时回归网页活动。开拓者可以邀请回归活跃开拓者，共同获取星穹奖励及周边好礼抽奖机会。",
-    "version": "v1.3"
+    "description": "1.3版本回归网页活动。分享专属邀请码，邀请符合条件的开拓者回归并完成网页任务，参与最高可得480星琼等奖励。",
+    "version": "v1.3",
+    "coverUrl": "/images/covers/sr-3.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2023/08/29/288909600/a9d980c4a8196ba20c93f4459483639b_1454200683694110860.png",
+    "sourcePostId": "42946479",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动上线，参与活动获星琼等好礼",
+    "descriptionSource": "manual",
+    "startDate": "2023.08.30",
+    "endDate": "2023.10.11",
+    "reward": "最高480星琼等奖励。"
   },
   {
     "id": "sr-4",
@@ -66,10 +78,16 @@
       "1.5版本",
       "岁阳退散"
     ],
-    "description": "1.5版本「迷离幻夜谈」限时回归网页活动。召集活跃开拓者重返群星，赢取星穹与周边大奖。",
+    "description": "1.5版本回归网页活动。邀请符合条件的开拓者绑定邀请码回归游戏，参与最高可得480星琼等奖励。",
     "version": "v1.5",
     "coverUrl": "/images/covers/sr-4.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231025hy56q79csg/upload/8777e05b27d40ee7529a4ad09b08422e_9054029627564641186.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231025hy56q79csg/upload/8777e05b27d40ee7529a4ad09b08422e_9054029627564641186.png",
+    "sourcePostId": "45514204",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动",
+    "descriptionSource": "manual",
+    "startDate": "2023.11.15",
+    "endDate": "2023.12.27",
+    "reward": "最高480星琼等奖励。"
   },
   {
     "id": "sr-5",
@@ -85,15 +103,19 @@
       "最新回归",
       "星穹奖励"
     ],
-    "description": "2026年春季回归系列活动。重走银河冒险，激活召回码可获得大量星穹奖励与独家角色培养素材。",
+    "description": "邀请符合条件的开拓者回归，完成网页活动任务可获得星琼奖励及抽奖机会，最高可获480星琼。",
     "version": "v4.2",
     "coverUrl": "/images/covers/sr-5.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260320hy3fn0bpc0/upload/609603506480e01016a00c7c9139ab17_954827074347387356.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260320hy3fn0bpc0/upload/609603506480e01016a00c7c9139ab17_954827074347387356.png",
+    "sourcePostId": "74803082",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+    "descriptionSource": "manual",
+    "reward": "最高480星琼及抽奖机会。"
   },
   {
     "id": "sr-6",
     "title": "重返群星之旅 (2.3回归)",
-    "url": "https://act.mihoyo.com/act/sr/event/e20240619reflow-emk7kj/index.html",
+    "url": "https://act.mihoyo.com/sr/event/e20240619reflow-emk7kj/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "回归活动",
@@ -104,8 +126,14 @@
       "2.3版本",
       "已失效"
     ],
-    "description": "2.3版本回归活动。因服务器变动或活动下线，当前该页面已失效（404）。",
-    "version": "v2.3"
+    "description": "2.3版本回归网页活动，邀请符合条件的开拓者回归，参与最高可获480星琼。已按官方公告修正链接，该历史页面目前仍返回404。",
+    "version": "v2.3",
+    "sourcePostId": "53971598",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+    "descriptionSource": "manual",
+    "reward": "最高480星琼及抽奖机会。",
+    "coverUrl": "/images/covers/sr-6.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/06/18/288909600/d76f06b9cfe584b8f3ad47368101cb05_4407776629181816358.png"
   },
   {
     "id": "sr-7",
@@ -120,10 +148,14 @@
       "回归活动",
       "星穹"
     ],
-    "description": "2025年4月版回归邀请网页活动。活跃开拓者激活召回链接可获得星穹及星轨通票等奖励。",
+    "description": "分享专属邀请码，邀请符合条件的开拓者回归，参与网页活动可获得星琼奖励及抽奖机会，最高可获480星琼。",
     "version": "v3.2",
     "coverUrl": "/images/covers/sr-7.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250228hy4bq6fsow/upload/60d359483d14ae245059fd038eb1f909_5946604605617114022.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250228hy4bq6fsow/upload/60d359483d14ae245059fd038eb1f909_5946604605617114022.png",
+    "sourcePostId": "63350507",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+    "descriptionSource": "manual",
+    "reward": "最高480星琼及抽奖机会。"
   },
   {
     "id": "sr-8",
@@ -139,8 +171,16 @@
       "2.1版本",
       "已失效"
     ],
-    "description": "2.1版本回归邀请网页活动。由于链接迁移或活动下线，当前该页面已失效（404）。",
-    "version": "v2.1"
+    "description": "邀请符合条件的开拓者回归，参与网页活动最高可获480星琼；该历史活动页面目前返回404。",
+    "version": "v2.1",
+    "coverUrl": "/images/covers/sr-8.jpg",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/03/26/288909600/1237a813a13706d95a61b62f7d3c01be_8081176603289823111.jpg",
+    "sourcePostId": "50741498",
+    "sourcePostTitle": "「重返群星之旅」回归网页活动上线，最高可得480星琼等好礼！",
+    "descriptionSource": "manual",
+    "startDate": "2024.03.27",
+    "endDate": "2024.05.08",
+    "reward": "最高480星琼及抽奖机会。"
   },
   {
     "id": "sr-9",
@@ -173,8 +213,16 @@
       "数据报告",
       "1周年回顾"
     ],
-    "description": "星穹铁道一周年数据盘点页面。记录了开拓者自公测以来在银河铁道上的足迹、消灭的敌人数量、最常配队的伙伴、获得的信用点等个人数据。",
-    "version": "v2.1"
+    "description": "与列车组成员一起完成年度开拓报告，回顾开拓历程。完成网页任务可获得180星琼，收集祝福还可获得燃料、漫游指南及信用点等奖励。",
+    "version": "v2.1",
+    "coverUrl": "/images/covers/sr-10.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/04/25/288909600/b24ccd42ed98f99371b7bd1d39cfc28a_6676559416702355118.png",
+    "sourcePostId": "52012041",
+    "sourcePostTitle": "【已开奖】「《星穹列车年度开拓报告》」网页活动开启",
+    "descriptionSource": "manual",
+    "startDate": "2024.04.26",
+    "endDate": "2024.05.07",
+    "reward": "完成任务可得180星琼；收集祝福可得燃料、漫游指南、信用点等奖励。"
   },
   {
     "id": "sr-11",
@@ -190,8 +238,16 @@
       "数据报告",
       "2周年回顾"
     ],
-    "description": "星穹铁道二周年数据报告。开拓者可登录查看两年来在匹诺康尼等地的探险历程、抽卡欧气指数、以及星神祝福总结。",
-    "version": "v3.2"
+    "description": "完成本年度开拓报告，回顾开拓历程；完成网页任务可获得180星琼、燃料及各类消耗品，分享报告还可参与周边抽奖。",
+    "version": "v3.2",
+    "coverUrl": "/images/covers/sr-11.jpg",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2025/04/25/288909600/c4c8fea2386551202749b72b018ce447_1470128029222686916.jpg",
+    "sourcePostId": "63894112",
+    "sourcePostTitle": "【已开奖】「《星穹列车年度开拓报告》」网页活动开启",
+    "descriptionSource": "manual",
+    "startDate": "2025.04.26",
+    "endDate": "2025.05.07",
+    "reward": "180星琼、燃料×1及各类消耗品；分享报告可参与额外周边抽奖。"
   },
   {
     "id": "sr-12",
@@ -207,8 +263,16 @@
       "数据报告",
       "3周年庆"
     ],
-    "description": "星穹铁道三周年数据大盘点。详细统计了开拓者在翁法罗斯及其他未知星域的开拓数据，并可生成精美的三周年专属纪念报告卡片。",
-    "version": "v4.2"
+    "description": "完成本年度开拓报告，回顾开拓历程；完成网页任务可获得180星琼、燃料及各类消耗品，分享报告还可参与周边抽奖。",
+    "version": "v4.2",
+    "coverUrl": "/images/covers/sr-12.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/04/24/288909600/f9dc702565ee45af73f13add14b5746e_2514647199114161226.png",
+    "sourcePostId": "74928605",
+    "sourcePostTitle": "【已开奖】《星穹列车年度开拓报告》网页活动开启",
+    "descriptionSource": "manual",
+    "startDate": "2026.04.26",
+    "endDate": "2026.05.07",
+    "reward": "180星琼、燃料×1及各类消耗品；分享报告可参与额外周边抽奖。"
   },
   {
     "id": "sr-13",
@@ -257,8 +321,16 @@
       "匹诺康尼",
       "已失效"
     ],
-    "description": "匹诺康尼盛会限时邀约活动网页。当前页面已被下线（404）。",
-    "version": "v2.0"
+    "description": "分享专属邀约码，邀请符合条件的开拓者回归，参与网页活动最高可获540星琼；该历史活动页面目前返回404。",
+    "version": "v2.0",
+    "coverUrl": "/images/covers/sr-15.jpg",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/02/05/288909600/bdcdf42a9f37225caadd389f1f743419_3251812024141729674.jpg",
+    "sourcePostId": "48868605",
+    "sourcePostTitle": "「盛会邀约」回归网页活动上线，参与最高可得540星琼等好礼！",
+    "descriptionSource": "manual",
+    "startDate": "2024.02.06",
+    "endDate": "2024.03.27",
+    "reward": "最高540星琼及抽奖机会。"
   },
   {
     "id": "sr-16",
@@ -282,16 +354,17 @@
     "url": "https://act.mihoyo.com/sr/event/e202504rpg2ndwish-xap56m/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
-    "type": "小游戏",
+    "type": "其他活动",
     "status": "已结束",
     "date": "2025.04.25",
     "tags": [
       "小游戏",
-      "趣味测试",
-      "神秘信件"
+      "神秘信件",
+      "神秘来信"
     ],
-    "description": "一个融合了RPG微型冒险的文字心理测试。玩家根据神秘信件的指引做出选择，最终测出属于自己的命运卡牌，并可获得星穹兑换码。",
-    "version": "v3.2"
+    "description": "「神秘来信」网页活动，回顾一年前对未来说过的话。",
+    "version": "v3.2",
+    "descriptionSource": "manual"
   },
   {
     "id": "sr-18",
@@ -341,10 +414,16 @@
       "模拟经营",
       "仙舟演武"
     ],
-    "description": "配合仙舟演武仪典推出的模拟小报社经营小游戏。玩家需要扮演记者撰写热门头条、采访参赛选手，从而提高报社订阅数并获得星穹奖励。",
+    "description": "与三月七一起收集线索、推演信息、游历罗浮。参与「星天演武百晓生」网页活动，至多可获得120星琼、漫游指南、遗失碎金及信用点等奖励。",
     "version": "v2.3",
     "coverUrl": "/images/covers/sr-20.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240605hy19055b7k/upload/11a2e4f18f443c6f4b9735e692fa34a4_5271627219025262700.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240605hy19055b7k/upload/11a2e4f18f443c6f4b9735e692fa34a4_5271627219025262700.png",
+    "sourcePostId": "55790555",
+    "sourcePostTitle": "【已开奖】「星天演武百晓生」网页活动开启",
+    "descriptionSource": "manual",
+    "reward": "至多120星琼、漫游指南×10、遗失碎金×12、信用点×50000。",
+    "startDate": "2024.07.27",
+    "endDate": "2024.08.03"
   },
   {
     "id": "sr-21",
@@ -352,18 +431,24 @@
     "url": "https://act.mihoyo.com/sr/event/e20240709jade/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
-    "type": "资料站",
-    "status": "可访问",
+    "type": "小游戏",
+    "status": "已结束",
     "date": "2024.07.09",
     "tags": [
-      "资料站",
+      "小游戏",
       "翡翠",
-      "公司设定"
+      "藏品交易"
     ],
-    "description": "针对星际和平公司「战略投资部」不良资产清算专家——翡翠（Jade）的特别档案展示站。收录其角色PV、配音音频以及契约机制介绍。",
+    "description": "作为翡翠「慈玉典押」的临时合伙人，完成藏品交易可获得120星琼、漫游指南、遗失晶块及动态线稿；分享营业表现还可获得信用点奖励。",
     "version": "v2.3",
     "coverUrl": "/images/covers/sr-21.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240514hy38s58utc/upload/b5f045680c277a1d31987212212cefd1_5136087249045922382.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240514hy38s58utc/upload/b5f045680c277a1d31987212212cefd1_5136087249045922382.png",
+    "sourcePostId": "54894255",
+    "sourcePostTitle": "【已开奖】「Lady Jade 慈玉手册」 网页活动开启",
+    "descriptionSource": "manual",
+    "reward": "藏品交易：120星琼、漫游指南×10、遗失晶块×10、动态线稿×1；分享营业表现：信用点×30000。",
+    "startDate": "2024.07.09",
+    "endDate": "2024.07.16"
   },
   {
     "id": "sr-22",
@@ -379,10 +464,16 @@
       "波提欧",
       "射击闯关"
     ],
-    "description": "波提欧主题的横版怀旧像素射击小游戏。操控牛仔波提欧在宇宙中躲避弹幕、击落障碍，积累积分可以解锁专属兑换码。",
+    "description": "参与波提欧主题射击挑战，完成网页任务可获得100星琼、信用点、提纯以太及经典苏乐达等奖励。",
     "version": "v2.2",
     "coverUrl": "/images/covers/sr-22.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240426hy38llhxc0/upload/e12865d283bedd230516d344a0f82be3_47535628874253649.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240426hy38llhxc0/upload/e12865d283bedd230516d344a0f82be3_47535628874253649.png",
+    "sourcePostId": "53349636",
+    "sourcePostTitle": "【已开奖】「酷得走火—宇宙！咻！咻！大挑战！」网页活动开启",
+    "descriptionSource": "manual",
+    "startDate": "2024.05.31",
+    "endDate": "2024.06.07",
+    "reward": "100星琼、信用点×30000、提纯以太×3、经典苏乐达×3。"
   },
   {
     "id": "sr-23",
@@ -417,8 +508,16 @@
       "模拟交易",
       "托帕"
     ],
-    "description": "托帕主题模拟理财交易游戏。玩家可在网页模拟买入和卖出虚构的道具资产，并在指定回合内获取最大收益，解锁星穹等奖励。",
-    "version": "v1.4"
+    "description": "与托帕组队，在有限交易日内和账账展开交易竞赛，达成成就可获得星琼、遗失晶块及信用点，至多可得160星琼。",
+    "version": "v1.4",
+    "coverUrl": "/images/covers/sr-24.jpg",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2023/10/24/288909600/12555ccef28ecbbc1eddb7e3ad5c50b6_3359511652064951057.jpg",
+    "sourcePostId": "44832786",
+    "sourcePostTitle": "【已开奖】「模拟市场」网页活动开启",
+    "descriptionSource": "manual",
+    "reward": "至多160星琼、遗失晶块×10及信用点×208000。",
+    "startDate": "2023.10.25",
+    "endDate": "2023.10.30"
   },
   {
     "id": "sr-25",
@@ -434,8 +533,16 @@
       "音乐",
       "已失效"
     ],
-    "description": "知更鸟新歌预热限时H5小游戏。目前该页面已下线（404）。",
-    "version": "v2.2"
+    "description": "创作音乐并分享到指定平台，完成活动流程可领取兑换码，在游戏中兑换120星琼；该历史活动页面目前返回404。",
+    "version": "v2.2",
+    "coverUrl": "/images/covers/sr-25.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/05/07/288909600/96d77474d3997a2cc15ded1e9a4bb599_4563148435828255221.png",
+    "sourcePostId": "52526705",
+    "sourcePostTitle": "《崩坏：星穹铁道》网页活动——「下一首歌开始之前」",
+    "descriptionSource": "manual",
+    "startDate": "2024.05.08",
+    "endDate": "2024.05.15",
+    "reward": "完成全部流程可通过兑换码领取120星琼。"
   },
   {
     "id": "sr-26",
@@ -472,8 +579,10 @@
     ],
     "description": "罗刹主题的列车快餐店模拟经营游戏。开拓者需要采购食材、研发菜品、服务上门消费的角色顾客，以此累积信用点兑换星穹。",
     "version": "v1.1",
-    "coverUrl": "/images/covers/sr-27.jpg",
-    "coverSourceUrl": "https://webstatic.mihoyo.com/upload/static-resource/2023/06/25/8ea09be2b58e8d16f6afe00aeb1280ac_2361285968226251551.jpg"
+    "coverUrl": "/images/covers/sr-27.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2023/06/27/288909600/9b55d5cf4878db6e722e16b546e83d1b_5771232044160319432.png",
+    "startDate": "2023.06.27",
+    "endDate": "2023.07.04"
   },
   {
     "id": "sr-28",
@@ -576,8 +685,8 @@
     ],
     "description": "参加《绝区零》3.0版本回归活动，最高得340菲林，还能抽游戏机、手办和周边！回归或注册游戏，绑定邀请码可领60菲林！",
     "version": "v3.0",
-    "coverUrl": "/images/covers/zzz-1.jpg",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/12/25/f6885acda7b6a8f5a8c3e7b10fbdb0cc_20164030018022280.jpg"
+    "coverUrl": "/images/covers/zzz-1.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/06/152039148/0c8c87542b8d90316b5096aaef87c5c8_6816384771148951044.png"
   },
   {
     "id": "zzz-2",
@@ -615,7 +724,7 @@
     "description": "邀请好友绑定邀请码并回归《绝区零》，最高可获得740菲林；参与抽奖还可获得游戏机、手办及周边等奖励。",
     "version": "v2.5",
     "coverUrl": "/images/covers/zzz-3.jpg",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/12/25/f6885acda7b6a8f5a8c3e7b10fbdb0cc_20164030018022280.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2025/12/30/152039148/be9e2e854f6ee4df619712f6c07dc668_280101370569406719.jpg"
   },
   {
     "id": "zzz-4",
@@ -634,7 +743,7 @@
     "description": "参与《绝区零》2.0版本预约可获得320菲林；解锁里程碑还可获得限定称号及代理人等级提升包等好礼。",
     "version": "v2.0",
     "coverUrl": "/images/covers/zzz-4.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/05/19/743d341e21cef6fb2adc0a65ec122c3d_1076361919909817482.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2025/05/23/152039148/5fa02119b29ce3485dc527e82ee9f714_7149117020582069652.png"
   },
   {
     "id": "zzz-5",
@@ -650,8 +759,9 @@
       "琴弦测试",
       "人物背景"
     ],
-    "description": "星座与音乐主题的测试小游戏。玩家滑动指尖弹拨琴弦，完成特定乐章的演奏，即可为角色揭开独有音符背景并获取菲林奖励。",
-    "version": "v1.4"
+    "description": "参与活动完成系列任务，必得菲林等奖励，赶紧去看看吧~",
+    "version": "v1.4",
+    "descriptionSource": "page"
   },
   {
     "id": "zzz-6",
@@ -669,8 +779,8 @@
     ],
     "description": "邀请回归绳匠体验《绝区零》并绑定邀请码，最高可获得510菲林；回归绳匠绑定邀请码可领取60菲林。",
     "version": "v1.3",
-    "coverUrl": "/images/covers/zzz-6.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2024/03/04/b267a25e448d984e4012e03e6b266915_6079099512353839210.png"
+    "coverUrl": "/images/covers/zzz-6.jpg",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/11/05/152039148/55f11212d9f9a54758dc992823dc3cee_1905169838086389056.jpg"
   },
   {
     "id": "zzz-7",
@@ -686,10 +796,11 @@
       "插画欣赏",
       "角色赠言"
     ],
-    "description": "岁末冬日心意贺卡制作页面。绳匠可以选择新艾利都的伙伴（如哲、铃、艾莲等），并定制精美的祝福卡片赠送他人。",
+    "description": "《绝区零》「心笺雅赠」活动正式开启~分享贺卡赢游戏内头像奖励及诸多好礼！这里有一封我制作的祝福贺卡送给你",
     "version": "v1.4",
     "coverUrl": "/images/covers/zzz-7.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241113hy7an0z0n4/upload/19c9c986897bc7f1aaf41f23b60f3e08_6970851938334622028.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241113hy7an0z0n4/upload/19c9c986897bc7f1aaf41f23b60f3e08_6970851938334622028.png",
+    "descriptionSource": "page"
   },
   {
     "id": "zzz-8",
@@ -705,8 +816,9 @@
       "公测预约",
       "音擎抽取"
     ],
-    "description": "绝区零公测预约期“行前采购”预抽卡网页活动。玩家可以通过抽卡网格翻牌来积攒代币，直接兑换A级音擎、邦布券以及正式服珍稀奖励。",
-    "version": "公测前"
+    "description": "参与活动，最高可获得A级音擎「时光切片」、「邦布券」 ×3、A级驱动盘等奖励。有概率获得PlayStation®5, 周边等惊喜好礼。",
+    "version": "公测前",
+    "descriptionSource": "page"
   },
   {
     "id": "zzz-9",
@@ -804,17 +916,20 @@
     "game": "原神",
     "gameKey": "ys",
     "type": "资料站",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2025.08.29",
     "tags": [
       "资料站",
       "新区域",
       "背景介绍"
     ],
-    "description": "扫码参与活动，即可得原石等游戏内奖励",
+    "description": "参与「始于挪德卡莱」网页活动，接受命运的邀约，获取原石等奖励。",
     "version": "v6.0",
     "coverUrl": "/images/covers/ys-5.jpg",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/08/27/11ca05cb35bc3e67a85737e4751d84c4_6270871390981470115.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2025/08/29/75276539/02fe1265cc0e1aff85d665c22394fd4f_6725119753963253033.jpg",
+    "descriptionSource": "manual",
+    "startDate": "2025.08.29",
+    "endDate": "2025.09.24"
   },
   {
     "id": "ys-6",
@@ -849,10 +964,11 @@
       "脉动",
       "运动补给"
     ],
-    "description": "原神 × 脉动 联动网页活动。通过页面小测试生成自己的“活力指数”，可获取原石及脉动联动特制道具。",
+    "description": "活动期间，旅行者可通过玩《原神》参与积分兑换活动，或购买脉动+电解质饮品开盖抽奖活动。7月1日前，更有分享助力活动和有奖召回活动双重加码，快来参与吧～",
     "version": "v5.5",
     "coverUrl": "/images/covers/ys-7.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/05/01/381e0b40d4fe7b3cf3bd607ea97563fc_3156718288061314232.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/05/01/381e0b40d4fe7b3cf3bd607ea97563fc_3156718288061314232.png",
+    "descriptionSource": "page"
   },
   {
     "id": "ys-8",
@@ -868,10 +984,13 @@
       "五周年庆",
       "旅行总结"
     ],
-    "description": "原神五周年特别数据回忆录。重温旅行者五年间结识的伙伴、踏足的国度，并计算专属的“提瓦特契合度”，分享可获取大额原石奖励。",
+    "description": "参与「追迹寻心」五周年网页活动，查看累计数据小结，获取原石等奖励。",
     "version": "v6.0",
     "coverUrl": "/images/covers/ys-8.jpg",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/09/15/3f0e3f7b4a75709df427452788f878e8_4883376203003185409.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2025/09/26/75276539/f268347022c5dad08a7ee32d7b7caaba_1857641155818053590.jpg",
+    "descriptionSource": "manual",
+    "startDate": "2025.09.28",
+    "endDate": "2025.10.12"
   },
   {
     "id": "ys-10",
@@ -884,13 +1003,15 @@
     "date": "2025.01.26",
     "tags": [
       "小游戏",
-      "海灯节",
-      "传统手艺"
+      "海灯节"
     ],
-    "description": "非遗传统藤编工艺主题的海灯节网页小游戏。玩家可在页面模拟编织灯笼、涂色、并完成关卡点亮，完成后获得原石与海灯节特制背景。",
+    "description": "和小藤人一起重演八奇故事，欢度海灯节；参与「藤编八奇」网页活动可获得原石奖励。",
     "version": "v5.3",
     "coverUrl": "/images/covers/ys-10.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2025/01/18/dd14412a3b1d67ccd4af2bba8933583a_3308240578797284363.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2025/01/23/75276539/850645bf5ab03035e8dfd4e66de46579_4750286563778656210.png",
+    "descriptionSource": "manual",
+    "startDate": "2025.01.26",
+    "endDate": "2025.02.09"
   },
   {
     "id": "ys-11",
@@ -906,10 +1027,11 @@
       "火之国",
       "先行预约"
     ],
-    "description": "原神5.0版本「荣花与炎途之章」上线先导活动。完成纳塔启程挑战，获得纳塔本地特有食谱、原石及角色突破耗材。",
+    "description": "参与「出发！火之国」网页活动，为圣火的巡礼喝彩，可获得三把新武器。",
     "version": "v5.0",
     "coverUrl": "/images/covers/ys-11.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240725hy29ii6cqo/upload/96f0b13d64cff29a798c4d219f531d54_3409187421555238640.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240725hy29ii6cqo/upload/96f0b13d64cff29a798c4d219f531d54_3409187421555238640.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-12",
@@ -959,10 +1081,13 @@
       "三周年庆",
       "足迹回顾"
     ],
-    "description": "原神三周年主题数据回忆站。乘上尘歌壶般的飞艇掠过提瓦特各大版图，详细记录了在枫丹开启水下探索等关键数据。",
+    "description": "参与「尘星旅梦」三周年回顾活动，分享与派蒙的旅行回忆，获得原石等奖励。",
     "version": "v4.1",
-    "coverUrl": "/images/covers/ys-14.jpg",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2023/09/28/3dfadd71d5b7db184586885794964b63_8865904070501853653.jpg"
+    "coverUrl": "/images/covers/ys-14.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2023/09/27/75276539/f755819046e55458c04d946f79f39abe_6078643786142647572.png",
+    "descriptionSource": "manual",
+    "startDate": "2023.09.28",
+    "endDate": "2023.10.12"
   },
   {
     "id": "ys-15",
@@ -976,12 +1101,15 @@
     "tags": [
       "年度报告",
       "四周年庆",
-      "纳塔新足迹"
+      "旅行回顾"
     ],
-    "description": "原神四周年数据年报。收录包括在纳塔与魂体同化、获取的五星角色数量等独家统计，支持定制并生成分享卡片。",
+    "description": "参与「星路拾忆」四周年回顾活动，获取原石等奖励。",
     "version": "v5.0",
-    "coverUrl": "/images/covers/ys-15.jpg",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2024/09/27/058341d9510268073495d1687d60c0c7_4257293401464757295.jpg"
+    "coverUrl": "/images/covers/ys-15.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/09/27/75276539/b970b96bf26842c2e0e8ed2721efb23c_7692251131733640474.png",
+    "descriptionSource": "manual",
+    "startDate": "2024.09.28",
+    "endDate": "2024.10.12"
   },
   {
     "id": "ys-16",
@@ -1013,13 +1141,13 @@
     "date": "2024.09.27",
     "tags": [
       "小游戏",
-      "速递跑酷",
       "周年福利"
     ],
-    "description": "操控Q版快递角色在提瓦特城市（蒙德、璃月、枫丹等）中进行越障跑酷，收集散落的心意礼盒。成功送达后可抽取游戏周边与原石。",
+    "description": "参与「提瓦特心意速递」四周年网页活动，可获得原石及四周年限定食谱等奖励。",
     "version": "v5.0",
     "coverUrl": "/images/covers/ys-17.jpg",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240826hy29u5whkw/upload/e4de5f522f23c3be2593ac79bafc429c_4061442415420506539.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2024/09/26/75276539/e6a59b03f93b48ce67a0a83477577d0b_459530536884136432.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-18",
@@ -1244,21 +1372,23 @@
   },
   {
     "id": "gen-1",
-    "title": "角色账号转移 (自助工具)",
+    "title": "《崩坏3》角色账号转移（自助工具）",
     "url": "https://webstatic.mihoyo.com/event/user-change-server/index.html",
-    "game": "全部游戏",
-    "gameKey": "all",
-    "type": "其他活动",
+    "game": "崩坏3",
+    "gameKey": "bh3",
+    "type": "资料站",
     "status": "需登录",
     "date": "2022.05.20",
     "tags": [
+      "资料站",
       "自助工具",
       "账号转移",
       "系统功能",
       "需登录"
     ],
-    "description": "米哈游官方提供的跨渠道/服务器角色数据转移或合并自助申请平台。开拓者/旅行者可在此查询并办理特定账号的转移和合并业务。",
-    "version": "通用"
+    "description": "《崩坏3》角色账号转移自助页面，登录后按页面说明办理相关角色账号转移。",
+    "version": "通用",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-27",
@@ -1290,7 +1420,12 @@
       "网页活动"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。"
+    "description": "米游币抽抽乐原神专场活动，使用米游币参与抽奖，具体奖池及兑换规则以活动页面为准。",
+    "coverUrl": "/images/covers/ys-28.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/22/75276550/fd0725a6c28a20f9620e54c9cb0a11d3_3314462466152864924.png",
+    "startDate": "2026.05.22",
+    "endDate": "2026.05.24",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-29",
@@ -1305,22 +1440,28 @@
       "版本前瞻"
     ],
     "version": "v6.6",
-    "description": "提瓦特/米游社官方网页活动。"
+    "description": "《原神》「月之七」版本前瞻特别节目，介绍「虚空劫灰往世书」版本内容。节目于2026年5月8日20:00开启。",
+    "coverUrl": "/images/covers/ys-29.jpg",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/06/75276539/784d7dd063fa6861ca6e83866a3afcd9_9008872238021276319.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "sr-33",
-    "title": "千冶•刃绘画",
+    "title": "「千冶•刃」角色绘画征集活动",
     "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202605261549567753&act_id=ea202605261549567753#/rpg/act",
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.05.29",
     "tags": [
-      "网页活动"
+      "绘画征集"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。"
+    "description": "「千冶•刃」主题绘画征集活动页面，用于查看征集信息及获奖作品名单。",
+    "coverUrl": "/images/covers/sr-33.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/29/288909601/25af2f467333035d4174466bb69e9a50_79075023134565700.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-30",
@@ -1335,7 +1476,12 @@
       "网页活动"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。"
+    "description": "「履迹寻路」网页活动，活动时间为2026年4月8日至4月21日，参与可获得原石等奖励，玩法和领取规则详见活动页面。",
+    "coverUrl": "/images/covers/ys-30.jpg",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/04/07/75276539/38733dfb78c75922c85dcd8bf63ce1e1_2651335734281582003.jpg",
+    "startDate": "2026.04.08",
+    "endDate": "2026.04.21",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-31",
@@ -1396,9 +1542,10 @@
       "v4.3版本"
     ],
     "version": "v4.3",
-    "description": "快来了解新版本内容吧~",
+    "description": "4.3版本「沉于生者的忘川」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-38.jpg",
-    "coverSourceUrl": "https://act-webstatic.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/resource/puzzle/2026/05/19/89f85172c9565561ce1588ffd60d2c34_5444984557035128914.jpg"
+    "coverSourceUrl": "https://act-webstatic.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/resource/puzzle/2026/05/19/89f85172c9565561ce1588ffd60d2c34_5444984557035128914.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "bh3-5",
@@ -1417,9 +1564,10 @@
       "v8.9版本"
     ],
     "version": "v8.9",
-    "description": "《崩坏3》全新版本「羽落万生」开启，角色「愈生佑翎」登场！",
+    "description": "8.9版本「羽落万生」内容前瞻，介绍全新S级角色愈生佑翎、主题活动、主线及新服装。指定活动期内首次分享网页可获得20水晶。",
     "coverUrl": "/images/covers/bh3-5.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/22/73565430/1e6c3ed070379421d79b9114b3b36422_6476340942166010012.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/22/73565430/1e6c3ed070379421d79b9114b3b36422_6476340942166010012.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "sr-39",
@@ -1439,7 +1587,7 @@
       "网页活动"
     ],
     "version": "通用",
-    "reward": "参与抽抽乐有机会获得星琼×60、米游币、游戏虚拟道具及实物周边等奖励。",
+    "reward": "使用米游币抽奖，有机会获得游戏虚拟道具、实物周边等；具体奖池与数量以活动页面为准。",
     "description": "活动期间可使用米游币参与星穹铁道专场抽抽乐。",
     "coverUrl": "/images/covers/sr-39.png",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/11/80823548/d71b32ae2db310fe5d90c142148187bc_2597186726660423294.png"
@@ -1450,22 +1598,20 @@
     "url": "https://act.mihoyo.com/miliastra_wonderland/developer",
     "game": "原神",
     "gameKey": "ys",
-    "type": "其他活动",
+    "type": "资料站",
     "status": "已结束",
     "date": "2026.06.16",
     "dateType": "announcement",
-    "startDate": "2026.06.16",
-    "endDate": "2026.07.06",
     "sourcePostId": "76038734",
     "sourcePostTitle": "「千星奇域 · 奇匠夏日共创」活动开启，丰厚好礼等你拿！",
     "tags": [
-      "网页活动"
+      "资料站"
     ],
     "version": "通用",
-    "reward": "完成社群成长任务可得「一号创作票券」；投稿作品参与评选，单个作品最高可获现金3000元及神秘周边1份。",
-    "description": "「千星奇域·奇匠夏日共创」活动面向奇匠征集夏日主题关卡作品，包含社群任务及投稿评选。",
+    "description": "《原神》千星奇域创作者中心入口，提供奇域创作相关服务；关联公告中的「奇匠夏日共创」活动另有报名与投稿期限。",
     "coverUrl": "/images/covers/ys-33.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/16/378227958/08f9baa5035ccbe27b5cfc2ed8202a04_376999526785138968.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/16/378227958/08f9baa5035ccbe27b5cfc2ed8202a04_376999526785138968.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-34",
@@ -1473,19 +1619,18 @@
     "url": "https://act.mihoyo.com/miliastra_wonderland/agreement?id=156266",
     "game": "原神",
     "gameKey": "ys",
-    "type": "其他活动",
+    "type": "资料站",
     "status": "可访问",
     "date": "2026.06.16",
     "dateType": "announcement",
     "sourcePostId": "76038734",
     "sourcePostTitle": "「千星奇域 · 奇匠夏日共创」活动开启，丰厚好礼等你拿！",
     "tags": [
-      "网页活动"
+      "资料站"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。",
-    "coverUrl": "/images/covers/ys-34.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/16/378227958/08f9baa5035ccbe27b5cfc2ed8202a04_376999526785138968.png"
+    "description": "《千星奇域创作者中心服务协议》文档页面，用于查看创作者中心相关服务条款。",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-35",
@@ -1494,7 +1639,7 @@
     "game": "原神",
     "gameKey": "ys",
     "type": "版本前瞻",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.06.16",
     "dateType": "announcement",
     "sourcePostId": "76036597",
@@ -1503,9 +1648,13 @@
       "版本前瞻"
     ],
     "version": "v6.7",
-    "description": "提瓦特/米游社官方网页活动。",
+    "description": "分享米游社直播间，抽取纠缠之缘奖励。参与方式 ：在米游社App进入米游社直播间，点击右上角分享按钮并分享至任意渠道，即为参与成功。活动奖励 ：纠缠之缘x10（50份）。",
     "coverUrl": "/images/covers/ys-35.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/16/75276539/99d74904918336b00544b746ad4ec7ca_4697608716666546927.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/16/75276539/99d74904918336b00544b746ad4ec7ca_4697608716666546927.jpg",
+    "descriptionSource": "announcement",
+    "reward": "分享直播间可参与抽取纠缠之缘×10（50份）；参与前瞻讨论可参与抽取原石×60（200份）。",
+    "startDate": "2026.06.16",
+    "endDate": "2026.06.18"
   },
   {
     "id": "sr-40",
@@ -1514,7 +1663,7 @@
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.06.16",
     "dateType": "announcement",
     "sourcePostId": "76042971",
@@ -1523,9 +1672,10 @@
       "网页活动"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。",
+    "description": "《崩坏：星穹铁道》「绯英」角色绘画征集活动的获奖名单正式出炉。",
     "coverUrl": "/images/covers/sr-40.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/16/288909601/4da30fffe80fbf22c5554b7638c701e3_1866406112671471518.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/16/288909601/4da30fffe80fbf22c5554b7638c701e3_1866406112671471518.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "zzz-10",
@@ -1533,20 +1683,20 @@
     "url": "https://act.mihoyo.com/app/mihoyo-zzz-game-record/m.html#/zzz/roles/0/detail",
     "game": "绝区零",
     "gameKey": "zzz",
-    "type": "其他活动",
+    "type": "资料站",
     "status": "可访问",
     "date": "2026.06.17",
     "dateType": "announcement",
     "sourcePostId": "76063822",
     "sourcePostTitle": "战绩更新 | 战绩新增「拟境湮灭战」作战记录，快来查看吧！",
     "tags": [
-      "网页活动"
+      "资料站"
     ],
     "version": "通用",
-    "reward": "分享直播间可参与抽取纠缠之缘×10（50份）；参与前瞻讨论可参与抽取原石×60（200份）。",
-    "description": "《原神》「月之八」版本前瞻特别节目将于6月18日20:00开启，并配套开展分享及前瞻讨论活动。",
+    "description": "《绝区零》战绩工具，查看角色及作战记录；「拟境湮灭战」模块提供勋章、排名、最快挑战时长、星数和挑战阵容等信息。",
     "coverUrl": "/images/covers/zzz-10.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/17/152039148/0bb820ba812c3381061146b3b5715b28_2045612412689486032.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/17/152039148/0bb820ba812c3381061146b3b5715b28_2045612412689486032.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-36",
@@ -1578,7 +1728,7 @@
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.05.26",
     "dateType": "announcement",
     "sourcePostId": "75619068",
@@ -1587,9 +1737,10 @@
       "网页活动"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。",
+    "description": "《崩坏：星穹铁道》「银狼LV.999」角色绘画征集活动的获奖名单正式出炉。",
     "coverUrl": "/images/covers/sr-41.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/26/288909601/02dcd458075e966ac2647ab71920d5ea_6887529744201731263.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/26/288909601/02dcd458075e966ac2647ab71920d5ea_6887529744201731263.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "sr-42",
@@ -1610,7 +1761,7 @@
       "v4.3版本"
     ],
     "version": "v4.3",
-    "reward": "从成功参与者中随机抽取25名：5名各获648元现金，20名各获星穹铁道随机周边×1。",
+    "reward": "抽取5名各获648元现金、20名各获星穹铁道随机周边。",
     "description": "围绕4.3版本前瞻特别节目参与评论讨论，即有机会获得现金或随机周边奖励。",
     "coverUrl": "/images/covers/sr-42.jpg",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/20/80823548/ace8885e181e5b42ef1e2c684817f1e2_775705971849514884.jpg"
@@ -1621,14 +1772,14 @@
     "url": "https://act.mihoyo.com/sr/event/around-gift-w3qak2/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
-    "type": "其他活动",
+    "type": "资料站",
     "status": "已结束",
     "date": "2026.05.14",
     "dateType": "announcement",
     "sourcePostId": "75322548",
     "sourcePostTitle": "《崩坏：星穹铁道》纪念册发货相关说明",
     "tags": [
-      "网页活动"
+      "资料站"
     ],
     "version": "通用",
     "description": "《崩坏：星穹铁道》纪念册周边实物发货信息登记平台，可用于查看物流及处理相关发货信息。",
@@ -1651,9 +1802,10 @@
       "网页活动"
     ],
     "version": "通用",
-    "description": "提瓦特/米游社官方网页活动。",
+    "description": "《崩坏：星穹铁道》「不死途」角色绘画征集活动的获奖名单正式出炉。",
     "coverUrl": "/images/covers/sr-44.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/07/288909601/89425fb1d02d18ab29d0256720ec9380_3188752610782480675.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/05/07/288909601/89425fb1d02d18ab29d0256720ec9380_3188752610782480675.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "bh3-6",
@@ -1694,9 +1846,10 @@
       "v8.8版本"
     ],
     "version": "v8.8",
-    "description": "《崩坏3》全新版本「数海游云」开启，协同者「白鹿游云」登场！",
+    "description": "8.8版本「数海游云」内容前瞻，介绍协同者白鹿游云、神之键苍雷星梭EX19、主题活动及主线。指定活动期内首次分享网页可获得20水晶。",
     "coverUrl": "/images/covers/bh3-7.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/03/27/73565430/8b62731d760da88ecf8cb88d682d7245_4496155348321326087.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/03/27/73565430/8b62731d760da88ecf8cb88d682d7245_4496155348321326087.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "zzz-11",
@@ -1716,7 +1869,7 @@
       "网页活动"
     ],
     "version": "通用",
-    "reward": "参与抽抽乐有机会获得菲林×60、猫宫又奈1/7手办、米游币及其他奖励。",
+    "reward": "使用米游币抽奖，有机会获得游戏虚拟道具、实物周边等；具体奖池与数量以活动页面为准。",
     "description": "活动期间可使用米游币参与绝区零专场抽抽乐。",
     "coverUrl": "/images/covers/zzz-11.png",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/06/25/152039072/a1035e6940864174b7aab7dc2f5ab732_6196812442241861992.png"
@@ -1759,7 +1912,7 @@
       "网页活动"
     ],
     "version": "通用",
-    "reward": "参与抽抽乐有机会获得原石×60、限时头像挂件、米游币及其他奖励。",
+    "reward": "使用米游币抽奖，有机会获得游戏虚拟道具、实物周边等；具体奖池与数量以活动页面为准。",
     "description": "活动期间可使用米游币参与原神专场抽抽乐。",
     "coverUrl": "/images/covers/ys-38.png",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/03/75276550/d18f0047ab7a99c24f073863a7d2702e_3172939888647885053.png"
@@ -1780,9 +1933,10 @@
       "v4.4版本"
     ],
     "version": "v4.4",
-    "description": "快来了解新版本内容吧~",
+    "description": "4.4版本「鸣笛于归寂之时」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-45.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/02/288909600/00dfb4aad2971f0c4791b1bfd15b52a0_7007249228002508117.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/02/288909600/00dfb4aad2971f0c4791b1bfd15b52a0_7007249228002508117.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "sr-46",
@@ -1803,7 +1957,7 @@
       "v4.4版本"
     ],
     "version": "v4.4",
-    "reward": "从成功参与者中随机抽取25名：5名各获648元现金，20名各获星穹铁道随机周边×1。",
+    "reward": "抽取5名各获648元现金、20名各获星穹铁道随机周边。",
     "description": "围绕4.4版本前瞻特别节目参与评论讨论，即有机会获得现金或随机周边奖励。",
     "coverUrl": "/images/covers/sr-46.jpg",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/02/80823548/660c65d9d573865c757cd15e422bd97e_8480423580354278838.jpg"
@@ -1873,7 +2027,9 @@
     ],
     "version": "v6.7",
     "reward": "完成网页任务可领取原石、重现晶簇及「千星奇域」道具等奖励。",
-    "description": "「来奇域，快乐一夏！」网页活动限时开启，旅行者可完成网页任务领取游戏内奖励。"
+    "description": "「来奇域，快乐一夏！」网页活动限时开启，旅行者可完成网页任务领取游戏内奖励。",
+    "coverUrl": "/images/covers/ys-40.png",
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/14/75276539/a7b5f780e5012343e22a716be3d008b1_7290472879765282552.png"
   },
   {
     "id": "sr-48",
@@ -1881,14 +2037,14 @@
     "url": "https://act.mihoyo.com/sr/event/wechat-landing-ii2fz2/index.html",
     "game": "星穹铁道",
     "gameKey": "sr",
-    "type": "其他活动",
+    "type": "资料站",
     "status": "可访问",
     "date": "2026.07.15",
     "dateType": "announcement",
     "sourcePostId": "76691429",
     "sourcePostTitle": "官方小程序&企业微信正式上线，每版本领专属星琼福利！",
     "tags": [
-      "游戏内奖励"
+      "资料站"
     ],
     "version": "通用",
     "reward": "首次绑定账号并添加「星穹铁道小呜呜」可领取星琼×60；每版本完成游戏登录可额外领取星琼×30；每个UID仅可领取1次绑定奖励。",
@@ -1914,9 +2070,10 @@
     ],
     "version": "v4.4",
     "reward": "活动期间邀请符合条件的开拓者回归，可获得星琼奖励及抽奖机会，最高可获480星琼。",
-    "description": "邀请开拓者回归，赢星琼、电竞笔记本、iPhone 17等惊喜好礼！",
+    "description": "分享专属邀请码，邀请符合条件的开拓者回归。参与网页活动可获得星琼奖励及抽奖机会，最高可获480星琼。",
     "coverUrl": "/images/covers/sr-49.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/14/288909600/5a2dde8fd9c0b59d5fbfea802bed2645_5994558004997071860.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/14/288909600/5a2dde8fd9c0b59d5fbfea802bed2645_5994558004997071860.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "zzz-12",
@@ -1935,12 +2092,13 @@
       "v3.1版本"
     ],
     "version": "v3.1",
-    "description": "亲爱的绳匠，《绝区零》3.1版本「初代虚狩，回归」预约&回归活动现已开启。",
+    "description": "《绝区零》3.1版本「初代虚狩，回归」预约&回归活动现已开启。网页内，参与预约活动可得160菲林和游戏内纪念名片。邀请好友回归或注册游戏，最高可得340菲林。",
     "startDate": "2026.07.17",
     "endDate": "2026.09.09",
     "reward": "网页内，参与预约活动可得160菲林和游戏内纪念名片；邀请好友回归或注册游戏，最高可得340菲林；游戏内签到活动「初代虚狩，回归」期间，累计登录7日即可获赠480菲林；参与网页内抽奖活动，赢取iPhone、游戏主机、手办、菲林等奖励",
     "coverUrl": "/images/covers/zzz-12.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/17/152039148/104ca09273d8f9bd52b0c61d10345745_628889863906950084.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/17/152039148/104ca09273d8f9bd52b0c61d10345745_628889863906950084.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "bh3-8",
@@ -1959,9 +2117,10 @@
       "v9.0版本"
     ],
     "version": "v9.0",
-    "description": "登场，参与「希娜狄雅」协同补给至多可获取",
+    "description": "主题活动「舰舰与许愿树秘闻」即将开放，参与活动可获取瞒天乐游·曙影全新服装「流浪朋克」、水晶、梦愿成真勋章、根源棱镜等奖励。主线第二部终章「从此，拥抱未来」即将更新，体验主线剧情可获得寻梦纪念册、水晶、根源棱镜等奖励。7月27日04:00期间，首次参与网页内分享活动可获得20水晶。",
     "coverUrl": "/images/covers/bh3-8.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/17/73565430/5957ad7079bc7508efd8078be2ffc399_3605244411699434454.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/17/73565430/5957ad7079bc7508efd8078be2ffc399_3605244411699434454.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "zzz-13",
@@ -1982,12 +2141,13 @@
       "游戏内奖励"
     ],
     "version": "通用",
-    "description": "《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包。欢迎各位绳匠前往平台收听。",
+    "description": "《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包。活动期间，完成活动任务即可获得限量菲林礼包兑换码奖励。酷狗音乐APP 搜索「绝区零」点击进入「【活动】绝区零」活动页面-「查看兑换码」。",
     "startDate": "2026.07.28",
     "endDate": "2026.08.10",
     "reward": "《绝区零》二周年音乐平台活动现已开启，参与活动即可领取限量菲林礼包",
     "coverUrl": "/images/covers/zzz-13.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/28/152039148/2775eb2aff57f96b9b22e7f81bb76455_517355192262316114.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/28/152039148/2775eb2aff57f96b9b22e7f81bb76455_517355192262316114.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "zzz-14",
@@ -2027,12 +2187,13 @@
       "游戏内奖励"
     ],
     "version": "v7.0",
-    "description": "亲爱的旅行者，现在是派蒙的特别节目预告时间> <",
+    "description": "分享米游社直播间，抽取纠缠之缘奖励。参与方式 ：在米游社App进入米游社直播间，点击右上角分享按钮并分享至任意渠道，即为参与成功。活动奖励 ：纠缠之缘x10（50份）。",
     "startDate": "2026.07.29",
     "endDate": "2026.07.31",
-    "reward": "，抽取纠缠之缘奖励",
+    "reward": "分享直播间可参与抽取纠缠之缘×10（50份）；参与前瞻讨论可参与抽取原石×60（200份）。",
     "coverUrl": "/images/covers/ys-41.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/28/75276539/b8afdab7a960d90c47a58cd031cd8fab_4691853722994436668.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/28/75276539/b8afdab7a960d90c47a58cd031cd8fab_4691853722994436668.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "ys-42",
@@ -2052,12 +2213,13 @@
       "游戏内奖励"
     ],
     "version": "v7.0",
-    "description": "「至冬将至」网页活动限时开启。快来预约新版本领原石奖励吧！",
+    "description": "完成新版本预约可获得40原石；分享专属链接邀请他人预约，每成功邀请一人可再获得20原石，最多邀请两人。",
     "startDate": "2026.07.31",
     "endDate": "2026.08.11",
-    "reward": "快来预约新版本领原石奖励吧",
+    "reward": "完成预约可得40原石；每成功邀请一人预约可得20原石，最多两人。",
     "coverUrl": "/images/covers/ys-42.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/30/75276539/228a622943f7a604766af1606990f974_6618623138775042548.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/30/75276539/228a622943f7a604766af1606990f974_6618623138775042548.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-43",
@@ -2066,7 +2228,7 @@
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.08.03",
     "dateType": "announcement",
     "sourcePostId": "77160485",
@@ -2075,9 +2237,12 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "旅行者好呀！这里是提瓦特徒步团(*/ω＼*)",
+    "description": "徒步团已经准备好了周边礼包和原石，快拿起手中的画笔，为奥黛塔绘制作品吧。活动期间，在上方指定活动页面点击“立即投稿”按钮，发布符合投稿要求的奥黛塔绘画作品，即视为成功参与。",
     "coverUrl": "/images/covers/ys-43.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/31/75379477/6b773dd6ccdb237cbcdf74a22285724b_4115175764849541485.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/31/75379477/6b773dd6ccdb237cbcdf74a22285724b_4115175764849541485.png",
+    "descriptionSource": "announcement",
+    "startDate": "2026.08.03",
+    "endDate": "2026.08.23"
   },
   {
     "id": "zzz-15",
@@ -2095,11 +2260,12 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "2026/8/7 11:00-2026/8/9 23:59",
+    "description": "活动期间，使用米游币参与抽抽乐活动，即有机会获得游戏虚拟道具、实物周边等奖励。每次抽奖可根据需求选择单抽或十连抽，一起来试试手气吧。本期活动期间，每次抽取需耗费200米游币，单人最多可参与50次。",
     "startDate": "2026.08.07",
     "endDate": "2026.08.09",
     "coverUrl": "/images/covers/zzz-15.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/06/152039072/7a763fefbacf9ad7d361c739ec61dab0_3113228933222905725.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/06/152039072/7a763fefbacf9ad7d361c739ec61dab0_3113228933222905725.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "ys-44",
@@ -2117,9 +2283,10 @@
       "v7.0版本"
     ],
     "version": "v7.0",
-    "description": "7.0版本「无神怜爱的雪国」内容专题页上线啦！",
+    "description": "7.0版本「无神怜爱的雪国」内容专题页，介绍新地区至冬、新角色奥黛塔与阿罗夏、新武器及版本活动。",
     "coverUrl": "/images/covers/ys-44.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/07/75276545/ca45309bbcf66c7abb7efdb8f2679d6e_5281805898645151815.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/07/75276545/ca45309bbcf66c7abb7efdb8f2679d6e_5281805898645151815.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "ys-45",
@@ -2152,22 +2319,24 @@
     "url": "https://act.mihoyo.com/ys/event/e20260812creator/index.html",
     "game": "原神",
     "gameKey": "ys",
-    "type": "联动活动",
-    "status": "可访问",
+    "type": "其他活动",
+    "status": "已结束",
     "date": "2026.08.12",
     "dateType": "announcement",
     "sourcePostId": "77371944",
     "sourcePostTitle": "「千星创作赛」正式启动！",
     "tags": [
-      "联动活动",
-      "v6.7版本",
+      "奇域创作",
       "游戏内奖励"
     ],
-    "version": "v6.7",
-    "description": "《原神》千星奇域首届面向全体创作者的创作赛终于到来了！",
-    "reward": "本次活动不限品类、不限玩法，制作奇域并投稿即有机会获得原石奖励，优秀奇域更可额外获一号创作票券奖励，甚至有机会得到与官方合作的机会；其中，我们还为各位新手奇匠设置了专属奖励，只要你有想法、有创意， 本次创作赛将会是你大展拳脚的舞台",
+    "version": "通用",
+    "description": "在千星奇域中创作并投稿原创奇域，参与不限品类与玩法的创作赛。获评作品可获得原石、一号创作票券等奖励，新手奇匠另设专属奖项。",
+    "reward": "依评选结果分档获得原石及一号创作票券等奖励，另设新手奖项，具体名额和条件以公告为准。",
     "coverUrl": "/images/covers/ys-46.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/11/75276539/b47f5389e0b083ebc5057926105822fc_2379429715107169567.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/11/75276539/b47f5389e0b083ebc5057926105822fc_2379429715107169567.png",
+    "descriptionSource": "manual",
+    "startDate": "2026.08.12",
+    "endDate": "2026.09.16"
   },
   {
     "id": "ys-47",
@@ -2185,11 +2354,12 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "2026/8/14 12:00-2026/8/16 23:59",
+    "description": "活动期间，使用米游币参与抽抽乐活动，即有机会获得游戏虚拟道具、实物周边等奖励。每次抽奖可根据需求选择单抽或十连抽，一起来试试手气吧。本期活动期间，每次抽取需耗费200米游币，单人最多可参与50次。",
     "startDate": "2026.08.14",
     "endDate": "2026.08.16",
     "coverUrl": "/images/covers/ys-47.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/13/75276550/c9b3f8ec6db321a07ee2739b26ecc5dd_969572375175315709.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/13/75276550/c9b3f8ec6db321a07ee2739b26ecc5dd_969572375175315709.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "sr-50",
@@ -2207,9 +2377,10 @@
       "v4.5版本"
     ],
     "version": "v4.5",
-    "description": "亲爱的开拓者，4.5版本「挥掷千星的筹码」专题展示页现已上线，一起看看新版本都有哪些内容吧！",
+    "description": "4.5版本「挥掷千星的筹码」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-50.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/13/288909600/f286cfca7cb37995c984631eb476d4dd_1031110279178513822.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/13/288909600/f286cfca7cb37995c984631eb476d4dd_1031110279178513822.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "sr-51",
@@ -2218,7 +2389,7 @@
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "版本前瞻",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.08.14",
     "dateType": "announcement",
     "sourcePostId": "77447230",
@@ -2228,10 +2399,13 @@
       "v4.5版本"
     ],
     "version": "v4.5",
-    "description": "开拓者好呀~《崩坏：星穹铁道》「",
-    "reward": "在本次节目播送期间，阿姬为开拓者准备了648元现金奖励、；阿姬将从成功参与活动的开拓者中随机选取25名，各获得648元现金奖励*1或；648元现金奖励*5；3、请获得周边奖励的开拓者在系统通知发出后的4个工作日内完成周边收货地址填写，否则将视为放弃奖励；公告】周边奖励地址填写教程；获得现金奖励的开拓者在中奖公示后4个工作日内关注私信，并回复相关收款信息",
+    "description": "观看4.5版本「挥掷千星的筹码」前瞻特别节目，在公告评论区分享感兴趣的内容及理由，可参与648元现金及随机周边抽奖。",
+    "reward": "抽取5名各获648元现金、20名各获星穹铁道随机周边。",
     "coverUrl": "/images/covers/sr-51.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/13/80823548/3d86d1e56b0f768bbaf132118f1b0b21_8405626015304846167.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/13/80823548/3d86d1e56b0f768bbaf132118f1b0b21_8405626015304846167.jpg",
+    "descriptionSource": "manual",
+    "startDate": "2026.08.14",
+    "endDate": "2026.08.16"
   },
   {
     "id": "sr-52",
@@ -2240,7 +2414,7 @@
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.08.19",
     "dateType": "announcement",
     "sourcePostId": "77595646",
@@ -2249,10 +2423,13 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "「知更鸟•晴歌」主题绘画征集活动现已开启！",
+    "description": "1、活动期间，在上方指定活动页面点击“参与投稿”按钮，发布符合投稿要求的「知更鸟•晴歌」同人绘画作品，或选择符合投稿要求的历史作品来关联活动，均视为参与成功。2、未通过指定页面投稿且已发布的米游社作品，也可以通过编辑帖子-选择”参与话题“-选择“知更鸟•晴歌绘画”来关联本活动（需更新至米游社App最新版本）。",
     "reward": "，以确保星琼奖励的正常发放；※头像挂件奖励将在绘画征集活动获奖结果公示后20个工作日内发放",
     "coverUrl": "/images/covers/sr-52.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/18/288909601/d5e9385988a7a0534942e3599bf0ec4e_1250885243871379110.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/18/288909601/d5e9385988a7a0534942e3599bf0ec4e_1250885243871379110.jpg",
+    "descriptionSource": "announcement",
+    "startDate": "2026.08.19",
+    "endDate": "2026.09.09"
   },
   {
     "id": "ys-48",
@@ -2271,9 +2448,10 @@
       "v6.7版本"
     ],
     "version": "v6.7",
-    "description": "各位奇匠好呀，奇匠小助手又来啦！",
+    "description": "简单来说就是：奇匠把自己的奇域放上去，玩家们会来试玩，然后给奇匠一份反馈报告。奇匠发起一个奇域共创邀请，可以获得玩家的游玩反馈，奇匠拿到的这些反馈，可以帮助发现自己在制作时容易忽略的问题，了解玩家真实的喜好和体验感受。",
     "coverUrl": "/images/covers/ys-48.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/02/378227958/80912cccf98f286e5c516782a19ccd32_6583085937579869824.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/02/378227958/80912cccf98f286e5c516782a19ccd32_6583085937579869824.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "sr-53",
@@ -2282,7 +2460,7 @@
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.09.04",
     "dateType": "announcement",
     "sourcePostId": "77971226",
@@ -2291,10 +2469,13 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "「砂金•戏浪」主题绘画征集活动现已开启！",
+    "description": "1、活动期间，在上方指定活动页面点击“参与投稿”按钮，发布符合投稿要求的「砂金•戏浪」同人绘画作品，或选择符合投稿要求的历史作品来关联活动，均视为参与成功。2、未通过指定页面投稿且已发布的米游社作品，也可以通过编辑帖子-选择”参与话题“-选择“砂金•戏浪绘画”来关联本活动（需更新至米游社App最新版本）。",
     "reward": "，以确保星琼奖励的正常发放；※头像挂件奖励将在绘画征集活动获奖结果公示后20个工作日内发放",
     "coverUrl": "/images/covers/sr-53.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/03/288909601/24155795841c5fcdec3987fb84d2c948_7070213616265298332.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/03/288909601/24155795841c5fcdec3987fb84d2c948_7070213616265298332.png",
+    "descriptionSource": "announcement",
+    "startDate": "2026.09.04",
+    "endDate": "2026.09.25"
   },
   {
     "id": "sr-54",
@@ -2313,11 +2494,12 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "2026/9/4 11:00-2026/9/6 23:59",
+    "description": "活动期间，使用米游币参与抽抽乐活动，即有机会获得游戏虚拟道具、实物周边等奖励。每次抽奖可根据需求选择单抽或十连抽，一起来试试手气吧。本期活动期间，每次抽取需耗费200米游币，单人最多可参与50次。",
     "startDate": "2026.09.04",
     "endDate": "2026.09.06",
     "coverUrl": "/images/covers/sr-54.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/03/80823548/059ccb1005cc72f6dec82f01105aed6e_6296067122042937403.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/03/80823548/059ccb1005cc72f6dec82f01105aed6e_6296067122042937403.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "ys-49",
@@ -2337,12 +2519,13 @@
       "游戏内奖励"
     ],
     "version": "v7.1",
-    "description": "亲爱的旅行者，现在是派蒙的特别节目预告时间> <",
+    "description": "分享米游社直播间，抽取纠缠之缘奖励。参与方式 ：在米游社App进入米游社直播间，点击右上角分享按钮并分享至任意渠道，即为参与成功。活动奖励 ：纠缠之缘x10（50份）。",
     "startDate": "2026.09.07",
     "endDate": "2026.09.12",
-    "reward": "，抽取纠缠之缘奖励",
+    "reward": "分享直播间可参与抽取纠缠之缘×10（50份）；参与前瞻讨论可参与抽取原石×60（200份）。",
     "coverUrl": "/images/covers/ys-49.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/04/75276539/c0731647a7c463b34681f1410bcb31b6_3431091379746871994.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/04/75276539/c0731647a7c463b34681f1410bcb31b6_3431091379746871994.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "zzz-16",
@@ -2360,9 +2543,10 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "弗林特工坊的休假日！克拉蕾和洛克茜的行程规划中…",
+    "description": "是选择布亚斯特的落日还是维尔乌姆的海滩，又或者…这是一个绝佳的加班机会。",
     "coverUrl": "/images/covers/zzz-16.png",
-    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/upload/1bbaadf1e3e559e06c0437880c0c684a_6168933394135011786.png"
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/upload/1bbaadf1e3e559e06c0437880c0c684a_6168933394135011786.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "zzz-17",
@@ -2381,10 +2565,11 @@
       "游戏内奖励"
     ],
     "version": "v3.2",
-    "description": "版本上线后，已完成账号绑定验证的绳匠，可再次领取",
-    "reward": "添加『Z宝』为好友，也能即刻领取菲林奖励；三、完成绑定后，即可通过版本任务，领取30菲林奖励；四、除此之外，首次添加Z宝的绳匠，还可领取60菲林奖励嗯呢",
+    "description": "添加Z宝并完成账号与角色绑定，通过版本任务可领取30菲林；首次添加Z宝还可领取60菲林。已完成绑定验证的绳匠可领取3.2版本刷新后的福利。",
+    "reward": "完成绑定并通过版本任务领取30菲林；首次添加Z宝还可领取60菲林。",
     "coverUrl": "/images/covers/zzz-17.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/10/152039148/fdce64b7daebbfafdddabaa9cbdf149b_4228492068562239638.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/10/152039148/fdce64b7daebbfafdddabaa9cbdf149b_4228492068562239638.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "bh3-9",
@@ -2402,9 +2587,10 @@
       "网页活动"
     ],
     "version": "待确认",
-    "description": "亲爱的观众，万众瞩目的「火力全开！银河梦幻擂台！」就要开始了~那是最充满期待的假期，在一堆水费电费燃气费的账单里，一张比赛的宣传单格外醒目……",
+    "description": "活动期间，舰长可以使用「竞猜券」为自己支持的选手投票。积累一定数量的「竞猜券」可获取水晶、根源棱镜、远古意志、相转移镜面等奖励。1）活动期间，参赛的选手们将进行两两对决，舰长可前往赛场查看选手技能和属性，并使用「竞猜券」为自己支持的选手投票。",
     "coverUrl": "/images/covers/bh3-9.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/11/73565430/481b238dbba155c1315fb012c21375ac_8681037386043677334.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/11/73565430/481b238dbba155c1315fb012c21375ac_8681037386043677334.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "ys-50",
@@ -2422,9 +2608,12 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "旅行者好呀！这里是提瓦特徒步团(*/ω＼*)",
+    "description": "徒步团已经准备好了周边礼包和原石，快拿起手中的画笔，为沃雅妮莎绘制作品吧。活动期间，在上方指定活动页面点击“立即投稿”按钮，发布符合投稿要求的沃雅妮莎绘画作品，即视为成功参与。",
     "coverUrl": "/images/covers/ys-50.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/14/75379477/5be35a03b8317eba9078290c3376a79a_5047370119426533674.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/14/75379477/5be35a03b8317eba9078290c3376a79a_5047370119426533674.png",
+    "descriptionSource": "announcement",
+    "startDate": "2026.09.15",
+    "endDate": "2026.10.04"
   },
   {
     "id": "ys-51",
@@ -2442,9 +2631,12 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "旅行者好呀！这里是提瓦特徒步团(*/ω＼*)",
+    "description": "徒步团已经准备好了周边礼包和原石，快拿起手中的画笔，为薇斯纳绘制作品吧。活动期间，在上方指定活动页面点击“立即投稿”按钮，发布符合投稿要求的薇斯纳绘画作品，即视为成功参与。",
     "coverUrl": "/images/covers/ys-51.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/14/75379477/dd6e45ca12922c7c8b02f6defb13673a_473236172915497973.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/14/75379477/dd6e45ca12922c7c8b02f6defb13673a_473236172915497973.png",
+    "descriptionSource": "announcement",
+    "startDate": "2026.09.14",
+    "endDate": "2026.10.04"
   },
   {
     "id": "bh3-10",
@@ -2463,10 +2655,11 @@
       "v9.1版本"
     ],
     "version": "v9.1",
-    "description": "9月19日本周六晚19:30",
+    "description": "9月19日本周六晚19:30，《崩坏3》十周年庆典特别节目将在爱酱的直播间举行，同时，舰长也可以选择在米游社直播间观看节目。本次节目中，配音演员赵爽、张若瑜、孙艳琦、闫夜桥、可可味、溯浔、宴宁、Mace、阮从青、陶典、菊花花、hanser、花玲、唐雅菁将会一同揭秘9.1版本的全新内容，带来全新S级角色「时序之律者」、主线第二部后日谈「海正用火的声音歌唱」、主题活动「相遇♪回忆玩具小屋」、新服装与丰富周年活动的情报。米游社的直播间页面内设有兑换码一键复制功能，舰长可以便捷地领取特别节目福利。",
     "reward": "米游社的直播间页面内设有兑换码一键复制功能，舰长可以便捷地领取特别节目福利",
     "coverUrl": "/images/covers/bh3-10.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/15/73565430/22508e4eff4695fca51d1e53132f2871_5984052575573732983.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/15/73565430/22508e4eff4695fca51d1e53132f2871_5984052575573732983.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "bh3-11",
@@ -2485,10 +2678,11 @@
       "v9.1版本"
     ],
     "version": "v9.1",
-    "description": "角色补给时首次十连免费。点击下方链接查看新版本情报吧~",
-    "reward": "奖励，9.1版本期间还将开放更多登录活动，累计登录可领取；周年累消活动即将开放，参与各类补给累计消耗3万水晶，即可领取",
+    "description": "9.1版本「时序照新」内容前瞻，介绍时序之律者、十周年庆典及版本活动。指定活动期内首次分享网页可获得20水晶。",
+    "reward": "指定活动期内首次分享网页可得20水晶；版本内各活动奖励及条件详见专题页。",
     "coverUrl": "/images/covers/bh3-11.png",
-    "coverSourceUrl": "https://act-webstatic.mihoyo.com/puzzle/bh3/bh3_version_page_910_1452/resource/puzzle/2026/09/11/6b27d496a97ef2425bdf2ccb41a97f7d_1239701516596918870.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/18/73565430/0e62238ae4990a918b30b1ad9abf2e3a_7590189887876841159.png",
+    "descriptionSource": "manual"
   },
   {
     "id": "sr-55",
@@ -2506,9 +2700,10 @@
       "v4.6版本"
     ],
     "version": "v4.6",
-    "description": "亲爱的开拓者，4.6版本「月升之前，与兽共舞」专题展示页现已上线，一起看看新版本都有哪些内容吧！",
+    "description": "4.6版本「月升之前，与兽共舞」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-55.jpg",
-    "coverSourceUrl": "https://act-webstatic.mihoyo.com/puzzle/hkrpg/e20260913version_fasf13434_77d1c0e99b/resource/puzzle/2026/09/10/f41b5add247d200612da0920e97ad0c4_6121142611459259898.jpg"
+    "coverSourceUrl": "https://act-webstatic.mihoyo.com/puzzle/hkrpg/e20260913version_fasf13434_77d1c0e99b/resource/puzzle/2026/09/10/f41b5add247d200612da0920e97ad0c4_6121142611459259898.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "sr-56",
@@ -2517,7 +2712,7 @@
     "game": "星穹铁道",
     "gameKey": "sr",
     "type": "版本前瞻",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.09.20",
     "dateType": "announcement",
     "sourcePostId": "78279658",
@@ -2527,10 +2722,13 @@
       "v4.6版本"
     ],
     "version": "v4.6",
-    "description": "开拓者好呀~《崩坏：星穹铁道》「月升之前，与兽共舞」前瞻特别节目即将开始，请开拓者在9月20日19点30分准时点击下方链接前往观看。",
-    "reward": "在本次节目播送期间，阿姬为开拓者准备了648元现金奖励、；阿姬将从成功参与活动的开拓者中随机选取25名，各获得648元现金奖励*1或；648元现金奖励*5；3、请获得周边奖励的开拓者在系统通知发出后的4个工作日内完成周边收货地址填写，否则将视为放弃奖励；公告】周边奖励地址填写教程；获得现金奖励的开拓者在中奖公示后4个工作日内关注私信，并回复相关收款信息",
+    "description": "观看4.6版本「月升之前，与兽共舞」前瞻特别节目，在公告评论区分享感兴趣的内容及理由，可参与648元现金及随机周边抽奖。",
+    "reward": "抽取5名各获648元现金、20名各获星穹铁道随机周边。",
     "coverUrl": "/images/covers/sr-56.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/18/80823548/01a08fb07751dc89b7ec2276bcbf4216_6985613576525110693.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/18/80823548/01a08fb07751dc89b7ec2276bcbf4216_6985613576525110693.jpg",
+    "descriptionSource": "manual",
+    "startDate": "2026.09.20",
+    "endDate": "2026.09.22"
   },
   {
     "id": "ys-52",
@@ -2567,11 +2765,13 @@
     "tags": [
       "游戏内奖励"
     ],
-    "version": "待确认",
-    "description": "本次创作赛活动不设玩法品类与题材限制。在千星沙箱中开启创作之旅并按照参赛规则发布奇域，即有机会竞逐",
-    "reward": "的丰富奖励，优质奇域作品还将获得更多官方宣传资源",
+    "version": "v7.1",
+    "description": "在千星沙箱中创作并按参赛规则发布奇域，参加不限玩法与题材的「千星之约」创作赛。获评作品可获得一号创作票券、原石等奖励，优质作品还有机会获得官方宣传资源。",
+    "reward": "依评选结果分档获得原石及一号创作票券等奖励，具体名额和条件以公告为准。",
     "coverUrl": "/images/covers/ys-53.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/23/378227958/92063b6fa2eec74d086782f5e36a5203_4834383403075243196.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/23/378227958/92063b6fa2eec74d086782f5e36a5203_4834383403075243196.png",
+    "descriptionSource": "manual",
+    "endDate": "2026.11.02"
   },
   {
     "id": "ys-54",
@@ -2579,21 +2779,24 @@
     "url": "https://act.mihoyo.com/ys/community-player-works-upload/index.html",
     "game": "原神",
     "gameKey": "ys",
-    "type": "年度报告",
-    "status": "可访问",
+    "type": "其他活动",
+    "status": "已结束",
     "date": "2026.09.21",
     "dateType": "announcement",
     "sourcePostId": "78304228",
     "sourcePostTitle": "「旅途回忆」视频共创活动征集",
     "tags": [
-      "年度报告",
-      "v6.7版本"
+      "视频征集",
+      "游戏内奖励"
     ],
-    "version": "v6.7",
-    "description": "六年、七国。不知不觉间，旅行者的足迹已经遍布提瓦特。",
-    "reward": "违反法律法规、用户协议与社区规则的内容，将无法用于领取奖励；10月16日，获奖名单将在审核结束后的10个工作日内公布，请获奖的旅行者及时关注官方信息，并在规定时间内按照获奖公告要求提交奖品收货信息（姓名、收货地址、手机号），逾期视为自动放弃奖励；填写收货信息的行为则视为获奖者授权活动运营方将信息用于奖品通知及寄送，奖品发放将在获奖名单公布后60个工作日内通过邮寄方式完成，请获奖的旅行者耐心等待；本活动可多次投递，但不可重复领取奖励",
+    "version": "通用",
+    "description": "提交旅途视频或图片，参与六周年纪念视频共创。在活动页面完成提交可领取5万摩拉，另随机抽取1000名旅行者赠送派蒙角色徽章。",
+    "reward": "完成提交可领取摩拉×50000；另随机抽取1000名旅行者各赠送派蒙角色徽章。",
     "coverUrl": "/images/covers/ys-54.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/20/75276539/3ea2a99f1c1d058c43f5a583817d0262_7321402629959673490.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/20/75276539/3ea2a99f1c1d058c43f5a583817d0262_7321402629959673490.png",
+    "descriptionSource": "manual",
+    "startDate": "2026.09.21",
+    "endDate": "2026.09.30"
   },
   {
     "id": "sr-57",
@@ -2611,10 +2814,13 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "「真珠」主题绘画征集活动现已开启！",
+    "description": "1、活动期间，在上方指定活动页面点击“参与投稿”按钮，发布符合投稿要求的「真珠」同人绘画作品，或选择符合投稿要求的历史作品来关联活动，均视为参与成功。2、未通过指定页面投稿且已发布的米游社作品，也可以通过编辑帖子-选择”参与话题“-选择“真珠绘画”来关联本活动（需更新至米游社App最新版本）。",
     "reward": "，以确保星琼奖励的正常发放；※头像挂件奖励将在绘画征集活动获奖结果公示后20个工作日内发放",
     "coverUrl": "/images/covers/sr-57.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/22/288909601/cbf1d183f9812b500a042b5b40029856_1302314447205788392.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/22/288909601/cbf1d183f9812b500a042b5b40029856_1302314447205788392.jpg",
+    "descriptionSource": "announcement",
+    "startDate": "2026.09.23",
+    "endDate": "2026.10.25"
   },
   {
     "id": "bh3-12",
@@ -2632,11 +2838,12 @@
       "网页活动"
     ],
     "version": "待确认",
-    "description": "《崩坏3》十周年庆典开启",
+    "description": "《崩坏3》十周年庆典开启，米游社「签到福利」工具中也将更新十周年福利活动。活动期间累计签到7日，可额外领取水晶×60、逆熵·虚数核心、星石等奖励。活动期间，舰长在米游社内参与十周年庆典限时签到活动，除了常规签到奖励外，还可额外领取水晶、逆熵·虚数核心、星石等奖励。",
     "startDate": "2026.09.24",
     "endDate": "2026.10.12",
     "coverUrl": "/images/covers/bh3-12.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/73565533/bb233f9f617cab1e9d455a71b009bf13_3216903743282478519.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/73565533/bb233f9f617cab1e9d455a71b009bf13_3216903743282478519.png",
+    "descriptionSource": "announcement"
   },
   {
     "id": "ys-55",
@@ -2654,11 +2861,13 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "2026/9/25 12:00-2026/9/27 23:59",
+    "description": "活动期间，使用米游币参与抽抽乐活动，即有机会获得游戏虚拟道具、实物周边等奖励。每次抽奖可根据需求选择单抽或十连抽，一起来试试手气吧。本期活动期间，每次抽取需耗费200米游币，单人最多可参与50次。",
     "startDate": "2026.09.25",
     "endDate": "2026.09.27",
     "coverUrl": "/images/covers/ys-55.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/25/75276550/9f051385d11c869d5cd5ecf5087dc08f_3259930402445585848.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/25/75276550/9f051385d11c869d5cd5ecf5087dc08f_3259930402445585848.png",
+    "descriptionSource": "announcement",
+    "reward": "使用米游币抽奖，有机会获得游戏虚拟道具、实物周边等；具体奖池与数量以活动页面为准。"
   },
   {
     "id": "ys-56",
@@ -2676,11 +2885,12 @@
       "游戏内奖励"
     ],
     "version": "待确认",
-    "description": "旅行者好呀~距离我们初次相遇已经过去了六年时光，与旅行者相伴旅行的每一天，派蒙都认真地记在心里哦~",
+    "description": "与派蒙一起回顾旅程精彩经历，前往星旅鉴语测一测你的冒险风格，还可以获得原石*180、大英雄的经验、祝圣油膏等奖励。活动期间，在米游社 #周年拾光册# 话题中分享你的星旅鉴语-冒险风格，还有机会获得额外礼物哦。",
     "startDate": "2026.09.28",
     "endDate": "2026.10.18",
     "coverUrl": "/images/covers/ys-56.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/75276539/75ff1e20326fd4277efa19521c1f7122_6718200261876559041.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/75276539/75ff1e20326fd4277efa19521c1f7122_6718200261876559041.jpg",
+    "descriptionSource": "announcement"
   },
   {
     "id": "ys-57",
@@ -2698,9 +2908,10 @@
       "网页活动"
     ],
     "version": "待确认",
-    "description": "「拾音邮局」原神六周年特别公益行动正式开启！",
+    "description": "为小朋友们的心声写下回应，参与「拾音邮局」六周年特别公益行动，以回信送出解答、安慰与鼓励。",
     "coverUrl": "/images/covers/ys-57.jpg",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/75276539/3ba9459675f3d689cdad76f7b2ca07b3_891506167028452654.jpg"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/75276539/3ba9459675f3d689cdad76f7b2ca07b3_891506167028452654.jpg",
+    "descriptionSource": "manual"
   },
   {
     "id": "bh3-13",
@@ -2718,8 +2929,12 @@
       "网页活动"
     ],
     "version": "待确认",
-    "description": "「用一帧帧影像，为你记录回忆的绚烂多彩。」",
+    "description": "回顾年度数据，完成回顾可获得100水晶；分享礼盒并拆开好友礼盒，三次内必得60水晶，活动合计可获得160水晶等奖励。",
     "coverUrl": "/images/covers/bh3-13.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/73565430/bffc8cfc6b43c1e778b51b281066b543_7645004091585171225.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/73565430/bffc8cfc6b43c1e778b51b281066b543_7645004091585171225.png",
+    "descriptionSource": "manual",
+    "reward": "完成回顾可得100水晶，三次拆礼盒内必得60水晶，合计160水晶等奖励。",
+    "startDate": "2026.09.28",
+    "endDate": "2026.11.26"
   }
 ]

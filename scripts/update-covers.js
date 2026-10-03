@@ -1,6 +1,7 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isDescriptionResource } from './crawler-rules.js';
 import {
   archiveEventCover, extractPostCoverUrl, extractShareCoverUrl,
   hasValidLocalCover, normalizeCoverSourceUrl, readPublicResource
@@ -61,7 +62,10 @@ export async function updateEventCovers(options = {}) {
   const archiveOptions = { ...networkOptions, outputDir: options.outputDir,
     maxBytes: options.maxBytes, force: options.force };
   for (const entry of selected) {
-    if (!options.force && await hasValidLocalCover(entry.event, archiveOptions)) summary.skipped++;
+    // A linked agreement is not the announcement's activity. Do not give it
+    // that activity's artwork during a later automatic backfill.
+    if (isDescriptionResource(entry.event)
+      || !options.force && await hasValidLocalCover(entry.event, archiveOptions)) summary.skipped++;
     else pending.push(entry);
   }
 

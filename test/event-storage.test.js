@@ -40,6 +40,19 @@ const baseEvents = [
   }
 ];
 
+test('manual description provenance persists and survives repository description updates', () => {
+  const base = [{ ...baseEvents[0], descriptionSource: 'announcement' }];
+  const overlay = upsertEventInOverlay(createEmptyEventOverlay(), base, {
+    ...base[0], description: 'My curated summary', descriptionSource: 'manual'
+  });
+  const persisted = parsePersistedEventState(serializeEventState(overlay), base).overlay;
+  const updatedRepository = [{ ...base[0], description: 'New automatic summary' }];
+  const merged = mergeEventState(updatedRepository, persisted);
+  assert.equal(merged[0].description, 'My curated summary');
+  assert.equal(merged[0].descriptionSource, 'manual');
+  assert.equal(JSON.parse(JSON.stringify(merged))[0].descriptionSource, 'manual');
+});
+
 test('legacy arrays migrate only local additions without freezing stale repository fields', () => {
   const legacy = [
     { ...baseEvents[0], title: 'Locally edited title' },

@@ -123,6 +123,14 @@ test('schema rejects unsafe URLs and mismatched game metadata', () => {
   );
 });
 
+test('description provenance accepts only supported sources', () => {
+  for (const descriptionSource of ['announcement', 'page', 'manual']) {
+    assert.deepEqual(validateEvent({ ...events[0], descriptionSource }), []);
+  }
+  assert.ok(validateEvent({ ...events[0], descriptionSource: 'unknown' })
+    .some(issue => issue.includes('descriptionSource')));
+});
+
 test('version schema accepts only normalized classifications', () => {
   const base = {
     ...events.find(event => event.id === 'ys-11'),

@@ -82,6 +82,9 @@ jobs:
       - name: Archive Official Event Covers
         run: npm run covers
 
+      - name: Update Official Event Descriptions
+        run: npm run descriptions
+
       - name: Capture Missing Event Screenshots
         env:
           FORCE_SCREENSHOT_IDS: ${{ inputs.force_screenshot_ids }}

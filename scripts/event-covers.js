@@ -99,9 +99,23 @@ export function extractShareCoverUrl(html, pageUrl) {
 
 export function detectImageExtension(bytes) {
   if (bytes.length < 20) return null;
-  if (bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))
-    && bytes.toString('ascii', 12, 16) === 'IHDR'
-    && bytes.subarray(-8, -4).toString('ascii') === 'IEND') return 'png';
+  if (bytes.subarray(0, 8).equals(Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]))) {
+    // Some official PNGs append an author watermark after IEND. Walk the
+    // chunks to prove the image is complete instead of treating that as truncation.
+    if (bytes.readUInt32BE(8) !== 13 || bytes.toString('ascii', 12, 16) !== 'IHDR') return null;
+    let offset = 8;
+    let hasImageData = false;
+    while (offset + 12 <= bytes.length) {
+      const length = bytes.readUInt32BE(offset);
+      const next = offset + 12 + length;
+      if (next > bytes.length) return null;
+      const type = bytes.toString('ascii', offset + 4, offset + 8);
+      if (type === 'IDAT') hasImageData = true;
+      if (type === 'IEND') return length === 0 && hasImageData ? 'png' : null;
+      offset = next;
+    }
+    return null;
+  }
   if (bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff
     && bytes.at(-2) === 0xff && bytes.at(-1) === 0xd9) return 'jpg';
   if (bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WEBP'

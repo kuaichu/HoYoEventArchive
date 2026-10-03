@@ -53,6 +53,7 @@ export const EVENT_FIELDS = Object.freeze([
   'tags',
   'version',
   'description',
+  'descriptionSource',
   'reward',
   'rewards'
 ]);
@@ -292,6 +293,11 @@ export function normalizeEvent(raw, fallback = {}) {
     if (value) normalized[field] = value;
   }
 
+  const descriptionSource = own('descriptionSource') ? raw.descriptionSource : fallbackEvent.descriptionSource;
+  if (['announcement', 'page', 'manual'].includes(descriptionSource)) {
+    normalized.descriptionSource = descriptionSource;
+  }
+
   return normalized;
 }
 
@@ -341,6 +347,9 @@ export function validateEvent(event, index = -1) {
   }
   if (event?.dateType !== undefined && event.dateType !== 'announcement') {
     issues.push(`${prefix}.dateType is not supported`);
+  }
+  if (event?.descriptionSource !== undefined && !['announcement', 'page', 'manual'].includes(event.descriptionSource)) {
+    issues.push(`${prefix}.descriptionSource is not supported`);
   }
   if (event?.endDate !== undefined && !normalizeComparableDate(event.endDate)) {
     issues.push(`${prefix}.endDate must be a valid YYYY.MM.DD date`);
