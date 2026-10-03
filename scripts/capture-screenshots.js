@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { normalizeStoredEventUrl } from '../src/event-url.js';
+import { hasValidLocalCover } from './event-covers.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -39,10 +40,12 @@ export function selectMissingScreenshotEvents(
   events,
   hasScreenshot,
   limit = Number.POSITIVE_INFINITY,
-  forceIds = new Set()
+  forceIds = new Set(),
+  hasCover = () => false
 ) {
   return events
     .filter(event => event.status !== '已失效')
+    .filter(event => forceIds.has(event.id) || !hasCover(event))
     .filter(event => forceIds.has(event.id) || !hasScreenshot(event))
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, limit);
@@ -351,11 +354,17 @@ export async function captureScreenshots() {
   const events = JSON.parse(fs.readFileSync(eventsPath, 'utf8'));
   console.log(`Loaded ${events.length} events from database.`);
 
+  const archivedCoverIds = new Set();
+  for (const event of events) {
+    if (await hasValidLocalCover(event)) archivedCoverIds.add(event.id);
+  }
+
   const missingEvents = selectMissingScreenshotEvents(
     events,
     event => fs.existsSync(path.join(outputDir, `${event.id}.png`)),
     captureLimit,
-    requestedScreenshotIds
+    requestedScreenshotIds,
+    event => archivedCoverIds.has(event.id)
   );
 
   console.log(`Found ${missingEvents.length} missing screenshot(s) eligible for capture.`);

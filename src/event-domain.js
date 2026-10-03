@@ -48,6 +48,8 @@ export const EVENT_FIELDS = Object.freeze([
   'endDate',
   'sourcePostId',
   'sourcePostTitle',
+  'coverUrl',
+  'coverSourceUrl',
   'tags',
   'version',
   'description',
@@ -151,6 +153,27 @@ export function escapeHtml(value) {
 
 export function safeExternalUrl(value) {
   return normalizeStoredEventUrl(value);
+}
+
+export function safeCoverUrl(value) {
+  if (typeof value !== 'string') return null;
+  const cleaned = value.trim();
+  if (/^\/images\/covers\/[a-z0-9]+-[a-z0-9-]+\.(?:jpg|jpeg|png|webp)$/i.test(cleaned)) {
+    return cleaned;
+  }
+  try {
+    const url = new URL(cleaned);
+    if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) return null;
+    // Image transformations and signed URLs depend on their original query parameters.
+    return url.toString();
+  } catch {
+    return null;
+  }
+}
+
+function safeCoverSourceUrl(value) {
+  const url = safeCoverUrl(value);
+  return url && !url.startsWith('/') ? url : null;
 }
 
 const BUILD_SCREENSHOT_VERSION = typeof __SCREENSHOT_VERSION__ === 'string'
@@ -263,6 +286,12 @@ export function normalizeEvent(raw, fallback = {}) {
     }
   }
 
+  for (const field of ['coverUrl', 'coverSourceUrl']) {
+    const sanitize = field === 'coverUrl' ? safeCoverUrl : safeCoverSourceUrl;
+    const value = sanitize(own(field) ? raw[field] : fallbackEvent[field]);
+    if (value) normalized[field] = value;
+  }
+
   return normalized;
 }
 
@@ -336,6 +365,15 @@ export function validateEvent(event, index = -1) {
 
   if (!safeExternalUrl(event?.url)) {
     issues.push(`${prefix}.url must be an absolute credential-free HTTP(S) URL`);
+  }
+  if (event?.coverUrl !== undefined && event.coverUrl !== null && !safeCoverUrl(event.coverUrl)) {
+    issues.push(`${prefix}.coverUrl must be an archived cover path or a credential-free HTTP(S) URL`);
+  }
+  if (
+    event?.coverSourceUrl !== undefined && event.coverSourceUrl !== null &&
+    !safeCoverSourceUrl(event.coverSourceUrl)
+  ) {
+    issues.push(`${prefix}.coverSourceUrl must be an absolute credential-free HTTP(S) URL`);
   }
   if (GAME_META[event?.gameKey]?.name !== event?.game) {
     issues.push(`${prefix}.game must match gameKey`);

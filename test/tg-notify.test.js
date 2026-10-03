@@ -1,14 +1,27 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import path from 'node:path';
 import test from 'node:test';
 
 import {
   buildFinishedNotificationPlan,
   deleteDeliveredMessages,
   eventHashTags,
+  eventPhotoPath,
   formatVersion,
   resolveTelegramTargets
 } from '../scripts/tg-notify.js';
+
+test('event cards prefer archived official covers and retain screenshot fallback', () => {
+  const cover = path.join('public', 'images', 'covers', 'ys-56.jpg');
+  const screenshot = path.join('public', 'images', 'screenshots', 'ys-56.png');
+  const event = { id: 'ys-56', coverUrl: '/images/covers/ys-56.jpg' };
+  assert.equal(eventPhotoPath(event, candidate => [cover, screenshot].includes(candidate)), cover);
+  assert.equal(eventPhotoPath(event, candidate => candidate === screenshot), screenshot);
+  assert.equal(eventPhotoPath(event, () => false), null);
+  assert.equal(eventPhotoPath({ ...event, coverUrl: '/images/covers/../../secret.jpg' }, () => true), screenshot);
+  assert.equal(eventPhotoPath({ id: '../secret' }, () => true), null);
+});
 
 const baseInput = {
   status: 'success',

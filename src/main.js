@@ -7,9 +7,9 @@ import {
   normalizeBookmarks,
   projectEventForDisplay,
   safeExternalUrl,
-  safeScreenshotUrl,
   statusMeta
 } from './event-domain.js';
+import { eventImageCandidates, setEventImage } from './event-cover.js';
 import {
   mergeEventState,
   parsePersistedEventState,
@@ -814,11 +814,8 @@ function renderEvents() {
     elEventsContainer.className = 'event-grid';
     elEventsContainer.innerHTML = filtered.map(e => {
       const isBookmarked = state.bookmarks.includes(e.id);
-      const gameCover = gameCovers[e.gameKey] || gameCovers.all;
       const status = statusMeta(e.status);
-      const imageSrc = e.status === '已失效'
-        ? gameCover
-        : (safeScreenshotUrl(e.id) || gameCover);
+      const imageSrc = eventImageCandidates(e)[0];
       const detailHref = serializeRoute({ name: 'event', eventId: e.id });
       return `
         <div class="event-card" data-id="${escapeHtml(e.id)}">
@@ -830,7 +827,7 @@ function renderEvents() {
             <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-id="${escapeHtml(e.id)}" title="${isBookmarked ? '取消收藏' : '加入收藏'}">
               <i class="${isBookmarked ? 'fa-solid' : 'fa-regular'} fa-star"></i>
             </button>
-            <img class="card-img" data-event-image data-game-key="${escapeHtml(e.gameKey)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" />
+            <img class="card-img" data-event-image data-event-id="${escapeHtml(e.id)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" referrerpolicy="no-referrer" />
           </div>
           <div class="event-details">
             <div class="event-info-top">
@@ -873,17 +870,14 @@ function renderEvents() {
       </div>
       ${filtered.map(e => {
         const isBookmarked = state.bookmarks.includes(e.id);
-        const gameCover = gameCovers[e.gameKey] || gameCovers.all;
         const status = statusMeta(e.status);
-        const imageSrc = e.status === '已失效'
-          ? gameCover
-          : (safeScreenshotUrl(e.id) || gameCover);
+        const imageSrc = eventImageCandidates(e)[0];
         const detailHref = serializeRoute({ name: 'event', eventId: e.id });
         return `
           <div class="event-list-row" data-id="${escapeHtml(e.id)}">
             <a class="event-detail-link" href="${escapeHtml(detailHref)}" data-route-link aria-label="查看 ${escapeHtml(e.title)} 详情"></a>
             <div class="list-title-cell">
-              <img class="list-img-thumbnail" data-event-image data-game-key="${escapeHtml(e.gameKey)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" />
+              <img class="list-img-thumbnail" data-event-image data-event-id="${escapeHtml(e.id)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" referrerpolicy="no-referrer" />
               <span class="list-title-text" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</span>
             </div>
             <div class="list-game-cell">${escapeHtml(e.game)}</div>
@@ -906,10 +900,9 @@ function renderEvents() {
     `;
   }
 
+  const eventsById = new Map(filtered.map(event => [event.id, event]));
   elEventsContainer.querySelectorAll('img[data-event-image]').forEach(image => {
-    image.addEventListener('error', () => {
-      image.src = gameCovers[image.dataset.gameKey] || gameCovers.all;
-    }, { once: true });
+    setEventImage(image, eventsById.get(image.dataset.eventId));
   });
 
   // Bind click handlers to bookmark buttons
@@ -1036,17 +1029,7 @@ function renderRoute(route) {
 function openDetailModal(eventObj) {
   state.selectedEvent = eventObj;
   
-  const fallbackCover = gameCovers[eventObj.gameKey] || gameCovers.all;
-  const screenshotUrl = safeScreenshotUrl(eventObj.id);
-  if (eventObj.status === '已失效' || !screenshotUrl) {
-    elModalHeroImg.src = fallbackCover;
-  } else {
-    elModalHeroImg.src = screenshotUrl;
-    elModalHeroImg.onerror = function() {
-      this.onerror = null;
-      this.src = fallbackCover;
-    };
-  }
+  setEventImage(elModalHeroImg, eventObj);
   elModalTitle.textContent = eventObj.title;
   elModalDate.textContent = formatEventDate(eventObj);
   elModalVersion.textContent = eventObj.version || '待确认';

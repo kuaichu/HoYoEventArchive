@@ -3,8 +3,10 @@ import fs from 'node:fs';
 import test from 'node:test';
 
 import {
+  normalizeEvent,
   projectEventForDisplay,
   resolveEventStatus,
+  safeCoverUrl,
   validateEvent,
   validateEventCollection
 } from '../src/event-domain.js';
@@ -12,6 +14,53 @@ import {
 const events = JSON.parse(
   fs.readFileSync(new URL('../src/events.json', import.meta.url), 'utf8')
 );
+
+test('cover URLs accept only safe archived paths and credential-free remote images', () => {
+  for (const extension of ['jpg', 'jpeg', 'png', 'webp']) {
+    const path = `/images/covers/ys-1.${extension}`;
+    assert.equal(safeCoverUrl(path), path);
+  }
+  const remote = 'https://example.com/cover?mode=crop&win_mode=dark&utm_source=signed&signature=a%2Fb';
+  assert.equal(safeCoverUrl(remote), remote);
+  for (const value of [
+    'javascript:alert(1)', 'data:image/png;base64,eA==', '//example.com/a.jpg',
+    'https://user:pass@example.com/a.jpg', '/images/covers/../ys-1.jpg',
+    '/images/covers/ys-1.svg', '/images/screenshots/ys-1.png', '/images/covers/ys-1.jpg?evil=1',
+    null, 42
+  ]) {
+    assert.equal(safeCoverUrl(value), null, String(value));
+  }
+});
+
+test('cover fields survive normalization while explicit null or unsafe URLs clear only their own field', () => {
+  const fallback = {
+    ...events[0],
+    coverUrl: '/images/covers/ys-1.jpg',
+    coverSourceUrl: 'https://example.com/cover.jpg?mode=resize&token=a%2Fb'
+  };
+  const retained = normalizeEvent({ id: fallback.id, title: 'Edited title' }, fallback);
+  assert.equal(retained.coverUrl, fallback.coverUrl);
+  assert.equal(retained.coverSourceUrl, fallback.coverSourceUrl);
+  for (const coverUrl of [null, undefined, 'javascript:bad']) {
+    const cleared = normalizeEvent({ ...fallback, coverUrl }, fallback);
+    assert.equal(cleared.coverUrl, undefined);
+    assert.equal(cleared.coverSourceUrl, fallback.coverSourceUrl);
+  }
+  const cleared = normalizeEvent({ ...fallback, coverSourceUrl: null }, fallback);
+  assert.equal(cleared.coverUrl, fallback.coverUrl);
+  assert.equal(cleared.coverSourceUrl, undefined);
+  assert.equal(normalizeEvent({ ...fallback, coverSourceUrl: fallback.coverUrl }, fallback).coverSourceUrl, undefined);
+});
+
+test('cover schema validates archived images, source URLs, and explicit removals', () => {
+  assert.deepEqual(validateEvent({
+    ...events[0], coverUrl: '/images/covers/ys-1.webp', coverSourceUrl: 'https://example.com/image.jpg'
+  }), []);
+  assert.deepEqual(validateEvent({ ...events[0], coverUrl: null, coverSourceUrl: null }), []);
+  assert.notDeepEqual(validateEvent({ ...events[0], coverUrl: '/other/ys-1.jpg' }), []);
+  assert.notDeepEqual(validateEvent({ ...events[0], coverSourceUrl: '/images/covers/ys-1.jpg' }), []);
+  assert.notDeepEqual(validateEvent({ ...events[0], coverSourceUrl: 'https://user@example.com/image.jpg' }), []);
+});
 
 test('announcement dates never imply that an event has ended', () => {
   const event = {

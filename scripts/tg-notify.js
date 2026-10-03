@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { safeCoverUrl, safeScreenshotUrl } from '../src/event-domain.js';
 
 const __filename = fileURLToPath(import.meta.url);
 
@@ -107,7 +108,9 @@ async function sendPhoto(caption, target, photoPath) {
   form.append('caption', caption);
   form.append('parse_mode', 'HTML');
   form.append('disable_web_page_preview', 'true');
-  form.append('photo', new Blob([bytes], { type: 'image/png' }), path.basename(photoPath));
+  const mimeType = /\.png$/i.test(photoPath) ? 'image/png'
+    : /\.webp$/i.test(photoPath) ? 'image/webp' : 'image/jpeg';
+  form.append('photo', new Blob([bytes], { type: mimeType }), path.basename(photoPath));
 
   const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
     method: 'POST',
@@ -350,18 +353,29 @@ Run: <a href="${runUrl}">#${runId}</a>`;
   };
 }
 
+export function eventPhotoPath(event, hasFile = existsSync) {
+  const coverUrl = safeCoverUrl(event?.coverUrl);
+  if (coverUrl?.startsWith('/images/covers/')) {
+    const coverPath = path.join('public', coverUrl.slice(1));
+    if (hasFile(coverPath)) return coverPath;
+  }
+  if (!safeScreenshotUrl(event?.id)) return null;
+  const screenshotPath = path.join('public', 'images', 'screenshots', `${event.id}.png`);
+  return hasFile(screenshotPath) ? screenshotPath : null;
+}
+
 async function sendEventCards(events, targets, deleteAfterSeconds = 0) {
   const results = [];
 
   for (const event of events) {
     const caption = eventCaption(event);
-    const screenshotPath = path.join('public', 'images', 'screenshots', `${event.id}.png`);
+    const photoPath = eventPhotoPath(event);
 
     for (const target of chatIds(targets)) {
       try {
         let message;
-        if (existsSync(screenshotPath)) {
-          message = await sendPhoto(caption, target, screenshotPath);
+        if (photoPath) {
+          message = await sendPhoto(caption, target, photoPath);
         } else {
           message = await sendMessage(caption, target);
         }

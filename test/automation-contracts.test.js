@@ -173,6 +173,24 @@ test('forced screenshot IDs are recaptured even when an image already exists', (
   assert.deepEqual(selected.map(event => event.id), ['existing', 'missing']);
 });
 
+test('archived official covers skip screenshots unless explicitly forced', () => {
+  const events = [
+    { id: 'official', date: '2026.07.19', status: '可访问' },
+    { id: 'missing', date: '2026.07.18', status: '可访问' }
+  ];
+  const hasCover = event => event.id === 'official';
+  assert.deepEqual(
+    selectMissingScreenshotEvents(events, () => false, Infinity, new Set(), hasCover)
+      .map(event => event.id),
+    ['missing']
+  );
+  assert.deepEqual(
+    selectMissingScreenshotEvents(events, () => false, Infinity, new Set(['official']), hasCover)
+      .map(event => event.id),
+    ['official', 'missing']
+  );
+});
+
 test('event page readiness distinguishes GPU warning, loading, and the main UI', () => {
   assert.equal(
     classifyEventPageState({ coverText: '请开启浏览器硬件加速，获得更流畅的动画体验' }),

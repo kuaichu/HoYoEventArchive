@@ -17,6 +17,7 @@ import {
   selectEventTitle
 } from './crawler-rules.js';
 import { isNumericVersion } from './version-classification.js';
+import { extractPostCoverUrl, extractShareCoverUrl } from './event-covers.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -212,6 +213,7 @@ export async function runCrawler() {
 
           const postId = post.post_id;
           const subject = post.subject;
+          const postCoverUrl = extractPostCoverUrl(item);
           const structuredStr = post.structured_content;
 
           if (!structuredStr) {
@@ -265,6 +267,12 @@ export async function runCrawler() {
           const existingEvent = eventsByCanonicalUrl.get(canonicalUrl);
           if (existingEvent) {
             const sameSource = !existingEvent.sourcePostId || String(existingEvent.sourcePostId) === String(postId);
+            if (sameSource && postCoverUrl && !existingEvent.coverSourceUrl) {
+              existingEvent.coverSourceUrl = postCoverUrl;
+              existingEvent.sourcePostId ||= String(postId);
+              existingEvent.sourcePostTitle ||= subject;
+              updatedEventsCount++;
+            }
             if (sameSource && enrichExistingIds.has(existingEvent.id)) {
               const enrichment = enrichEventWithMetadata(existingEvent, announcementMetadata);
               if (enrichment.changed) {
@@ -282,6 +290,7 @@ export async function runCrawler() {
           // Scrape metadata using Puppeteer
           let eventTitle = subject;
           let eventDesc = '提瓦特/米游社官方网页活动。';
+          let shareCoverUrl = null;
           
           let page;
           
@@ -302,6 +311,9 @@ export async function runCrawler() {
             });
             
             eventTitle = selectEventTitle(subject, pageData.title, pageData.ogTitle);
+            if (!postCoverUrl) {
+              shareCoverUrl = extractShareCoverUrl(await page.content(), page.url());
+            }
             if (pageData.desc && pageData.desc.trim().length > 10) {
               eventDesc = pageData.desc.trim();
             }
@@ -365,6 +377,7 @@ export async function runCrawler() {
             dateType: 'announcement',
             sourcePostId: String(postId),
             sourcePostTitle: subject,
+            ...((postCoverUrl || shareCoverUrl) ? { coverSourceUrl: postCoverUrl || shareCoverUrl } : {}),
             tags: tags.length > 0 ? tags : ['网页活动'],
             version: version,
             description: announcementMetadata.description || eventDesc,

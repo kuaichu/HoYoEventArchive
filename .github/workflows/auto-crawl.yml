@@ -61,6 +61,11 @@ jobs:
       - name: Install Chromium for Puppeteer
         run: npx puppeteer browsers install chrome
 
+      - name: Install Chinese fonts for screenshot fallbacks
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y fonts-noto-cjk
+
       - name: Record Start Time
         id: start_step
         run: |
@@ -73,6 +78,9 @@ jobs:
 
       - name: Update Event Statuses
         run: node scripts/update-statuses.js
+
+      - name: Archive Official Event Covers
+        run: npm run covers
 
       - name: Capture Missing Event Screenshots
         env:
@@ -99,7 +107,7 @@ jobs:
       - name: Detect Generated Changes
         id: change_step
         run: |
-          git add src/events.json public/images/screenshots
+          git add src/events.json public/images/screenshots public/images/covers
 
           if git diff --cached --quiet; then
             echo "No new events or updates found."

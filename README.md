@@ -99,11 +99,19 @@ npm test
   ```
   一键重新从 miHoYo 官方 CDN 下载各游戏官方透明 PNG 高精标志与最新静态资产。
 
+* **归档活动官方封面**：
+  ```bash
+  npm run covers
+  ```
+  优先从米游社公告获取封面和帖子原图，没有可用公告图时尝试活动页面的 `og:image` / `twitter:image`。图片校验后保存到 `public/images/covers/`，`events.json` 记录本地 `coverUrl` 和原始 `coverSourceUrl`；抓取失败保留已有封面和截图。
+
+  可用 `-- --ids=ys-56,sr-52` 定向补图、`-- --force` 重新归档、`-- --dry-run` 查看处理范围。前端按官方封面、来源原图、网页截图、游戏默认图逐级降级；后台编辑和导出保留封面信息。
+
 * **生成网页截图封面**：
   ```bash
   node scripts/capture-screenshots.js
   ```
-  读取活动数据库，利用 Puppeteer 为缺失预览图的非失效活动生成 1024×576 缩略图，保存至 `public/images/screenshots/`。
+  读取活动数据库，利用 Puppeteer 为没有有效归档封面且缺少截图的非失效活动生成 1024×576 缩略图，保存至 `public/images/screenshots/`。已有截图继续作为兜底保留；`--force=活动ID` 可强制重拍。自动维护先归档官方封面，再补截图，并安装中文字库用于截图。
 
 自动维护工作流会在生成数据后运行完整测试和生产构建，只有验证成功才提交到 `main`。Cloudflare Pages 的构建与部署统一由 `.github/workflows/deploy-pages.yml` 执行。
 

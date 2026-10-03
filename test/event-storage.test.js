@@ -102,6 +102,50 @@ test('overlays can explicitly remove optional fields', () => {
   assert.equal(mergeEventState(baseWithEndDate, reparsed.overlay)[0].endDate, undefined);
 });
 
+test('cover edits and additions survive local persistence and JSON export', () => {
+  const covers = {
+    coverUrl: '/images/covers/ys-1.jpg',
+    coverSourceUrl: 'https://example.com/image?mode=resize&signature=a%2Fb'
+  };
+  let overlay = upsertEventInOverlay(createEmptyEventOverlay(), baseEvents, {
+    ...baseEvents[0], ...covers
+  });
+  overlay = upsertEventInOverlay(overlay, baseEvents, {
+    ...baseEvents[0], ...covers, id: 'ys-9', url: 'https://act.mihoyo.com/custom'
+  });
+  const reparsed = parsePersistedEventState(serializeEventState(overlay), baseEvents);
+  const exported = JSON.parse(JSON.stringify(mergeEventState(baseEvents, reparsed.overlay)));
+  for (const id of ['ys-1', 'ys-9']) {
+    const event = exported.find(event => event.id === id);
+    assert.equal(event.coverUrl, covers.coverUrl);
+    assert.equal(event.coverSourceUrl, covers.coverSourceUrl);
+  }
+});
+
+test('title edits retain repository covers and explicit removals do not resurrect them', () => {
+  const baseWithCovers = [{
+    ...baseEvents[0],
+    coverUrl: '/images/covers/ys-1.jpg',
+    coverSourceUrl: 'https://example.com/image.jpg'
+  }];
+  const edited = upsertEventInOverlay(createEmptyEventOverlay(), baseWithCovers, {
+    ...baseWithCovers[0], title: 'Edited title'
+  });
+  assert.equal(edited.overrides['ys-1'].coverUrl, undefined);
+  assert.equal(mergeEventState(baseWithCovers, edited)[0].coverUrl, baseWithCovers[0].coverUrl);
+  for (const value of [null, 'javascript:bad']) {
+    const removed = upsertEventInOverlay(edited, baseWithCovers, {
+      ...baseWithCovers[0], coverUrl: value, coverSourceUrl: value
+    });
+    const reparsed = parsePersistedEventState(serializeEventState(removed), baseWithCovers);
+    const merged = mergeEventState(baseWithCovers, reparsed.overlay)[0];
+    assert.equal(removed.overrides['ys-1'].coverUrl, null);
+    assert.equal(removed.overrides['ys-1'].coverSourceUrl, null);
+    assert.equal(merged.coverUrl, undefined);
+    assert.equal(merged.coverSourceUrl, undefined);
+  }
+});
+
 test('invalid additions are dropped and invalid override fields fall back to repository values', () => {
   const raw = JSON.stringify({
     version: 2,
