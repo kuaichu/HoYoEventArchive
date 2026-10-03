@@ -2,13 +2,9 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  createEmptyEventOverlay,
-  deleteEventFromOverlay,
   mergeEventState,
-  nextEventId,
   parsePersistedEventState,
-  serializeEventState,
-  upsertEventInOverlay
+  serializeEventState
 } from '../src/event-storage.js';
 
 const baseEvents = [
@@ -42,9 +38,13 @@ const baseEvents = [
 
 test('manual description provenance persists and survives repository description updates', () => {
   const base = [{ ...baseEvents[0], descriptionSource: 'announcement' }];
-  const overlay = upsertEventInOverlay(createEmptyEventOverlay(), base, {
-    ...base[0], description: 'My curated summary', descriptionSource: 'manual'
+  const raw = JSON.stringify({
+    version: 2,
+    overrides: { 'ys-1': { description: 'My curated summary', descriptionSource: 'manual' } },
+    additions: [],
+    deletedIds: []
   });
+  const overlay = parsePersistedEventState(raw, base).overlay;
   const persisted = parsePersistedEventState(serializeEventState(overlay), base).overlay;
   const updatedRepository = [{ ...base[0], description: 'New automatic summary' }];
   const merged = mergeEventState(updatedRepository, persisted);
@@ -74,25 +74,26 @@ test('legacy arrays migrate only local additions without freezing stale reposito
 });
 
 test('versioned overlays persist edits, tombstones, and additions', () => {
-  let overlay = createEmptyEventOverlay();
-  overlay = upsertEventInOverlay(overlay, baseEvents, {
-    ...baseEvents[0],
-    title: 'Persistent edit'
-  });
-  overlay = deleteEventFromOverlay(overlay, baseEvents, 'sr-1');
-  overlay = upsertEventInOverlay(overlay, baseEvents, {
-    ...baseEvents[0],
-    id: 'ys-2',
-    title: 'Persistent addition',
-    url: 'https://act.mihoyo.com/addition'
+  const raw = JSON.stringify({
+    version: 2,
+    overrides: { 'ys-1': { title: 'Persistent edit' } },
+    deletedIds: ['sr-1'],
+    additions: [{
+      ...baseEvents[0],
+      id: 'ys-2',
+      title: 'Persistent addition',
+      url: 'https://act.mihoyo.com/addition'
+    }]
   });
 
-  const reparsed = parsePersistedEventState(serializeEventState(overlay), baseEvents);
-  const merged = mergeEventState(baseEvents, reparsed.overlay);
+  const reparsed = parsePersistedEventState(raw, baseEvents);
+  const newRepositoryEvent = { ...baseEvents[0], id: 'bh3-1', gameKey: 'bh3' };
+  const merged = mergeEventState([...baseEvents, newRepositoryEvent], reparsed.overlay);
 
   assert.equal(merged.find(event => event.id === 'ys-1').title, 'Persistent edit');
   assert.equal(merged.some(event => event.id === 'sr-1'), false);
   assert.equal(merged.some(event => event.id === 'ys-2'), true);
+  assert.equal(merged.some(event => event.id === 'bh3-1'), true);
 });
 
 test('corrupt or incompatible storage falls back to repository data', () => {
@@ -105,13 +106,15 @@ test('corrupt or incompatible storage falls back to repository data', () => {
 
 test('overlays can explicitly remove optional fields', () => {
   const baseWithEndDate = [{ ...baseEvents[0], endDate: '2026.01.31' }];
-  const overlay = upsertEventInOverlay(createEmptyEventOverlay(), baseWithEndDate, {
-    ...baseWithEndDate[0],
-    endDate: undefined
+  const raw = JSON.stringify({
+    version: 2,
+    overrides: { 'ys-1': { endDate: null } },
+    additions: [],
+    deletedIds: []
   });
-  const reparsed = parsePersistedEventState(serializeEventState(overlay), baseWithEndDate);
+  const reparsed = parsePersistedEventState(raw, baseWithEndDate);
 
-  assert.equal(overlay.overrides['ys-1'].endDate, null);
+  assert.equal(reparsed.overlay.overrides['ys-1'].endDate, null);
   assert.equal(mergeEventState(baseWithEndDate, reparsed.overlay)[0].endDate, undefined);
 });
 
@@ -120,12 +123,13 @@ test('cover edits and additions survive local persistence and JSON export', () =
     coverUrl: '/images/covers/ys-1.jpg',
     coverSourceUrl: 'https://example.com/image?mode=resize&signature=a%2Fb'
   };
-  let overlay = upsertEventInOverlay(createEmptyEventOverlay(), baseEvents, {
-    ...baseEvents[0], ...covers
+  const raw = JSON.stringify({
+    version: 2,
+    overrides: { 'ys-1': covers },
+    additions: [{ ...baseEvents[0], ...covers, id: 'ys-9', url: 'https://act.mihoyo.com/custom' }],
+    deletedIds: []
   });
-  overlay = upsertEventInOverlay(overlay, baseEvents, {
-    ...baseEvents[0], ...covers, id: 'ys-9', url: 'https://act.mihoyo.com/custom'
-  });
+  const overlay = parsePersistedEventState(raw, baseEvents).overlay;
   const reparsed = parsePersistedEventState(serializeEventState(overlay), baseEvents);
   const exported = JSON.parse(JSON.stringify(mergeEventState(baseEvents, reparsed.overlay)));
   for (const id of ['ys-1', 'ys-9']) {
@@ -138,18 +142,30 @@ test('cover edits and additions survive local persistence and JSON export', () =
 test('title edits retain repository covers and explicit removals do not resurrect them', () => {
   const baseWithCovers = [{
     ...baseEvents[0],
+    endDate: '2026.01.31',
     coverUrl: '/images/covers/ys-1.jpg',
     coverSourceUrl: 'https://example.com/image.jpg'
   }];
-  const edited = upsertEventInOverlay(createEmptyEventOverlay(), baseWithCovers, {
-    ...baseWithCovers[0], title: 'Edited title'
+  const editedRaw = JSON.stringify({
+    version: 2,
+    overrides: { 'ys-1': { title: 'Edited title' } },
+    additions: [],
+    deletedIds: []
   });
+  const edited = parsePersistedEventState(editedRaw, baseWithCovers).overlay;
   assert.equal(edited.overrides['ys-1'].coverUrl, undefined);
-  assert.equal(mergeEventState(baseWithCovers, edited)[0].coverUrl, baseWithCovers[0].coverUrl);
+  const updatedRepositoryEvent = { ...baseWithCovers[0], endDate: '2026.02.28' };
+  const mergedEditedEvent = mergeEventState([updatedRepositoryEvent], edited)[0];
+  assert.equal(mergedEditedEvent.coverUrl, baseWithCovers[0].coverUrl);
+  assert.equal(mergedEditedEvent.endDate, '2026.02.28');
   for (const value of [null, 'javascript:bad']) {
-    const removed = upsertEventInOverlay(edited, baseWithCovers, {
-      ...baseWithCovers[0], coverUrl: value, coverSourceUrl: value
+    const removedRaw = JSON.stringify({
+      version: 2,
+      overrides: { 'ys-1': { coverUrl: value, coverSourceUrl: value } },
+      additions: [],
+      deletedIds: []
     });
+    const removed = parsePersistedEventState(removedRaw, baseWithCovers).overlay;
     const reparsed = parsePersistedEventState(serializeEventState(removed), baseWithCovers);
     const merged = mergeEventState(baseWithCovers, reparsed.overlay)[0];
     assert.equal(removed.overrides['ys-1'].coverUrl, null);
@@ -194,16 +210,4 @@ test('duplicate additions are normalized to one event ID', () => {
 
   assert.equal(merged.filter(event => event.id === 'ys-9').length, 1);
   assert.equal(merged.find(event => event.id === 'ys-9').title, 'Last value wins');
-});
-
-test('new IDs never reuse deleted or repository-backed IDs', () => {
-  const overlay = {
-    version: 2,
-    overrides: {},
-    additions: [{ ...baseEvents[0], id: 'ys-3', url: 'https://act.mihoyo.com/three' }],
-    deletedIds: ['ys-2']
-  };
-  const base = [baseEvents[0], { ...baseEvents[0], id: 'ys-2' }];
-
-  assert.equal(nextEventId('ys', base, overlay), 'ys-4');
 });

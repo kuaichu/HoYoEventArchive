@@ -131,56 +131,6 @@ export function mergeEventState(baseEvents, overlay) {
   return [...mergedBase, ...normalizedOverlay.additions];
 }
 
-export function upsertEventInOverlay(overlay, baseEvents, event) {
-  const next = cloneOverlay(overlay);
-  const baseEvent = baseEvents.find(candidate => candidate.id === event?.id);
-  const normalized = normalizeEvent(event, baseEvent);
-  if (!normalized) throw new Error('Event has an invalid ID');
-
-  next.deletedIds = next.deletedIds.filter(id => id !== normalized.id);
-  if (baseEvent) {
-    const patch = eventPatch(baseEvent, normalized);
-    if (Object.keys(patch).length > 0) next.overrides[normalized.id] = patch;
-    else delete next.overrides[normalized.id];
-    next.additions = next.additions.filter(candidate => candidate.id !== normalized.id);
-  } else {
-    const index = next.additions.findIndex(candidate => candidate.id === normalized.id);
-    if (index >= 0) next.additions[index] = normalized;
-    else next.additions.push(normalized);
-  }
-
-  return next;
-}
-
-export function deleteEventFromOverlay(overlay, baseEvents, eventId) {
-  const next = cloneOverlay(overlay);
-  const isBaseEvent = baseEvents.some(event => event.id === eventId);
-
-  delete next.overrides[eventId];
-  next.additions = next.additions.filter(event => event.id !== eventId);
-  if (isBaseEvent && !next.deletedIds.includes(eventId)) next.deletedIds.push(eventId);
-
-  return next;
-}
-
 export function serializeEventState(overlay) {
   return JSON.stringify(cloneOverlay(overlay));
-}
-
-export function nextEventId(gameKey, baseEvents, overlay) {
-  const prefix = `${gameKey}-`;
-  const usedIds = new Set([
-    ...baseEvents.map(event => event.id),
-    ...(overlay?.additions || []).map(event => event.id),
-    ...(overlay?.deletedIds || [])
-  ]);
-  let maxNumber = 0;
-
-  for (const id of usedIds) {
-    if (!id.startsWith(prefix)) continue;
-    const suffix = Number.parseInt(id.slice(prefix.length), 10);
-    if (Number.isInteger(suffix) && suffix > maxNumber) maxNumber = suffix;
-  }
-
-  return `${prefix}${maxNumber + 1}`;
 }

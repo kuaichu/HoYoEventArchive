@@ -108,10 +108,10 @@ let elEventsContainer, elTimelineContainer;
 let elStatTotal, elStatAvailable, elStatExpired;
 let elHeroStatTotal, elHeroStatAvailable, elHeroStatExpired;
 let elCountYs, elCountSr, elCountZzz, elCountBh3;
-let elSearchInput, elHeroSearchInput;
+let elHeroSearchInput;
 let elViewGridBtn, elViewListBtn;
 let elDetailModal, elModalHeroImg, elModalTitle, elModalDate, elModalVersion, elModalType, elModalDesc, elModalTags, elModalPrimaryLink, elModalFavoriteBtn, elModalGameBadge, elModalStatusBadge;
-let elGameZoneHeader, elGameZoneLogo, elGameZoneTitle, elGameZoneDesc, elZoneStatTotal, elZoneStatAvailable, elZoneStatExpired, elBackToHomeBtn;
+let elGameZoneHeader, elGameZoneLogo, elGameZoneTitle, elGameZoneDesc, elZoneStatTotal, elZoneStatAvailable, elZoneStatExpired;
 let elMobileNavToggle, elMobileFilterBtn, elSidebarCloseBtn, elDrawerOverlay, elSidebarPanel, elNavMenu;
 
 
@@ -151,7 +151,6 @@ function initDOM() {
   elCountBh3 = document.getElementById('countBh3');
   
   elHeroSearchInput = document.getElementById('heroSearchInput');
-  elSearchInput = document.getElementById('heroSearchInput'); // Syncing
   
   elViewGridBtn = document.getElementById('viewGrid');
   elViewListBtn = document.getElementById('viewList');
@@ -177,7 +176,6 @@ function initDOM() {
   elZoneStatTotal = document.getElementById('zoneStatTotal');
   elZoneStatAvailable = document.getElementById('zoneStatAvailable');
   elZoneStatExpired = document.getElementById('zoneStatExpired');
-  elBackToHomeBtn = document.getElementById('backToHomeBtn');
   
   elMobileNavToggle = document.getElementById('mobileNavToggle');
   elMobileFilterBtn = document.getElementById('mobileFilterBtn');
