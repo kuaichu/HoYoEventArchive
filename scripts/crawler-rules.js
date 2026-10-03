@@ -10,6 +10,7 @@ const permanentResourcePathFragments = [
   '/event/character-builder/',
   '/event/cultivation-tool/',
   '/app/community-game-records/',
+  '/app/community-creator/',
   '/app/interactive-map/'
 ];
 
@@ -227,7 +228,7 @@ const rewardKeyword = /(原石|星琼|菲林|水晶|摩拉|徽章|挂件|名片|
 const rewardAction = /(可得|获得|获赠|赠送|赢取|领取|抽奖|奖励|最高可得)/;
 const explicitReward = /\d+\s*(?:万|千)?\s*(?:原石|星琼|菲林|水晶|摩拉|补给卡)|(?:原石|星琼|菲林|水晶|摩拉|徽章|挂件|礼包|手办|周边|补给卡).{0,40}[*x×]\s*\d+/i;
 const administrativeText = /(注意事项|免责声明|客服|活动最终解释|解释权|隐私政策|用户协议|法律法规|社区规则|禁止参赛|严禁抄袭|审核状态|测试服|正式服效果为准|获奖名单.*(?:公布|公示)|奖励名单|(?:奖励|奖品)说明预览|收货(?:信息|地址)|收件(?:信息|地址)|(?:回复|填写|提交).*收款信息|(?:奖品|奖励|周边).*(?:地址填写|填写教程)|奖励名额.*(?:不代表|实际获奖)|(?:发送|送达|发至).*(?:邮箱|邮件|账户)|发货|寄送|关注.*私信|逾期.*放弃(?:奖品|奖励)|(?:视为|即代表).{0,8}(同意|接受)|确保.*(?:发放|到账)|(?:奖品|奖励).*(?:发放|到账)|(?:发放|领取).{0,8}(时长|时间|工作日)|不可.{0,5}(领取|获得)|无法.{0,5}(领取|获得))/;
-const genericDescriptions = new Set(['提瓦特/米游社官方网页活动。', '米游社官方网页活动。', '官方网页活动。']);
+const genericDescriptions = new Set(['提瓦特/米游社官方网页活动。', '米游社官方网页活动。', '官方网页活动。', '官方网页活动，详情见来源公告。']);
 
 function splitOutsideQuotes(text, punctuation) {
   const pairs = new Map([['「', '」'], ['『', '』'], ['“', '”'], ['"', '"'], ['《', '》'], ['【', '】'], ['（', '）'], ['(', ')'], ['[', ']']]);
@@ -458,7 +459,7 @@ export function enrichEventDescription(event, postText, options = {}) {
   return { event: { ...event, description, descriptionSource: 'announcement' }, changed: true };
 }
 
-export function classifyCrawlerVersion({ gameKey, title, sourcePostTitle, description, body, date, eventType, eventUrl }) {
+export function classifyCrawlerVersion({ gameKey, title, sourcePostTitle, description, body, date, eventType, eventUrl, versionContext }) {
   if (isPlatformCampaignUrl(eventUrl)) return '通用';
   const dateFallbackTypes = new Set(['年度报告', '回归活动', '小游戏', '预约/预抽卡', '联动活动']);
   return classifyEventVersion({
@@ -468,6 +469,7 @@ export function classifyCrawlerVersion({ gameKey, title, sourcePostTitle, descri
     description,
     body,
     date,
+    versionContext,
     allowDateFallback: dateFallbackTypes.has(eventType)
   });
 }

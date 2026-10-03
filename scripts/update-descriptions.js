@@ -1,41 +1,11 @@
 import { promises as fs } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { readPublicResource } from './event-covers.js';
 import { enrichEventDescription, extractAnnouncementMetadata, extractPostText, isDescriptionResource } from './crawler-rules.js';
+import { fetchOfficialNewsDetail } from './official-news.js';
 
 const EVENTS_PATH = fileURLToPath(new URL('../src/events.json', import.meta.url));
-const PLACEHOLDERS = new Set(['', '提瓦特/米游社官方网页活动。', '米游社官方网页活动。']);
-
-// Compare against the former crawler output so existing custom text stays intact.
-function legacyPostText(post) {
-  try {
-    const ops = typeof post.structured_content === 'string'
-      ? JSON.parse(post.structured_content) : post.structured_content;
-    if (Array.isArray(ops)) {
-      const text = ops.map(op => typeof op?.insert === 'string' ? op.insert : '')
-        .filter(Boolean).join('\n').replace(/\r/g, '').trim();
-      if (text) return text;
-    }
-  } catch { /* Use the previous HTML fallback below. */ }
-  return String(post.content || '').replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, ' ')
-    .replace(/&nbsp;/gi, ' ').replace(/&amp;/gi, '&').replace(/&lt;/gi, '<').replace(/&gt;/gi, '>')
-    .replace(/\r/g, '').replace(/[ \t]+/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
-}
-
-function pageDescription(html) {
-  for (const match of html.matchAll(/<meta\b[^>]*>/gi)) {
-    const attrs = {};
-    for (const attribute of match[0].matchAll(/([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/g)) {
-      attrs[attribute[1].toLowerCase()] = attribute[2] ?? attribute[3] ?? attribute[4];
-    }
-    if (['description', 'og:description', 'twitter:description'].includes((attrs.name || attrs.property || '').toLowerCase())) {
-      return String(attrs.content || '').replace(/&quot;/gi, '"').replace(/&#39;/g, "'")
-        .replace(/&amp;/gi, '&').replace(/&nbsp;/gi, ' ').trim();
-    }
-  }
-  return '';
-}
+const PLACEHOLDERS = new Set(['', '提瓦特/米游社官方网页活动。', '米游社官方网页活动。', '官方网页活动，详情见来源公告。']);
 
 export async function updateEventDescriptions(options = {}) {
   const eventsPath = options.eventsPath || EVENTS_PATH;
@@ -46,10 +16,10 @@ export async function updateEventDescriptions(options = {}) {
   const selected = events.map((event, index) => ({ event, index }))
     .filter(({ event }) => !ids || ids.has(event.id)).slice(0, options.limit ?? Infinity);
   const summary = { selected: selected.length, updated: 0, manualSkipped: 0, preserved: 0,
-    missing: 0, failed: 0, requests: 0, detailRequests: 0, detailBlocked: false };
+    missing: 0, failed: 0, requests: 0, newsRequests: 0 };
   const logger = options.logger ?? console;
   const network = { fetchImpl: options.fetchImpl, lookupImpl: options.lookupImpl, timeoutMs: options.timeoutMs ?? 15000 };
-  const posts = new Map();
+  const news = new Map();
   const pending = selected.filter(({ event }) => {
     if (event.descriptionSource === 'manual') { summary.manualSkipped++; return false; }
     if (isDescriptionResource(event)) { summary.preserved++; return false; }
@@ -67,51 +37,29 @@ export async function updateEventDescriptions(options = {}) {
     return true;
   });
 
-  async function requestApi(url) {
-    summary.requests++;
-    const { body } = await readPublicResource(url, { ...network, maxBytes: 4 * 1024 * 1024 });
-    const json = JSON.parse(body.toString('utf8'));
-    if (json.retcode === 1034) summary.detailBlocked = true;
-    if (json.retcode !== 0 || !json.data) throw new Error(`Official API retcode=${json.retcode}`);
-    return json.data;
-  }
-
-  let lastDetailAt = 0;
-  const attempted = new Set();
   for (const { event, index } of pending) {
-    const postId = String(event.sourcePostId || '');
+    const newsId = String(event.sourceNewsId || '');
+    const newsKey = `${event.gameKey}:${newsId}`;
     let failed = false;
-    if (/^\d+$/.test(postId) && !posts.has(postId) && !attempted.has(postId) && !summary.detailBlocked) {
-      attempted.add(postId);
-      const delay = Math.max(0, (options.detailDelayMs ?? 2500) - (Date.now() - lastDetailAt));
-      if (delay) await new Promise(resolve => setTimeout(resolve, delay));
-      const url = new URL('https://bbs-api.miyoushe.com/post/wapi/getPostFull');
-      url.searchParams.set('post_id', postId);
-      summary.detailRequests++;
+    if (/^\d+$/.test(newsId) && event.gameKey && !news.has(newsKey)) {
+      summary.newsRequests++;
+      summary.requests++;
       try {
-        const data = await requestApi(url.href);
-        const post = data.post?.post;
-        if (!post || String(post.post_id) !== postId) throw new Error('Official source post does not match the event');
-        posts.set(postId, post);
-      } catch (error) { failed = true; logger.warn?.(`[${event.id}] Description source unavailable: ${error.message}`); }
-      finally { lastDetailAt = Date.now(); }
+        const item = await fetchOfficialNewsDetail(event.gameKey, newsId, {
+          ...network, maxBytes: 4 * 1024 * 1024, maxAttempts: options.maxAttempts ?? 2
+        });
+        news.set(newsKey, { post: item.post });
+      } catch (error) {
+        news.set(newsKey, { error });
+        logger.warn?.(`[${event.id}] Description source unavailable: ${error.message}`);
+      }
     }
 
-    const post = posts.get(postId);
-    let update = post ? enrichEventDescription(event, extractPostText(post), { legacyText: legacyPostText(post) })
+    const cached = news.get(newsKey);
+    failed = Boolean(cached?.error);
+    const post = cached?.post;
+    const update = post ? enrichEventDescription(event, extractPostText(post))
       : { event, changed: false };
-    // Page metadata only fills empty/placeholder text; it never downgrades a useful announcement.
-    if (!update.changed && PLACEHOLDERS.has(String(event.description || '').trim())) {
-      try {
-        summary.requests++;
-        const resource = await readPublicResource(event.url, { ...network, maxBytes: 2 * 1024 * 1024 });
-        const description = pageDescription(resource.body.toString('utf8'));
-        if (description) {
-          update = enrichEventDescription(event, description);
-          if (update.changed) update.event.descriptionSource = 'page';
-        }
-      } catch (error) { failed = true; logger.warn?.(`[${event.id}] Description metadata unavailable: ${error.message}`); }
-    }
     if (update.changed) {
       events[index] = update.event;
       summary.updated++;
@@ -120,7 +68,6 @@ export async function updateEventDescriptions(options = {}) {
     else if (post || !PLACEHOLDERS.has(String(event.description || '').trim())) summary.preserved++;
     else summary.missing++;
   }
-  if (summary.detailBlocked) logger.warn?.('Official API requested verification; remaining detail requests stopped.');
   if (!options.dryRun && summary.updated && options.write !== false && !options.events) {
     const temporary = `${eventsPath}.${process.pid}.${crypto.randomUUID()}.tmp`;
     try {

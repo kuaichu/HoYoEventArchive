@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import test from 'node:test';
 
 import {
+  EVENT_FIELDS,
   normalizeEvent,
   projectEventForDisplay,
   resolveEventStatus,
@@ -14,6 +15,35 @@ import {
 const events = JSON.parse(
   fs.readFileSync(new URL('../src/events.json', import.meta.url), 'utf8')
 );
+
+test('official news provenance persists independently from historical post IDs', () => {
+  const fallback = { ...events[0], sourcePostId: 'legacy-reference', sourceNewsId: '456',
+    sourceNewsUrl: 'https://sr.mihoyo.com/news/456?utm_source=archive' };
+  assert.ok(EVENT_FIELDS.includes('sourceNewsId'));
+  assert.ok(EVENT_FIELDS.includes('sourceNewsUrl'));
+  const retained = normalizeEvent({ id: fallback.id, title: 'Edited title' }, fallback);
+  assert.equal(retained.sourceNewsId, '456');
+  assert.equal(retained.sourceNewsUrl, 'https://sr.mihoyo.com/news/456');
+  assert.equal(retained.sourcePostId, 'legacy-reference');
+  assert.deepEqual(validateEvent(retained), []);
+  for (const sourceNewsId of [null, undefined, 456, 'legacy-reference', '']) {
+    const cleared = normalizeEvent({ ...fallback, sourceNewsId }, fallback);
+    assert.equal(cleared.sourceNewsId, undefined);
+    assert.equal(cleared.sourcePostId, fallback.sourcePostId);
+    assert.equal(cleared.sourceNewsUrl, retained.sourceNewsUrl);
+  }
+  for (const sourceNewsUrl of [null, undefined, 'javascript:bad', 'https://user:pass@example.com/news/1']) {
+    const cleared = normalizeEvent({ ...fallback, sourceNewsUrl }, fallback);
+    assert.equal(cleared.sourceNewsUrl, undefined);
+    assert.equal(cleared.sourceNewsId, '456');
+  }
+  assert.deepEqual(validateEvent({ ...events[0], sourceNewsId: null, sourceNewsUrl: null }), []);
+  for (const sourceNewsId of [456, '', 'abc']) {
+    assert.ok(validateEvent({ ...events[0], sourceNewsId }).some(issue => issue.includes('sourceNewsId')));
+  }
+  assert.ok(validateEvent({ ...events[0], sourceNewsUrl: 'https://user@example.com/news/1' })
+    .some(issue => issue.includes('sourceNewsUrl')));
+});
 
 test('cover URLs accept only safe archived paths and credential-free remote images', () => {
   for (const extension of ['jpg', 'jpeg', 'png', 'webp']) {

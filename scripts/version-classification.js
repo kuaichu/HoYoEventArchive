@@ -12,6 +12,8 @@ export const VERSION_ALIASES = Object.freeze({
   '月之八': 'v6.7'
 });
 
+// Legacy history is only used between known updates. The crawler overlays dates
+// extracted from official update notices and never extends this table's tail.
 export const VERSION_RELEASE_DATES = Object.freeze({
   ys: Object.freeze([
     ['v1.0', '2020.09.28'], ['v1.1', '2020.11.11'], ['v1.2', '2020.12.23'],
@@ -58,8 +60,11 @@ export const VERSION_RELEASE_DATES = Object.freeze({
 function comparableDate(date) {
   const match = String(date || '').match(/^(\d{4})[.-](\d{2})[.-](\d{2})$/);
   if (!match) return null;
-  const value = Date.UTC(Number(match[1]), Number(match[2]) - 1, Number(match[3]));
-  return Number.isNaN(value) ? null : value;
+  const [year, month, day] = match.slice(1).map(Number);
+  const value = Date.UTC(year, month - 1, day);
+  const parsed = new Date(value);
+  return parsed.getUTCFullYear() === year && parsed.getUTCMonth() === month - 1
+    && parsed.getUTCDate() === day ? value : null;
 }
 
 function flattenSources(sources) {
@@ -107,16 +112,39 @@ export function extractExplicitVersion(...sources) {
   return undefined;
 }
 
-export function inferVersionFromDate(gameKey, date) {
-  const releases = VERSION_RELEASE_DATES[gameKey];
+export function inferVersionFromDate(gameKey, date, versionContext) {
+  const byVersion = new Map((VERSION_RELEASE_DATES[gameKey] ?? []).map(([version, releaseDate]) =>
+    [version, { version, date: releaseDate }]));
+  for (const release of versionContext?.releases ?? []) {
+    if (isNumericVersion(release.version) && comparableDate(release.date) !== null) {
+      byVersion.set(release.version, release);
+    }
+  }
+  const releases = [...byVersion.values()].sort((a, b) => comparableDate(a.date) - comparableDate(b.date));
   const eventDate = comparableDate(date);
-  if (!releases || eventDate === null) return undefined;
+  if (!releases.length || eventDate === null) return undefined;
 
-  const firstRelease = comparableDate(releases[0][1]);
-  if (eventDate < firstRelease) return '公测前';
+  // Historical records only have a day, so maintenance before/after on that day
+  // cannot establish an activity's version. A gap must not be filled by the old version.
+  if (releases.some(release => eventDate === comparableDate(release.date))) return undefined;
+  const firstRelease = comparableDate(releases[0].date);
+  if (VERSION_RELEASE_DATES[gameKey] && eventDate < firstRelease) return '公测前';
 
   for (let index = releases.length - 1; index >= 0; index--) {
-    if (eventDate >= comparableDate(releases[index][1])) return releases[index][0];
+    const release = releases[index];
+    if (eventDate <= comparableDate(release.date)) continue;
+    const next = releases[index + 1];
+    if (next) {
+      const [major, minor] = release.version.slice(1).split('.').map(Number);
+      const [nextMajor, nextMinor] = next.version.slice(1).split('.').map(Number);
+      const consecutive = major === nextMajor && nextMinor === minor + 1
+        || nextMajor === major + 1 && nextMinor === 0;
+      return consecutive ? release.version : undefined;
+    }
+    const checkedDate = comparableDate(versionContext?.checkedDate);
+    if (versionContext?.status === 'confirmed' && versionContext.currentVersion === release.version
+      && checkedDate !== null && eventDate <= checkedDate) return release.version;
+    return undefined;
   }
 
   return undefined;
@@ -132,7 +160,8 @@ export function classifyEventVersion({
   date,
   currentVersion,
   allowDateFallback = false,
-  preserveCurrentSpecial = false
+  preserveCurrentSpecial = false,
+  versionContext
 } = {}) {
   const normalizedCurrent = String(currentVersion || '').trim();
   if (preserveCurrentSpecial && ['公测前', '通用'].includes(normalizedCurrent)) {
@@ -150,7 +179,7 @@ export function classifyEventVersion({
   if (isValidVersion(normalizedCurrent) && normalizedCurrent !== '待确认') return normalizedCurrent;
 
   if (allowDateFallback) {
-    const dateVersion = inferVersionFromDate(gameKey, date);
+    const dateVersion = inferVersionFromDate(gameKey, date, versionContext);
     if (dateVersion) return dateVersion;
   }
 

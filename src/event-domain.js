@@ -48,6 +48,8 @@ export const EVENT_FIELDS = Object.freeze([
   'endDate',
   'sourcePostId',
   'sourcePostTitle',
+  'sourceNewsId',
+  'sourceNewsUrl',
   'coverUrl',
   'coverSourceUrl',
   'tags',
@@ -293,6 +295,13 @@ export function normalizeEvent(raw, fallback = {}) {
     if (value) normalized[field] = value;
   }
 
+  const sourceNewsId = own('sourceNewsId') ? raw.sourceNewsId : fallbackEvent.sourceNewsId;
+  if (typeof sourceNewsId === 'string' && /^\d+$/.test(sourceNewsId)) {
+    normalized.sourceNewsId = sourceNewsId;
+  }
+  const sourceNewsUrl = safeExternalUrl(own('sourceNewsUrl') ? raw.sourceNewsUrl : fallbackEvent.sourceNewsUrl);
+  if (sourceNewsUrl) normalized.sourceNewsUrl = sourceNewsUrl;
+
   const descriptionSource = own('descriptionSource') ? raw.descriptionSource : fallbackEvent.descriptionSource;
   if (['announcement', 'page', 'manual'].includes(descriptionSource)) {
     normalized.descriptionSource = descriptionSource;
@@ -374,6 +383,13 @@ export function validateEvent(event, index = -1) {
 
   if (!safeExternalUrl(event?.url)) {
     issues.push(`${prefix}.url must be an absolute credential-free HTTP(S) URL`);
+  }
+  if (event?.sourceNewsId !== undefined && event.sourceNewsId !== null
+    && (typeof event.sourceNewsId !== 'string' || !/^\d+$/.test(event.sourceNewsId))) {
+    issues.push(`${prefix}.sourceNewsId must be a numeric string`);
+  }
+  if (event?.sourceNewsUrl !== undefined && event.sourceNewsUrl !== null && !safeExternalUrl(event.sourceNewsUrl)) {
+    issues.push(`${prefix}.sourceNewsUrl must be an absolute credential-free HTTP(S) URL`);
   }
   if (event?.coverUrl !== undefined && event.coverUrl !== null && !safeCoverUrl(event.coverUrl)) {
     issues.push(`${prefix}.coverUrl must be an archived cover path or a credential-free HTTP(S) URL`);

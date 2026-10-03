@@ -1,4 +1,4 @@
-name: Auto Crawl Miyoushe Events
+name: Sync Official Event News
 
 on:
   schedule:
@@ -40,7 +40,7 @@ jobs:
       TG_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       TG_CHANNEL_CHAT_ID: ${{ secrets.TELEGRAM_CHANNEL_CHAT_ID }}
       TG_TRANSIENT_DELETE_AFTER_SECONDS: ${{ vars.TELEGRAM_TRANSIENT_DELETE_AFTER_SECONDS }}
-      MIYOUSHE_ENRICH_EXISTING_IDS: ${{ inputs.enrich_event_ids }}
+      OFFICIAL_NEWS_ENRICH_EXISTING_IDS: ${{ inputs.enrich_event_ids }}
 
     steps:
       - name: Checkout Repository
@@ -73,8 +73,8 @@ jobs:
           echo "START_TIME=$START_TIME" >> $GITHUB_ENV
           echo "start_time=$START_TIME" >> $GITHUB_OUTPUT
 
-      - name: Run Miyoushe Crawler
-        run: node scripts/miyoushe-crawler.js
+      - name: Fetch Official News APIs
+        run: npm run crawl
 
       - name: Update Event Statuses
         run: node scripts/update-statuses.js
@@ -134,7 +134,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "chore(data): update events and screenshots from miyoushe [skip ci]"
+          git commit -m "chore(data): update events from official news APIs [skip ci]"
 
           for attempt in 1 2 3; do
             if git push origin main; then

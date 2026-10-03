@@ -11,10 +11,10 @@
    * 使用官方超清透明 PNG 标志（Game Logo），并在背景设计了游戏专属的主题微光径向渐变聚光灯（原神：金黄，星铁：靛紫，绝区零：黄绿，崩坏3：粉紫）。
    * 自适应不同比例的标志缩放，防裁剪，Hover 触发平滑上浮和光效膨胀动效。
 
-2. **自动米游社活动爬虫 (Automated Scraper)**
-   * 独立的 Node.js 命令行脚本（[miyoushe-crawler.js](file:///s:/Projects/Active/HoYo%20Event%20Archive/scripts/miyoushe-crawler.js)），基于 Puppeteer 无头浏览器。
-   * 分页扫描米游社四款游戏论坛，规范化并去重官方活动 URL；单个来源或页面失败会降级继续，全部来源失败时任务以失败退出。
-   * 解析新闻详情，提取包含的 H5 网页链接，并利用 Puppeteer 动态加载解析页面 Meta 标签以自动获取活动标题、描述和关联版本，智能归档入库。
+2. **官方新闻 API 同步**
+   * [official-news-crawler.js](scripts/official-news-crawler.js) 直接请求四款游戏官网使用的公开 JSON 接口，从公告正文提取网页活动链接、简介、明确的活动时间与奖励，并使用官方封面。
+   * 不再请求米游社论坛或帖子详情，也不再用浏览器加载活动页来获取标题与简介。按规范化 URL 去重，保留人工简介和已有封面；单个游戏失败继续，其余游戏也全部失败时任务报错且保留原数据。
+   * [official-news.js](scripts/official-news.js) 管理各游戏的 app/channel 配置、分页、响应大小与超时限制。`sourceNewsId` / `sourceNewsUrl` 记录官网公告来源；历史 `sourcePostId` 仅保留追溯。
 
 3. **多维筛选与智能搜索 (Advanced Filtering & Search)**
    * 支持按游戏种类、活动类型（年度报告、回归活动、版本前瞻、预约/预抽卡、小游戏等）以及可用状态（可访问、已失效、需登录、已结束）进行交叉筛选。
@@ -81,11 +81,31 @@ npm test
 
 项目在 [scripts/](file:///s:/Projects/Active/HoYo%20Event%20Archive/scripts/) 目录下提供了一系列易于执行的自动化维护脚本：
 
-* **米游社网页爬虫**：
+* **官方新闻 API 同步**：
   ```bash
-  node scripts/miyoushe-crawler.js
+  npm run crawl
   ```
-  执行后会自动扫描米游社官网，获取最新的官方活动信息，更新数据库。
+  默认每款游戏读取最近 5 页、每页 20 条公告；从正文筛选网页活动并更新数据库。`npm run crawl -- --dry-run` 仅预览，不写入数据。可用 `--games=sr` 定向崩铁，`--max-pages=1` / `--page-size=20` 限制范围，`--enrich-ids=sr-52` 仅为指定已有活动补缺失的时间、奖励等字段。
+
+  | 游戏 | 官方 API app | 新闻 channel |
+  | --- | --- | --- |
+  | 原神 | `16471662a82d418a` | `719` |
+  | 崩坏：星穹铁道 | `1963de8dc19e461c` | `255` |
+  | 绝区零 | `706fd13a87294881` | `273` |
+  | 崩坏3 | `b9d5f96cd69047eb` | `693` |
+
+  原神、崩铁、崩坏3 使用 `https://act-api-takumi-static.mihoyo.com/content_v2_user/app/{app}/getContentList`；绝区零使用 `https://api-takumi-static.mihoyo.com/content_v2_user/app/{app}/getContentList`。参数为 `iPage`、`iPageSize`、`sLangKey=zh-cn`、`iChanId`。单篇公告使用同路径下的 `getContent?iInfoId={id}&sLangKey=zh-cn`。
+
+  这些是官网当前使用的公开接口，没有对外稳定性承诺，也不是完整的网页活动目录。接口内的 `dtStartTime` 是公告发布时间，`dtEndTime` 是内容展示期限，不作为活动起止日期；活动时间仅从正文中的明确规则提取。只发在社区而未同步到官网的活动可能遗漏，原有历史记录不会删除。
+
+  同步时同时读取 HoYoPlay 的 `https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGameBranches`，使用 `main.tag` 正式分支版本，不把预下载分支当成当前版本。`getGamePackages` 的主包版本可能落后于实际版本，不再用于判断。官网正式更新公告提供明确的维护日期；正式分支与最新已生效公告匹配且已知上线日期时才允许近期活动按当前版本期间补缺，二者冲突时记录冲突并停止此项推断。公告明确写出的活动版本始终优先，前瞻可以指向尚未上线的版本。
+
+* **补全待确认的活动版本**：
+  ```bash
+  npm run versions -- --dry-run
+  npm run versions
+  ```
+  根据活动公告、官方更新公告和启动器接口补全缺失或“待确认”的版本，保留已有有效版本及“通用”等分类。`--ids=zzz-16,sr-52` 可限制处理记录。没有可靠依据时不改；不会把历史活动统一改成当前版本。已有日期表仅用于两次已知更新之间的历史区间，缺失中间版本、更新当天只有日期而无时刻、最新区间未获接口与公告共同确认时均不推断。此项逻辑也已接入 `npm run crawl` 的自动同步。
   
 * **活动生命周期状态更新**：
   ```bash
@@ -103,17 +123,17 @@ npm test
   ```bash
   npm run covers
   ```
-  优先从米游社公告获取封面和帖子原图，没有可用公告图时尝试活动页面的 `og:image` / `twitter:image`。图片校验后保存到 `public/images/covers/`，`events.json` 记录本地 `coverUrl` 和原始 `coverSourceUrl`；抓取失败保留已有封面和截图。
+  从已记录的官方图片地址或官网新闻详情 API 获取封面。图片校验后保存到 `public/images/covers/`，`events.json` 记录本地 `coverUrl` 和原始 `coverSourceUrl`；抓取失败保留已有封面和截图，不再请求米游社或活动页面 Meta 信息。
 
-  可用 `-- --ids=ys-56,sr-52` 定向补图、`-- --force` 重新归档、`-- --dry-run` 查看处理范围。前端按官方封面、来源原图、网页截图、游戏默认图逐级降级；后台编辑和导出保留封面信息。
+  可用 `-- --ids=ys-56,sr-52` 定向补图、`-- --force` 重新归档、`-- --dry-run` 查看处理范围。前端按官方封面、来源原图、网页截图、游戏默认图逐级降级。
 
 * **更新活动简介**：
   ```bash
   npm run descriptions
   ```
-  从官方公告正文提炼活动玩法、参与方式和明确奖励，保留真实富文本段落，过滤问候、重复标题、链接按钮和奖品发放说明。已有简介只在空白、通用占位、与旧爬虫首行精确匹配或明确为自动生成时更新；人工简介保留。正文不可用时，仅为占位简介尝试页面 Meta 信息。
+  从官网新闻详情 API 的正文提炼活动玩法、参与方式和明确奖励，过滤问候、重复标题、链接按钮和奖品发放说明。已有简介只在空白、通用占位、与旧自动简介精确匹配或明确为自动生成时更新；人工简介保留。没有官网新闻来源或接口不可用时保留原文。
 
-  `descriptionSource` 记录 `announcement`、`page` 或 `manual`；后台修改简介时标记为 `manual`，其它字段的编辑不改变简介来源。默认复用已有有效简介，减少重复请求；详情请求保持间隔，遇到接口验证要求停止后续详情请求。可用 `-- --dry-run` 预览、`-- --ids=ys-56,sr-52` 定向处理或 `-- --refresh` 重新检查自动简介。简介更新只修改简介和来源，不改活动状态、日期、奖励字段或链接；单条失败保留原文。
+  `descriptionSource` 记录 `announcement`、历史 `page` 或 `manual`；`manual` 不会被同步脚本覆盖。默认复用已有有效简介，减少重复请求。可用 `-- --dry-run` 预览、`-- --ids=ys-56,sr-52` 定向处理或 `-- --refresh` 重新检查自动简介。简介更新只修改简介和来源，不改活动状态、日期、奖励字段或链接；单条失败保留原文。
 
 * **生成网页截图封面**：
   ```bash

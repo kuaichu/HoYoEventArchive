@@ -11,6 +11,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "screenshots": "node scripts/capture-screenshots.js",
+    "crawl": "node scripts/official-news-crawler.js",
+    "versions": "node scripts/enrich-versions.js",
     "covers": "node scripts/update-covers.js",
     "descriptions": "node scripts/update-descriptions.js",
     "test": "node --test test/*.test.js scripts/test-crawler-rules.js",

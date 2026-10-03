@@ -6,7 +6,6 @@ import {
   extractExplicitVersion,
   inferVersionFromDate
 } from '../scripts/version-classification.js';
-import { classifyScrapedEventVersion } from '../scripts/scrape-and-update.js';
 
 test('named Genshin versions map to their numeric target versions', () => {
   const aliases = [
@@ -18,7 +17,7 @@ test('named Genshin versions map to their numeric target versions', () => {
   }
 });
 
-test('Star Rail release days belong to the new version in UTC+8', () => {
+test('day-only records remain uncertain on Star Rail maintenance days', () => {
   const boundaries = [
     ['2024.09.09', 'v2.4'], ['2024.09.10', 'v2.5'],
     ['2025.02.25', 'v3.0'], ['2025.02.26', 'v3.1'],
@@ -30,14 +29,43 @@ test('Star Rail release days belong to the new version in UTC+8', () => {
     ['2025.12.16', 'v3.7'], ['2025.12.17', 'v3.8']
   ];
 
-  for (const [date, version] of boundaries) {
-    assert.equal(inferVersionFromDate('sr', date), version, date);
+  for (const [index, [date, version]] of boundaries.entries()) {
+    const expected = index % 2 ? undefined : version;
+    assert.equal(inferVersionFromDate('sr', date), expected, date);
   }
 });
 
-test('Zenless Zone Zero 3.1 release day belongs to v3.1', () => {
+test('Zenless Zone Zero dates do not guess maintenance-day or unverified tail versions', () => {
   assert.equal(inferVersionFromDate('zzz', '2026.07.28'), 'v3.0');
-  assert.equal(inferVersionFromDate('zzz', '2026.07.29'), 'v3.1');
+  assert.equal(inferVersionFromDate('zzz', '2026.07.29'), undefined);
+  assert.equal(inferVersionFromDate('zzz', '2026.10.04'), undefined);
+});
+
+test('official release intervals work despite a launcher conflict, but the newest tail does not', () => {
+  const context = { status: 'conflict', checkedDate: '2026.10.04', releases: [
+    { version: 'v4.4', date: '2026.07.15' }, { version: 'v4.5', date: '2026.08.26' },
+    { version: 'v4.6', date: '2026.09.28' }
+  ] };
+  assert.equal(inferVersionFromDate('sr', '2026.09.04', context), 'v4.5');
+  assert.equal(inferVersionFromDate('sr', '2026.09.28', context), undefined);
+  assert.equal(inferVersionFromDate('sr', '2026.10.04', context), undefined);
+});
+
+test('a matching live branch and dated update notice bound the current-version fallback', () => {
+  const context = { status: 'confirmed', currentVersion: 'v3.2', checkedDate: '2026.10.04',
+    releases: [{ version: 'v3.2', date: '2026.09.09' }] };
+  assert.equal(inferVersionFromDate('zzz', '2026.09.14', context), 'v3.2');
+  assert.equal(inferVersionFromDate('zzz', '2026.10.04', context), 'v3.2');
+  assert.equal(inferVersionFromDate('zzz', '2026.10.05', context), undefined);
+  assert.equal(inferVersionFromDate('zzz', '2026.09.09', context), undefined);
+  assert.equal(inferVersionFromDate('zzz', '2026.02.31', context), undefined);
+});
+
+test('a missing intermediate version leaves the release interval uncertain', () => {
+  const context = { status: 'unconfirmed', releases: [
+    { version: 'v9.0', date: '2026.07.23' }, { version: 'v9.2', date: '2026.11.20' }
+  ] };
+  assert.equal(inferVersionFromDate('bh3', '2026.09.20', context), undefined);
 });
 
 test('explicit content version wins over publication-date fallback', () => {
@@ -76,17 +104,11 @@ test('date fallback recognizes pre-launch content', () => {
   }), '公测前');
 });
 
-test('legacy page scraper uses shared classification without overwriting intentional categories', () => {
-  assert.equal(classifyScrapedEventVersion(
-    { gameKey: 'zzz', version: '通用' },
-    { title: '绝区零 3.1版本工具更新', metaDesc: '' }
-  ), '通用');
-  assert.equal(classifyScrapedEventVersion(
-    { gameKey: 'ys', version: '待确认' },
-    { title: '「月之七」版本活动页', metaDesc: '' }
-  ), 'v6.6');
-  assert.equal(classifyScrapedEventVersion(
-    { gameKey: 'sr', version: 'v3.1' },
-    { title: '崩坏：星穹铁道 3.2版本活动页', metaDesc: '' }
-  ), 'v3.2');
+test('shared classification preserves intentional categories and accepts explicit numeric versions', () => {
+  assert.equal(classifyEventVersion({ gameKey: 'zzz', currentVersion: '通用',
+    title: '绝区零 3.1版本工具更新', preserveCurrentSpecial: true }), '通用');
+  assert.equal(classifyEventVersion({ gameKey: 'ys', currentVersion: '待确认',
+    title: '「月之七」版本活动页', preserveCurrentSpecial: true }), 'v6.6');
+  assert.equal(classifyEventVersion({ gameKey: 'sr', currentVersion: 'v3.1',
+    title: '崩坏：星穹铁道 3.2版本活动页', preserveCurrentSpecial: true }), 'v3.2');
 });

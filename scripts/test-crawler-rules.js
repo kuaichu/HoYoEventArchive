@@ -21,6 +21,7 @@ const permanentResources = [
   'https://act.mihoyo.com/zzz/event/character-builder/index.html#/',
   'https://act.mihoyo.com/sr/event/cultivation-tool/index.html',
   'https://webstatic.mihoyo.com/app/community-game-records/rpg/index.html',
+  'https://webstatic.mihoyo.com/app/community-creator/?mhy_presentation_style_android=no_header#/home',
   'https://webstatic.mihoyo.com/sr/app/interactive-map/index.html#/map/682',
   'https://act.mihoyo.com/miliastra_wonderland/agreement?id=156266',
   'https://act.mihoyo.com/app/mihoyo-zzz-game-record/m.html#/zzz/roles/0/detail'
@@ -207,7 +208,7 @@ assert.equal(
     eventType: '年度报告',
     eventUrl: 'https://act.mihoyo.com/zzz/event/e20260729-anniversary-smcfj5/index.html'
   }),
-  'v3.1'
+  '待确认'
 );
 
 assert.equal(

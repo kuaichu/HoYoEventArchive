@@ -14,6 +14,154 @@ const SOURCE = 'https://upload-bbs.miyoushe.com/cover.png';
 const lookupImpl = async () => [{ address: '8.8.8.8', family: 4 }];
 const quietLogger = { log() {}, warn() {} };
 const imageResponse = () => new Response(PNG, { headers: { 'content-type': 'image/png' } });
+const newsResponse = (id = '456', cover = SOURCE) => new Response(JSON.stringify({ retcode: 0,
+  data: { list: [{ iInfoId: Number(id), sTitle: '活动公告', sContent: `<p>活动说明</p><img src="${cover}">`,
+    dtStartTime: '2026-09-28 08:00:00' }] } }));
+
+test('a failed known image source can recover from the official news API', async t => {
+  const outputDir = await temporaryDirectory(t);
+  const stale = 'https://fastcdn.mihoyo.com/stale.png';
+  const event = { id: 'sr-91', gameKey: 'sr', sourceNewsId: '456', coverSourceUrl: stale };
+  const calls = [];
+  const result = await updateEventCovers({ events: [event], outputDir, lookupImpl,
+    maxAttempts: 1, logger: quietLogger, fetchImpl: async url => {
+      calls.push(url);
+      if (url === stale) return new Response('gone', { status: 404 });
+      if (url === SOURCE) return imageResponse();
+      assert.match(url, /getContent/);
+      return newsResponse();
+    } });
+  assert.equal(calls.length, 3);
+  assert.equal(result.summary.archived, 1);
+  assert.equal(result.events[0].coverSourceUrl, SOURCE);
+});
+
+test('official news covers use the news ID namespace and never historical post IDs', async t => {
+  const outputDir = await temporaryDirectory(t);
+  const event = { id: 'sr-80', gameKey: 'sr', sourceNewsId: '456', sourcePostId: '123',
+    url: 'https://act.mihoyo.com/activity', title: '保留' };
+  const calls = [];
+  const result = await updateEventCovers({ events: [event], outputDir, lookupImpl,
+    maxAttempts: 1, logger: quietLogger, fetchImpl: async url => {
+      calls.push(url);
+      if (url === SOURCE) return imageResponse();
+      const parsed = new URL(url);
+      assert.match(parsed.pathname, /getContent$/);
+      assert.equal(parsed.searchParams.get('iInfoId'), '456');
+      assert.ok(!parsed.hostname.includes('miyoushe'));
+      return newsResponse();
+    } });
+  assert.equal(calls.length, 2);
+  assert.equal(result.summary.archived, 1);
+  assert.equal(result.summary.newsRequests, 1);
+  assert.deepEqual(result.events[0], { ...event, coverUrl: '/images/covers/sr-80.png', coverSourceUrl: SOURCE });
+});
+
+test('official news cache distinguishes games and reuses duplicate IDs', async t => {
+  const outputDir = await temporaryDirectory(t);
+  const events = [
+    { id: 'ys-81', gameKey: 'ys', sourceNewsId: '456' },
+    { id: 'ys-82', gameKey: 'ys', sourceNewsId: '456' },
+    { id: 'sr-81', gameKey: 'sr', sourceNewsId: '456' }
+  ];
+  const apiCalls = [];
+  const result = await updateEventCovers({ events, outputDir, lookupImpl, logger: quietLogger,
+    fetchImpl: async url => {
+      if (url === SOURCE) return imageResponse();
+      apiCalls.push(new URL(url));
+      return newsResponse();
+    } });
+  assert.equal(result.summary.archived, 3);
+  assert.equal(result.summary.newsRequests, 2);
+  assert.notEqual(apiCalls[0].pathname, apiCalls[1].pathname);
+});
+
+test('missing or failed news sources preserve covers without requesting posts or activity pages', async () => {
+  const event = { id: 'ys-83', gameKey: 'ys', sourcePostId: '123', url: 'https://act.mihoyo.com/activity' };
+  let calls = 0;
+  const missing = await updateEventCovers({ events: [event], lookupImpl, logger: quietLogger,
+    fetchImpl: async () => { calls++; throw new Error('No official news ID'); } });
+  assert.equal(calls, 0);
+  assert.equal(missing.summary.missing, 1);
+  const withNews = { ...event, sourceNewsId: '456' };
+  const failed = await updateEventCovers({ events: [withNews], lookupImpl, maxAttempts: 1, logger: quietLogger,
+    fetchImpl: async url => { calls++; assert.match(url, /getContent/); return new Response('Unavailable', { status: 503 }); } });
+  assert.equal(calls, 1);
+  assert.equal(failed.summary.failed, 1);
+  assert.equal(failed.summary.newsFailures, 1);
+  assert.equal(failed.summary.allRequestsFailed, true);
+  assert.deepEqual(failed.events, [withNews]);
+});
+
+test('working known image sources avoid APIs and total failures preserve the event', async t => {
+  const outputDir = await temporaryDirectory(t);
+  const event = { id: 'sr-84', gameKey: 'sr', sourceNewsId: '456', sourcePostId: '123', coverSourceUrl: SOURCE };
+  const result = await updateEventCovers({ events: [event], outputDir, lookupImpl, maxAttempts: 1,
+    logger: quietLogger, fetchImpl: async url => { assert.equal(url, SOURCE); return imageResponse(); } });
+  assert.equal(result.summary.archived, 1);
+  assert.equal(result.summary.newsRequests, 0);
+  const failed = await updateEventCovers({ events: [{ ...event, id: 'sr-85' }], outputDir, lookupImpl,
+    maxAttempts: 1, logger: quietLogger, fetchImpl: async url => {
+      assert.ok(url === SOURCE || new URL(url).pathname.endsWith('/getContent'));
+      return new Response('Missing', { status: 404 });
+    } });
+  assert.equal(failed.summary.failed, 1);
+  assert.equal(failed.summary.newsRequests, 1);
+  assert.deepEqual(failed.events, [{ ...event, id: 'sr-85' }]);
+});
+
+test('force refresh prefers official news and can retain a known image when its API fails', async t => {
+  const outputDir = await temporaryDirectory(t);
+  const oldSource = `${SOURCE}?old`;
+  const event = { id: 'sr-86', gameKey: 'sr', sourceNewsId: '456',
+    coverUrl: '/images/covers/sr-86.png', coverSourceUrl: oldSource };
+  await fs.writeFile(path.join(outputDir, 'sr-86.png'), PNG);
+  const refreshed = await updateEventCovers({ events: [event], force: true, outputDir, lookupImpl,
+    logger: quietLogger, maxAttempts: 1, fetchImpl: async url => {
+      if (url === SOURCE) return imageResponse();
+      assert.match(url, /getContent/); return newsResponse();
+    } });
+  assert.equal(refreshed.events[0].coverSourceUrl, SOURCE);
+  const fallback = await updateEventCovers({ events: [event], force: true, outputDir, lookupImpl,
+    logger: quietLogger, maxAttempts: 1, fetchImpl: async url => {
+      if (url === oldSource) return imageResponse();
+      assert.match(url, /getContent/); return new Response('Unavailable', { status: 503 });
+    } });
+  assert.equal(fallback.summary.archived, 1);
+  assert.equal(fallback.summary.newsFailures, 1);
+  assert.equal(fallback.summary.allRequestsFailed, false);
+  assert.equal(fallback.events[0].coverSourceUrl, oldSource);
+});
+
+test('corrupt covers repair from official news and disk writes preserve unrelated fields', async t => {
+  const outputDir = await temporaryDirectory(t);
+  const eventsPath = path.join(outputDir, 'events.json');
+  const event = { id: 'sr-87', title: '标题', gameKey: 'sr', sourceNewsId: '456',
+    coverUrl: '/images/covers/sr-87.png', custom: { x: 1 } };
+  await fs.writeFile(eventsPath, JSON.stringify([event]));
+  await fs.writeFile(path.join(outputDir, 'sr-87.png'), 'broken');
+  const result = await updateEventCovers({ eventsPath, outputDir, lookupImpl, logger: quietLogger,
+    fetchImpl: async url => url === SOURCE ? imageResponse() : newsResponse() });
+  assert.equal(result.summary.archived, 1);
+  const saved = JSON.parse(await fs.readFile(eventsPath, 'utf8'));
+  assert.deepEqual(Object.keys(saved[0]), [...Object.keys(event), 'coverSourceUrl']);
+  assert.deepEqual(saved[0].custom, event.custom);
+  assert.deepEqual(await fs.readFile(path.join(outputDir, 'sr-87.png')), PNG);
+});
+
+test('dry run and ID limits discover official images without writing assets or fields', async t => {
+  const outputDir = await temporaryDirectory(t);
+  const events = ['sr-88', 'sr-89', 'sr-90'].map(id => ({ id, gameKey: 'sr', sourceNewsId: '456' }));
+  let calls = 0;
+  const result = await updateEventCovers({ events, ids: ['sr-89', 'sr-90'], limit: 1, dryRun: true,
+    outputDir, lookupImpl, logger: quietLogger, fetchImpl: async url => {
+      calls++; assert.match(url, /getContent/); return newsResponse();
+    } });
+  assert.equal(calls, 1);
+  assert.equal(result.summary.proposed, 1);
+  assert.deepEqual(result.events, events);
+  assert.deepEqual(await fs.readdir(outputDir), []);
+});
 
 test('complete PNGs with official trailing watermarks remain valid', () => {
   assert.equal(detectImageExtension(Buffer.concat([PNG, Buffer.from('mi_yiwen.yang')])), 'png');
@@ -26,7 +174,7 @@ test('complete PNGs with official trailing watermarks remain valid', () => {
 test('agreement pages cannot acquire unrelated announcement artwork during backfills', async () => {
   const event = { id: 'ys-34', title: '千星奇域创作者中心服务协议',
     url: 'https://act.mihoyo.com/miliastra_wonderland/agreement?id=156266',
-    sourcePostId: '123', coverSourceUrl: SOURCE };
+    gameKey: 'ys', sourceNewsId: '456', sourcePostId: '123', coverSourceUrl: SOURCE };
   const result = await updateEventCovers({ events: [event], force: true,
     logger: quietLogger, fetchImpl: async () => { throw new Error('A linked agreement must not fetch activity covers'); } });
   assert.deepEqual(result.events, [event]);
@@ -135,203 +283,14 @@ test('only supported PNG/JPEG/WebP signatures pass image detection', () => {
   assert.equal(detectImageExtension(webp), null);
 });
 
-test('official API failures fall back to activity-page share metadata', async t => {
-  const outputDir = await temporaryDirectory(t);
-  const calls = [];
-  const event = { id: 'ys-2', gameKey: 'ys', sourcePostId: '123', url: 'https://act.mihoyo.com/activity', title: '保留' };
-  const result = await updateEventCovers({ events: [event], outputDir, lookupImpl, maxAttempts: 1, logger: quietLogger,
-    fetchImpl: async url => {
-      calls.push(url);
-      if (url.includes('getNewsList')) return new Response(JSON.stringify({ retcode: 0, data: { list: [] } }));
-      if (url.includes('getPostFull')) return new Response('unavailable', { status: 503 });
-      if (url === event.url) return new Response(`<meta property="og:image" content="${SOURCE}">`, { headers: { 'content-type': 'text/html; charset=utf-8' } });
-      return imageResponse();
-    }
-  });
-  assert.equal(calls.length, 4);
-  assert.equal(result.summary.archived, 1);
-  assert.equal(result.summary.allRequestsFailed, false);
-  assert.deepEqual(result.events[0], { ...event, coverUrl: '/images/covers/ys-2.png', coverSourceUrl: SOURCE });
-});
-
 test('valid existing local covers skip all source requests', async t => {
   const outputDir = await temporaryDirectory(t);
   await fs.writeFile(path.join(outputDir, 'zzz-1.png'), PNG);
-  const event = { id: 'zzz-1', coverUrl: '/images/covers/zzz-1.png' };
+  const event = { id: 'zzz-1', gameKey: 'zzz', sourceNewsId: '456', coverUrl: '/images/covers/zzz-1.png' };
   const result = await updateEventCovers({ events: [event], outputDir, logger: quietLogger,
     fetchImpl: () => { throw new Error('should never fetch'); } });
   assert.equal(result.summary.skipped, 1);
   assert.deepEqual(result.events, [event]);
-});
-
-test('corrupt existing files are repaired, API covers outrank page metadata, and disk writes preserve field order', async t => {
-  const outputDir = await temporaryDirectory(t);
-  const eventsPath = path.join(outputDir, 'events.json');
-  const event = { id: 'sr-3', title: '标题', sourcePostId: '456', gameKey: 'sr', coverUrl: '/images/covers/sr-3.png', custom: { x: 1 } };
-  await fs.writeFile(eventsPath, JSON.stringify([event]));
-  await fs.writeFile(path.join(outputDir, 'sr-3.png'), 'broken');
-  const result = await updateEventCovers({ eventsPath, outputDir, lookupImpl, logger: quietLogger, maxAttempts: 1,
-    fetchImpl: async url => url.includes('getPostFull')
-      ? new Response(JSON.stringify({ retcode: 0, data: { post: { post: { cover: SOURCE } } } })) : imageResponse()
-  });
-  assert.equal(result.summary.archived, 1);
-  const saved = JSON.parse(await fs.readFile(eventsPath, 'utf8'));
-  assert.deepEqual(Object.keys(saved[0]), [...Object.keys(event), 'coverSourceUrl']);
-  assert.deepEqual(saved[0].custom, event.custom);
-  assert.deepEqual(await fs.readFile(path.join(outputDir, 'sr-3.png')), PNG);
-});
-
-test('dry run and id/limit filters discover covers without writing any assets or fields', async t => {
-  const outputDir = await temporaryDirectory(t);
-  const events = ['ys-1', 'ys-2', 'ys-3'].map(id => ({ id, sourcePostId: '123' }));
-  let calls = 0;
-  const result = await updateEventCovers({ events, ids: ['ys-2', 'ys-3'], limit: 1, dryRun: true,
-    outputDir, lookupImpl, logger: quietLogger, fetchImpl: async () => {
-      calls++; return new Response(JSON.stringify({ retcode: 0, data: { post: { post: { cover: SOURCE } } } }));
-    } });
-  assert.equal(calls, 1);
-  assert.equal(result.summary.proposed, 1);
-  assert.deepEqual(result.events, events);
-  assert.deepEqual(await fs.readdir(outputDir), []);
-});
-
-test('offline results distinguish all failed requests from successful pages without any cover', async () => {
-  const event = { id: 'ys-4', url: 'https://act.mihoyo.com/empty', sourcePostId: '123', coverSourceUrl: SOURCE };
-  const offline = await updateEventCovers({ events: [event], lookupImpl, maxAttempts: 1, logger: quietLogger,
-    fetchImpl: async () => { throw new Error('offline'); } });
-  assert.equal(offline.summary.allRequestsFailed, true);
-  assert.deepEqual(offline.events, [event]);
-  const missing = await updateEventCovers({ events: [{ id: 'ys-5', url: event.url }], lookupImpl,
-    logger: quietLogger, fetchImpl: async () => new Response('<html>No share metadata</html>', { headers: { 'content-type': 'text/html' } }) });
-  assert.equal(missing.summary.missing, 1);
-  assert.equal(missing.summary.allRequestsFailed, false);
-});
-
-test('cached news-list pages cover multiple events and stop once all target posts are found', async t => {
-  const outputDir = await temporaryDirectory(t);
-  const events = [
-    { id: 'ys-20', gameKey: 'ys', sourcePostId: '200' },
-    { id: 'ys-21', gameKey: 'ys', sourcePostId: '100' },
-    { id: 'ys-22', gameKey: 'ys', sourcePostId: '100' }
-  ];
-  const apiCalls = [];
-  const result = await updateEventCovers({ events, outputDir, lookupImpl, logger: quietLogger,
-    maxAttempts: 1, fetchImpl: async url => {
-      if (url.includes('getPostFull')) throw new Error('No detail fetch expected');
-      if (!url.includes('getNewsList')) return imageResponse();
-      const parsed = new URL(url);
-      apiCalls.push(parsed);
-      const first = !parsed.searchParams.get('last_id');
-      return new Response(JSON.stringify({ retcode: 0, data: {
-        list: [{ post: { post_id: first ? '200' : '100', cover: SOURCE } }],
-        last_id: first ? '199' : '99'
-      } }));
-    } });
-  assert.equal(result.summary.archived, 3);
-  assert.equal(result.summary.bulkPages, 2);
-  assert.equal(result.summary.detailRequests, 0);
-  assert.equal(apiCalls[0].hostname, 'bbs-api-static.miyoushe.com');
-  assert.equal(apiCalls[0].searchParams.get('page_size'), '100');
-  assert.equal(apiCalls[0].searchParams.get('gids'), '2');
-  assert.equal(apiCalls[1].searchParams.get('last_id'), '199');
-});
-
-test('known cover sources avoid both list and detail calls, including when that image fails', async t => {
-  const outputDir = await temporaryDirectory(t);
-  const events = [{ id: 'sr-20', gameKey: 'sr', sourcePostId: '555', coverSourceUrl: SOURCE }];
-  const calls = [];
-  const result = await updateEventCovers({ events, outputDir, lookupImpl, logger: quietLogger, maxAttempts: 1,
-    fetchImpl: async url => { calls.push(url); return imageResponse(); } });
-  assert.deepEqual(calls, [SOURCE]);
-  assert.equal(result.summary.archived, 1);
-  const failed = await updateEventCovers({ events: [{ ...events[0], id: 'sr-21' }], outputDir, lookupImpl,
-    logger: quietLogger, maxAttempts: 1, fetchImpl: async url => {
-      assert.equal(url, SOURCE); return new Response('Missing', { status: 404 });
-    } });
-  assert.equal(failed.summary.failed, 1);
-  assert.equal(failed.summary.bulkPages, 0);
-  assert.equal(failed.summary.detailRequests, 0);
-});
-
-test('detail fallback is serial, paced and cached for duplicate post ids', async t => {
-  const outputDir = await temporaryDirectory(t);
-  const events = [
-    { id: 'ys-30', gameKey: 'ys', sourcePostId: '100' },
-    { id: 'ys-31', gameKey: 'ys', sourcePostId: '100' },
-    { id: 'ys-32', gameKey: 'ys', sourcePostId: '101' }
-  ];
-  let active = 0;
-  let maxActive = 0;
-  const startedAt = [];
-  const result = await updateEventCovers({ events, outputDir, lookupImpl, logger: quietLogger, detailDelayMs: 15,
-    fetchImpl: async url => {
-      if (url.includes('getNewsList')) return new Response(JSON.stringify({ retcode: 0, data: { list: [] } }));
-      if (!url.includes('getPostFull')) return imageResponse();
-      startedAt.push(Date.now());
-      active++;
-      maxActive = Math.max(maxActive, active);
-      await new Promise(resolve => setTimeout(resolve, 5));
-      active--;
-      return new Response(JSON.stringify({ retcode: 0, data: { post: { post: { cover: SOURCE } } } }));
-    } });
-  assert.equal(result.summary.archived, 3);
-  assert.equal(result.summary.detailRequests, 2);
-  assert.equal(maxActive, 1);
-  assert.ok(startedAt[1] - startedAt[0] >= 15);
-});
-
-test('retcode 1034 stops queued detail calls while every event still uses share images', async t => {
-  const outputDir = await temporaryDirectory(t);
-  const events = ['1', '2', '3'].map(id => ({ id: `ys-4${id}`, gameKey: 'ys', sourcePostId: id,
-    url: `https://act.mihoyo.com/share-${id}`, screenshot: `/screenshots/ys-4${id}.png` }));
-  let detailCalls = 0;
-  const result = await updateEventCovers({ events, outputDir, lookupImpl, logger: quietLogger,
-    detailDelayMs: 0, fetchImpl: async url => {
-      if (url.includes('getNewsList')) return new Response(JSON.stringify({ retcode: 0, data: { list: [] } }));
-      if (url.includes('getPostFull')) {
-        detailCalls++;
-        return new Response(JSON.stringify({ retcode: 1034, message: 'verification required' }));
-      }
-      if (url.includes('share-')) return new Response(`<meta property="og:image" content="${SOURCE}">`,
-        { headers: { 'content-type': 'text/html' } });
-      return imageResponse();
-    } });
-  assert.equal(detailCalls, 1);
-  assert.equal(result.summary.detailBlocked, true);
-  assert.equal(result.summary.requestFailures, 1);
-  assert.equal(result.summary.archived, 3);
-  assert.deepEqual(result.events.map(event => event.screenshot), events.map(event => event.screenshot));
-});
-
-test('bulk search is bounded to five pages before detail fallback', async () => {
-  let page = 0;
-  const result = await updateEventCovers({ events: [{ id: 'zzz-50', gameKey: 'zzz', sourcePostId: '999' }],
-    dryRun: true, lookupImpl, logger: quietLogger, fetchImpl: async url => {
-      if (url.includes('getNewsList')) {
-        page++;
-        return new Response(JSON.stringify({ retcode: 0, data: { list: [{ post: { post_id: String(page) } }], last_id: String(page) } }));
-      }
-      return new Response(JSON.stringify({ retcode: 0, data: { post: { post: { cover: SOURCE } } } }));
-    } });
-  assert.equal(page, 5);
-  assert.equal(result.summary.detailRequests, 1);
-  assert.equal(result.summary.proposed, 1);
-});
-
-test('force refresh prefers the cached announcement cover over an existing source', async t => {
-  const outputDir = await temporaryDirectory(t);
-  await fs.writeFile(path.join(outputDir, 'sr-60.png'), PNG);
-  const event = { id: 'sr-60', gameKey: 'sr', sourcePostId: '600', coverUrl: '/images/covers/sr-60.png',
-    coverSourceUrl: `${SOURCE}?old` };
-  const result = await updateEventCovers({ events: [event], force: true, outputDir, lookupImpl, logger: quietLogger,
-    fetchImpl: async url => {
-      if (url.includes('getNewsList')) return new Response(JSON.stringify({ retcode: 0, data: { list: [{ post: { post_id: '600', cover: SOURCE } }] } }));
-      assert.equal(url, SOURCE);
-      return imageResponse();
-    } });
-  assert.equal(result.summary.archived, 1);
-  assert.equal(result.summary.detailRequests, 0);
-  assert.equal(result.events[0].coverSourceUrl, SOURCE);
 });
 
 test('oversized official uploads use one bounded OSS thumbnail and retain the original source URL', async t => {
