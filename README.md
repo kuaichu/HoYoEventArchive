@@ -25,12 +25,7 @@
    * `date` 仅表示展示或公告日期；只有活动提供明确且已过期的 `endDate` 时，脚本才自动标记“已结束”。网页连通性、登录要求和失效状态不再根据活动年龄猜测。
    * 全量事件会在测试和自动提交前检查必填字段、枚举、日期、URL 以及 ID/URL 唯一性。
 
-5. **独立本地管理工具 (Standalone Local Admin Tool)**
-   * [admin.html](file:///s:/Projects/Active/HoYo%20Event%20Archive/admin.html) 是纯浏览器本地编辑工具，不具有服务端或仓库写权限。
-   * 编辑使用带版本的 localStorage overlay：内置记录保存字段补丁、删除保存 tombstone、自定义记录单独保存；刷新后仍会保留修改，同时能接收仓库新增记录。
-   * 支持一键导出合并后的 `events.json`，由维护者审核后替换仓库数据。
-
-6. **本地收藏夹 (Personal Bookmarks)**
+5. **本地收藏夹 (Personal Bookmarks)**
    * 采用浏览器 LocalStorage 实现纯前端持久化收藏功能，用户可以收藏喜爱的年度报告或绝版活动网页。
 
 ---
@@ -60,7 +55,6 @@ npm run dev
 打开浏览器访问控制台输出的本地地址（通常为 `http://localhost:5173/`）。
 
 * 访问首页: `http://localhost:5173/`
-* 访问管理后台: `http://localhost:5173/admin.html`
 
 ### 3. 项目打包构建
 如果需要生成用于静态服务器部署的生产包，运行：
