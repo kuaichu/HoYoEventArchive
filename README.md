@@ -34,6 +34,7 @@
 
 * **核心前端**: HTML5 语义化标签、JavaScript (ES Modules 规范)
 * **样式系统**: 原生 CSS3，全面引入 CSS 自定义变量设计系统，适配深色科技感玻璃拟态（Glassmorphism）与微动效。
+* **字体与图标**: 使用系统字体；`src/icons.css` 只包含实际使用的 Font Awesome SVG 图标，不加载外部网页字体或整包图标字体。新增图标需同步加入本地子集，许可文件位于 `public/licenses/font-awesome.txt`。
 * **构建/打包**: Vite
 * **脚本/自动化**: Node.js 24, Puppeteer (Headless Chrome), GitHub Actions
 

@@ -1,4 +1,5 @@
 import './style.css';
+import './icons.css';
 import eventsData from './events.json';
 import {
   escapeHtml,
@@ -9,7 +10,7 @@ import {
   safeExternalUrl,
   statusMeta
 } from './event-domain.js';
-import { eventImageCandidates, setEventImage } from './event-cover.js';
+import { setEventImage } from './event-cover.js';
 import {
   mergeEventState,
   parsePersistedEventState,
@@ -813,7 +814,6 @@ function renderEvents() {
     elEventsContainer.innerHTML = filtered.map(e => {
       const isBookmarked = state.bookmarks.includes(e.id);
       const status = statusMeta(e.status);
-      const imageSrc = eventImageCandidates(e)[0];
       const detailHref = serializeRoute({ name: 'event', eventId: e.id });
       return `
         <div class="event-card" data-id="${escapeHtml(e.id)}">
@@ -825,7 +825,7 @@ function renderEvents() {
             <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-id="${escapeHtml(e.id)}" title="${isBookmarked ? '取消收藏' : '加入收藏'}">
               <i class="${isBookmarked ? 'fa-solid' : 'fa-regular'} fa-star"></i>
             </button>
-            <img class="card-img" data-event-image data-event-id="${escapeHtml(e.id)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" referrerpolicy="no-referrer" />
+            <img class="card-img" data-event-image data-event-id="${escapeHtml(e.id)}" alt="${escapeHtml(e.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
           </div>
           <div class="event-details">
             <div class="event-info-top">
@@ -869,13 +869,12 @@ function renderEvents() {
       ${filtered.map(e => {
         const isBookmarked = state.bookmarks.includes(e.id);
         const status = statusMeta(e.status);
-        const imageSrc = eventImageCandidates(e)[0];
         const detailHref = serializeRoute({ name: 'event', eventId: e.id });
         return `
           <div class="event-list-row" data-id="${escapeHtml(e.id)}">
             <a class="event-detail-link" href="${escapeHtml(detailHref)}" data-route-link aria-label="查看 ${escapeHtml(e.title)} 详情"></a>
             <div class="list-title-cell">
-              <img class="list-img-thumbnail" data-event-image data-event-id="${escapeHtml(e.id)}" src="${escapeHtml(imageSrc)}" alt="${escapeHtml(e.title)}" loading="lazy" referrerpolicy="no-referrer" />
+              <img class="list-img-thumbnail" data-event-image data-event-id="${escapeHtml(e.id)}" alt="${escapeHtml(e.title)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" />
               <span class="list-title-text" title="${escapeHtml(e.title)}">${escapeHtml(e.title)}</span>
             </div>
             <div class="list-game-cell">${escapeHtml(e.game)}</div>
