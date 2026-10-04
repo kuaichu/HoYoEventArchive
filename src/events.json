@@ -1545,7 +1545,9 @@
     "description": "4.3版本「沉于生者的忘川」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-38.jpg",
     "coverSourceUrl": "https://act-webstatic.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/resource/puzzle/2026/05/19/89f85172c9565561ce1588ffd60d2c34_5444984557035128914.jpg",
-    "descriptionSource": "manual"
+    "descriptionSource": "manual",
+    "sourceNewsId": "164408",
+    "sourceNewsUrl": "https://sr.mihoyo.com/news/164408"
   },
   {
     "id": "bh3-5",
@@ -1936,7 +1938,9 @@
     "description": "4.4版本「鸣笛于归寂之时」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-45.png",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/02/288909600/00dfb4aad2971f0c4791b1bfd15b52a0_7007249228002508117.png",
-    "descriptionSource": "manual"
+    "descriptionSource": "manual",
+    "sourceNewsId": "165187",
+    "sourceNewsUrl": "https://sr.mihoyo.com/news/165187"
   },
   {
     "id": "sr-46",
@@ -2383,7 +2387,9 @@
     "description": "4.5版本「挥掷千星的筹码」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-50.jpg",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/13/288909600/f286cfca7cb37995c984631eb476d4dd_1031110279178513822.jpg",
-    "descriptionSource": "manual"
+    "descriptionSource": "manual",
+    "sourceNewsId": "165873",
+    "sourceNewsUrl": "https://sr.mihoyo.com/news/165873"
   },
   {
     "id": "sr-51",
@@ -2713,7 +2719,9 @@
     "description": "4.6版本「月升之前，与兽共舞」专题展示页，查看该版本的内容介绍。",
     "coverUrl": "/images/covers/sr-55.jpg",
     "coverSourceUrl": "https://act-webstatic.mihoyo.com/puzzle/hkrpg/e20260913version_fasf13434_77d1c0e99b/resource/puzzle/2026/09/10/f41b5add247d200612da0920e97ad0c4_6121142611459259898.jpg",
-    "descriptionSource": "manual"
+    "descriptionSource": "manual",
+    "sourceNewsId": "166480",
+    "sourceNewsUrl": "https://sr.mihoyo.com/news/166480"
   },
   {
     "id": "sr-56",
@@ -2758,7 +2766,9 @@
     "version": "v7.1",
     "description": "暂停的严冬计划、惶惶不安的民众…至冬的黎明仍被深锁在漫天风雪中。",
     "coverUrl": "/images/covers/ys-52.png",
-    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/22/75276545/10d8094a683453338b5f3088e6829052_3073179581954473016.png"
+    "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/22/75276545/10d8094a683453338b5f3088e6829052_3073179581954473016.png",
+    "sourceNewsId": "166262",
+    "sourceNewsUrl": "https://ys.mihoyo.com/main/news/detail/166262"
   },
   {
     "id": "ys-53",
@@ -2899,12 +2909,14 @@
       "v7.1版本"
     ],
     "version": "v7.1",
-    "description": "与派蒙一起回顾旅程精彩经历，前往星旅鉴语测一测你的冒险风格，还可以获得原石*180、大英雄的经验、祝圣油膏等奖励。活动期间，在米游社 #周年拾光册# 话题中分享你的星旅鉴语-冒险风格，还有机会获得额外礼物哦。",
+    "description": "与派蒙一起回顾旅程精彩经历，前往星旅鉴语测一测你的冒险风格，还可以获得原石*180、大英雄的经验、祝圣油膏等奖励。《原神》现已登录PS平台、iOS、Android、PC平台，并支持移动端、PC端以及PS平台数据互通，旅行者可自由选择平台和设备开启冒险。",
     "startDate": "2026.09.28",
     "endDate": "2026.10.18",
     "coverUrl": "/images/covers/ys-56.jpg",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/09/24/75276539/75ff1e20326fd4277efa19521c1f7122_6718200261876559041.jpg",
-    "descriptionSource": "announcement"
+    "descriptionSource": "announcement",
+    "sourceNewsId": "166508",
+    "sourceNewsUrl": "https://ys.mihoyo.com/main/news/detail/166508"
   },
   {
     "id": "ys-57",
@@ -3001,5 +3013,31 @@
     "descriptionSource": "announcement",
     "reward": "活动期间，开拓者可在游戏内参与「镇伏『贪饕』，汇聚愿力」活动，汇集全服愿力帮助虚照，解锁故事及奖励情报",
     "coverUrl": "/images/covers/sr-58.png"
+  },
+  {
+    "id": "ys-59",
+    "title": "《原神》「风的来信」音乐六周年主题活动正式上线",
+    "url": "https://y.qq.com/forest/iVC0Fqnz_04CZDBc/index.html",
+    "game": "原神",
+    "gameKey": "ys",
+    "type": "回归活动",
+    "status": "可访问",
+    "date": "2026.09.29",
+    "dateType": "announcement",
+    "sourceNewsId": "166538",
+    "sourceNewsUrl": "https://ys.mihoyo.com/main/news/detail/166538",
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/content-v2/hk4e/166538/652c87f0947b295a1b4a727349f515f2_5708489775347283450.jpg",
+    "tags": [
+      "回归活动",
+      "通用",
+      "游戏内奖励"
+    ],
+    "version": "通用",
+    "description": "活动期间，完成活动页内任务即可获得原石兑换码奖励（限量600万份，若QQ音乐与酷狗音乐重复领取，也仅可兑换一次），获得兑换码后，旅行者可前往游戏内「设置」-「账户」-「兑换码」领取礼包。收听《原神》六周年主题曲《风的来信 A Letter From the Wind》，还可解锁全服音乐六周年主题「旋曜玉帛·《风的来信》」奖励。",
+    "descriptionSource": "announcement",
+    "startDate": "2026.09.29",
+    "endDate": "2026.10.13",
+    "reward": "活动期间，完成活动页内任务即可获得原石兑换码奖励（限量600万份，若QQ音乐与酷狗音乐重复领取，也仅可兑换一次），获得兑换码后，旅行者可前往游戏内「设置」-「账户」-「兑换码」领取礼包；收听《原神》六周年主题曲《风的来信 A Letter From the Wind》，还可解锁全服音乐六周年主题「旋曜玉帛·《风的来信》」奖励；40原石（限量600万份）",
+    "coverUrl": "/images/covers/ys-59.jpg"
   }
 ]
