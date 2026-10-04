@@ -12,6 +12,13 @@ import {
   validateEventCollection
 } from '../src/event-domain.js';
 
+test('day-only future starts are upcoming without guessing a clock on their start day', () => {
+  const event = { status: '可访问', startDate: '2026.10.05' };
+  assert.equal(resolveEventStatus(event, '2026.10.04', '2026-10-04T12:00:00+08:00'), '未开始');
+  assert.equal(resolveEventStatus({ ...event, status: '未开始' }, '2026.10.05', '2026-10-05T00:00:00+08:00'), '可访问');
+  assert.equal(resolveEventStatus({ ...event, status: '需登录' }, '2026.10.04', '2026-10-04T12:00:00+08:00'), '需登录');
+});
+
 const events = JSON.parse(
   fs.readFileSync(new URL('../src/events.json', import.meta.url), 'utf8')
 );
@@ -133,6 +140,90 @@ test('display projection exposes the effective lifecycle status without mutating
   assert.equal(source.status, '可访问');
 });
 
+test('precise lifecycle cutoff includes the whole stated minute and respects seconds', () => {
+  for (const [endAt, before, cutoff] of [
+    ['2026-07-17T23:59+08:00', '2026-07-17T23:59:59.999+08:00', '2026-07-18T00:00:00+08:00'],
+    ['2026-07-17T10:00+08:00', '2026-07-17T10:00:59.999+08:00', '2026-07-17T10:01:00+08:00'],
+    ['2026-07-17T10:00:30+08:00', '2026-07-17T10:00:29.999+08:00', '2026-07-17T10:00:30+08:00']
+  ]) {
+    const event = { status: '可访问', endAt, endDate: '2026.07.01' };
+    assert.equal(resolveEventStatus(event, '2026.07.18', new Date(before)), '可访问', endAt);
+    assert.equal(resolveEventStatus(event, '2026.07.17', new Date(cutoff)), '已结束', endAt);
+    assert.equal(resolveEventStatus({ ...event, status: '已失效' }, '2026.07.17', cutoff), '已失效');
+  }
+});
+
+test('future starts affect available events while unavailable and login states retain precedence', () => {
+  const startAt = '2026-07-17T10:00+08:00';
+  const before = new Date('2026-07-17T09:59:59+08:00');
+  const atStart = new Date(startAt);
+  for (const status of ['可访问', '未开始']) {
+    const event = { status, startAt };
+    assert.equal(resolveEventStatus(event, '2026.07.17', before), '未开始');
+    assert.equal(resolveEventStatus(event, '2026.07.17', atStart), '可访问');
+    assert.equal(projectEventForDisplay(event, '2026.07.17', before).status, '未开始');
+    assert.equal(event.status, status);
+  }
+  for (const status of ['需登录', '已失效', '已结束']) {
+    assert.equal(resolveEventStatus({ status, startAt }, '2026.07.17', before), status);
+    assert.equal(resolveEventStatus({ status, startAt }, '2026.07.17', atStart), status);
+  }
+});
+
+test('time metadata normalizes offsets, retains fallback data, and supports explicit removal', () => {
+  const fallback = {
+    ...events[0], startDate: '2026.07.17', endDate: '2026.07.18',
+    startAt: '2026-07-16T16:00Z', endAt: '2026-07-18T23:59:00+08:00',
+    timeSource: 'activity-api', timeSourceUrl: 'https://example.com/api?mode=detail&signature=a%2Fb',
+    timeStages: [
+      { name: '活动', startAt: '2026-07-16T16:00Z', endAt: '2026-07-18T23:59:00+08:00' },
+      { name: '评奖', startAt: '2026-07-19T10:00+08:00' }
+    ]
+  };
+  const timeFields = ['startAt', 'endAt', 'timeSource', 'timeSourceUrl', 'timeStages'];
+  for (const field of timeFields) assert.ok(EVENT_FIELDS.includes(field), field);
+  const normalized = normalizeEvent({ id: fallback.id, title: 'Edited' }, fallback);
+  assert.equal(normalized.startAt, '2026-07-17T00:00+08:00');
+  assert.equal(normalized.endAt, fallback.endAt);
+  assert.equal(normalized.timeSourceUrl, fallback.timeSourceUrl);
+  assert.equal(normalized.timeStages[0].startAt, normalized.startAt);
+  assert.notEqual(normalized.timeStages, fallback.timeStages);
+  assert.deepEqual(validateEvent(normalized), []);
+  for (const field of timeFields) {
+    for (const value of [null, undefined]) {
+      assert.equal(normalizeEvent({ id: fallback.id, [field]: value }, fallback)[field], undefined, field);
+    }
+  }
+  assert.deepEqual(validateEvent({ ...events[0], ...Object.fromEntries(timeFields.map(field => [field, null])) }), []);
+});
+
+test('time schema rejects unsafe sources, mismatched dates, timestamp ordering, and malformed stages', () => {
+  const { startAt, endAt, timeStages, ...fixture } = events[0];
+  const base = { ...fixture, startDate: '2026.07.17', endDate: '2026.07.18' };
+  for (const patch of [
+    { startAt: '2026-07-17T10:00' },
+    { startAt: '2026-02-30T10:00+08:00' },
+    { startAt: '2026-07-16T10:00+08:00' },
+    { endAt: '2026-07-19T10:00+08:00' },
+    { startAt: '2026-07-18T10:00+08:00', endAt: '2026-07-17T10:00+08:00' },
+    { timeSource: 'unknown' }, { timeSourceUrl: 'https://user:pass@example.com/api' },
+    { timeSourceUrl: '/api' }, { timeSourceUrl: 'javascript:alert(1)' },
+    { timeStages: [] }, { timeStages: Array(13).fill({ name: '活动', startAt: '2026-07-17T10:00Z' }) },
+    { timeStages: [{ name: '' }] }, { timeStages: [{ name: 'a'.repeat(49), startAt: '2026-07-17T10:00Z' }] },
+    { timeStages: [{ name: '活动', startAt: null }] },
+    { timeStages: [{ name: '活动', startAt: '2026-07-17T10:00Z', unrelated: 1 }] },
+    { timeStages: [{ name: '活动', startAt: '2026-07-18T10:00Z', endAt: '2026-07-17T10:00Z' }] },
+    { timeStages: [
+      { name: '评奖', startAt: '2026-07-18T10:00Z' },
+      { name: '投稿', startAt: '2026-07-17T10:00Z' }
+    ] }
+  ]) assert.notDeepEqual(validateEvent({ ...base, ...patch }), [], JSON.stringify(patch));
+  for (const timeSource of ['activity-api', 'activity-config', 'announcement', 'manual']) {
+    assert.deepEqual(validateEvent({ ...base, timeSource }), []);
+  }
+  assert.deepEqual(validateEvent({ ...base, timeStages: [{ name: '投稿', endAt: '2026-07-18T10:00Z' }] }), []);
+});
+
 test('schema rejects unsafe URLs and mismatched game metadata', () => {
   const valid = events[0];
   assert.notDeepEqual(
@@ -198,7 +289,7 @@ test('known version corrections remain locked to their target classifications', 
     ['ys-35', 'v6.7'], ['ys-36', 'v6.7'], ['ys-37', 'v6.7'], ['ys-40', 'v6.7'],
     ['sr-1', '公测前'], ['sr-2', 'v3.4'], ['sr-7', 'v3.2'], ['sr-14', 'v3.2'],
     ['sr-19', '通用'], ['sr-28', '公测前'], ['sr-30', '公测前'], ['sr-31', '公测前'],
-    ['zzz-8', '公测前'], ['bh3-1', 'v8.5'], ['bh3-8', 'v9.0']
+    ['zzz-8', '公测前'], ['bh3-1', 'v8.5'], ['bh3-8', 'v9.0'], ['sr-58', 'v4.6']
   ]);
   const byId = new Map(events.map(event => [event.id, event]));
 
@@ -226,7 +317,8 @@ test('July announcement records preserve verified event windows and lifecycle bo
     ['sr-46', '2026.07.05'],
     ['sr-47', '2026.08.18'],
     ['ys-39', '2026.08.31'],
-    ['ys-40', '2026.07.28']
+    ['ys-40', '2026.07.28'],
+    ['sr-49', '2026.08.26']
   ]);
 
   for (const event of julyEvents) {
@@ -235,7 +327,7 @@ test('July announcement records preserve verified event windows and lifecycle bo
     if (event.endDate) {
       assert.notEqual(event.endDate, event.date);
       assert.equal(
-        resolveEventStatus({ ...event, status: '可访问' }, '2026.07.18'),
+        resolveEventStatus({ ...event, status: '可访问' }, '2026.07.18', new Date('2026-07-18T00:00:00+08:00')),
         event.endDate < '2026.07.18' ? '已结束' : '可访问',
         `${event.id} should respect its verified end date`
       );

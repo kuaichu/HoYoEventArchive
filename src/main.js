@@ -11,6 +11,7 @@ import {
   statusMeta
 } from './event-domain.js';
 import { setEventImage } from './event-cover.js';
+import { formatEventTimeRange } from './event-time.js';
 import {
   mergeEventState,
   parsePersistedEventState,
@@ -112,6 +113,7 @@ let elCountYs, elCountSr, elCountZzz, elCountBh3;
 let elHeroSearchInput;
 let elViewGridBtn, elViewListBtn;
 let elDetailModal, elModalHeroImg, elModalTitle, elModalDate, elModalVersion, elModalType, elModalDesc, elModalTags, elModalPrimaryLink, elModalFavoriteBtn, elModalGameBadge, elModalStatusBadge;
+let elModalTimeRange, elModalTimeStages;
 let elGameZoneHeader, elGameZoneLogo, elGameZoneTitle, elGameZoneDesc, elZoneStatTotal, elZoneStatAvailable, elZoneStatExpired;
 let elMobileNavToggle, elMobileFilterBtn, elSidebarCloseBtn, elDrawerOverlay, elSidebarPanel, elNavMenu;
 
@@ -161,6 +163,8 @@ function initDOM() {
   elModalHeroImg = document.getElementById('modalHeroImg');
   elModalTitle = document.getElementById('modalTitle');
   elModalDate = document.getElementById('modalDate');
+  elModalTimeRange = document.getElementById('modalTimeRange');
+  elModalTimeStages = document.getElementById('modalTimeStages');
   elModalVersion = document.getElementById('modalVersion');
   elModalType = document.getElementById('modalType');
   elModalDesc = document.getElementById('modalDesc');
@@ -703,6 +707,7 @@ function renderSidebarFilters() {
     { label: '可访问', value: '可访问', iconClass: 'available' },
     { label: '已失效 (404)', value: '已失效', iconClass: 'expired' },
     { label: '需登录', value: '需登录', iconClass: 'login' },
+    { label: '未开始', value: '未开始', iconClass: 'upcoming' },
     { label: '已结束', value: '已结束', iconClass: 'ended' }
   ];
 
@@ -1029,6 +1034,14 @@ function openDetailModal(eventObj) {
   setEventImage(elModalHeroImg, eventObj);
   elModalTitle.textContent = eventObj.title;
   elModalDate.textContent = formatEventDate(eventObj);
+  elModalTimeRange.textContent = formatEventTimeRange(eventObj);
+  const stages = eventObj.timeStages ?? [];
+  elModalTimeStages.replaceChildren(...stages.map(stage => {
+    const row = document.createElement('p');
+    row.textContent = `${stage.name}：${formatEventTimeRange(stage)}`;
+    return row;
+  }));
+  elModalTimeStages.hidden = stages.length === 0;
   elModalVersion.textContent = eventObj.version || '待确认';
   elModalType.textContent = eventObj.type;
   elModalDesc.textContent = eventObj.description || '暂无该活动的详细说明。该活动是米哈游推出的官方网页活动之一。';
@@ -1077,6 +1090,9 @@ function openMissingDetail(route) {
   elModalHeroImg.src = gameCovers.all;
   elModalTitle.textContent = '活动不存在或已移除';
   elModalDate.textContent = '—';
+  elModalTimeRange.textContent = '—';
+  elModalTimeStages.replaceChildren();
+  elModalTimeStages.hidden = true;
   elModalVersion.textContent = '—';
   elModalType.textContent = '—';
   elModalDesc.textContent = '无法在当前活动档案中找到该活动，它可能已被删除或从档案中移除。';

@@ -12,6 +12,9 @@ const notificationFields = [
   'version',
   'startDate',
   'endDate',
+  'startAt',
+  'endAt',
+  'timeStages',
   'reward',
   'rewards'
 ];

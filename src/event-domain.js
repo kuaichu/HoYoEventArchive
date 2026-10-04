@@ -1,4 +1,5 @@
 import { normalizeStoredEventUrl } from './event-url.js';
+import { normalizeEventTimestamp, timestampDate } from './event-time.js';
 
 export const GAME_KEYS = Object.freeze(['all', 'ys', 'sr', 'zzz', 'bh3']);
 
@@ -17,8 +18,11 @@ export const EVENT_STATUSES = Object.freeze([
   '可访问',
   '已失效',
   '需登录',
+  '未开始',
   '已结束'
 ]);
+
+export const TIME_SOURCES = Object.freeze(['activity-api', 'activity-config', 'announcement', 'manual']);
 
 const DATE_PATTERN = /^\d{4}\.\d{2}\.\d{2}$/;
 const ID_PATTERN = /^[a-z0-9]+-[a-z0-9-]+$/i;
@@ -46,6 +50,11 @@ export const EVENT_FIELDS = Object.freeze([
   'dateType',
   'startDate',
   'endDate',
+  'startAt',
+  'endAt',
+  'timeSource',
+  'timeSourceUrl',
+  'timeStages',
   'sourcePostId',
   'sourcePostTitle',
   'sourceNewsId',
@@ -97,6 +106,7 @@ export const STATUS_META = Object.freeze({
   可访问: Object.freeze({ className: 'available', icon: 'fa-circle-check' }),
   已失效: Object.freeze({ className: 'expired', icon: 'fa-triangle-exclamation' }),
   需登录: Object.freeze({ className: 'login', icon: 'fa-lock' }),
+  未开始: Object.freeze({ className: 'upcoming', icon: 'fa-clock' }),
   已结束: Object.freeze({ className: 'ended', icon: 'fa-clock' })
 });
 
@@ -127,22 +137,37 @@ export function currentShanghaiDate(now = new Date()) {
   }).format(now);
 }
 
-export function resolveEventStatus(event, todayShanghai = currentShanghaiDate()) {
+export function resolveEventStatus(event, todayShanghai = currentShanghaiDate(), now = new Date()) {
   const currentStatus = event?.status;
 
   if (!EVENT_STATUSES.includes(currentStatus)) return currentStatus;
 
   if (currentStatus === '已失效') return currentStatus;
 
+  const nowMs = now instanceof Date ? now.getTime() : new Date(now).getTime();
+  const endAt = normalizeEventTimestamp(event?.endAt);
+  if (endAt) {
+    // Minute-only announcements include that entire minute, even when it is :00.
+    const cutoff = Date.parse(endAt) + (endAt.length === 22 ? 60_000 : 0);
+    if (nowMs >= cutoff) return '已结束';
+  }
   const endDate = normalizeComparableDate(event?.endDate);
   const today = normalizeComparableDate(todayShanghai);
-  if (!endDate || !today) return currentStatus;
+  if (!endAt && endDate && today && endDate < today) return '已结束';
 
-  return endDate < today ? '已结束' : currentStatus;
+  const startAt = normalizeEventTimestamp(event?.startAt);
+  if (startAt && Number.isFinite(nowMs) && ['可访问', '未开始'].includes(currentStatus)) {
+    return nowMs < Date.parse(startAt) ? '未开始' : '可访问';
+  }
+  const startDate = normalizeComparableDate(event?.startDate);
+  if (!startAt && startDate && today && ['可访问', '未开始'].includes(currentStatus)) {
+    return startDate > today ? '未开始' : '可访问';
+  }
+  return currentStatus;
 }
 
-export function projectEventForDisplay(event, todayShanghai = currentShanghaiDate()) {
-  return { ...event, status: resolveEventStatus(event, todayShanghai) };
+export function projectEventForDisplay(event, todayShanghai = currentShanghaiDate(), now = new Date()) {
+  return { ...event, status: resolveEventStatus(event, todayShanghai, now) };
 }
 
 export function escapeHtml(value) {
@@ -177,6 +202,44 @@ export function safeCoverUrl(value) {
 function safeCoverSourceUrl(value) {
   const url = safeCoverUrl(value);
   return url && !url.startsWith('/') ? url : null;
+}
+
+function timeStageIssues(stages, prefix) {
+  const issues = [];
+  if (!Array.isArray(stages) || stages.length < 1 || stages.length > 12) {
+    return [`${prefix} must contain between 1 and 12 stages`];
+  }
+  let previousAnchor;
+  for (const [index, stage] of stages.entries()) {
+    const path = `${prefix}[${index}]`;
+    if (!stage || typeof stage !== 'object' || Array.isArray(stage)) {
+      issues.push(`${path} must be a stage object`);
+      continue;
+    }
+    if (Object.keys(stage).some(field => !['name', 'startAt', 'endAt'].includes(field))) {
+      issues.push(`${path} contains unsupported fields`);
+    }
+    if (typeof stage.name !== 'string' || !stage.name.trim() || stage.name.trim().length > 48) {
+      issues.push(`${path}.name must be a non-empty string of at most 48 characters`);
+    }
+    const startAt = normalizeEventTimestamp(stage.startAt);
+    const endAt = normalizeEventTimestamp(stage.endAt);
+    for (const field of ['startAt', 'endAt']) {
+      if (Object.prototype.hasOwnProperty.call(stage, field) && !normalizeEventTimestamp(stage[field])) {
+        issues.push(`${path}.${field} must be a valid ISO timestamp with an explicit timezone`);
+      }
+    }
+    if (!startAt && !endAt) issues.push(`${path} requires at least one valid timestamp`);
+    if (startAt && endAt && Date.parse(startAt) > Date.parse(endAt)) {
+      issues.push(`${path}.startAt must not be after endAt`);
+    }
+    const anchor = startAt || endAt;
+    if (anchor && previousAnchor && Date.parse(anchor) < Date.parse(previousAnchor)) {
+      issues.push(`${path} must follow chronological stage order`);
+    }
+    if (anchor) previousAnchor = anchor;
+  }
+  return issues;
 }
 
 const BUILD_SCREENSHOT_VERSION = typeof __SCREENSHOT_VERSION__ === 'string'
@@ -295,6 +358,27 @@ export function normalizeEvent(raw, fallback = {}) {
     if (value) normalized[field] = value;
   }
 
+  for (const field of ['startAt', 'endAt']) {
+    const value = normalizeEventTimestamp(own(field) ? raw[field] : fallbackEvent[field]);
+    const dateField = field === 'startAt' ? 'startDate' : 'endDate';
+    const explicitlyCleared = own(dateField) && raw[dateField] === null;
+    if (value && !explicitlyCleared && (!normalized[dateField] || normalized[dateField] === timestampDate(value))) {
+      normalized[field] = value;
+    }
+  }
+  const timeSource = own('timeSource') ? raw.timeSource : fallbackEvent.timeSource;
+  if (TIME_SOURCES.includes(timeSource)) normalized.timeSource = timeSource;
+  const timeSourceUrl = safeCoverSourceUrl(own('timeSourceUrl') ? raw.timeSourceUrl : fallbackEvent.timeSourceUrl);
+  if (timeSourceUrl) normalized.timeSourceUrl = timeSourceUrl;
+  const timeStages = own('timeStages') ? raw.timeStages : fallbackEvent.timeStages;
+  if (timeStageIssues(timeStages, 'timeStages').length === 0) {
+    normalized.timeStages = timeStages.map(stage => ({
+      name: stage.name.trim(),
+      ...(stage.startAt === undefined ? {} : { startAt: normalizeEventTimestamp(stage.startAt) }),
+      ...(stage.endAt === undefined ? {} : { endAt: normalizeEventTimestamp(stage.endAt) })
+    }));
+  }
+
   const sourceNewsId = own('sourceNewsId') ? raw.sourceNewsId : fallbackEvent.sourceNewsId;
   if (typeof sourceNewsId === 'string' && /^\d+$/.test(sourceNewsId)) {
     normalized.sourceNewsId = sourceNewsId;
@@ -375,6 +459,30 @@ export function validateEvent(event, index = -1) {
     normalizeComparableDate(event.startDate) > normalizeComparableDate(event.endDate)
   ) {
     issues.push(`${prefix}.startDate must not be after endDate`);
+  }
+
+  for (const [field, dateField] of [['startAt', 'startDate'], ['endAt', 'endDate']]) {
+    if (event?.[field] === undefined || event[field] === null) continue;
+    const timestamp = normalizeEventTimestamp(event[field]);
+    if (!timestamp) {
+      issues.push(`${prefix}.${field} must be a valid ISO timestamp with an explicit timezone`);
+    } else if (normalizeComparableDate(event[dateField])
+      && timestampDate(timestamp) !== event[dateField].replaceAll('-', '.')) {
+      issues.push(`${prefix}.${field} must match the Shanghai date in ${dateField}`);
+    }
+  }
+  if (normalizeEventTimestamp(event?.startAt) && normalizeEventTimestamp(event?.endAt)
+    && Date.parse(event.startAt) > Date.parse(event.endAt)) {
+    issues.push(`${prefix}.startAt must not be after endAt`);
+  }
+  if (event?.timeSource !== undefined && event.timeSource !== null && !TIME_SOURCES.includes(event.timeSource)) {
+    issues.push(`${prefix}.timeSource is not supported`);
+  }
+  if (event?.timeSourceUrl !== undefined && event.timeSourceUrl !== null && !safeCoverSourceUrl(event.timeSourceUrl)) {
+    issues.push(`${prefix}.timeSourceUrl must be an absolute credential-free HTTP(S) URL`);
+  }
+  if (event?.timeStages !== undefined && event.timeStages !== null) {
+    issues.push(...timeStageIssues(event.timeStages, `${prefix}.timeStages`));
   }
 
   if (!Array.isArray(event?.tags) || event.tags.some(tag => typeof tag !== 'string')) {

@@ -13,9 +13,11 @@
     "screenshots": "node scripts/capture-screenshots.js",
     "crawl": "node scripts/official-news-crawler.js",
     "versions": "node scripts/enrich-versions.js",
+    "times": "node scripts/update-times.js",
     "covers": "node scripts/update-covers.js",
     "descriptions": "node scripts/update-descriptions.js",
     "test": "node --test test/*.test.js scripts/test-crawler-rules.js",
+    "test:browser": "node scripts/test-browser.js",
     "test:crawler": "node scripts/test-crawler-rules.js"
   },
   "devDependencies": {

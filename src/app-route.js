@@ -32,6 +32,7 @@ const STATUS_FROM_SLUG = Object.freeze({
   available: '可访问',
   expired: '已失效',
   login: '需登录',
+  upcoming: '未开始',
   ended: '已结束'
 });
 const VERSION_FROM_SLUG = Object.freeze({

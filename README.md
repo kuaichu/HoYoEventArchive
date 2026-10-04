@@ -19,12 +19,12 @@
    * [official-news.js](scripts/official-news.js) 管理各游戏的 app/channel 配置、分页、响应大小与超时限制。`sourceNewsId` / `sourceNewsUrl` 记录官网公告来源；历史 `sourcePostId` 仅保留追溯。
 
 3. **多维筛选与智能搜索 (Advanced Filtering & Search)**
-   * 支持按游戏种类、活动类型（年度报告、回归活动、版本前瞻、预约/预抽卡、小游戏等）以及可用状态（可访问、已失效、需登录、已结束）进行交叉筛选。
+   * 支持按游戏种类、活动类型（年度报告、回归活动、版本前瞻、预约/预抽卡、小游戏等）以及可用状态（可访问、未开始、已失效、需登录、已结束）进行交叉筛选。
    * 内置实时输入模糊搜索，并在 Banner 底部提供热门搜索标签快捷引导。
 
 4. **状态数据校验与生命周期更新 (Status Validation)**
    * 提供 [update-statuses.js](scripts/update-statuses.js) 确定性更新脚本。
-   * `date` 仅表示展示或公告日期；只有活动提供明确且已过期的 `endDate` 时，脚本才自动标记“已结束”。网页连通性、登录要求和失效状态不再根据活动年龄猜测。
+   * `date` 仅表示展示或公告日期；活动提供明确且已过期的 `endAt` 或 `endDate` 时才自动标记“已结束”，明确的未来开始时间显示“未开始”。网页连通性、登录要求和失效状态不根据活动年龄猜测。
    * 全量事件会在测试和自动提交前检查必填字段、枚举、日期、URL 以及 ID/URL 唯一性。
 
 5. **本地收藏夹 (Personal Bookmarks)**
@@ -93,7 +93,7 @@ npm test
 
   原神、崩铁、崩坏3 使用 `https://act-api-takumi-static.mihoyo.com/content_v2_user/app/{app}/getContentList`；绝区零使用 `https://api-takumi-static.mihoyo.com/content_v2_user/app/{app}/getContentList`。参数为 `iPage`、`iPageSize`、`sLangKey=zh-cn`、`iChanId`。单篇公告使用同路径下的 `getContent?iInfoId={id}&sLangKey=zh-cn`。
 
-  这些是官网当前使用的公开接口，没有对外稳定性承诺，也不是完整的网页活动目录。接口内的 `dtStartTime` 是公告发布时间，`dtEndTime` 是内容展示期限，不作为活动起止日期；活动时间仅从正文中的明确规则提取。只发在社区而未同步到官网的活动可能遗漏，原有历史记录不会删除。
+  这些是官网当前使用的公开接口，没有对外稳定性承诺，也不是完整的网页活动目录。接口内的 `dtStartTime` 是公告发布时间，`dtEndTime` 是内容展示期限，不作为活动起止日期。活动时间由下述专用脚本获取。只发在社区而未同步到官网的活动可能遗漏，原有历史记录不会删除。
 
   同步时同时读取 HoYoPlay 的 `https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGameBranches`，使用 `main.tag` 正式分支版本，不把预下载分支当成当前版本。`getGamePackages` 的主包版本可能落后于实际版本，不再用于判断。官网正式更新公告提供明确的维护日期；正式分支与最新已生效公告匹配且已知上线日期时才允许近期活动按当前版本期间补缺，二者冲突时记录冲突并停止此项推断。公告明确写出的活动版本始终优先，前瞻可以指向尚未上线的版本。
 
@@ -103,6 +103,26 @@ npm test
   npm run versions
   ```
   根据活动公告、官方更新公告和启动器接口补全缺失或“待确认”的版本，保留已有有效版本及“通用”等分类。`--ids=zzz-16,sr-52` 可限制处理记录。没有可靠依据时不改；不会把历史活动统一改成当前版本。已有日期表仅用于两次已知更新之间的历史区间，缺失中间版本、更新当天只有日期而无时刻、最新区间未获接口与公告共同确认时均不推断。此项逻辑也已接入 `npm run crawl` 的自动同步。
+
+* **核对活动参与时间**：
+  ```bash
+  npm run times -- --dry-run
+  npm run times
+  npm run times -- --all --dry-run --news-pages=50 --report=reports/activity-time-review.json
+  ```
+  [update-times.js](scripts/update-times.js) 优先读取官方活动 API 和网页实际使用的公开规则配置，缺失时查对应官网公告。支持绘画投稿、抽抽乐、限时签到、直播及不同年代的网页配置；只用公开 GET，不需要登录或 Cookie，也不执行远程 JavaScript。`--ids=ys-58,bh3-12` 可缩小核对范围；`--all` 包括已归档的完整时间，`--news-pages` 设置公告回查深度，报告区分完整、部分、缺失、冲突及常驻服务。
+
+  `date` 仍表示相关日期或公告日期；参与起止用 `startDate/endDate`，带时刻时另存 `startAt/endAt`（明确时区，保留分钟或秒精度）。`timeSource/timeSourceUrl` 保存依据，`timeStages` 区分整体周期、投稿、评奖、直播等阶段。投稿截止不等于公示结束；直播时间不代替评论抽奖截止，年度统计区间不当成活动期。规则明确限定某个版本时，可联合官方版本持续时间补全日期，不把预计维护结束当真实开服时刻。旧接口失效或依据冲突时保留已归档时间；`timeSource=manual` 的人工确认时间不覆盖。
+
+  前端详情展示参与时间及阶段，并根据精确起止显示“未开始”或“已结束”。只写到日的结束日期仍按北京时间次日判定；精确到分钟的截止包含该分钟，精确到秒的截止在该时刻生效。自动同步会在更新状态前运行此脚本。
+
+* **浏览器交互核验**：先构建并启动本地预览，再运行：
+  ```bash
+  npm run build
+  npm run preview -- --host 127.0.0.1 --port 4187
+  npm run test:browser -- --url=http://127.0.0.1:4187 --chrome="Chrome可执行文件路径"
+  ```
+  使用项目已有 Puppeteer 启动独立无头 Chrome，60 秒总超时，结束后关闭，不复用个人浏览器会话。覆盖桌面和 390px 手机尺寸下的筛选、详情、阶段、收藏、搜索、导航和精确时间边界。`--screenshots=目录` 可保存核验截图；该测试仅访问本地站点，未加入需要浏览器环境的默认单元测试。
   
 * **活动生命周期状态更新**：
   ```bash

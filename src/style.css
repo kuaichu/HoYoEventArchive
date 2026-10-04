@@ -400,6 +400,7 @@ body {
 .status-indicator.expired { background: var(--status-expired); box-shadow: 0 0 6px var(--status-expired); }
 .status-indicator.login { background: var(--status-login); box-shadow: 0 0 6px var(--status-login); }
 .status-indicator.ended { background: var(--status-ended); box-shadow: 0 0 6px var(--status-ended); }
+.status-indicator.upcoming { background: var(--text-accent); }
 
 /* Statistics Box */
 .stats-box {
@@ -1277,6 +1278,7 @@ body {
 .status-badge.expired { color: var(--status-expired); background: var(--status-expired-bg); border: 1px solid var(--status-expired-border); }
 .status-badge.login { color: var(--status-login); background: var(--status-login-bg); border: 1px solid var(--status-login-border); }
 .status-badge.ended { color: var(--status-ended); background: var(--status-ended-bg); border: 1px solid var(--status-ended-border); }
+.status-badge.upcoming { color: var(--text-accent); border: 1px solid currentColor; }
 
 .bookmark-btn {
   position: absolute;
@@ -1477,6 +1479,7 @@ body {
 .list-status-badge.expired { color: var(--status-expired); background: var(--status-expired-bg); }
 .list-status-badge.login { color: var(--status-login); background: var(--status-login-bg); }
 .list-status-badge.ended { color: var(--status-ended); background: var(--status-ended-bg); }
+.list-status-badge.upcoming { color: var(--text-accent); background: var(--bg-card); }
 
 .list-action-cell {
   display: flex;
@@ -1867,6 +1870,27 @@ body {
 .modal-meta-val {
   color: white;
   font-weight: 500;
+}
+
+.modal-time-item {
+  grid-column: 1 / -1;
+  min-width: 0;
+}
+
+.modal-time-item .modal-meta-val,
+.modal-time-stages p {
+  overflow-wrap: anywhere;
+}
+
+.modal-time-stages {
+  color: var(--text-muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.modal-time-stages p {
+  margin: 4px 0;
 }
 
 .modal-desc {

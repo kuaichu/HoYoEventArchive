@@ -76,6 +76,9 @@ jobs:
       - name: Fetch Official News APIs
         run: npm run crawl
 
+      - name: Update Official Activity Times
+        run: npm run times
+
       - name: Update Event Statuses
         run: node scripts/update-statuses.js
 

@@ -1,0 +1,5865 @@
+{
+  "checkedAt": "2026-10-04T04:59:41.020Z",
+  "timezone": "Asia/Shanghai",
+  "summary": {
+    "selected": 143,
+    "updated": 1,
+    "outcomes": {
+      "ok": 95,
+      "conflict": 1,
+      "failed": 5,
+      "missing": 30,
+      "permanent": 9,
+      "partial": 3
+    },
+    "coverage": {
+      "total": 143,
+      "startDate": 107,
+      "endDate": 107,
+      "startAt": 59,
+      "endAt": 95,
+      "dateRanges": 107,
+      "preciseRanges": 59
+    },
+    "updatedSinceBaseline": 98
+  },
+  "newsSources": [
+    {
+      "gameKey": "sr",
+      "status": "ok",
+      "error": null,
+      "articles": 820
+    },
+    {
+      "gameKey": "ys",
+      "status": "ok",
+      "error": null,
+      "articles": 4718
+    },
+    {
+      "gameKey": "bh3",
+      "status": "ok",
+      "error": null,
+      "articles": 2764
+    },
+    {
+      "gameKey": "zzz",
+      "status": "ok",
+      "error": null,
+      "articles": 1611
+    }
+  ],
+  "records": [
+    {
+      "id": "sr-1",
+      "title": "群星邀约 (预抽卡)",
+      "url": "https://webstatic.mihoyo.com/sr/event/e20230115draw-wtn7k1/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.hoyoverse.com/admin/mi18n/hkrpg_cn/m20221216hy43jrmiv4/m20221216hy43jrmiv4-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-03-24T20:00:00+08:00",
+      "endAt": "2023-06-06T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-03-24T20:00:00+08:00",
+        "endAt": "2023-06-06T23:59:59+08:00",
+        "startDate": "2023.03.24",
+        "endDate": "2023.06.06",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.hoyoverse.com/admin/mi18n/hkrpg_cn/m20221216hy43jrmiv4/m20221216hy43jrmiv4-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-03-24T20:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2023.03.24"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-06-06T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2023.06.06"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.hoyoverse.com/admin/mi18n/hkrpg_cn/m20221216hy43jrmiv4/m20221216hy43jrmiv4-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-2",
+      "title": "重返群星之旅 (2025.07)",
+      "url": "https://act.mihoyo.com/sr/event/e20250702reflow-5fua4n/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250515hy6ci0x9mo/m20250515hy6ci0x9mo-zh-cn.json",
+      "method": "activity-static-config",
+      "endAt": "2025-08-13T06:00+08:00",
+      "versionStart": "v3.4",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2025.07.02",
+      "fallbackSourceUrl": "https://sr.mihoyo.com/news/157434",
+      "announcementFallback": {
+        "startDate": "2025.07.02",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/157434",
+        "method": "official-version-start",
+        "reason": "Rules say after this version update; its maintenance date establishes only the day, not the reopening time"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-08-13T06:00+08:00",
+        "startDate": "2025.07.02",
+        "endDate": "2025.08.13",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250515hy6ci0x9mo/m20250515hy6ci0x9mo-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.07.02"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-08-13T06:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.08.13"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250515hy6ci0x9mo/m20250515hy6ci0x9mo-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-3",
+      "title": "重返群星之旅 (1.3版本)",
+      "url": "https://act.mihoyo.com/sr/event/e20230830reflow/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20230803hy35vungu8/m20230803hy35vungu8-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-08-30T07:00+08:00",
+      "endAt": "2023-10-11T06:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-08-30T07:00+08:00",
+        "endAt": "2023-10-11T06:00+08:00",
+        "startDate": "2023.08.30",
+        "endDate": "2023.10.11",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20230803hy35vungu8/m20230803hy35vungu8-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-08-30T07:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-10-11T06:00+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20230803hy35vungu8/m20230803hy35vungu8-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-4",
+      "title": "重返群星之旅 (1.5版本)",
+      "url": "https://act.mihoyo.com/sr/event/e20231115reflow-bd3a09/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231025hy56q79csg/m20231025hy56q79csg-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-11-15T07:00+08:00",
+      "endAt": "2023-12-27T06:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-11-15T07:00+08:00",
+        "endAt": "2023-12-27T06:00+08:00",
+        "startDate": "2023.11.15",
+        "endDate": "2023.12.27",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231025hy56q79csg/m20231025hy56q79csg-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-11-15T07:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-12-27T06:00+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231025hy56q79csg/m20231025hy56q79csg-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-5",
+      "title": "重返群星之旅 (2026回归)",
+      "url": "https://act.mihoyo.com/sr/event/e20260422return-r744pv/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260320hy3fn0bpc0/m20260320hy3fn0bpc0-zh-cn.json",
+      "method": "activity-static-config",
+      "versionPeriod": "v4.0",
+      "reason": "Activity rules name v4.0, but the archived activity belongs to v4.2; no version-period dates inferred",
+      "status": "conflict",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-6",
+      "title": "重返群星之旅 (2.3回归)",
+      "url": "https://act.mihoyo.com/sr/event/e20240619reflow-emk7kj/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/sr/event/e20240619reflow-emk7kj/index.html",
+      "method": "activity-static-config",
+      "error": "HTTP 404",
+      "status": "failed",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-7",
+      "title": "重返群星之旅 (2025.04)",
+      "url": "https://act.mihoyo.com/sr/event/e20250409reflow-eor2gd/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250228hy4bq6fsow/m20250228hy4bq6fsow-zh-cn.json",
+      "method": "activity-static-config",
+      "endAt": "2025-05-21T06:00+08:00",
+      "versionStart": "v3.2",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2025.04.09",
+      "fallbackSourceUrl": "https://sr.mihoyo.com/news/155405",
+      "announcementFallback": {
+        "startDate": "2025.04.09",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/155405",
+        "method": "official-version-start",
+        "reason": "Rules say after this version update; its maintenance date establishes only the day, not the reopening time"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-05-21T06:00+08:00",
+        "startDate": "2025.04.09",
+        "endDate": "2025.05.21",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250228hy4bq6fsow/m20250228hy4bq6fsow-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.04.09"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-05-21T06:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.05.21"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250228hy4bq6fsow/m20250228hy4bq6fsow-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-8",
+      "title": "重返群星之旅 (2.1回归)",
+      "url": "https://act.mihoyo.com/sr/event/e20240327reflow-d60j7l/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/sr/event/e20240327reflow-d60j7l/index.html",
+      "method": "activity-static-config",
+      "error": "HTTP 404",
+      "status": "failed",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2024.03.27",
+        "endDate": "2024.05.08"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-9",
+      "title": "幻月新游戏",
+      "url": "https://act.mihoyo.com/sr/event/e20260423anniversary-qqm8bq/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260225hy5fenxjb4/m20260225hy5fenxjb4-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-04-23T12:00+08:00",
+      "endAt": "2026-05-06T04:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-04-23T12:00+08:00",
+        "endAt": "2026-05-06T04:00+08:00",
+        "startDate": "2026.04.23",
+        "endDate": "2026.05.06",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260225hy5fenxjb4/m20260225hy5fenxjb4-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-04-23T12:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.04.23"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-05-06T04:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.05.06"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260225hy5fenxjb4/m20260225hy5fenxjb4-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-10",
+      "title": "星穹列车年度开拓报告（1周年）",
+      "url": "https://act.mihoyo.com/sr/event/e20240426anniversary-so6swc/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240314hy485umxhc/m20240314hy485umxhc-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2024-04-26T12:00+08:00",
+      "endAt": "2024-05-07T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2024-04-26T12:00+08:00",
+        "endAt": "2024-05-07T23:59+08:00",
+        "startDate": "2024.04.26",
+        "endDate": "2024.05.07",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240314hy485umxhc/m20240314hy485umxhc-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2024-04-26T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-05-07T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240314hy485umxhc/m20240314hy485umxhc-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-11",
+      "title": "星穹列车年度开拓报告（2周年）",
+      "url": "https://act.mihoyo.com/sr/event/e20250426anniversary-ab5xre/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250221hy2bnoalts/m20250221hy2bnoalts-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2025-04-26T10:00+08:00",
+      "endAt": "2025-05-07T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2025-04-26T10:00+08:00",
+        "endAt": "2025-05-07T23:59+08:00",
+        "startDate": "2025.04.26",
+        "endDate": "2025.05.07",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250221hy2bnoalts/m20250221hy2bnoalts-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2025-04-26T10:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-05-07T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250221hy2bnoalts/m20250221hy2bnoalts-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-12",
+      "title": "星穹列车年度开拓报告（3周年）",
+      "url": "https://act.mihoyo.com/sr/event/e20260426anniversary-6sg7ni/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260311hy5fjpjwn4/m20260311hy5fjpjwn4-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-04-26T12:00+08:00",
+      "endAt": "2026-05-07T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-04-26T12:00+08:00",
+        "endAt": "2026-05-07T23:59+08:00",
+        "startDate": "2026.04.26",
+        "endDate": "2026.05.07",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260311hy5fjpjwn4/m20260311hy5fjpjwn4-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-04-26T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-05-07T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260311hy5fjpjwn4/m20260311hy5fjpjwn4-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-13",
+      "title": "星穹贺礼·三周年开拓福利",
+      "url": "https://act.mihoyo.com/sr/event/e20260422album-en1jh8/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260226hy3ff0oav4/m20260226hy3ff0oav4-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2026.04.22",
+      "endAt": "2026-05-10T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-05-10T23:59+08:00",
+        "startDate": "2026.04.22",
+        "endDate": "2026.05.10",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260226hy3ff0oav4/m20260226hy3ff0oav4-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2026.04.22"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-05-10T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.05.10"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260226hy3ff0oav4/m20260226hy3ff0oav4-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-14",
+      "title": "星穹贺礼·周年福利",
+      "url": "https://act.mihoyo.com/sr/event/e20250409album-ywl2vf/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250210hy2bjleneo/m20250210hy2bjleneo-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2025.04.09",
+      "endAt": "2025-05-10T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-05-10T23:59+08:00",
+        "startDate": "2025.04.09",
+        "endDate": "2025.05.10",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250210hy2bjleneo/m20250210hy2bjleneo-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.04.09"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-05-10T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.05.10"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20250210hy2bjleneo/m20250210hy2bjleneo-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-15",
+      "title": "盛会邀约",
+      "url": "https://act.mihoyo.com/sr/event/e20240206relow-lxxr53/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/sr/event/e20240206relow-lxxr53/index.html",
+      "method": "activity-static-config",
+      "error": "HTTP 404",
+      "status": "failed",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2024.02.06",
+        "endDate": "2024.03.27"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-16",
+      "title": "梦境之梦",
+      "url": "https://act.mihoyo.com/sr/event/e20240724coupon-wsrup1/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/sr/event/e20240724coupon-wsrup1/index.html",
+      "method": "activity-static-config",
+      "error": "HTTP 404",
+      "status": "failed",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-17",
+      "title": "神秘来信",
+      "url": "https://act.mihoyo.com/sr/event/e202504rpg2ndwish-xap56m/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/sr/event/e202504rpg2ndwish-xap56m/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-18",
+      "title": "航『星』一载 周年福利",
+      "url": "https://act.mihoyo.com/sr/event/e20240419myp-rg53yq/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240306hy782z4jcw/m20240306hy782z4jcw-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2024.04.19",
+      "endAt": "2024-04-23T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2024-04-23T23:59+08:00",
+        "startDate": "2024.04.19",
+        "endDate": "2024.04.23",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240306hy782z4jcw/m20240306hy782z4jcw-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2024.04.19"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-04-23T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2024.04.23"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240306hy782z4jcw/m20240306hy782z4jcw-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-19",
+      "title": "黄金裔WIKI",
+      "url": "https://act.mihoyo.com/sr/event/gt-aio/chrysos-heirs/index.html",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-20",
+      "title": "星天演武百晓生",
+      "url": "https://act.mihoyo.com/sr/event/e20240727luofu-b91x7m/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240605hy19055b7k/m20240605hy19055b7k-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2024-07-27T12:00+08:00",
+      "endAt": "2024-08-03T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2024-07-27T12:00+08:00",
+        "endAt": "2024-08-03T23:59+08:00",
+        "startDate": "2024.07.27",
+        "endDate": "2024.08.03",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240605hy19055b7k/m20240605hy19055b7k-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2024-07-27T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-08-03T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240605hy19055b7k/m20240605hy19055b7k-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-21",
+      "title": "Lady Jade 慈玉手册",
+      "url": "https://act.mihoyo.com/sr/event/e20240709jade/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240514hy38s58utc/m20240514hy38s58utc-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2024-07-09T12:00+08:00",
+      "endAt": "2024-07-16T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2024-07-09T12:00+08:00",
+        "endAt": "2024-07-16T23:59+08:00",
+        "startDate": "2024.07.09",
+        "endDate": "2024.07.16",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240514hy38s58utc/m20240514hy38s58utc-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2024-07-09T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-07-16T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240514hy38s58utc/m20240514hy38s58utc-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-22",
+      "title": "酷得走火—宇宙！咻！咻！大挑战！",
+      "url": "https://act.mihoyo.com/sr/event/e20240531shoot-8j34gx/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240426hy38llhxc0/m20240426hy38llhxc0-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2024-05-31T12:00+08:00",
+      "endAt": "2024-06-07T12:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2024-05-31T12:00+08:00",
+        "endAt": "2024-06-07T12:00+08:00",
+        "startDate": "2024.05.31",
+        "endDate": "2024.06.07",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240426hy38llhxc0/m20240426hy38llhxc0-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2024-05-31T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-06-07T12:00+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20240426hy38llhxc0/m20240426hy38llhxc0-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-23",
+      "title": "群星的寓言",
+      "url": "https://act.mihoyo.com/sr/event/e20231230card-d0a2c0/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231108hy36vbepds/m20231108hy36vbepds-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-12-30T12:00+08:00",
+      "endAt": "2024-01-05T12:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-12-30T12:00+08:00",
+        "endAt": "2024-01-05T12:00+08:00",
+        "startDate": "2023.12.30",
+        "endDate": "2024.01.05",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231108hy36vbepds/m20231108hy36vbepds-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-12-30T12:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2023.12.30"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-01-05T12:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2024.01.05"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20231108hy36vbepds/m20231108hy36vbepds-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-24",
+      "title": "模拟市场 (托帕与账账)",
+      "url": "https://act.mihoyo.com/sr/event/e20231025topaz/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20230828hy164zhr0g/m20230828hy164zhr0g-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-10-25T12:00+08:00",
+      "endAt": "2023-10-30T12:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-10-25T12:00+08:00",
+        "endAt": "2023-10-30T12:00+08:00",
+        "startDate": "2023.10.25",
+        "endDate": "2023.10.30",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20230828hy164zhr0g/m20230828hy164zhr0g-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-10-25T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-10-30T12:00+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20230828hy164zhr0g/m20230828hy164zhr0g-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-25",
+      "title": "下一首歌开始之前",
+      "url": "https://act.mihoyo.com/sr/event/e20240509robin-z0ps5s/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/sr/event/e20240509robin-z0ps5s/index.html",
+      "method": "activity-static-config",
+      "error": "HTTP 404",
+      "status": "failed",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2024.05.08",
+        "endDate": "2024.05.15"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-26",
+      "title": "代号：ACTION",
+      "url": "https://act.mihoyo.com/sr/event/20230802action/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230629hy35j1tngg/m20230629hy35j1tngg-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-08-05T12:00+08:00",
+      "endAt": "2023-08-12T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-08-05T12:00+08:00",
+        "endAt": "2023-08-12T23:59+08:00",
+        "startDate": "2023.08.05",
+        "endDate": "2023.08.12",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230629hy35j1tngg/m20230629hy35j1tngg-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-08-05T12:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2023.08.05"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-08-12T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2023.08.12"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230629hy35j1tngg/m20230629hy35j1tngg-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-27",
+      "title": "开『饭』之道",
+      "url": "https://act.mihoyo.com/sr/event/e20230625luocha-fki8ca/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230515hy152kvvuo/m20230515hy152kvvuo-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2023.06.27",
+      "endAt": "2023-07-04T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2023-07-04T23:59+08:00",
+        "startDate": "2023.06.27",
+        "endDate": "2023.07.04",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230515hy152kvvuo/m20230515hy152kvvuo-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2023-07-04T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230515hy152kvvuo/m20230515hy152kvvuo-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-28",
+      "title": "米游姬的开拓指南",
+      "url": "https://webstatic.mihoyo.com/sr/event/e20230105openingh5-qlg2th/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.hoyoverse.com/admin/mi18n/hkrpg_cn/m20221216hy33jpa0w0/m20221216hy33jpa0w0-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-04-26T18:00+08:00",
+      "endAt": "2023-05-10T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-04-26T18:00+08:00",
+        "endAt": "2023-05-10T23:59+08:00",
+        "startDate": "2023.04.26",
+        "endDate": "2023.05.10",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.hoyoverse.com/admin/mi18n/hkrpg_cn/m20221216hy33jpa0w0/m20221216hy33jpa0w0-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "status": {
+          "before": "可访问",
+          "after": "已结束"
+        },
+        "startAt": {
+          "before": null,
+          "after": "2023-04-26T18:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2023.04.26"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-05-10T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2023.05.10"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.hoyoverse.com/admin/mi18n/hkrpg_cn/m20221216hy33jpa0w0/m20221216hy33jpa0w0-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-29",
+      "title": "无尽的三月七",
+      "url": "https://webstatic.mihoyo.com/sr/event/e20230428ai-0x2qd1/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230315hy34g9mqkg/m20230315hy34g9mqkg-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-04-28T12:00+08:00",
+      "endAt": "2023-05-03T12:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-04-28T12:00+08:00",
+        "endAt": "2023-05-03T12:00+08:00",
+        "startDate": "2023.04.28",
+        "endDate": "2023.05.03",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230315hy34g9mqkg/m20230315hy34g9mqkg-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-04-28T12:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2023.04.28"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-05-03T12:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2023.05.03"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/hkrpg_cn/m20230315hy34g9mqkg/m20230315hy34g9mqkg-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-30",
+      "title": "跃动星穹",
+      "url": "https://webstatic.mihoyo.com/sr/event/e20220908jump-4odj/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/sr/event/e20220908jump-4odj/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-31",
+      "title": "仙舟六司入门试验",
+      "url": "https://webstatic.mihoyo.com/sr/event/e20221102exam/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/sr/event/e20221102exam/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-32",
+      "title": "入梦指南 (匹诺康尼导览)",
+      "url": "https://hsr.hoyoverse.com/guidetopenacony?lang=zh-cn",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://hsr.hoyoverse.com/guidetopenacony?lang=zh-cn",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "zzz-1",
+      "title": "回归丽都 共启新章",
+      "url": "https://act.mihoyo.com/zzz/event/e20260606reunion-97ch1w/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260512hy1g6em96o/m20260512hy1g6em96o-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-06-06T20:00+08:00",
+      "endAt": "2026-07-17T03:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-06-06T20:00+08:00",
+        "endAt": "2026-07-17T03:59:59+08:00",
+        "startDate": "2026.06.06",
+        "endDate": "2026.07.17",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260512hy1g6em96o/m20260512hy1g6em96o-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "status": {
+          "before": "可访问",
+          "after": "已结束"
+        },
+        "startAt": {
+          "before": null,
+          "after": "2026-06-06T20:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.06.06"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-07-17T03:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.07.17"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260512hy1g6em96o/m20260512hy1g6em96o-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-2",
+      "title": "妄想天使训练中",
+      "url": "https://act.mihoyo.com/zzz/event/e20260130-idol-ggxnqr/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20251014hy2e1kt0jk/m20251014hy2e1kt0jk-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-01-30T10:00+08:00",
+      "endAt": "2026-02-09T03:59+08:00",
+      "status": "ok",
+      "requests": 4,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-01-30T10:00+08:00",
+        "endAt": "2026-02-09T03:59+08:00",
+        "startDate": "2026.01.30",
+        "endDate": "2026.02.09",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20251014hy2e1kt0jk/m20251014hy2e1kt0jk-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-01-30T10:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.01.30"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-02-09T03:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.02.09"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20251014hy2e1kt0jk/m20251014hy2e1kt0jk-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-3",
+      "title": "集结委托：回归丽都（2.5版本）",
+      "url": "https://act.mihoyo.com/zzz/event/e20251219-collection-ok467g/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20251125hy1eh1xb0g/m20251125hy1eh1xb0g-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2025.12.30",
+      "endAt": "2026-02-06T05:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-02-06T05:59:59+08:00",
+        "startDate": "2025.12.30",
+        "endDate": "2026.02.06",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20251125hy1eh1xb0g/m20251125hy1eh1xb0g-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.12.30"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-02-06T05:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.02.06"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20251125hy1eh1xb0g/m20251125hy1eh1xb0g-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-4",
+      "title": "下一站：卫非地！",
+      "url": "https://act.mihoyo.com/zzz/event/e20250523collection-zspbz1/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20250320hy2bxk9qm8/m20250320hy2bxk9qm8-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2025.05.23",
+      "endAt": "2025-06-05T23:59:59+08:00",
+      "status": "ok",
+      "requests": 5,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-06-05T23:59:59+08:00",
+        "startDate": "2025.05.23",
+        "endDate": "2025.06.05",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20250320hy2bxk9qm8/m20250320hy2bxk9qm8-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.05.23"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-06-05T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.06.05"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20250320hy2bxk9qm8/m20250320hy2bxk9qm8-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-5",
+      "title": "若能化作天琴",
+      "url": "https://act.mihoyo.com/zzz/event/e20250117-star-x2u55q/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241120hy7apqpwxs/m20241120hy7apqpwxs-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2025-01-17T12:00+08:00",
+      "endAt": "2025-01-31T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2025-01-17T12:00+08:00",
+        "endAt": "2025-01-31T23:59+08:00",
+        "startDate": "2025.01.17",
+        "endDate": "2025.01.31",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241120hy7apqpwxs/m20241120hy7apqpwxs-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2025-01-17T12:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2025.01.17"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-01-31T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.01.31"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241120hy7apqpwxs/m20241120hy7apqpwxs-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-6",
+      "title": "集结委托：回归丽都（1.3版本）",
+      "url": "https://act.mihoyo.com/zzz/event/e20241106reunion-tsic2y/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241021hy7aeqhm9s/m20241021hy7aeqhm9s-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2024.11.06",
+      "endAt": "2024-12-02T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2024-12-02T23:59:59+08:00",
+        "startDate": "2024.11.06",
+        "endDate": "2024.12.02",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241021hy7aeqhm9s/m20241021hy7aeqhm9s-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2024.11.06"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-12-02T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2024.12.02"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241021hy7aeqhm9s/m20241021hy7aeqhm9s-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-7",
+      "title": "心笺雅赠",
+      "url": "https://act.mihoyo.com/zzz/event/e20241220card-paavoo/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241113hy7an0z0n4/m20241113hy7an0z0n4-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2024-12-20T12:00+08:00",
+      "endAt": "2025-01-03T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2024-12-20T12:00+08:00",
+        "endAt": "2025-01-03T23:59+08:00",
+        "startDate": "2024.12.20",
+        "endDate": "2025.01.03",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241113hy7an0z0n4/m20241113hy7an0z0n4-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2024-12-20T12:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2024.12.20"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-01-03T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.01.03"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20241113hy7an0z0n4/m20241113hy7an0z0n4-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-8",
+      "title": "行前采购 (预抽卡)",
+      "url": "https://act.mihoyo.com/zzz/event/e20240510predraw-ko7gnx/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20240315hy4865c9og/m20240315hy4865c9og-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2024-05-28T12:00:00+08:00",
+      "endAt": "2024-07-18T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2024-05-28T12:00:00+08:00",
+        "endAt": "2024-07-18T23:59:59+08:00",
+        "startDate": "2024.05.28",
+        "endDate": "2024.07.18",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20240315hy4865c9og/m20240315hy4865c9og-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2024-05-28T12:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2024.05.28"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-07-18T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2024.07.18"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20240315hy4865c9og/m20240315hy4865c9og-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-9",
+      "title": "早安，罗斯凯利法",
+      "url": "https://act.mihoyo.com/zzz/event/e20260606-warmup-rpxqfd/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260410hy3furw1z4/m20260410hy3furw1z4-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-06-06T10:00:00+08:00",
+      "endAt": "2026-06-17T05:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-06-06T10:00:00+08:00",
+        "endAt": "2026-06-17T05:59:59+08:00",
+        "startDate": "2026.06.06",
+        "endDate": "2026.06.17",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260410hy3furw1z4/m20260410hy3furw1z4-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "status": {
+          "before": "可访问",
+          "after": "已结束"
+        },
+        "startAt": {
+          "before": null,
+          "after": "2026-06-06T10:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.06.06"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-06-17T05:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.06.17"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260410hy3furw1z4/m20260410hy3furw1z4-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-1",
+      "title": "彼时今日",
+      "url": "https://act.mihoyo.com/ys/event/e20250618return-lw5jy8/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250520hy6cjvlxxc/m20250520hy6cjvlxxc-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2025.06.18",
+      "endAt": "2025-07-02T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-07-02T23:59+08:00",
+        "startDate": "2025.06.18",
+        "endDate": "2025.07.02",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250520hy6cjvlxxc/m20250520hy6cjvlxxc-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.06.18"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-07-02T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.07.02"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250520hy6cjvlxxc/m20250520hy6cjvlxxc-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-2",
+      "title": "雀巢脆脆鲨 × 原神联动",
+      "url": "https://act.mihoyo.com/ys/event/e20260327-ccs-hg7tcy/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260107hy1ewo8idc/m20260107hy1ewo8idc-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-03-27T20:00:00+08:00",
+      "endAt": "2026-09-26T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-03-27T20:00:00+08:00",
+        "endAt": "2026-09-26T23:59:59+08:00",
+        "startDate": "2026.03.27",
+        "endDate": "2026.09.26",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260107hy1ewo8idc/m20260107hy1ewo8idc-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-03-27T20:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.03.27"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-26T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.09.26"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260107hy1ewo8idc/m20260107hy1ewo8idc-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-3",
+      "title": "去月的归处",
+      "url": "https://act.mihoyo.com/ys/event/e20260114invite-kst075/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251210hy2emh9nnk/m20251210hy2emh9nnk-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2026.01.14",
+      "endAt": "2026-01-28T23:59+08:00",
+      "status": "ok",
+      "requests": 4,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-01-28T23:59+08:00",
+        "startDate": "2026.01.14",
+        "endDate": "2026.01.28",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251210hy2emh9nnk/m20251210hy2emh9nnk-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2026.01.14"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-01-28T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.01.28"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251210hy2emh9nnk/m20251210hy2emh9nnk-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-4",
+      "title": "月之拾忆 (年度总结)",
+      "url": "https://act.mihoyo.com/ys/event/e20251231reserve-ygor75/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251203hy1ejx11j4/m20251203hy1ejx11j4-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2025.12.31",
+      "endAt": "2026-01-13T23:59+08:00",
+      "status": "ok",
+      "requests": 4,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-01-13T23:59+08:00",
+        "startDate": "2025.12.31",
+        "endDate": "2026.01.13",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251203hy1ejx11j4/m20251203hy1ejx11j4-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.12.31"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-01-13T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.01.13"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251203hy1ejx11j4/m20251203hy1ejx11j4-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-5",
+      "title": "始于挪德卡莱",
+      "url": "https://act.mihoyo.com/ys/event/e20250829reserve-6htzhx/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250716hy4d4ng8ao/m20250716hy4d4ng8ao-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2025.08.29",
+      "endAt": "2025-09-24T23:59+08:00",
+      "status": "ok",
+      "requests": 6,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-09-24T23:59+08:00",
+        "startDate": "2025.08.29",
+        "endDate": "2025.09.24",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250716hy4d4ng8ao/m20250716hy4d4ng8ao-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2025-09-24T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250716hy4d4ng8ao/m20250716hy4d4ng8ao-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-6",
+      "title": "千星奇域「绘境之旅」",
+      "url": "https://act.mihoyo.com/ys/event/e20251022ugc-9x16wi/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250904hy2dn02b5s/m20250904hy2dn02b5s-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2025.10.22",
+      "endAt": "2025-12-03T07:00+08:00",
+      "status": "ok",
+      "requests": 5,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-12-03T07:00+08:00",
+        "startDate": "2025.10.22",
+        "endDate": "2025.12.03",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250904hy2dn02b5s/m20250904hy2dn02b5s-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2025.10.22"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-12-03T07:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.12.03"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250904hy2dn02b5s/m20250904hy2dn02b5s-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-7",
+      "title": "脉动联动网页站",
+      "url": "https://act.mihoyo.com/ys/event/e20250501mizone-capwyd/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250310hy3btui874/m20250310hy3btui874-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2025-05-01T10:00:00+08:00",
+      "endAt": "2025-07-01T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2025-05-01T10:00:00+08:00",
+        "endAt": "2025-07-01T23:59:59+08:00",
+        "startDate": "2025.05.01",
+        "endDate": "2025.07.01",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250310hy3btui874/m20250310hy3btui874-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2025-05-01T10:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2025.05.01"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-07-01T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2025.07.01"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250310hy3btui874/m20250310hy3btui874-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-8",
+      "title": "追迹寻心 (五周年回顾)",
+      "url": "https://act.mihoyo.com/ys/event/e20250928review-u3t1cg/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250709hy4d231qtc/m20250709hy4d231qtc-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2025-09-28T11:00+08:00",
+      "endAt": "2025-10-12T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2025-09-28T11:00+08:00",
+        "endAt": "2025-10-12T23:59+08:00",
+        "startDate": "2025.09.28",
+        "endDate": "2025.10.12",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250709hy4d231qtc/m20250709hy4d231qtc-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2025-09-28T11:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2025-10-12T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20250709hy4d231qtc/m20250709hy4d231qtc-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-10",
+      "title": "藤编八奇 (海灯节网页活动)",
+      "url": "https://act.mihoyo.com/ys/event/e20250126lantern-a862tu/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/129699",
+      "method": "official-announcement",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2025.01.26",
+      "endAt": "2025-02-09T23:59+08:00",
+      "endDate": "2025.02.09",
+      "activitySourceUrl": "https://act.mihoyo.com/ys/event/e20250126lantern-a862tu/index.html",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/129699",
+      "announcementFallback": {
+        "startDate": "2025.01.26",
+        "endAt": "2025-02-09T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/129699",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2025-02-09T23:59+08:00",
+        "startDate": "2025.01.26",
+        "endDate": "2025.02.09",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/129699"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2025-02-09T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://ys.mihoyo.com/main/news/detail/129699"
+        }
+      }
+    },
+    {
+      "id": "ys-11",
+      "title": "出发！火之国 (纳塔先导)",
+      "url": "https://act.mihoyo.com/ys/event/e20240822new-w0suak/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240725hy29ii6cqo/m20240725hy29ii6cqo-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2024.08.22",
+      "endAt": "2024-09-24T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2024-09-24T23:59+08:00",
+        "startDate": "2024.08.22",
+        "endDate": "2024.09.24",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240725hy29ii6cqo/m20240725hy29ii6cqo-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2024.08.22"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-09-24T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2024.09.24"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240725hy29ii6cqo/m20240725hy29ii6cqo-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-12",
+      "title": "提瓦特冒险试炼",
+      "url": "https://cmpay.csfullspeed.com/cph5/a20210930yuanshen/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/116976",
+      "method": "official-announcement",
+      "error": "Unsafe or non-official activity URL",
+      "status": "ok",
+      "requests": 0,
+      "startAt": "2021-09-29T13:00+08:00",
+      "startDate": "2021.09.29",
+      "endAt": "2021-10-09T23:59+08:00",
+      "endDate": "2021.10.09",
+      "activitySourceUrl": "https://cmpay.csfullspeed.com/cph5/a20210930yuanshen/index.html",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/116976",
+      "announcementFallback": {
+        "startAt": "2021-09-29T13:00+08:00",
+        "endAt": "2021-10-09T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/116976",
+        "method": "official-announcement"
+      },
+      "changedFields": [
+        "startAt",
+        "endAt",
+        "startDate",
+        "endDate",
+        "timeSource",
+        "timeSourceUrl"
+      ],
+      "stored": {
+        "startAt": "2021-09-29T13:00+08:00",
+        "endAt": "2021-10-09T23:59+08:00",
+        "startDate": "2021.09.29",
+        "endDate": "2021.10.09",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/116976"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2021-09-29T13:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2021.09.29"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2021-10-09T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2021.10.09"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://ys.mihoyo.com/main/news/detail/116976"
+        }
+      }
+    },
+    {
+      "id": "ys-13",
+      "title": "绘忆星辰 (二周年回顾)",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20220928review_data/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.hoyoverse.com/admin/mi18n/hk4e_cn/m08221019291721/m08221019291721-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2022.09.28",
+      "endAt": "2022-10-12T23:59+08:00",
+      "status": "ok",
+      "requests": 5,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2022-10-12T23:59+08:00",
+        "startDate": "2022.09.28",
+        "endDate": "2022.10.12",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.hoyoverse.com/admin/mi18n/hk4e_cn/m08221019291721/m08221019291721-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2022.09.28"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2022-10-12T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2022.10.12"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.hoyoverse.com/admin/mi18n/hk4e_cn/m08221019291721/m08221019291721-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-14",
+      "title": "尘星旅梦 (三周年回顾)",
+      "url": "https://act.mihoyo.com/ys/event/e20230928review/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/118525",
+      "method": "official-announcement",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "ok",
+      "requests": 5,
+      "startDate": "2023.09.28",
+      "endAt": "2023-10-12T23:59+08:00",
+      "endDate": "2023.10.12",
+      "activitySourceUrl": "https://act.mihoyo.com/ys/event/e20230928review/index.html",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/118525",
+      "announcementFallback": {
+        "startDate": "2023.09.28",
+        "endAt": "2023-10-12T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/118525",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2023-10-12T23:59+08:00",
+        "startDate": "2023.09.28",
+        "endDate": "2023.10.12",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/118525"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2023-10-12T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://ys.mihoyo.com/main/news/detail/118525"
+        }
+      }
+    },
+    {
+      "id": "ys-15",
+      "title": "星路拾忆 (四周年回顾)",
+      "url": "https://act.mihoyo.com/ys/event/e20240928review-k6pzqq/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240826hy39u7mi2o/m20240826hy39u7mi2o-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2024.09.28",
+      "endAt": "2024-10-12T23:59+08:00",
+      "status": "ok",
+      "requests": 5,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2024-10-12T23:59+08:00",
+        "startDate": "2024.09.28",
+        "endDate": "2024.10.12",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240826hy39u7mi2o/m20240826hy39u7mi2o-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2024-10-12T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240826hy39u7mi2o/m20240826hy39u7mi2o-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-16",
+      "title": "挪德卡莱概念站（先导）",
+      "url": "https://act.mihoyo.com/ys/event/e20250723light-uowufz/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/ys/event/e20250723light-uowufz/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 3,
+      "announcementFallback": {
+        "reason": "No unambiguous activity time section",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/157821",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-17",
+      "title": "提瓦特心意速递",
+      "url": "https://act.mihoyo.com/ys/event/20240927gift-delivery-xmyq9b/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240826hy29u5whkw/m20240826hy29u5whkw-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2024.09.27",
+      "endAt": "2024-10-07T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2024-10-07T23:59:59+08:00",
+        "startDate": "2024.09.27",
+        "endDate": "2024.10.07",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240826hy29u5whkw/m20240826hy29u5whkw-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2024.09.27"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2024-10-07T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2024.10.07"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20240826hy29u5whkw/m20240826hy29u5whkw-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-18",
+      "title": "相伴同行",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20210901people/index.html#/",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m08111424221081/m08111424221081-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2021.09.01",
+      "endAt": "2021-10-12T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2021-10-12T23:59+08:00",
+        "startDate": "2021.09.01",
+        "endDate": "2021.10.12",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m08111424221081/m08111424221081-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2021.09.01"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2021-10-12T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2021.10.12"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m08111424221081/m08111424221081-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-19",
+      "title": "皑尘与雪影",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20211113pre/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/ys/event/e20211113pre/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 3,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117060",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-20",
+      "title": "云中鹤影",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20211231shenh/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m12132051321871/m12132051321871-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2021-12-31T12:00+08:00",
+      "endAt": "2022-01-04T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2021-12-31T12:00+08:00",
+        "endAt": "2022-01-04T23:59+08:00",
+        "startDate": "2021.12.31",
+        "endDate": "2022.01.04",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m12132051321871/m12132051321871-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2021-12-31T12:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2021.12.31"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2022-01-04T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2022.01.04"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m12132051321871/m12132051321871-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-21",
+      "title": "尘歌宴仙归",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20220128lantern/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m01041050311691/m01041050311691-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2022.01.28",
+      "endAt": "2022-02-06T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2022-02-06T23:59+08:00",
+        "startDate": "2022.01.28",
+        "endDate": "2022.02.06",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m01041050311691/m01041050311691-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2022.01.28"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2022-02-06T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2022.02.06"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m01041050311691/m01041050311691-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-22",
+      "title": "薄樱初绽时",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20220207-previ/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/ys/event/e20220207-previ/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 3,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117246",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-23",
+      "title": "轻风雅游",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20220415travel-tq8y/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117381",
+      "method": "official-announcement",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2022.04.22",
+      "endAt": "2022-04-28T23:59+08:00",
+      "endDate": "2022.04.28",
+      "activitySourceUrl": "https://webstatic.mihoyo.com/ys/event/e20220415travel-tq8y/index.html",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/117381",
+      "announcementFallback": {
+        "startDate": "2022.04.22",
+        "endAt": "2022-04-28T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117381",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2022-04-28T23:59+08:00",
+        "startDate": "2022.04.22",
+        "endDate": "2022.04.28",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117381"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2022.04.22"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2022-04-28T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2022.04.28"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://ys.mihoyo.com/main/news/detail/117381"
+        }
+      }
+    },
+    {
+      "id": "ys-24",
+      "title": "纸间奇旅",
+      "url": "https://webstatic.mihoyo.com/ys/event/20220817puzzle-qgrp/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117596",
+      "method": "official-announcement",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2022.08.17",
+      "endAt": "2022-08-23T23:59+08:00",
+      "endDate": "2022.08.23",
+      "activitySourceUrl": "https://webstatic.mihoyo.com/ys/event/20220817puzzle-qgrp/index.html",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/117596",
+      "announcementFallback": {
+        "startDate": "2022.08.17",
+        "endAt": "2022-08-23T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117596",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2022-08-23T23:59+08:00",
+        "startDate": "2022.08.17",
+        "endDate": "2022.08.23",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117596"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2022.08.17"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2022-08-23T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2022.08.23"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://ys.mihoyo.com/main/news/detail/117596"
+        }
+      }
+    },
+    {
+      "id": "ys-25",
+      "title": "海上绮梦录",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20220722dream-6bgs/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117550",
+      "method": "official-announcement",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "ok",
+      "requests": 4,
+      "startDate": "2022.07.22",
+      "endAt": "2022-07-31T23:59+08:00",
+      "endDate": "2022.07.31",
+      "activitySourceUrl": "https://webstatic.mihoyo.com/ys/event/e20220722dream-6bgs/index.html",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/117550",
+      "announcementFallback": {
+        "startDate": "2022.07.22",
+        "endAt": "2022-07-31T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117550",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2022-07-31T23:59+08:00",
+        "startDate": "2022.07.22",
+        "endDate": "2022.07.31",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/117550"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2022.07.22"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2022-07-31T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2022.07.31"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://ys.mihoyo.com/main/news/detail/117550"
+        }
+      }
+    },
+    {
+      "id": "ys-26",
+      "title": "魔女尼可的茶会",
+      "url": "https://act.mihoyo.com/ys/event/e20260520invite-19ccy4/index.html?lang=zh-cn",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260420hy3fyccge8/m20260420hy3fyccge8-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2026.05.20",
+      "endAt": "2026-06-02T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-06-02T23:59:59+08:00",
+        "startDate": "2026.05.20",
+        "endDate": "2026.06.02",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260420hy3fyccge8/m20260420hy3fyccge8-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2026.05.20"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-06-02T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.06.02"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260420hy3fyccge8/m20260420hy3fyccge8-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "bh3-1",
+      "title": "漫途的拾光留影 (周年报告)",
+      "url": "https://act.mihoyo.com/bh3/event/e20250919anniversary-pf5r10/share.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/bh3/event/e20250919anniversary-pf5r10/share.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 4,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "bh3-2",
+      "title": "星际旅情记事簿 (八周年)",
+      "url": "https://act.mihoyo.com/bh3/event/e20240923anniversary-i0hopm/share.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/bh3/event/e20240923anniversary-i0hopm/share.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 4,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "bh3-3",
+      "title": "关于你的飞行日志",
+      "url": "https://act.mihoyo.com/bh3/event/e20230928anniversary-data/share.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/bh3_cn/m20230830hy665serk0/m20230830hy665serk0-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2023-09-28T11:00+08:00",
+      "endAt": "2023-10-12T04:00+08:00",
+      "status": "ok",
+      "requests": 4,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2023-09-28T11:00+08:00",
+        "endAt": "2023-10-12T04:00+08:00",
+        "startDate": "2023.09.28",
+        "endDate": "2023.10.12",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/bh3_cn/m20230830hy665serk0/m20230830hy665serk0-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2023-09-28T11:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2023.09.28"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2023-10-12T04:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2023.10.12"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/bh3_cn/m20230830hy665serk0/m20230830hy665serk0-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "bh3-4",
+      "title": "希儿的美味厨房！",
+      "url": "https://act.mihoyo.com/bh3/event/e20230626preheating-cc1dq5/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/bh3/event/e20230626preheating-cc1dq5/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "gen-1",
+      "title": "《崩坏3》角色账号转移（自助工具）",
+      "url": "https://webstatic.mihoyo.com/event/user-change-server/index.html",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-27",
+      "title": "「恣锐锋镞」洛恩绘画征集活动",
+      "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202605291815205656&act_id=ea202605291815205656",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-06-01T11:00:00+08:00",
+      "endAt": "2026-06-21T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-06-01T11:00:00+08:00",
+          "endAt": "2026-06-29T20:00:00+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-06-21T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-06-01T11:00:00+08:00",
+        "endAt": "2026-06-21T23:59:59+08:00",
+        "startDate": "2026.06.01",
+        "endDate": "2026.06.21",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-06-01T11:00:00+08:00",
+            "endAt": "2026-06-29T20:00:00+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-06-21T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "status": {
+          "before": "可访问",
+          "after": "已结束"
+        },
+        "startAt": {
+          "before": null,
+          "after": "2026-06-01T11:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.06.01"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-06-21T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.06.21"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-06-01T11:00:00+08:00",
+              "endAt": "2026-06-29T20:00:00+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-06-21T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "ys-28",
+      "title": "米游币抽抽乐-原神专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202605220001071&game_biz=hk4e",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202605220001071",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-05-22T12:00+08:00",
+      "endAt": "2026-05-24T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-05-22T12:00+08:00",
+        "endAt": "2026-05-24T23:59+08:00",
+        "startDate": "2026.05.22",
+        "endDate": "2026.05.24",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202605220001071"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-05-22T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-05-24T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202605220001071"
+        }
+      }
+    },
+    {
+      "id": "ys-29",
+      "title": "《原神》「月之七」版本前瞻特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202604301608148656",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202604301608148656",
+      "method": "miyolive-live",
+      "error": "Activity API retcode=-500012: 活动已结束 (-500012)",
+      "status": "missing",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-33",
+      "title": "「千冶•刃」角色绘画征集活动",
+      "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202605261549567753&act_id=ea202605261549567753#/rpg/act",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-05-29T00:00:00+08:00",
+      "endAt": "2026-06-26T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-05-29T00:00:00+08:00",
+          "endAt": "2026-07-15T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-06-26T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-05-29T00:00:00+08:00",
+        "endAt": "2026-06-26T23:59:59+08:00",
+        "startDate": "2026.05.29",
+        "endDate": "2026.06.26",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-05-29T00:00:00+08:00",
+            "endAt": "2026-07-15T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-06-26T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-05-29T00:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.05.29"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-06-26T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.06.26"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-05-29T00:00:00+08:00",
+              "endAt": "2026-07-15T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-06-26T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "ys-30",
+      "title": "履迹寻路",
+      "url": "https://act.mihoyo.com/ys/event/e20260408land-gmdt0n/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260309hy5fj1pcsg/m20260309hy5fj1pcsg-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2026.04.08",
+      "endAt": "2026-04-21T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-04-21T23:59:59+08:00",
+        "startDate": "2026.04.08",
+        "endDate": "2026.04.21",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260309hy5fj1pcsg/m20260309hy5fj1pcsg-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2026-04-21T23:59:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260309hy5fj1pcsg/m20260309hy5fj1pcsg-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-31",
+      "title": "「运动时间到！」",
+      "url": "https://act.mihoyo.com/ys/event/e20260610sports/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260512hy1g6gxbeo/m20260512hy1g6gxbeo-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2026.06.10",
+      "endAt": "2026-06-25T03:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-06-25T03:59:59+08:00",
+        "startDate": "2026.06.10",
+        "endDate": "2026.06.25",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260512hy1g6gxbeo/m20260512hy1g6gxbeo-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2026-06-25T03:59:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260512hy1g6gxbeo/m20260512hy1g6gxbeo-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-32",
+      "title": "「月之七」版本活动祈愿预告第二期",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=382675dd182b418c",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=382675dd182b418c",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.06.09",
+        "endDate": "2026.06.30"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-38",
+      "title": "《崩坏：星穹铁道》4.3版本「沉于生者的忘川」专题展示页现已上线",
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/hkrpg/e20260522kjcoAmheGdsMksiOcen_550028ab3c/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/164408",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "bh3-5",
+      "title": "《崩坏3》8.9版本前瞻",
+      "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_890_1400/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_890_1400/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-39",
+      "title": "米游币抽抽乐-星穹铁道专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202606111738051&game_biz=hkrpg",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202606111738051",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-06-12T11:00+08:00",
+      "endAt": "2026-06-14T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-06-12T11:00+08:00",
+        "endAt": "2026-06-14T23:59+08:00",
+        "startDate": "2026.06.12",
+        "endDate": "2026.06.14",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202606111738051"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-06-12T11:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-06-14T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202606111738051"
+        }
+      }
+    },
+    {
+      "id": "ys-33",
+      "title": "原神千星奇域创作者中心",
+      "url": "https://act.mihoyo.com/miliastra_wonderland/developer",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-34",
+      "title": "千星奇域创作者中心服务协议",
+      "url": "https://act.mihoyo.com/miliastra_wonderland/agreement?id=156266",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-35",
+      "title": "《原神》「月之八」版本前瞻特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606111703555535",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606111703555535",
+      "method": "miyolive-live",
+      "error": "Activity API retcode=-500012: 活动已结束 (-500012)",
+      "status": "missing",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.06.16",
+        "endDate": "2026.06.18"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-40",
+      "title": "绯英绘画",
+      "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202604151308528522&act_id=ea202604151308528522#/rpg/act",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-05-07T00:00:00+08:00",
+      "endAt": "2026-05-28T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-05-07T00:00:00+08:00",
+          "endAt": "2026-06-16T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-05-28T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-05-07T00:00:00+08:00",
+        "endAt": "2026-05-28T23:59:59+08:00",
+        "startDate": "2026.05.07",
+        "endDate": "2026.05.28",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-05-07T00:00:00+08:00",
+            "endAt": "2026-06-16T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-05-28T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-05-07T00:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.05.07"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-05-28T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.05.28"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-05-07T00:00:00+08:00",
+              "endAt": "2026-06-16T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-05-28T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "zzz-10",
+      "title": "绝区零工具合集",
+      "url": "https://act.mihoyo.com/app/mihoyo-zzz-game-record/m.html#/zzz/roles/0/detail",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-36",
+      "title": "【有奖活动】「镜水析谬」桑多涅绘画征集活动开启！",
+      "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202606181648058769&act_id=ea202606181648058769",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-06-22T11:00:00+08:00",
+      "endAt": "2026-07-12T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-06-22T11:00:00+08:00",
+          "endAt": "2026-07-20T20:00:00+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-07-12T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-06-22T11:00:00+08:00",
+        "endAt": "2026-07-12T23:59:59+08:00",
+        "startDate": "2026.06.22",
+        "endDate": "2026.07.12",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-06-22T11:00:00+08:00",
+            "endAt": "2026-07-20T20:00:00+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-07-12T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-06-22T11:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-07-12T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-06-22T11:00:00+08:00",
+              "endAt": "2026-07-20T20:00:00+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-07-12T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "sr-41",
+      "title": "银狼LV.999绘画",
+      "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202603191939552452&act_id=ea202603191939552452#/rpg/act",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-04-15T00:00:00+08:00",
+      "endAt": "2026-05-06T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-04-15T00:00:00+08:00",
+          "endAt": "2026-05-25T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-05-06T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-04-15T00:00:00+08:00",
+        "endAt": "2026-05-06T23:59:59+08:00",
+        "startDate": "2026.04.15",
+        "endDate": "2026.05.06",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-04-15T00:00:00+08:00",
+            "endAt": "2026-05-25T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-05-06T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-04-15T00:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.04.15"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-05-06T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.05.06"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-04-15T00:00:00+08:00",
+              "endAt": "2026-05-25T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-05-06T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "sr-42",
+      "title": "【已开奖】4.3版本前瞻讨论活动开启，参与赢648现金",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202605121648516106",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202605121648516106",
+      "method": "miyolive-live",
+      "error": "Activity API retcode=-500012: 活动已结束 (-500012)",
+      "status": "missing",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.05.22",
+        "endDate": "2026.05.24"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-43",
+      "title": "《崩坏：星穹铁道》周边实物发货信息登记平台",
+      "url": "https://act.mihoyo.com/sr/event/around-gift-w3qak2/index.html",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-44",
+      "title": "不死途绘画",
+      "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202603121636536101&act_id=ea202603121636536101#/rpg/act",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-03-19T00:00:00+08:00",
+      "endAt": "2026-04-14T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-03-19T00:00:00+08:00",
+          "endAt": "2026-05-06T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-04-14T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-03-19T00:00:00+08:00",
+        "endAt": "2026-04-14T23:59:59+08:00",
+        "startDate": "2026.03.19",
+        "endDate": "2026.04.14",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-03-19T00:00:00+08:00",
+            "endAt": "2026-05-06T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-04-14T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-03-19T00:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.03.19"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-04-14T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.04.14"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-03-19T00:00:00+08:00",
+              "endAt": "2026-05-06T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-04-14T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "bh3-6",
+      "title": "《崩坏3》V8.9羽落万生特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202605151427438423",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/miyolive/index",
+      "method": "miyolive-live",
+      "timeStages": [
+        {
+          "name": "直播",
+          "startAt": "2026-05-23T19:30:00+08:00"
+        }
+      ],
+      "reason": "Live broadcast time does not establish the participation window",
+      "status": "partial",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "timeStages": [
+          {
+            "name": "直播",
+            "startAt": "2026-05-23T19:30:00+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/miyolive/index"
+      },
+      "remaining": [
+        "start",
+        "end"
+      ],
+      "reviewChanges": {
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "直播",
+              "startAt": "2026-05-23T19:30:00+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/miyolive/index"
+        }
+      }
+    },
+    {
+      "id": "bh3-7",
+      "title": "《崩坏3》8.8版本前瞻",
+      "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_880_1367/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_880_1367/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "zzz-11",
+      "title": "米游币抽抽乐-绝区零专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202606231822571&game_biz=nap",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202606231822571",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-06-26T11:00+08:00",
+      "endAt": "2026-06-28T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-06-26T11:00+08:00",
+        "endAt": "2026-06-28T23:59+08:00",
+        "startDate": "2026.06.26",
+        "endDate": "2026.06.28",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202606231822571"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-06-26T11:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-06-28T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202606231822571"
+        }
+      }
+    },
+    {
+      "id": "ys-37",
+      "title": "「月之八」版本「映夏！归乡？千灵节！」内容专题页上线！",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=026e946ecbc54a3d",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=026e946ecbc54a3d",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 1,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/165044",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-38",
+      "title": "米游币抽抽乐-原神专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202607021808111&game_biz=hk4e",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202607021808111",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-07-03T12:00+08:00",
+      "endAt": "2026-07-05T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-07-03T12:00+08:00",
+        "endAt": "2026-07-05T23:59+08:00",
+        "startDate": "2026.07.03",
+        "endDate": "2026.07.05",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202607021808111"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-07-03T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-07-05T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202607021808111"
+        }
+      }
+    },
+    {
+      "id": "sr-45",
+      "title": "《崩坏：星穹铁道》4.4版本「鸣笛于归寂之时」专题展示页现已上线",
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e2070703decyhdTakKink_c5fa06d9da/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/hkrpg/e2070703decyhdTakKink_c5fa06d9da/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/165120",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-46",
+      "title": "《崩坏：星穹铁道》4.4版本前瞻特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606231747484569",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202606231747484569",
+      "method": "miyolive-live",
+      "error": "Activity API retcode=-500012: 活动已结束 (-500012)",
+      "status": "missing",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.07.03",
+        "endDate": "2026.07.05"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-47",
+      "title": "银河铁道之夜绘画征集",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-contribute/index.html?id=ea202606151740450477&game_biz=hkrpg",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-07-09T00:00:00+08:00",
+      "endAt": "2026-08-18T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-07-09T00:00:00+08:00",
+          "endAt": "2026-09-15T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-08-18T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-07-09T00:00:00+08:00",
+        "endAt": "2026-08-18T23:59:59+08:00",
+        "startDate": "2026.07.09",
+        "endDate": "2026.08.18",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-07-09T00:00:00+08:00",
+            "endAt": "2026-09-15T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-08-18T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-07-09T00:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-08-18T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-07-09T00:00:00+08:00",
+              "endAt": "2026-09-15T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-08-18T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "ys-39",
+      "title": "创造星领域！-「奇域校园星」首届高校暑期创作赛启动！",
+      "url": "https://act.mihoyo.com/ys/event/e20260710creator/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260617hy2gjm3474/m20260617hy2gjm3474-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-07-10T12:00+08:00",
+      "endAt": "2026-08-31T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-07-10T12:00+08:00",
+        "endAt": "2026-08-31T23:59+08:00",
+        "startDate": "2026.07.10",
+        "endDate": "2026.08.31",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260617hy2gjm3474/m20260617hy2gjm3474-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-07-10T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-08-31T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260617hy2gjm3474/m20260617hy2gjm3474-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-40",
+      "title": "来奇域，快乐一夏！",
+      "url": "https://act.mihoyo.com/ys/event/e20260715ugc-4svbyl/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260622hy1glh445c/m20260622hy1glh445c-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-07-15T12:00+08:00",
+      "endAt": "2026-07-28T03:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-07-15T12:00+08:00",
+        "endAt": "2026-07-28T03:59+08:00",
+        "startDate": "2026.07.15",
+        "endDate": "2026.07.28",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260622hy1glh445c/m20260622hy1glh445c-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-07-15T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-07-28T03:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260622hy1glh445c/m20260622hy1glh445c-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-48",
+      "title": "官方小程序&企业微信正式上线，每版本领专属星琼福利！",
+      "url": "https://act.mihoyo.com/sr/event/wechat-landing-ii2fz2/index.html",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-49",
+      "title": "《崩坏：星穹铁道》「重返群星之旅」回归网页活动现已开启！",
+      "url": "https://act.mihoyo.com/sr/event/e20260715return-4wlzz5/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://sr.mihoyo.com/news/165210",
+      "method": "official-version-period",
+      "versionPeriod": "v4.4",
+      "reason": "No explicit calendar activity window",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2026.07.15",
+      "endAt": "2026-08-26T06:00+08:00",
+      "endDate": "2026.08.26",
+      "activitySourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260603hy1gegewao/m20260603hy1gegewao-zh-cn.json",
+      "fallbackSourceUrl": "https://sr.mihoyo.com/news/165210",
+      "announcementFallback": {
+        "startDate": "2026.07.15",
+        "endAt": "2026-08-26T06:00+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/165210",
+        "method": "official-version-period",
+        "reason": "Activity rules explicitly name this version; dates come from its official duration notice"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-08-26T06:00+08:00",
+        "startDate": "2026.07.15",
+        "endDate": "2026.08.26",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/165210"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "status": {
+          "before": "可访问",
+          "after": "已结束"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.07.15"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-08-26T06:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.08.26"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://sr.mihoyo.com/news/165210"
+        }
+      }
+    },
+    {
+      "id": "zzz-12",
+      "title": "初代虚狩，回归",
+      "url": "https://act.mihoyo.com/zzz/event/e20260717reserve-pvy5cf/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://zzz.mihoyo.com/news/165267",
+      "method": "official-announcement",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2026.07.17",
+      "endAt": "2026-09-09T05:59+08:00",
+      "endDate": "2026.09.09",
+      "activitySourceUrl": "https://act.mihoyo.com/zzz/event/e20260717reserve-pvy5cf/index.html",
+      "fallbackSourceUrl": "https://zzz.mihoyo.com/news/165267",
+      "announcementFallback": {
+        "startDate": "2026.07.17",
+        "endAt": "2026-09-09T05:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://zzz.mihoyo.com/news/165267",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-09-09T05:59+08:00",
+        "startDate": "2026.07.17",
+        "endDate": "2026.09.09",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://zzz.mihoyo.com/news/165267"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2026-09-09T05:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://zzz.mihoyo.com/news/165267"
+        }
+      }
+    },
+    {
+      "id": "bh3-8",
+      "title": "《崩坏3》9.0版本前瞻",
+      "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_900_1423/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_900_1423/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "zzz-13",
+      "title": "《绝区零》二周年音乐活动",
+      "url": "https://y.qq.com/forest/dWx0qP3Z130jnshg/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://zzz.mihoyo.com/news/165398",
+      "method": "official-announcement",
+      "error": "Unsafe or non-official activity URL",
+      "status": "ok",
+      "requests": 0,
+      "startAt": "2026-07-28T12:00+08:00",
+      "startDate": "2026.07.28",
+      "endAt": "2026-08-10T23:59+08:00",
+      "endDate": "2026.08.10",
+      "activitySourceUrl": "https://y.qq.com/forest/dWx0qP3Z130jnshg/index.html",
+      "fallbackSourceUrl": "https://zzz.mihoyo.com/news/165398",
+      "announcementFallback": {
+        "startAt": "2026-07-28T12:00+08:00",
+        "endAt": "2026-08-10T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://zzz.mihoyo.com/news/165398",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-07-28T12:00+08:00",
+        "endAt": "2026-08-10T23:59+08:00",
+        "startDate": "2026.07.28",
+        "endDate": "2026.08.10",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://zzz.mihoyo.com/news/165398"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-07-28T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-08-10T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://zzz.mihoyo.com/news/165398"
+        }
+      }
+    },
+    {
+      "id": "zzz-14",
+      "title": "法厄同年度大揭秘",
+      "url": "https://act.mihoyo.com/zzz/event/e20260729-anniversary-smcfj5/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260525hy1gb7wt1c/m20260525hy1gb7wt1c-zh-cn.json",
+      "method": "activity-static-config",
+      "endAt": "2026-09-09T05:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "versionStart": "v3.1",
+      "versionRuleSourceUrl": "https://zzz.mihoyo.com/news/165417",
+      "startDate": "2026.07.29",
+      "fallbackSourceUrl": "https://zzz.mihoyo.com/news/165415",
+      "announcementFallback": {
+        "startDate": "2026.07.29",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://zzz.mihoyo.com/news/165415",
+        "method": "official-version-start",
+        "reason": "Rules say after this version update; its maintenance date establishes only the day, not the reopening time"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-09-09T05:59:59+08:00",
+        "startDate": "2026.07.29",
+        "endDate": "2026.09.09",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260525hy1gb7wt1c/m20260525hy1gb7wt1c-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "status": {
+          "before": "需登录",
+          "after": "已结束"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-09T05:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.09.09"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260525hy1gb7wt1c/m20260525hy1gb7wt1c-zh-cn.json"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.07.29"
+        }
+      }
+    },
+    {
+      "id": "ys-41",
+      "title": "《原神》7.0版本前瞻特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202607241851454675",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202607241851454675",
+      "method": "miyolive-live",
+      "error": "Activity API retcode=-500007: 活动已结束",
+      "status": "missing",
+      "requests": 1,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/165422",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.07.29",
+        "endDate": "2026.07.31"
+      },
+      "remaining": []
+    },
+    {
+      "id": "ys-42",
+      "title": "【网页活动上线】「至冬将至」网页活动限时开启",
+      "url": "https://act.mihoyo.com/ys/event/e20260731reserve-y2xckt/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260703hy1gpgse0w/m20260703hy1gpgse0w-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2026.07.31",
+      "endAt": "2026-08-11T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-08-11T23:59+08:00",
+        "startDate": "2026.07.31",
+        "endDate": "2026.08.11",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260703hy1gpgse0w/m20260703hy1gpgse0w-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2026-08-11T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260703hy1gpgse0w/m20260703hy1gpgse0w-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-43",
+      "title": "【有奖活动】「翾风回雪」奥黛塔绘画征集活动开启！",
+      "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202607311621488820&act_id=ea202607311621488820",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-08-03T11:00:00+08:00",
+      "endAt": "2026-08-23T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-08-03T11:00:00+08:00",
+          "endAt": "2026-08-31T20:00:00+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-08-23T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-08-03T11:00:00+08:00",
+        "endAt": "2026-08-23T23:59:59+08:00",
+        "startDate": "2026.08.03",
+        "endDate": "2026.08.23",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-08-03T11:00:00+08:00",
+            "endAt": "2026-08-31T20:00:00+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-08-23T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-08-03T11:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-08-23T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-08-03T11:00:00+08:00",
+              "endAt": "2026-08-31T20:00:00+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-08-23T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "zzz-15",
+      "title": "米游币抽抽乐-绝区零专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202607301813271&game_biz=nap",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202607301813271",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-08-07T11:00+08:00",
+      "endAt": "2026-08-09T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-08-07T11:00+08:00",
+        "endAt": "2026-08-09T23:59+08:00",
+        "startDate": "2026.08.07",
+        "endDate": "2026.08.09",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202607301813271"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-08-07T11:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-08-09T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202607301813271"
+        }
+      }
+    },
+    {
+      "id": "ys-44",
+      "title": "7.0版本「无神怜爱的雪国」内容专题页上线！",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=585c4649a63142d9",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=585c4649a63142d9",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 1,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/165631",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-45",
+      "title": "【网页活动上线】「至冬漫游手册」网页活动限时开启",
+      "url": "https://act.mihoyo.com/ys/event/e20260812winter-1npovj/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260715hy5gtv9f5s/m20260715hy5gtv9f5s-zh-cn.json",
+      "method": "activity-static-config",
+      "startDate": "2026.08.12",
+      "endAt": "2026-08-25T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-08-25T23:59+08:00",
+        "startDate": "2026.08.12",
+        "endDate": "2026.08.25",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260715hy5gtv9f5s/m20260715hy5gtv9f5s-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "endAt": {
+          "before": null,
+          "after": "2026-08-25T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260715hy5gtv9f5s/m20260715hy5gtv9f5s-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-46",
+      "title": "《原神》千星奇域 创作赛启动！",
+      "url": "https://act.mihoyo.com/ys/event/e20260812creator/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260730hy2gzar56o/m20260730hy2gzar56o-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-08-12T12:00:00+08:00",
+      "endAt": "2026-09-16T11:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "评审",
+          "startAt": "2026-09-16T12:00:00+08:00",
+          "endAt": "2026-10-16T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-08-12T12:00:00+08:00",
+        "endAt": "2026-09-16T11:59:59+08:00",
+        "startDate": "2026.08.12",
+        "endDate": "2026.09.16",
+        "timeStages": [
+          {
+            "name": "评审",
+            "startAt": "2026-09-16T12:00:00+08:00",
+            "endAt": "2026-10-16T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260730hy2gzar56o/m20260730hy2gzar56o-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-08-12T12:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-16T11:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "评审",
+              "startAt": "2026-09-16T12:00:00+08:00",
+              "endAt": "2026-10-16T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260730hy2gzar56o/m20260730hy2gzar56o-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-47",
+      "title": "米游币抽抽乐-原神专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202608131816281&game_biz=hk4e",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202608131816281",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-08-14T12:00+08:00",
+      "endAt": "2026-08-16T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-08-14T12:00+08:00",
+        "endAt": "2026-08-16T23:59+08:00",
+        "startDate": "2026.08.14",
+        "endDate": "2026.08.16",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202608131816281"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-08-14T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-08-16T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202608131816281"
+        }
+      }
+    },
+    {
+      "id": "sr-50",
+      "title": "4.5版本「挥掷千星的筹码」专题展示页",
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260807version_847959e2a2/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/hkrpg/e20260807version_847959e2a2/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/165722",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-51",
+      "title": "《崩坏：星穹铁道》4.5版本前瞻特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202608101635141038",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202608101635141038",
+      "method": "miyolive-live",
+      "error": "Activity API retcode=-500012: 活动已结束 (-500012)",
+      "status": "missing",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.08.14",
+        "endDate": "2026.08.16"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-52",
+      "title": "「知更鸟•晴歌」角色绘画征集活动开启！",
+      "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202607061041317985&act_id=ea202607061041317985#/rpg/act",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-08-19T00:00:00+08:00",
+      "endAt": "2026-09-09T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-08-19T00:00:00+08:00",
+          "endAt": "2026-10-09T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-09-09T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-08-19T00:00:00+08:00",
+        "endAt": "2026-09-09T23:59:59+08:00",
+        "startDate": "2026.08.19",
+        "endDate": "2026.09.09",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-08-19T00:00:00+08:00",
+            "endAt": "2026-10-09T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-09-09T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-08-19T00:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-09T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-08-19T00:00:00+08:00",
+              "endAt": "2026-10-09T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-09-09T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "ys-48",
+      "title": "【奇匠小贴士】奇域共创计划使用指南",
+      "url": "https://act.mihoyo.com/miliastra_wonderland/cocreation#/creatorIndex",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-53",
+      "title": "「砂金•戏浪」角色绘画征集活动开启！",
+      "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202608051830237663&act_id=ea202608051830237663#/rpg/act",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-09-04T00:00:00+08:00",
+      "endAt": "2026-09-25T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-09-04T00:00:00+08:00",
+          "endAt": "2026-10-23T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-09-25T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-04T00:00:00+08:00",
+        "endAt": "2026-09-25T23:59:59+08:00",
+        "startDate": "2026.09.04",
+        "endDate": "2026.09.25",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-09-04T00:00:00+08:00",
+            "endAt": "2026-10-23T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-09-25T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-04T00:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-25T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-09-04T00:00:00+08:00",
+              "endAt": "2026-10-23T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-09-25T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "sr-54",
+      "title": "米游币抽抽乐-星穹铁道专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202609031802431&game_biz=hkrpg",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202609031802431",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-09-04T11:00+08:00",
+      "endAt": "2026-09-06T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-04T11:00+08:00",
+        "endAt": "2026-09-06T23:59+08:00",
+        "startDate": "2026.09.04",
+        "endDate": "2026.09.06",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202609031802431"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-04T11:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-06T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202609031802431"
+        }
+      }
+    },
+    {
+      "id": "ys-49",
+      "title": "《原神》7.1版本前瞻特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202609041755176692",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/miyolive/index",
+      "method": "miyolive-live",
+      "timeStages": [
+        {
+          "name": "直播",
+          "startAt": "2026-09-12T19:32:49+08:00",
+          "endAt": "2026-09-12T21:16:10+08:00"
+        }
+      ],
+      "reason": "Live broadcast time does not establish the participation window",
+      "status": "partial",
+      "requests": 1,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/166006",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.09.07",
+        "endDate": "2026.09.12",
+        "timeStages": [
+          {
+            "name": "直播",
+            "startAt": "2026-09-12T19:32:49+08:00",
+            "endAt": "2026-09-12T21:16:10+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/miyolive/index"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "直播",
+              "startAt": "2026-09-12T19:32:49+08:00",
+              "endAt": "2026-09-12T21:16:10+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/miyolive/index"
+        }
+      }
+    },
+    {
+      "id": "zzz-16",
+      "title": "维尔乌姆假日相册",
+      "url": "https://act.mihoyo.com/zzz/event/e20260909flintworkshop-s3ou3r/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/m20260807hy2h29rw1s-zh-cn.json",
+      "method": "activity-static-config",
+      "endAt": "2026-10-10T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2026.09.09",
+      "fallbackSourceUrl": "https://zzz.mihoyo.com/news/166028",
+      "announcementFallback": {
+        "startDate": "2026.09.09",
+        "endDate": "2026.10.10",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://zzz.mihoyo.com/news/166028",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-10-10T23:59+08:00",
+        "startDate": "2026.09.09",
+        "endDate": "2026.10.10",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/m20260807hy2h29rw1s-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2026.09.09"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-10-10T23:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.10.10"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/m20260807hy2h29rw1s-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "zzz-17",
+      "title": "添加Z宝领菲林",
+      "url": "https://act.mihoyo.com/zzz/event/wechat-landing-2sjz4e/index.html",
+      "status": "permanent",
+      "method": "resource",
+      "reason": "Permanent service; no campaign deadline inferred",
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "bh3-9",
+      "title": "【公告】火力全开！银河梦幻擂台！丨参与竞猜获取水晶等奖励",
+      "url": "https://act.mihoyo.com/bh3/event/e20260914bet-brjp02/index.html?game_biz=bh3_cn",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/bh3_cn/m20260515hy1g7jkao0/m20260515hy1g7jkao0-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-09-14T10:00+08:00",
+      "endAt": "2026-09-24T04:00+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-14T10:00+08:00",
+        "endAt": "2026-09-24T04:00+08:00",
+        "startDate": "2026.09.14",
+        "endDate": "2026.09.24",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/bh3_cn/m20260515hy1g7jkao0/m20260515hy1g7jkao0-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "status": {
+          "before": "可访问",
+          "after": "已结束"
+        },
+        "startAt": {
+          "before": null,
+          "after": "2026-09-14T10:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.09.14"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-24T04:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.09.24"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/bh3_cn/m20260515hy1g7jkao0/m20260515hy1g7jkao0-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-50",
+      "title": "【有奖活动】「幽歌萦渊」沃雅妮莎绘画征集活动开启！",
+      "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202609141824580514&act_id=ea202609141824580514",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-09-15T11:00:00+08:00",
+      "endAt": "2026-10-04T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-09-15T11:00:00+08:00",
+          "endAt": "2026-10-12T20:00:00+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-10-04T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-15T11:00:00+08:00",
+        "endAt": "2026-10-04T23:59:59+08:00",
+        "startDate": "2026.09.15",
+        "endDate": "2026.10.04",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-09-15T11:00:00+08:00",
+            "endAt": "2026-10-12T20:00:00+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-10-04T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-15T11:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-10-04T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-09-15T11:00:00+08:00",
+              "endAt": "2026-10-12T20:00:00+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-10-04T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "ys-51",
+      "title": "【有奖活动】「雪宴之锋」薇斯纳绘画征集活动开启！",
+      "url": "https://act.mihoyo.com/ys/event/doujin-collection/index.html?id=ea202609121641261735&act_id=ea202609121641261735",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-09-14T11:00:00+08:00",
+      "endAt": "2026-10-04T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-09-14T11:00:00+08:00",
+          "endAt": "2026-10-12T20:00:00+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-10-04T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-14T11:00:00+08:00",
+        "endAt": "2026-10-04T23:59:59+08:00",
+        "startDate": "2026.09.14",
+        "endDate": "2026.10.04",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-09-14T11:00:00+08:00",
+            "endAt": "2026-10-12T20:00:00+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-10-04T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-14T11:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-10-04T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-09-14T11:00:00+08:00",
+              "endAt": "2026-10-12T20:00:00+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-10-04T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "bh3-10",
+      "title": "《崩坏3》十周年庆典特别节目",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202609101428456900",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/miyolive/index",
+      "method": "miyolive-live",
+      "timeStages": [
+        {
+          "name": "直播",
+          "startAt": "2026-09-19T19:30:00+08:00",
+          "endAt": "2026-09-19T21:00:00+08:00"
+        }
+      ],
+      "reason": "Live broadcast time does not establish the participation window",
+      "status": "partial",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "timeStages": [
+          {
+            "name": "直播",
+            "startAt": "2026-09-19T19:30:00+08:00",
+            "endAt": "2026-09-19T21:00:00+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/miyolive/index"
+      },
+      "remaining": [
+        "start",
+        "end"
+      ],
+      "reviewChanges": {
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "直播",
+              "startAt": "2026-09-19T19:30:00+08:00",
+              "endAt": "2026-09-19T21:00:00+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/miyolive/index"
+        }
+      }
+    },
+    {
+      "id": "bh3-11",
+      "title": "【公告】V9.1时序照新丨新版本内容前瞻",
+      "url": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_910_1452/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/bh3/bh3_version_page_910_1452/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-55",
+      "title": "《崩坏：星穹铁道》4.6版本「月升之前，与兽共舞」专题展示页现已上线",
+      "url": "https://act.mihoyo.com/puzzle/hkrpg/e20260913version_fasf13434_77d1c0e99b/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/puzzle/hkrpg/e20260913version_fasf13434_77d1c0e99b/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/166199",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "sr-56",
+      "title": "【有奖活动】4.6版本前瞻讨论活动开启，参与赢648现金",
+      "url": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202609141754373603",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/bbs/event/live/index.html?act_id=ea202609141754373603",
+      "method": "miyolive-live",
+      "error": "Activity API retcode=-500007: 活动已结束",
+      "status": "missing",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.09.20",
+        "endDate": "2026.09.22"
+      },
+      "remaining": []
+    },
+    {
+      "id": "ys-52",
+      "title": "「朝会」召开，针对死之执政的计划是…？",
+      "url": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=75da15071f6043b5",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/ys/event/e20210601blue_post/vert.html?page_sn=75da15071f6043b5",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 1,
+      "announcementFallback": {
+        "reason": "No explicit calendar activity window",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/166262",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {},
+      "remaining": [
+        "start",
+        "end"
+      ]
+    },
+    {
+      "id": "ys-53",
+      "title": "千星之约·奇域创作大赛",
+      "url": "https://act.mihoyo.com/ys/event/e20260923creator/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m20260920hy2hib969s/m20260920hy2hib969s-zh-cn.json",
+      "method": "activity-static-config",
+      "endAt": "2026-11-02T11:59:59+08:00",
+      "versionStart": "v7.1",
+      "timeStages": [
+        {
+          "name": "评审",
+          "startAt": "2026-11-02T12:00:00+08:00",
+          "endAt": "2026-12-04T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2026.09.23",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/166392",
+      "announcementFallback": {
+        "startDate": "2026.09.23",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/166392",
+        "method": "official-version-start",
+        "reason": "Rules say after this version update; its maintenance date establishes only the day, not the reopening time"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-11-02T11:59:59+08:00",
+        "startDate": "2026.09.23",
+        "endDate": "2026.11.02",
+        "timeStages": [
+          {
+            "name": "评审",
+            "startAt": "2026-11-02T12:00:00+08:00",
+            "endAt": "2026-12-04T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m20260920hy2hib969s/m20260920hy2hib969s-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startDate": {
+          "before": null,
+          "after": "2026.09.23"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-11-02T11:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "评审",
+              "startAt": "2026-11-02T12:00:00+08:00",
+              "endAt": "2026-12-04T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://webstatic.mihoyo.com/admin/mi18n/hk4e_cn/m20260920hy2hib969s/m20260920hy2hib969s-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-54",
+      "title": "旅途回忆 —— 提瓦特回忆征集企划",
+      "url": "https://act.mihoyo.com/ys/community-player-works-upload/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://act.mihoyo.com/ys/community-player-works-upload/index.html",
+      "method": "activity-static-config",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "missing",
+      "requests": 2,
+      "changedFields": [],
+      "stored": {
+        "startDate": "2026.09.21",
+        "endDate": "2026.09.30"
+      },
+      "remaining": []
+    },
+    {
+      "id": "sr-57",
+      "title": "「真珠」角色绘画征集活动开启！",
+      "url": "https://act.mihoyo.com/bbs/event/doujin-collect/index.html?id=ea202609031728067124&act_id=ea202609031728067124#/rpg/act",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo",
+      "method": "contribution-act-info",
+      "startAt": "2026-09-23T00:00:00+08:00",
+      "endAt": "2026-10-25T23:59:59+08:00",
+      "timeStages": [
+        {
+          "name": "活动周期",
+          "startAt": "2026-09-23T00:00:00+08:00",
+          "endAt": "2026-11-24T23:59:59+08:00"
+        },
+        {
+          "name": "评奖",
+          "startAt": "2026-10-25T23:59:59+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-23T00:00:00+08:00",
+        "endAt": "2026-10-25T23:59:59+08:00",
+        "startDate": "2026.09.23",
+        "endDate": "2026.10.25",
+        "timeStages": [
+          {
+            "name": "活动周期",
+            "startAt": "2026-09-23T00:00:00+08:00",
+            "endAt": "2026-11-24T23:59:59+08:00"
+          },
+          {
+            "name": "评奖",
+            "startAt": "2026-10-25T23:59:59+08:00"
+          }
+        ],
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-23T00:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-10-25T23:59:59+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "活动周期",
+              "startAt": "2026-09-23T00:00:00+08:00",
+              "endAt": "2026-11-24T23:59:59+08:00"
+            },
+            {
+              "name": "评奖",
+              "startAt": "2026-10-25T23:59:59+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/contributionv2/actInfo"
+        }
+      }
+    },
+    {
+      "id": "bh3-12",
+      "title": "【崩坏3】每日签到",
+      "url": "https://webstatic.mihoyo.com/bbs/event/signin/bh3/index.html?act_id=e202306201626331",
+      "timeSource": "activity-api",
+      "timeSourceUrl": "https://api-takumi.mihoyo.com/event/luna/bh3/home?act_id=e202306201626331&lang=zh-cn",
+      "method": "bh3-signin-bonus",
+      "startAt": "2026-09-24T00:00:00+08:00",
+      "endAt": "2026-10-12T23:59:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-24T00:00:00+08:00",
+        "endAt": "2026-10-12T23:59:59+08:00",
+        "startDate": "2026.09.24",
+        "endDate": "2026.10.12",
+        "timeSource": "activity-api",
+        "timeSourceUrl": "https://api-takumi.mihoyo.com/event/luna/bh3/home?act_id=e202306201626331&lang=zh-cn"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-24T00:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-10-12T23:59:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-api"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi.mihoyo.com/event/luna/bh3/home?act_id=e202306201626331&lang=zh-cn"
+        }
+      }
+    },
+    {
+      "id": "ys-55",
+      "title": "米游币抽抽乐-原神专场现已开启！",
+      "url": "https://webstatic.mihoyo.com/bbs/event/bbs-event-ccl/index.html?id=e202609250108101&game_biz=hk4e",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202609250108101",
+      "method": "excalibur-skin-rule",
+      "startAt": "2026-09-25T12:00+08:00",
+      "endAt": "2026-09-27T23:59+08:00",
+      "status": "ok",
+      "requests": 1,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-25T12:00+08:00",
+        "endAt": "2026-09-27T23:59+08:00",
+        "startDate": "2026.09.25",
+        "endDate": "2026.09.27",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202609250108101"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-25T12:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-09-27T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://api-takumi-static.mihoyo.com/event/excalibur/skinV2?act_id=e202609250108101"
+        }
+      }
+    },
+    {
+      "id": "ys-56",
+      "title": "「原神」周年拾光册",
+      "url": "https://act.mihoyo.com/ys/event/e20260928-review-kkmxf9/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260804hy1h14gtts/m20260804hy1h14gtts-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-09-28T11:00+08:00",
+      "endAt": "2026-10-18T23:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-28T11:00+08:00",
+        "endAt": "2026-10-18T23:59+08:00",
+        "startDate": "2026.09.28",
+        "endDate": "2026.10.18",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260804hy1h14gtts/m20260804hy1h14gtts-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-28T11:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-10-18T23:59+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260804hy1h14gtts/m20260804hy1h14gtts-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "ys-57",
+      "title": "「拾音邮局」原神六周年特别公益行动",
+      "url": "https://act.mihoyo.com/ys/event/e20260927ysgy-b998y6/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260910hy2hent340/m20260910hy2hent340-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-09-27T12:00:00+08:00",
+      "endAt": "2026-10-31T23:59:59+08:00",
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-27T12:00:00+08:00",
+        "endAt": "2026-10-31T23:59:59+08:00",
+        "startDate": "2026.09.27",
+        "endDate": "2026.10.31",
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260910hy2hent340/m20260910hy2hent340-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-27T12:00:00+08:00"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.09.27"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-10-31T23:59:59+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.10.31"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260910hy2hent340/m20260910hy2hent340-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "bh3-13",
+      "title": "【公告】忆旅的流彩叙映丨完成数据回顾获取水晶等奖励",
+      "url": "https://act.mihoyo.com/bh3/event/e20260928anniversary-khr27n/index.html?game_biz=bh3_cn",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://bh3.mihoyo.com/news/693/166494",
+      "method": "official-announcement",
+      "reason": "No explicit activity window in safely discoverable official rules",
+      "status": "ok",
+      "requests": 5,
+      "startAt": "2026-09-28T10:00+08:00",
+      "startDate": "2026.09.28",
+      "endAt": "2026-11-26T04:00+08:00",
+      "endDate": "2026.11.26",
+      "activitySourceUrl": "https://act.mihoyo.com/bh3/event/e20260928anniversary-khr27n/index.html?game_biz=bh3_cn",
+      "fallbackSourceUrl": "https://bh3.mihoyo.com/news/693/166494",
+      "announcementFallback": {
+        "startAt": "2026-09-28T10:00+08:00",
+        "endAt": "2026-11-26T04:00+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://bh3.mihoyo.com/news/693/166494",
+        "method": "official-announcement"
+      },
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-09-28T10:00+08:00",
+        "endAt": "2026-11-26T04:00+08:00",
+        "startDate": "2026.09.28",
+        "endDate": "2026.11.26",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://bh3.mihoyo.com/news/693/166494"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-09-28T10:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-11-26T04:00+08:00"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://bh3.mihoyo.com/news/693/166494"
+        }
+      }
+    },
+    {
+      "id": "ys-58",
+      "title": "「绮星盛会」——《原神》千星奇域网页活动上线！",
+      "url": "https://act.mihoyo.com/ys/event/e20261001ugc-ali0ea/index.html",
+      "timeSource": "activity-config",
+      "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260728hy2gymysqo/m20260728hy2gymysqo-zh-cn.json",
+      "method": "activity-static-config",
+      "startAt": "2026-10-01T12:00:00+08:00",
+      "endAt": "2026-11-03T04:00:00+08:00",
+      "timeStages": [
+        {
+          "name": "一阶段",
+          "startAt": "2026-10-01T12:00:00+08:00",
+          "endAt": "2026-10-22T04:00:00+08:00"
+        },
+        {
+          "name": "二阶段",
+          "startAt": "2026-10-22T08:00:00+08:00",
+          "endAt": "2026-11-03T04:00:00+08:00"
+        }
+      ],
+      "status": "ok",
+      "requests": 3,
+      "changedFields": [],
+      "stored": {
+        "startAt": "2026-10-01T12:00:00+08:00",
+        "endAt": "2026-11-03T04:00:00+08:00",
+        "startDate": "2026.10.01",
+        "endDate": "2026.11.03",
+        "timeStages": [
+          {
+            "name": "一阶段",
+            "startAt": "2026-10-01T12:00:00+08:00",
+            "endAt": "2026-10-22T04:00:00+08:00"
+          },
+          {
+            "name": "二阶段",
+            "startAt": "2026-10-22T08:00:00+08:00",
+            "endAt": "2026-11-03T04:00:00+08:00"
+          }
+        ],
+        "timeSource": "activity-config",
+        "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260728hy2gymysqo/m20260728hy2gymysqo-zh-cn.json"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "startAt": {
+          "before": null,
+          "after": "2026-10-01T12:00:00+08:00"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-11-03T04:00:00+08:00"
+        },
+        "timeStages": {
+          "before": null,
+          "after": [
+            {
+              "name": "一阶段",
+              "startAt": "2026-10-01T12:00:00+08:00",
+              "endAt": "2026-10-22T04:00:00+08:00"
+            },
+            {
+              "name": "二阶段",
+              "startAt": "2026-10-22T08:00:00+08:00",
+              "endAt": "2026-11-03T04:00:00+08:00"
+            }
+          ]
+        },
+        "timeSource": {
+          "before": null,
+          "after": "activity-config"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260728hy2gymysqo/m20260728hy2gymysqo-zh-cn.json"
+        }
+      }
+    },
+    {
+      "id": "sr-58",
+      "title": "「乐子神智取米哈游」网页活动",
+      "url": "https://act.mihoyo.com/sr/event/e20260928thevoracity-nl3xly/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://sr.mihoyo.com/news/166489",
+      "method": "official-version-period",
+      "versionPeriod": "v4.6",
+      "reason": "No explicit calendar activity window",
+      "status": "ok",
+      "requests": 3,
+      "startDate": "2026.09.28",
+      "endAt": "2026-11-11T06:00+08:00",
+      "endDate": "2026.11.11",
+      "activitySourceUrl": "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260828hy5h9z8hds/m20260828hy5h9z8hds-zh-cn.json",
+      "fallbackSourceUrl": "https://sr.mihoyo.com/news/166489",
+      "announcementFallback": {
+        "startDate": "2026.09.28",
+        "endAt": "2026-11-11T06:00+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/166489",
+        "method": "official-version-period",
+        "reason": "Activity rules explicitly name this version; dates come from its official duration notice"
+      },
+      "changedFields": [],
+      "stored": {
+        "endAt": "2026-11-11T06:00+08:00",
+        "startDate": "2026.09.28",
+        "endDate": "2026.11.11",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://sr.mihoyo.com/news/166489"
+      },
+      "remaining": [],
+      "reviewChanges": {
+        "tags": {
+          "before": [
+            "回归活动",
+            "v4.4版本",
+            "游戏内奖励"
+          ],
+          "after": [
+            "回归活动",
+            "游戏内奖励",
+            "v4.6版本"
+          ]
+        },
+        "version": {
+          "before": "v4.4",
+          "after": "v4.6"
+        },
+        "startDate": {
+          "before": null,
+          "after": "2026.09.28"
+        },
+        "endAt": {
+          "before": null,
+          "after": "2026-11-11T06:00+08:00"
+        },
+        "endDate": {
+          "before": null,
+          "after": "2026.11.11"
+        },
+        "timeSource": {
+          "before": null,
+          "after": "announcement"
+        },
+        "timeSourceUrl": {
+          "before": null,
+          "after": "https://sr.mihoyo.com/news/166489"
+        }
+      }
+    },
+    {
+      "id": "ys-59",
+      "title": "《原神》「风的来信」音乐六周年主题活动正式上线",
+      "url": "https://y.qq.com/forest/iVC0Fqnz_04CZDBc/index.html",
+      "timeSource": "announcement",
+      "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/166538",
+      "method": "official-announcement",
+      "error": "Unsafe or non-official activity URL",
+      "status": "ok",
+      "requests": 0,
+      "startAt": "2026-09-29T12:00+08:00",
+      "startDate": "2026.09.29",
+      "endAt": "2026-10-13T23:59+08:00",
+      "endDate": "2026.10.13",
+      "activitySourceUrl": "https://y.qq.com/forest/iVC0Fqnz_04CZDBc/index.html",
+      "fallbackSourceUrl": "https://ys.mihoyo.com/main/news/detail/166538",
+      "announcementFallback": {
+        "startAt": "2026-09-29T12:00+08:00",
+        "endAt": "2026-10-13T23:59+08:00",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/166538",
+        "method": "official-announcement"
+      },
+      "changedFields": [
+        "startAt",
+        "endAt",
+        "timeSource",
+        "timeSourceUrl"
+      ],
+      "stored": {
+        "startAt": "2026-09-29T12:00+08:00",
+        "endAt": "2026-10-13T23:59+08:00",
+        "startDate": "2026.09.29",
+        "endDate": "2026.10.13",
+        "timeSource": "announcement",
+        "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/166538"
+      },
+      "remaining": [],
+      "remoteAddedFromCommit": "fe28a24",
+      "checkedAt": "2026-10-04T04:59:41.020Z"
+    }
+  ],
+  "baselineCommit": "83c6291ba1e4cf64912bd65a975914d9d2c758b6",
+  "baselineCoverage": {
+    "startDate": 56,
+    "endDate": 57,
+    "dateRanges": 56,
+    "startAt": 0,
+    "endAt": 0
+  },
+  "manualCorrections": [
+    {
+      "id": "sr-58",
+      "field": "version",
+      "before": "v4.4",
+      "after": "v4.6",
+      "reason": "The official activity rules explicitly say 4.6版本期间, corroborated by the formal 4.6 duration notice; corrected the old automated classification.",
+      "sources": [
+        "https://fastcdn.mihoyo.com/mi18n/hkrpg_cn/m20260828hy5h9z8hds/m20260828hy5h9z8hds-zh-cn.json",
+        "https://sr.mihoyo.com/news/166489"
+      ]
+    }
+  ],
+  "additionalResearch": [
+    {
+      "ids": [
+        "sr-6",
+        "sr-16",
+        "sr-25"
+      ],
+      "method": "Equivalent official host/path check",
+      "result": "Both webstatic.mihoyo.com/sr/event and act.mihoyo.com/act/sr/event alternatives returned HTTP 404; no archived dates inferred."
+    },
+    {
+      "ids": [
+        "sr-16"
+      ],
+      "method": "Internet Archive CDX index of the original official campaign directory",
+      "result": "Returned an empty snapshot index; no archive-derived times added."
+    },
+    {
+      "ids": [
+        "ys-12"
+      ],
+      "method": "Read-only partner HTML and the referenced index.js",
+      "result": "The partner site was reachable and its title matched, but contained no explicit activity period or public time configuration; no dates added."
+    }
+  ]
+}

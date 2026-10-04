@@ -36,6 +36,20 @@ const baseEvents = [
   }
 ];
 
+test('existing date overrides and explicit clearing do not inherit incompatible repository clocks', () => {
+  const base = [{ ...baseEvents[0], startDate: '2026.09.28', endDate: '2026.10.18',
+    startAt: '2026-09-28T11:00+08:00', endAt: '2026-10-18T23:59+08:00' }];
+  for (const endDate of ['2026.10.20', null]) {
+    const overlay = parsePersistedEventState(JSON.stringify({ version: 2,
+      overrides: { 'ys-1': { endDate } }, additions: [], deletedIds: [] }), base);
+    const merged = mergeEventState(base, overlay.overlay)[0];
+    assert.equal(merged.endDate, endDate ?? undefined);
+    assert.equal(merged.endAt, undefined);
+    assert.equal(merged.startAt, base[0].startAt);
+    assert.equal(base[0].endAt, '2026-10-18T23:59+08:00');
+  }
+});
+
 test('manual description provenance persists and survives repository description updates', () => {
   const base = [{ ...baseEvents[0], descriptionSource: 'announcement' }];
   const raw = JSON.stringify({
@@ -116,6 +130,36 @@ test('overlays can explicitly remove optional fields', () => {
 
   assert.equal(reparsed.overlay.overrides['ys-1'].endDate, null);
   assert.equal(mergeEventState(baseWithEndDate, reparsed.overlay)[0].endDate, undefined);
+});
+
+test('time metadata persists through overlays, additions, JSON export, and explicit clearing', () => {
+  const time = {
+    startAt: '2026-01-01T08:00+08:00', endAt: '2026-01-31T23:59:00+08:00',
+    timeSource: 'manual', timeSourceUrl: 'https://example.com/api?mode=detail',
+    timeStages: [{ name: '活动', startAt: '2026-01-01T08:00+08:00', endAt: '2026-01-31T23:59:00+08:00' }]
+  };
+  const raw = JSON.stringify({
+    version: 2, overrides: { 'ys-1': time }, deletedIds: [],
+    additions: [{ ...baseEvents[0], ...time, id: 'ys-9', url: 'https://act.mihoyo.com/custom' }]
+  });
+  const overlay = parsePersistedEventState(raw, baseEvents).overlay;
+  const reparsed = parsePersistedEventState(serializeEventState(overlay), baseEvents).overlay;
+  for (const event of JSON.parse(JSON.stringify(mergeEventState(baseEvents, reparsed)))) {
+    if (!['ys-1', 'ys-9'].includes(event.id)) continue;
+    for (const field of Object.keys(time)) assert.deepEqual(event[field], time[field], field);
+  }
+  const withTime = [{ ...baseEvents[0], ...time }];
+  const clear = JSON.stringify({
+    version: 2, overrides: { 'ys-1': Object.fromEntries(Object.keys(time).map(field => [field, null])) },
+    deletedIds: [], additions: []
+  });
+  const removed = parsePersistedEventState(clear, withTime).overlay;
+  const persisted = parsePersistedEventState(serializeEventState(removed), withTime).overlay;
+  const merged = mergeEventState(withTime, persisted)[0];
+  for (const field of Object.keys(time)) {
+    assert.equal(persisted.overrides['ys-1'][field], null, field);
+    assert.equal(merged[field], undefined, field);
+  }
 });
 
 test('cover edits and additions survive local persistence and JSON export', () => {

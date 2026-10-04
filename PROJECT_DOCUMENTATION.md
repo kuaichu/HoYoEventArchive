@@ -100,7 +100,23 @@ https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGameBranches
 
 [update-covers.js](scripts/update-covers.js) 使用已存官方图片地址或官网新闻详情 API，校验图片格式及下载大小后保存到 `public/images/covers/`。已有有效本地封面默认跳过，已知来源失败时可尝试官方新闻图片；失败不覆盖旧文件。`coverUrl` 记录站内归档地址，`coverSourceUrl` 记录原图地址。
 
-### 4. 截图兜底与其它工具
+### 4. 活动参与时间
+
+[update-times.js](scripts/update-times.js) 单独核对参与期限，按官方活动配置、官网公告的顺序补充；请求失败不清空已存时间。`npm run times` 处理缺失时间和仍在进行的活动，`--all` 可复查整个档案，`--dry-run` 仅提出变更，`--report=路径` 保存逐条结果。公告列表按游戏共享，URL、活动 ID 及日期附近的明确标题共同用于关联，避免重用活动入口套到另一期。
+
+[activity-time-sources.js](scripts/activity-time-sources.js) 只调用公开 GET，校验活动 ID、官方域名、重定向及响应预算，不登录、不使用 Cookie，不执行远程 JavaScript。主要来源包括：
+
+- 绘画征集 `contributionv2/actInfo`：优先使用 `post_start_time/post_end_time`，完整周期和评奖另存阶段。
+- 抽抽乐 `excalibur/skinV2`：读取公开规则中的参与范围，不请求需要登录的个人抽奖信息。
+- 崩坏3 `luna/bh3/home`：读取 `short_extra_award` 限时奖励，确认与归档活动对应后才使用，长期签到服务不随奖励期结束。
+- 前瞻 `miyolive/index`：实际直播起止只记为直播阶段，不能覆盖讨论或抽奖参与期。
+- 独立网页：从 HTML 实际引用的业务脚本静态定位 mi18n 配置，支持 `morax`、`s3` 及旧 SDK 路径。大脚本只读取受限首尾片段，配置无活动期时回查官网公告。
+
+[activity-time-parser.js](scripts/activity-time-parser.js) 识别活动、投稿等限定时间段，支持省略年份、跨年、仅有截止、版本更新后开始及多阶段，不把年度统计、奖品发放或公示区间误作参与期。规则只说某个版本期间时，必须与记录版本相符，再联合正式更新公告明确的持续范围；未知开始时刻保留为日期，不能用维护预估伪造。
+
+时间字段使用 `startDate/endDate` 和可选 `startAt/endAt`，后者带明确时区并保留原有分钟或秒精度。`timeSource/timeSourceUrl` 保存依据，`timeStages` 为分阶段起止。归档结果通过共享 schema 和本地 overlay 兼容检查；详情显示北京时间，精确截止优先于日期截止，支持“未开始”。数据中没有结束时间的常驻服务或内容页不自动推算结束日。
+
+### 5. 截图兜底与其它工具
 
 [capture-screenshots.js](scripts/capture-screenshots.js) 使用独立 Headless Chrome 为没有有效归档封面且缺少截图的非失效活动生成 1024×576 缩略图。它会检查页面加载状态、错误提示和截图质量，不能把“固定等待几秒”作为完整加载的保证；页面不可用时可生成信息兜底图。已有截图保留，指定 `--force=活动ID` 时可重拍。
 
@@ -115,7 +131,7 @@ https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGameBranches
 工作流按以下顺序执行：
 
 1. 安装 Node.js 24、依赖、截图浏览器及中文字库，检查同步规则。
-2. 获取官方新闻与正式分支版本，更新活动数据。
+2. 获取官方新闻与正式分支版本，更新活动数据，再核对官方活动参与时间。
 3. 更新生命周期状态、归档官方封面、补充简介及缺失截图。
 4. 生成更新摘要；有变化时运行完整测试和生产构建。
 5. 验证成功后提交并推送数据及图片到 `main`，调用部署工作流发布该提交。

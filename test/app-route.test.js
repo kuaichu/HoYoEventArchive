@@ -69,7 +69,7 @@ test('every documented enum value round-trips through the public query contract'
   for (const type of ['report', 'return', 'preview', 'minigame', 'resource', 'prereg', 'collab', 'other']) {
     assert.equal(serializeRoute(parseLocation('/events', `?type=${type}`)), `/events?type=${type}`);
   }
-  for (const status of ['available', 'expired', 'login', 'ended']) {
+  for (const status of ['available', 'expired', 'login', 'upcoming', 'ended']) {
     assert.equal(serializeRoute(parseLocation('/events', `?status=${status}`)), `/events?status=${status}`);
   }
   for (const sort of ['date-asc', 'title-asc', 'status-asc']) {
