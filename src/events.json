@@ -2516,7 +2516,7 @@
       "v3.1版本"
     ],
     "version": "v3.1",
-    "description": "《绝区零》3.1版本「初代虚狩，回归」预约&回归活动现已开启。网页内，参与预约活动可得160菲林和游戏内纪念名片。邀请好友回归或注册游戏，最高可得340菲林。",
+    "description": "邀请好友回归或注册游戏，最高可得340菲林。新手绳匠、回归绳匠和流失绳匠绑定好友邀请码，可得60菲林。活动期间内，邀请好友回归或注册游戏，最高可获得340菲林的奖励。",
     "startDate": "2026.07.17",
     "endDate": "2026.09.09",
     "reward": "网页内，参与预约活动可得160菲林和游戏内纪念名片；邀请好友回归或注册游戏，最高可得340菲林；游戏内签到活动「初代虚狩，回归」期间，累计登录7日即可获赠480菲林；参与网页内抽奖活动，赢取iPhone、游戏主机、手办、菲林等奖励",
@@ -2525,7 +2525,9 @@
     "descriptionSource": "announcement",
     "endAt": "2026-09-09T05:59+08:00",
     "timeSource": "announcement",
-    "timeSourceUrl": "https://zzz.mihoyo.com/news/165267"
+    "timeSourceUrl": "https://zzz.mihoyo.com/news/165267",
+    "sourceNewsId": "165420",
+    "sourceNewsUrl": "https://zzz.mihoyo.com/news/165420"
   },
   {
     "id": "bh3-8",
@@ -2578,7 +2580,9 @@
     "startAt": "2026-07-28T12:00+08:00",
     "endAt": "2026-08-10T23:59+08:00",
     "timeSource": "announcement",
-    "timeSourceUrl": "https://zzz.mihoyo.com/news/165398"
+    "timeSourceUrl": "https://zzz.mihoyo.com/news/165398",
+    "sourceNewsId": "165398",
+    "sourceNewsUrl": "https://zzz.mihoyo.com/news/165398"
   },
   {
     "id": "zzz-14",
@@ -3071,7 +3075,7 @@
       "v3.2版本"
     ],
     "version": "v3.2",
-    "description": "是选择布亚斯特的落日还是维尔乌姆的海滩，又或者…这是一个绝佳的加班机会。",
+    "description": "完成行程规划，即可解锁多样结局。参与必得菲林奖励。",
     "coverUrl": "/images/covers/zzz-16.png",
     "coverSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/upload/1bbaadf1e3e559e06c0437880c0c684a_6168933394135011786.png",
     "descriptionSource": "announcement",
@@ -3079,7 +3083,9 @@
     "endAt": "2026-10-10T23:59+08:00",
     "endDate": "2026.10.10",
     "timeSource": "activity-config",
-    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/m20260807hy2h29rw1s-zh-cn.json"
+    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260807hy2h29rw1s/m20260807hy2h29rw1s-zh-cn.json",
+    "sourceNewsId": "166479",
+    "sourceNewsUrl": "https://zzz.mihoyo.com/news/166479"
   },
   {
     "id": "zzz-17",
@@ -3139,7 +3145,7 @@
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.09.15",
     "dateType": "announcement",
     "sourcePostId": "78179678",
@@ -3178,7 +3184,7 @@
     "game": "原神",
     "gameKey": "ys",
     "type": "其他活动",
-    "status": "可访问",
+    "status": "已结束",
     "date": "2026.09.14",
     "dateType": "announcement",
     "sourcePostId": "78159165",
