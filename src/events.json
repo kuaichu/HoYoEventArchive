@@ -1078,8 +1078,8 @@
     "startDate": "2025.12.31",
     "endAt": "2026-01-13T23:59+08:00",
     "endDate": "2026.01.13",
-    "timeSource": "announcement",
-    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/161806"
+    "timeSource": "activity-config",
+    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251203hy1ejx11j4/m20251203hy1ejx11j4-zh-cn.json"
   },
   {
     "id": "ys-5",
@@ -1555,8 +1555,8 @@
     "startDate": "2026.05.20",
     "endAt": "2026-06-02T23:59:59+08:00",
     "endDate": "2026.06.02",
-    "timeSource": "announcement",
-    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/164277"
+    "timeSource": "activity-config",
+    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260420hy3fyccge8/m20260420hy3fyccge8-zh-cn.json"
   },
   {
     "id": "bh3-1",
@@ -1783,8 +1783,8 @@
     "endDate": "2026.04.21",
     "descriptionSource": "manual",
     "endAt": "2026-04-21T23:59:59+08:00",
-    "timeSource": "announcement",
-    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/163482"
+    "timeSource": "activity-config",
+    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260309hy5fj1pcsg/m20260309hy5fj1pcsg-zh-cn.json"
   },
   {
     "id": "ys-31",
@@ -2607,7 +2607,9 @@
     "endDate": "2026.09.09",
     "timeSource": "activity-config",
     "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260525hy1gb7wt1c/m20260525hy1gb7wt1c-zh-cn.json",
-    "startDate": "2026.07.29"
+    "startDate": "2026.07.29",
+    "sourceNewsId": "165417",
+    "sourceNewsUrl": "https://zzz.mihoyo.com/news/165417"
   },
   {
     "id": "ys-41",
