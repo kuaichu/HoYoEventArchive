@@ -2605,8 +2605,8 @@
     "coverSourceUrl": "https://fastcdn.mihoyo.com/static-resource-v2/2026/07/28/14ace4dfc413d41ae47c95d27f36347b_7465567061155116173.jpg",
     "endAt": "2026-09-09T05:59:59+08:00",
     "endDate": "2026.09.09",
-    "timeSource": "activity-config",
-    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/nap_cn/m20260525hy1gb7wt1c/m20260525hy1gb7wt1c-zh-cn.json",
+    "timeSource": "announcement",
+    "timeSourceUrl": "https://zzz.mihoyo.com/news/165415",
     "startDate": "2026.07.29",
     "sourceNewsId": "165417",
     "sourceNewsUrl": "https://zzz.mihoyo.com/news/165417"
@@ -2663,8 +2663,8 @@
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/07/30/75276539/228a622943f7a604766af1606990f974_6618623138775042548.jpg",
     "descriptionSource": "manual",
     "endAt": "2026-08-11T23:59+08:00",
-    "timeSource": "activity-config",
-    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260703hy1gpgse0w/m20260703hy1gpgse0w-zh-cn.json"
+    "timeSource": "announcement",
+    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/165452"
   },
   {
     "id": "ys-43",
@@ -2779,8 +2779,8 @@
     "coverUrl": "/images/covers/ys-45.jpg",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/12/75276539/16f4e9254a9286426dfb7c3d5f8da9e4_8159277434403702274.jpg",
     "endAt": "2026-08-25T23:59+08:00",
-    "timeSource": "activity-config",
-    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260715hy5gtv9f5s/m20260715hy5gtv9f5s-zh-cn.json"
+    "timeSource": "announcement",
+    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/165696"
   },
   {
     "id": "ys-46",
@@ -3606,11 +3606,11 @@
     "version": "v7.1",
     "description": "参与得原石、重现晶簇等游戏内奖励。活动期间，旅行者完成网页任务，即可领取原石、重现晶簇、「千星奇域」道具等奖励，任务详情请见活动页面。",
     "descriptionSource": "announcement",
-    "startDate": "2026.10.01",
+    "startDate": "2026.10.22",
     "endDate": "2026.11.03",
     "reward": "参与得原石、重现晶簇等游戏内奖励；活动期间，旅行者完成网页任务，即可领取原石、重现晶簇、「千星奇域」道具等奖励，任务详情请见活动页面",
     "coverUrl": "/images/covers/ys-58.png",
-    "startAt": "2026-10-01T12:00:00+08:00",
+    "startAt": "2026-10-22T08:00:00+08:00",
     "endAt": "2026-11-03T04:00:00+08:00",
     "timeStages": [
       {
@@ -3625,7 +3625,7 @@
       }
     ],
     "timeSource": "activity-config",
-    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260728hy2gymysqo/m20260728hy2gymysqo-zh-cn.json"
+    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260828hy5h9wmoe8/m20260828hy5h9wmoe8-zh-cn.json"
   },
   {
     "id": "sr-58",
