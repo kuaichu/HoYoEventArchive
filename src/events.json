@@ -1078,8 +1078,8 @@
     "startDate": "2025.12.31",
     "endAt": "2026-01-13T23:59+08:00",
     "endDate": "2026.01.13",
-    "timeSource": "announcement",
-    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/161806"
+    "timeSource": "activity-config",
+    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20251203hy1ejx11j4/m20251203hy1ejx11j4-zh-cn.json"
   },
   {
     "id": "ys-5",
