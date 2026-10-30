@@ -3685,5 +3685,26 @@
     "endAt": "2026-10-13T23:59+08:00",
     "timeSource": "announcement",
     "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/166538"
+  },
+  {
+    "id": "sr-59",
+    "title": "4.7版本「此刻，将群星付之一笑」专题展示页现已上线",
+    "url": "https://act.mihoyo.com/puzzle/hkrpg/e20261024version_2142940ddd/index.html",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.10.30",
+    "dateType": "announcement",
+    "sourceNewsId": "167106",
+    "sourceNewsUrl": "https://sr.mihoyo.com/news/167106",
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/content-v2/hkrpg/167106/c59f32a545a39a3fe27d7e328527a39c_8288034598958324270.jpg",
+    "tags": [
+      "v4.7版本"
+    ],
+    "version": "v4.7",
+    "description": "4.7版本「此刻，将群星付之一笑」专题展示页现已上线，一起看看新版本都有哪些内容吧。",
+    "descriptionSource": "announcement",
+    "coverUrl": "/images/covers/sr-59.jpg"
   }
 ]
