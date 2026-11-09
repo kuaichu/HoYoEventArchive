@@ -52,6 +52,10 @@ test('auto-crawl does not send a redundant running notification', () => {
 
 test('event cards fall back to the working status chat when no channel is configured', () => {
   assert.deepEqual(
+    resolveTelegramTargets({}),
+    { statusTargets: '-1003934800450', eventTargets: '-1003934800450' }
+  );
+  assert.deepEqual(
     resolveTelegramTargets({ TG_CHAT_ID: '-100-status', TG_CHANNEL_CHAT_ID: '' }),
     { statusTargets: '-100-status', eventTargets: '-100-status' }
   );
@@ -138,9 +142,24 @@ test('forced screenshot verification can resend one card without a repository co
   assert.equal(plan.summary.enabled, false);
 });
 
-test('committed non-event changes are not mislabeled or deleted', () => {
+test('scheduled committed non-event changes stay silent even with whitespace in the summary', () => {
+  for (const updateSummary of ['', ' \n ']) {
+    const plan = buildFinishedNotificationPlan({
+      ...baseInput,
+      dataChanged: true,
+      updateSummary,
+      eventUpdates: []
+    });
+
+    assert.equal(plan.eventCards.enabled, false);
+    assert.equal(plan.summary.enabled, false);
+  }
+});
+
+test('manual committed non-event changes retain a persistent completion receipt', () => {
   const plan = buildFinishedNotificationPlan({
     ...baseInput,
+    trigger: 'manual',
     dataChanged: true,
     updateSummary: '',
     eventUpdates: []
@@ -150,8 +169,35 @@ test('committed non-event changes are not mislabeled or deleted', () => {
   assert.equal(plan.summary.enabled, true);
   assert.equal(plan.summary.deleteAfterSeconds, 0);
   assert.match(plan.summary.text, /changed and committed/);
-  assert.match(plan.summary.text, /no newly added event summary was generated/);
+  assert.match(plan.summary.text, /no activity update summary available/);
   assert.doesNotMatch(plan.summary.text, /no event updates detected/);
+});
+
+test('scheduled event cards are still sent when the text summary is missing', () => {
+  const plan = buildFinishedNotificationPlan({
+    ...baseInput,
+    dataChanged: true,
+    updateSummary: '',
+    eventUpdates: [{ id: 'notification-test', title: '通知测试活动' }]
+  });
+
+  assert.equal(plan.eventCards.enabled, true);
+  assert.equal(plan.summary.enabled, true);
+});
+
+test('failed runs with committed non-event changes still send a persistent failure notice', () => {
+  const plan = buildFinishedNotificationPlan({
+    ...baseInput,
+    status: 'failure',
+    dataChanged: true,
+    updateSummary: '',
+    eventUpdates: []
+  });
+
+  assert.equal(plan.eventCards.enabled, false);
+  assert.equal(plan.summary.enabled, true);
+  assert.equal(plan.summary.deleteAfterSeconds, 0);
+  assert.match(plan.summary.text, /sync failed/);
 });
 
 test('status-only event changes send one explicit summary without an event card', () => {

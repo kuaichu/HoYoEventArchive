@@ -8,7 +8,7 @@ import { safeCoverUrl, safeScreenshotUrl } from '../src/event-domain.js';
 const __filename = fileURLToPath(import.meta.url);
 
 const BOT_TOKEN = process.env.TG_BOT_TOKEN || process.env.TELEGRAM_BOT_TOKEN;
-const DEFAULT_CHAT_ID = '-1003962096060';
+const DEFAULT_CHAT_ID = '-1003934800450';
 
 export function resolveTelegramTargets(env = process.env) {
   const statusTargets = env.TG_CHAT_ID || env.TELEGRAM_CHAT_ID || DEFAULT_CHAT_ID;
@@ -309,9 +309,10 @@ export function buildFinishedNotificationPlan({
     trigger !== 'schedule' &&
     !notificationTest &&
     !forceEventCards;
+  const hasEventUpdates = eventUpdates.length > 0 || Boolean(updateSummary?.trim());
   const silentNoChange =
     status === 'success' &&
-    !dataChanged &&
+    (!dataChanged || !hasEventUpdates) &&
     trigger === 'schedule' &&
     !notificationTest &&
     !forceEventCards;
@@ -329,7 +330,7 @@ Updates:
 ${htmlEscape(updateSummary)}`;
   } else if (dataChanged) {
     text += `
-Updates: changed, but no newly added event summary was generated`;
+Updates: no activity update summary available`;
   } else if (manualNoChange) {
     text += `
 Note: no event updates detected; this temporary manual-run receipt will be deleted.`;
@@ -503,7 +504,7 @@ Run: <a href="${runUrl}">#${runId}</a>`;
       plan.summary.deleteAfterSeconds
     );
   } else if (!plan.eventCards.enabled) {
-    console.log('No repository changes detected; skipping Telegram notification.');
+    console.log('No activity notifications to send; skipping Telegram notification.');
   }
 
   if (cardDeliveryError) throw cardDeliveryError;
