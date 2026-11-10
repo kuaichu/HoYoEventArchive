@@ -2779,8 +2779,8 @@
     "coverUrl": "/images/covers/ys-45.jpg",
     "coverSourceUrl": "https://upload-bbs.miyoushe.com/upload/2026/08/12/75276539/16f4e9254a9286426dfb7c3d5f8da9e4_8159277434403702274.jpg",
     "endAt": "2026-08-25T23:59+08:00",
-    "timeSource": "activity-config",
-    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260715hy5gtv9f5s/m20260715hy5gtv9f5s-zh-cn.json"
+    "timeSource": "announcement",
+    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/165696"
   },
   {
     "id": "ys-46",
