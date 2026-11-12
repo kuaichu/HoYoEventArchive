@@ -1555,8 +1555,8 @@
     "startDate": "2026.05.20",
     "endAt": "2026-06-02T23:59:59+08:00",
     "endDate": "2026.06.02",
-    "timeSource": "activity-config",
-    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260420hy3fyccge8/m20260420hy3fyccge8-zh-cn.json"
+    "timeSource": "announcement",
+    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/164277"
   },
   {
     "id": "bh3-1",
@@ -3728,5 +3728,34 @@
     "description": "旅行者好呀~7.2版本「坏灭肇始之时」内容专题页上线啦。P.S. 旅行者在游戏过程中前往「派蒙菜单」，点击「版本热点」即可找到本专题页哦。",
     "descriptionSource": "announcement",
     "coverUrl": "/images/covers/ys-60.jpg"
+  },
+  {
+    "id": "sr-60",
+    "title": "听歌领80星琼！歌曲「无中生有」音乐活动正式上线",
+    "url": "https://y.qq.com/forest/SxtRVm78JA6S7dhI/index.html",
+    "game": "星穹铁道",
+    "gameKey": "sr",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.11.12",
+    "dateType": "announcement",
+    "sourceNewsId": "167327",
+    "sourceNewsUrl": "https://sr.mihoyo.com/news/167327",
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/content-v2/hkrpg/167327/4d0c70f4d2abc9bba36b5fea6227801e_1331192033563307044.jpg",
+    "tags": [
+      "通用",
+      "游戏内奖励"
+    ],
+    "version": "通用",
+    "description": "活动期间，完成听歌活动互动即可获得星琼兑换码奖励（限量300万份）。酷狗音乐APP 搜索“星穹铁道”点击进入「【活动】崩坏：星穹铁道」活动页面-「查看兑换码」。",
+    "descriptionSource": "announcement",
+    "startDate": "2026.11.12",
+    "endDate": "2026.11.29",
+    "reward": "活动期间，完成听歌活动互动即可获得星琼兑换码奖励（限量300万份）；星琼*80（限量300万份，先到先得）；（QQ音乐×酷狗音乐各40星琼）",
+    "startAt": "2026-11-12T12:00+08:00",
+    "endAt": "2026-11-29T23:59+08:00",
+    "timeSource": "announcement",
+    "timeSourceUrl": "https://sr.mihoyo.com/news/167327",
+    "coverUrl": "/images/covers/sr-60.jpg"
   }
 ]
