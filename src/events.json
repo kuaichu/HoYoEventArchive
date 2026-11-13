@@ -1555,8 +1555,8 @@
     "startDate": "2026.05.20",
     "endAt": "2026-06-02T23:59:59+08:00",
     "endDate": "2026.06.02",
-    "timeSource": "announcement",
-    "timeSourceUrl": "https://ys.mihoyo.com/main/news/detail/164277"
+    "timeSource": "activity-config",
+    "timeSourceUrl": "https://fastcdn.mihoyo.com/mi18n/hk4e_cn/m20260420hy3fyccge8/m20260420hy3fyccge8-zh-cn.json"
   },
   {
     "id": "bh3-1",
