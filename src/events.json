@@ -3757,5 +3757,53 @@
     "timeSource": "announcement",
     "timeSourceUrl": "https://sr.mihoyo.com/news/167327",
     "coverUrl": "/images/covers/sr-60.jpg"
+  },
+  {
+    "id": "zzz-18",
+    "title": "🎁决战于黎明之前",
+    "url": "https://act.mihoyo.com/zzz/event/e20261120reserve-auy9i1/index.html",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "回归活动",
+    "status": "可访问",
+    "date": "2026.11.20",
+    "dateType": "announcement",
+    "sourceNewsId": "167393",
+    "sourceNewsUrl": "https://zzz.mihoyo.com/news/167393",
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/content-v2/nap/167393/138bdaad9e6849a0bf90baf3588b9bc6_1266733623179047933.png",
+    "tags": [
+      "回归活动",
+      "v3.4版本",
+      "游戏内奖励"
+    ],
+    "version": "v3.4",
+    "description": "网页内，参与预约活动可得160菲林和游戏内纪念名片。邀请好友回归或注册游戏，最高可得340菲林。游戏内签到活动「决战于黎明之前」期间，累计登录7日即可获赠480菲林。",
+    "descriptionSource": "announcement",
+    "startDate": "2026.11.20",
+    "endDate": "2027.01.13",
+    "reward": "网页内，参与预约活动可得160菲林和游戏内纪念名片；邀请好友回归或注册游戏，最高可得340菲林；游戏内签到活动「决战于黎明之前」期间，累计登录7日即可获赠480菲林；参与网页内抽奖活动，赢取iPhone、游戏主机、手办等奖励；艾莲·乔 1/7手办 x10；酷酷邦布手办盲盒 第一弹（随机款）x200",
+    "endAt": "2027-01-13T05:59+08:00",
+    "timeSource": "announcement",
+    "timeSourceUrl": "https://zzz.mihoyo.com/news/167393"
+  },
+  {
+    "id": "zzz-19",
+    "title": "《绝区零》官方调频统计工具上线！",
+    "url": "https://act.mihoyo.com/zzz/event/gacha-record/index.html",
+    "game": "绝区零",
+    "gameKey": "zzz",
+    "type": "其他活动",
+    "status": "可访问",
+    "date": "2026.11.20",
+    "dateType": "announcement",
+    "sourceNewsId": "167401",
+    "sourceNewsUrl": "https://zzz.mihoyo.com/news/167401",
+    "coverSourceUrl": "https://fastcdn.mihoyo.com/content-v2/nap/167401/9de2323815470a6b942011db1fa90c12_4902854617608972994.png",
+    "tags": [
+      "网页活动"
+    ],
+    "version": "待确认",
+    "description": "绳匠前往官方小程序，登录后即可查看调频记录，欢迎绳匠前往体验。",
+    "descriptionSource": "announcement"
   }
 ]
